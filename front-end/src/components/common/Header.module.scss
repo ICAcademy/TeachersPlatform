@@ -1,0 +1,18 @@
+@import '../../styles/background.scss';
+
+.container {
+    display: flex;
+    width: 100%;
+    background: $mainBackground;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+}
