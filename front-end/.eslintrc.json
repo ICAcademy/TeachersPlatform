@@ -15,13 +15,17 @@
     "sourceType": "module"
   },
   "plugins": ["react", "prettier"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "indent": ["error", 2],
     "linebreak-style": ["error", "windows"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "prefer-arrow-callback": ["error"],
-    "arrow-body-style": ["error", "as-needed"],
     "func-style": ["error", "expression"],
     "object-curly-spacing": ["error", "always"],
     "eol-last": ["error", "always"],
@@ -34,19 +38,11 @@
       }
     ],
     "react/jsx-closing-bracket-location": "error",
-    // "react/jsx-curly-spacing": [
-    //   "error",
-    //   {
-    //     "when": "always",
-    //     "children": true
-    //   }
-    // ],
     "react/jsx-equals-spacing": "error",
     "react/jsx-first-prop-new-line": "error",
     "react/jsx-indent-props": ["error", 2],
     "react/jsx-indent": ["error", 2],
     "react/jsx-key": "error",
-    "react/jsx-sort-props": "error",
     "react/jsx-one-expression-per-line": [
       "error",
       {
@@ -81,4 +77,3 @@
     "react-hooks/exhaustive-deps": "warn"
   }
 }
-
