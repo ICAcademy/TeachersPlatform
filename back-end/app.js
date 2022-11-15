@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT;
 
-app.get('/', () => {});
+app.get('/', (req, res) => {});
 
 async function main() {
   try {
