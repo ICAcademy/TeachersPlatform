@@ -1,0 +1,101 @@
+@import '../../../styles/background.scss';
+@import '../../../styles/colors.scss';
+@import '../../../styles/font.scss';
+
+.container {
+    display: flex;
+    width: 100%;
+    background: $mainBackground;
+    height: 100px;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.logoContainer {
+    display: flex;
+    justify-content: center;
+    width: 140px;
+}
+
+.button {
+    &:hover {
+        background: transparent;
+    }
+}
+
+.logo {
+    width: 100%;
+}
+
+.menuContainer {
+    margin-left: 100px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    color: $purple;
+    text-decoration: none;
+    font-weight: $fw500;
+    line-height: 50px;
+    font-size: $f18;
+    text-transform: capitalize;
+    justify-content: center;
+    margin: 0px 0px;
+}
+
+.itemMenu {
+    margin-right: 30px;
+}
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logInContainer {
+    padding: 0 45px;
+    line-height: 55px;
+    min-height: 55px;
+    cursor: pointer;
+    background: $logInBackground;
+    height: 42px;
+    border-radius: 6px;
+    color: $purple;
+    transition: all .5s ease-out;
+    font-size: 16px;
+    font-weight: 500;
+    &:hover {
+        background: $signUpBackground;
+        color: $white;
+        transition: all .5s ease-out;
+    }
+}
+
+.signUpContainer {
+    padding: 0 45px;
+    line-height: 55px;
+    min-height: 55px;
+    cursor: pointer;
+    background: $signUpBackground;
+    height: 42px;
+    border-radius: 6px;
+    color: $white;
+    transition: all .5s ease-out;
+    font-size: $f16;
+    font-weight: $fw500;
+    margin-left: 5px;
+    transition: all .5s ease-out;
+    &:hover {
+        box-shadow: 0 0 1px 0 $signUpBackgroundShadow inset, 0 0 1px 2px $signUpBackgroundShadow;
+        transition: all .5s ease-out;
+    }
+}
