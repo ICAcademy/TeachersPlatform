@@ -3,8 +3,12 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const port = process.env.PORT;
+const authUser = require('./routes/auth');
+
+app.use(express.json());
 
 app.get('/', (req, res) => {});
+app.use('/register', authUser);
 
 async function main() {
   try {
