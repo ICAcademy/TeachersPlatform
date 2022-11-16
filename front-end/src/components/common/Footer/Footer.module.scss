@@ -4,7 +4,7 @@
 
 .container {
     width: 100%;
-    background: #1c2a44;
+    background: $footerBackground;
     color: $white;
     padding: 120px 0 0;
 }
@@ -14,6 +14,7 @@
     flex-direction: row;
     justify-content: center;
     padding-bottom: 70px;
+    border-bottom: 0.1px solid $borderColor;
 }
 
 .siksha {
@@ -37,7 +38,7 @@
 .explanation {
     hyphens: auto;
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: $f16;
     line-height: 26px;
 }
 
@@ -50,9 +51,9 @@
 
 .iconItem {
     margin-right: 15px;
-    border: 1px solid black;
-    background: #fff;
-    color: #000;
+    border: 1px solid $black;
+    background: $white;
+    color: $black;
     width: 25px;
     height: 25px;
     border-radius: 3px;
@@ -63,6 +64,12 @@
 .icon {
     display: flex;
     align-self: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    &:hover {
+        transition: all 0.3s ease;
+        fill: $iconBackground;
+    }
 }
 
 .companyContainer {
@@ -82,10 +89,40 @@
 .companyInfoItem {
     list-style-type: none;
     margin-bottom: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    &:hover {
+        transition: all 0.3s ease;
+        color: $iconBackground;
+    }
+}
+
+.companyInfoItemSvg {
+    transition: all 0.3s ease;
+    &:hover {
+        transition: all 0.3s ease;
+        fill: $iconBackground;
+    }
 }
 
 .info {
     margin-left: 8px;
     font-size: 15px;
     line-height: 30px;
+}
+
+.contactContainer {
+    display: flex;
+    align-items: center;
+}
+
+.copyrightContainer {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.copyright {
+    font-size: 16px;
+    line-height: 26px;
 }

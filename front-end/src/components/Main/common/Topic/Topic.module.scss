@@ -1,0 +1,16 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/background.scss';
+@import '../../../../styles/font.scss';
+
+.topic {
+    color: $purple;
+    padding: 15px 30px;
+    border-radius: 90px;
+    line-height: 30px;
+    font-size: 14px;
+    background: $topicBackground;
+    margin-bottom: 15px;
+    font-weight: $fw600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}

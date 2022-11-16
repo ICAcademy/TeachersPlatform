@@ -9,20 +9,14 @@ import './App.scss';
 // theme style
 import theme from './styles/customTheme';
 import { Button } from '@mui/material';
+import Main from 'pages/Main/Main';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="wrap">
         <Header />
-        <div>Teachers platform</div>
-        <Button
-          onClick={() => console.log('you clicked me')}
-          color="primary"
-          variant="contained"
-        >
-          Button
-        </Button>
+        <Main />
       </div>
       <Footer />
     </ThemeProvider>

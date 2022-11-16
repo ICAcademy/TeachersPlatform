@@ -1,0 +1,81 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 360px;
+    height: 348px;
+    background: #F8F9FA;
+    transition: all 0.4s ease-out;
+    &:hover {
+        background: #fff;
+        box-shadow: 0px 4px 74px rgb(0 0 0 / 8%);
+        transition: all 0.4s ease-out;
+    }
+}
+
+.labelContainer {
+    background: linear-gradient(210.43deg, #F188E0 6.94%, #F4648B 57.69%);
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.dollar {
+    display: flex;
+    align-self: center;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 34px;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.explanationContainer {
+    padding: 0 10px;
+    text-align: center;
+}
+
+.explanation {
+    margin: 0 0 30px 0;
+    font-size: 16px;
+    line-height: 26px;
+    color: #797979;
+}
+
+.learnMoreContainer {
+    background-color: #F5EDFF;
+    cursor: pointer;
+    height: 42px;
+    line-height: 42px;
+    font-size: 16px;
+    transition: all 0.5s ease;
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 0 30px;
+    color: #9000FF;
+    display: flex;
+    justify-content: center;
+    &:hover {
+        color: #fff;
+        background: #9000FF;
+        .arrow {
+            fill: #fff;
+            transition: all 0.4s ease-out;
+        }
+    }
+}
+
+.learnMore {}
+
+.arrow {
+    display: flex;
+    align-self: center;
+    margin-left: 5px;
+    transition: all 0.4s ease-out;
+}
