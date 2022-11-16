@@ -11,9 +11,9 @@ const App = () => {
       <div>Teachers platform</div>
       <Button
         onClick={() => console.log('you clicked me')}
-        color="primary" 
-        variant="contained"
-        >
+        color='primary'
+        variant='contained'
+      >
         Button
       </Button>
     </ThemeProvider>
