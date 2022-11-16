@@ -6,7 +6,7 @@ import { Sidebar } from 'components/sidebar/Sidebar';
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Sidebar />
+       <Sidebar />
     </ThemeProvider>
   );
 };
