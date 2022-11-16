@@ -1,3 +1,39 @@
-.sidebar{
-    background-color: red;
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.sidebar {
+  position: fixed;
+  border-right: 0px solid rgba(95, 99, 121, 0.16);
+  box-shadow: 0 0 35px 0 rgb(208 208 209 / 70%);
+  background-color: #fff;
+  padding: 20px 20px 0 20px;
+  min-height: 100%;
+
+  .sidebarSection container {
+    padding-bottom: 10px;
+  }
+
+  .sidebarImgHolder {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 15px;
+    margin-bottom: 20px;
+  }
+
+  .sidebarImgAvatar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-self: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .sidebarAvatar {
+    border-radius: 90px;
+    border: 1px solid #019ff8;
+    background-color: #e2f3fc;
+    margin-bottom: 20px;
+  }
 }

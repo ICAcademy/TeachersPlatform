@@ -1,0 +1,22 @@
+.sidebarList {
+  margin-bottom: 20px;
+
+  .sidebarItem {
+    font-size: 1.143rem;
+    margin: 5px 0px 0 5px;
+    padding: 0 10px;
+
+    .sidebarLink {
+      color: #7f839a;
+      font-weight: 500;
+      line-height: 25px;
+      padding: 10px 10px;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        color: #019ff8;
+      }
+    }
+  }
+}
