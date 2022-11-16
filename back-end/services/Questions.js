@@ -1,15 +1,44 @@
-const Question = require('../models/Question')
+const Question = require('../models/Question');
 
-const getQuestions = async () => await Question.find({})
+const getQuestions = async () => {
+  try {
+    await Question.find({});
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
-const createQuestion = async (question) => await Question.create(question)
+const createQuestion = async (question) => {
+  try {
+    await Question.create(question);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
-const findQuestion = async (id) => await Question.findById(id)
+const findQuestion = async (id) => {
+  try {
+    await Question.findById(id);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
-const editQuestion = async (id, body) =>
-  await Question.findByIdAndUpdate(id, body, { new: true, runValidators: true })
+const editQuestion = async (id, body) => {
+  try {
+    await Question.findByIdAndUpdate(id, body, { new: true, runValidators: true });
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
-const removeQuestion = async (id) => await Question.findByIdAndDelete(id)
+const removeQuestion = async (id) => {
+  try {
+    await Question.findByIdAndDelete(id);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
 module.exports = {
   getQuestions,
@@ -17,4 +46,4 @@ module.exports = {
   findQuestion,
   editQuestion,
   removeQuestion,
-}
+};
