@@ -1,0 +1,68 @@
+@import '../../styles/colors.scss';
+@import '../../styles/font.scss';
+
+.contentWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: $purpleBlue;
+  background: linear-gradient(70deg, rgba(102,16,242,0.8914916308320203) 0%, rgba(245,222,255,1) 100%);
+}
+
+.blocksWrap {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  background-color: $white;
+  width: 560px;
+  height: 545px;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.bottomWrap {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  height: 75px;
+  width: 55%;
+
+  & p {
+    font-size: $f16;
+    color: $santaGrey;
+  }
+  
+  & span {
+    font-size: $f14;
+    color: $vividViolet;
+    font-weight: $fw600;
+
+    &:hover {
+      color: $softPurple;
+    }
+  }
+}
+
+.link {
+  text-decoration: none;
+}
+
+.topWrap {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & h1 {
+    font-size: $f24;
+    color: $vividViolet;
+  }
+
+  & p {
+    font-size: $f14;
+    color: $santaGrey;
+  }
+}
