@@ -18,37 +18,37 @@ export const SidebarList = () => {
     <div className='sidebarMenu'>
       <List className={styles.sidebarList}>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/' className={styles.sidebarLink}>
+          <Link to='/home' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faHouseUser} />
             Dashboard
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/' className={styles.sidebarLink}>
+          <Link to='/home' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faCalendarDays} />
             Calendar
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/' className={styles.sidebarLink}>
+          <Link to='/home' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
             Materials
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/' className={styles.sidebarLink}>
+          <Link to='/home' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />
             Grammar
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/' className={styles.sidebarLink}>
+          <Link to='/home' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
             Students
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/' className={styles.sidebarLink}>
+          <Link to='/home' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSackDollar} />
             Finances
           </Link>

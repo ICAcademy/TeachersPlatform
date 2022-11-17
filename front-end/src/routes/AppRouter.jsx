@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Container } from 'components/container/Container';
-import { NotFound } from 'components/NotFound/NotFound';
+import { NotFound } from 'components/notFound/NotFound';
 
 const AppRouter = () => (
   <Routes>

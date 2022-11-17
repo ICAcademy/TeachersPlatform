@@ -13,12 +13,12 @@ export const Sidebar = () => {
       <aside className={styles.sidebar}>
         <div className={styles.sidebarImgHolder}>
           <div className={styles.sidebarImgBlock}>
-            <Link href='#'>
+            <Link to='/home'>
               <img src={logo1} alt='logo' width='30px' />
             </Link>
           </div>
           <div className={styles.sidebarImgBlock}>
-            <Link href='#'>
+            <Link to='/home'>
               <img src={logo} alt='logo' />
             </Link>
           </div>
