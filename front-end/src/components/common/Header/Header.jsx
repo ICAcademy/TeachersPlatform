@@ -17,28 +17,28 @@ const Header = () => {
                 <nav className={styles.menuContainer}>
                     <ul className={styles.menu}>
                         <li className={styles.itemMenu}>
-                            <a>Home</a>
+                            <a className={styles.sign} href="*">Home</a>
                         </li>
                         <li className={styles.itemMenu}>
-                            <a>Course</a>
+                            <a className={styles.sign} href="*">Course</a>
                         </li>
                         <li className={styles.itemMenu}>
-                            <a>Pages</a>
+                            <a className={styles.sign} href="*">Pages</a>
                         </li>
                         <li className={styles.itemMenu}>
-                            <a>Blog</a>
+                            <a className={styles.sign} href="*">Blog</a>
                         </li>
                         <li className={styles.itemMenu}>
-                            <a>Contact Us</a>
+                            <a className={styles.sign} href="*">Contact Us</a>
                         </li>
                     </ul>
                 </nav>
                 <div className={styles.buttonsContainer}>
                     <div className={styles.logInContainer}>
-                        <a>Log In</a>
+                        <a className={styles.logIn} href="*">Log In</a>
                     </div>
                     <div className={styles.signUpContainer}>
-                        <a>Sign Up</a>
+                        <a className={styles.signUp}>Sign Up</a>
                     </div>
                 </div>
             </div>

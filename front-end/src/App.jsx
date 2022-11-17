@@ -1,15 +1,18 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 
+// pages
+import Main from 'pages/Main/Main';
+
 // components
 import Header from 'components/common/Header/Header';
 import Footer from 'components/common/Footer/Footer';
-import './App.scss';
 
 // theme style
 import theme from './styles/customTheme';
-import { Button } from '@mui/material';
-import Main from 'pages/Main/Main';
+
+// styles
+import './App.scss';
 
 const App = () => {
   return (

@@ -53,6 +53,12 @@
 
 .itemMenu {
     margin-right: 30px;
+    cursor: pointer;
+}
+
+.sign {
+    text-decoration: none;
+    color: $purple;
 }
 
 .buttonsContainer {
@@ -77,6 +83,16 @@
         background: $signUpBackground;
         color: $white;
         transition: all .5s ease-out;
+    }
+}
+
+.logIn {
+    text-decoration: none;
+    color: $purple;
+    transition: all .5s ease-out;
+    &:hover {
+        transition: all .5s ease-out;
+        color: $white;
     }
 }
 

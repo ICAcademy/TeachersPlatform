@@ -1,18 +1,22 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/font.scss';
+@import '../../../../styles/background.scss';
+
 .container {
-    border: 1px solid #fff;
+    border: 1px solid $white;
     width: 570px;
 }
 
 .dataContainer {
-    background: linear-gradient(210.43deg, #F188E0 6.94%, #F4648B 57.69%);
+    background: linear-gradient(210.43deg, $lightPink 6.94%, $darkPink 57.69%);
     width: 50px;
     height: 70px;
     border-radius: 2px;
     padding: 20px 35px;
-    color: #fff;
-    font-weight: 600;
+    color: $white;
+    font-weight: $fw600;
     text-align: center;
-    font-size: 20px;
+    font-size: $f20;
     text-transform: uppercase;
     position: absolute;
     z-index: 1;
@@ -37,10 +41,10 @@
 }
 
 .title {
-    font-weight: 600;
+    font-weight: $fw600;
     margin: 0;
     padding: 0;
-    font-size: 20px;
+    font-size: $f20;
     line-height: 30px;
 }
 

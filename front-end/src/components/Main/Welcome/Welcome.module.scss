@@ -62,7 +62,7 @@ $johnDoe: "../../../assets/images/john-doe.jpeg";
     line-height: 55px;
     color: $white;
     background: $ourStoryBackground;
-    font-weight: 500;
+    font-weight: $fw500;
     border-radius: 5px;
     text-align: center;
     width: 150px;
@@ -116,7 +116,7 @@ $johnDoe: "../../../assets/images/john-doe.jpeg";
     font-weight: $fw600;
     margin: 0;
     padding: 0;
-    font-size: 24px;
+    font-size: $f24;
     line-height: 34px;
 }
 
