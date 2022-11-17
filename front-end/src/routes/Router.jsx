@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Questions from 'components/quiz/Quiz';
+import Questions from 'components/questions/Questions';
 
 const Router = () => {
   return (

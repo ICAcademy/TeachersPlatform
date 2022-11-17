@@ -8,7 +8,7 @@ const {
 
 const getAllQuestions = async (req, res) => {
   try {
-    const questions = await getQuestions();
+    const questions = await getQuestions(req.query);
     res.status(200).json({ questions });
   } catch (error) {
     res.status(500).json({ error });

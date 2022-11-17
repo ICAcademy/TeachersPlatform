@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import PropTypes from 'prop-types';
 
 const AnswerPicker = ({ id, options }) => {
   const [answer, setAnswer] = useState('');
@@ -21,6 +21,11 @@ const AnswerPicker = ({ id, options }) => {
       </Select>
     </FormControl>
   );
+};
+
+AnswerPicker.propTypes = {
+  id: PropTypes.string,
+  options: PropTypes.array,
 };
 
 export default AnswerPicker;

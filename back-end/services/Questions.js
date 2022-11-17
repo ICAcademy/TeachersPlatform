@@ -1,8 +1,19 @@
 const Question = require('../models/Question');
 
-const getQuestions = async () => {
+const getQuestions = async (queryParams) => {
   try {
-    return await Question.find({});
+    const criterias = queryParams;
+
+    if (criterias.fields === 'level') {
+      return await Question.distinct(criterias.fields);
+    }
+
+    if (Object.keys(criterias).length && criterias.fields) {
+      const fields = criterias.fields.split(',');
+      return await Question.find(criterias).select(fields);
+    }
+
+    return await Question.find(criterias);
   } catch (error) {
     throw new Error(error);
   }
