@@ -1,14 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import { Sidebar } from 'components/sidebar/Sidebar';
+import { Routes, Route } from 'react-router-dom';
+import { Container } from 'components/container/Container';
+import { NotFound } from 'components/NotFound/NotFound';
 
 const AppRouter = () => (
-  <Router>
-    <Routes>
-      <Route path='/dashboard' element={<Sidebar />} />
-    </Routes>
-  </Router>
+  <Routes>
+    <Route path='/home' element={<Container />} />
+    <Route path='*' element={<NotFound />} />
+  </Routes>
 );
 
 export default AppRouter;

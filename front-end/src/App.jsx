@@ -1,12 +1,12 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './styles/customTheme';
-import { Sidebar } from 'components/sidebar/Sidebar';
+import AppRouter from 'routes/AppRouter';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Sidebar />
+      <AppRouter />
     </ThemeProvider>
   );
 };
