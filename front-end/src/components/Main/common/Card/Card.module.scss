@@ -1,3 +1,7 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/font.scss';
+@import '../../../../styles/background.scss';
+
 .container {
     display: flex;
     flex-direction: column;
@@ -5,17 +9,17 @@
     align-items: center;
     width: 360px;
     height: 348px;
-    background: #F8F9FA;
+    background: $cardBackground;
     transition: all 0.4s ease-out;
     &:hover {
-        background: #fff;
+        background: $cardBackgroundHover;
         box-shadow: 0px 4px 74px rgb(0 0 0 / 8%);
         transition: all 0.4s ease-out;
     }
 }
 
 .labelContainer {
-    background: linear-gradient(210.43deg, #F188E0 6.94%, #F4648B 57.69%);
+    background: linear-gradient(210.43deg, $lightPink 6.94%, $darkPink 57.69%);
     width: 56px;
     height: 56px;
     display: flex;
@@ -26,6 +30,9 @@
 .dollar {
     display: flex;
     align-self: center;
+    width: 20px;
+    height: 20px;
+    color: $white;
 }
 
 .title {
@@ -45,37 +52,38 @@
     margin: 0 0 30px 0;
     font-size: 16px;
     line-height: 26px;
-    color: #797979;
+    color: $lessDarkGrey;
 }
 
 .learnMoreContainer {
-    background-color: #F5EDFF;
+    background-color: $learnMoreBackground;
     cursor: pointer;
     height: 42px;
     line-height: 42px;
-    font-size: 16px;
+    font-size: $f16;
     transition: all 0.5s ease;
-    font-weight: 500;
+    font-weight: $fw500;
     border-radius: 5px;
     padding: 0 30px;
-    color: #9000FF;
+    color: $purple;
     display: flex;
     justify-content: center;
     &:hover {
-        color: #fff;
-        background: #9000FF;
+        color: $white;
+        background: $learnMoreBackgroundHover;
         .arrow {
-            fill: #fff;
+            color: $white;
             transition: all 0.4s ease-out;
         }
     }
 }
-
-.learnMore {}
 
 .arrow {
     display: flex;
     align-self: center;
     margin-left: 5px;
     transition: all 0.4s ease-out;
+    width: 15px;
+    height: 15px;
+    color: $purple;
 }

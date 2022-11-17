@@ -1,6 +1,11 @@
-import Dollar from 'assets/icons/Dollar';
-import FullArrowRight from 'assets/icons/FullArrowRight';
 import React from 'react';
+
+// assets
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+    faDollarSign, 
+    faArrowRight 
+} from '@fortawesome/free-solid-svg-icons';
 
 // styles
 import styles from './Card.module.scss';
@@ -9,7 +14,7 @@ const Card = () => {
     return(
         <div className={styles.container}>
             <div className={styles.labelContainer}>
-                <Dollar className={styles.dollar} width='20' height='20' fill='#fff' />
+                <FontAwesomeIcon icon={faDollarSign} className={styles.dollar} />
             </div>
             <div>
                 <h3 className={styles.title}>Scolarships</h3>
@@ -19,7 +24,7 @@ const Card = () => {
             </div>
             <div className={styles.learnMoreContainer}>
                 <a className={styles.learnMore}>Learn more</a>
-                <FullArrowRight className={styles.arrow} width='15' height='15' fill='#9000FF' />
+                <FontAwesomeIcon icon={faArrowRight} className={styles.arrow} />
             </div>
         </div>
     );

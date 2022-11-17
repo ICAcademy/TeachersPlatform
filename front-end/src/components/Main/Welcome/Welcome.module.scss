@@ -82,6 +82,12 @@ $johnDoe: "../../../assets/images/john-doe.jpeg";
     margin-left: 5px;
 }
 
+.faArrowRight {
+    width: 15px;
+    height: 15px;
+    color: $white;
+}
+
 .imagesContainer {
     background-image: url(#{$girl});
     background-position: center;
@@ -156,6 +162,9 @@ $johnDoe: "../../../assets/images/john-doe.jpeg";
 .check {
     display: flex;
     align-self: center;
+    width: 20px;
+    height: 20px;
+    color: $white;
 }
 
 .name {

@@ -1,8 +1,8 @@
 import React from 'react';
 
 // assets
-import FullArrowRight from 'assets/icons/FullArrowRight';
-import Check from 'assets/icons/Check';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 // styles
 import styles from './Welcome.module.scss';
@@ -30,7 +30,7 @@ const Welcome = () => {
                             <a>Our story</a>
                         </div>
                         <div className={styles.arrow}>
-                            <FullArrowRight width='15' height='15' fill='#fff' />
+                            <FontAwesomeIcon icon={faArrowRight} className={styles.faArrowRight} />
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ const Welcome = () => {
                     <div className={styles.instructorContainer}>
                         <div className={styles.instructorImage}>
                             <div className={styles.checkContainer}>
-                                <Check className={styles.check} width='20' height='20' fill='#fff' />
+                                <FontAwesomeIcon icon={faCheck} className={styles.check} />
                             </div>
                         </div>
                         <div className={styles.nameContainer}>

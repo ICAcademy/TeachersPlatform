@@ -65,10 +65,13 @@
     display: flex;
     align-self: center;
     transition: all 0.3s ease;
+    width: 15px;
+    height: 15px;
+    color: $black;
     cursor: pointer;
     &:hover {
         transition: all 0.3s ease;
-        fill: $iconBackground;
+        color: $iconBackground;
     }
 }
 
@@ -86,6 +89,10 @@
     padding: 0;
 }
 
+.companyInfoContainer {
+    display: flex;
+}
+
 .companyInfoItem {
     list-style-type: none;
     margin-bottom: 5px;
@@ -98,10 +105,15 @@
 }
 
 .companyInfoItemSvg {
+    display: flex;
+    align-self: center;
     transition: all 0.3s ease;
+    width: 10px;
+    height: 10px;
+    color: $white;
     &:hover {
         transition: all 0.3s ease;
-        fill: $iconBackground;
+        color: $iconBackground;
     }
 }
 
@@ -114,6 +126,19 @@
 .contactContainer {
     display: flex;
     align-items: center;
+}
+
+.contactIcon {
+    display: flex;
+    align-self: center;
+    transition: all 0.3s ease;
+    width: 12px;
+    height: 12px;
+    color: $white;
+    &:hover {
+        transition: all 0.3s ease;
+        color: $iconBackground;
+    }
 }
 
 .copyrightContainer {
