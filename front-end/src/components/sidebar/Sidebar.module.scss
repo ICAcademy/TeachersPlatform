@@ -1,3 +1,5 @@
+@import '../../styles/colors.scss';
+
 img {
   max-width: 100%;
   display: block;
@@ -7,13 +9,10 @@ img {
   position: fixed;
   border-right: 0px solid rgba(95, 99, 121, 0.16);
   box-shadow: 0 0 35px 0 rgb(208 208 209 / 70%);
-  background-color: #fff;
+  background-color: $white;
   padding: 20px 20px 0 20px;
   min-height: 100%;
-
-  .sidebarSection container {
-    padding-bottom: 10px;
-  }
+  padding-bottom: 10px;
 
   .sidebarImgHolder {
     display: flex;
@@ -32,8 +31,9 @@ img {
 
   .sidebarAvatar {
     border-radius: 90px;
-    border: 1px solid #019ff8;
-    background-color: #e2f3fc;
+    border: 1px solid $lightBlue;
+    background-color: $sideBackground;
     margin-bottom: 20px;
   }
 }
+
