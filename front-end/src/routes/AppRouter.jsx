@@ -1,11 +1,11 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Container } from 'components/container/Container';
-import { NotFound } from 'components/notFound/NotFound';
+import { NotFound } from 'components/NotFound/NotFound';
+import { Content } from 'components/Content/Content';
 
 const AppRouter = () => (
   <Routes>
-    <Route path='/home' element={<Container />} />
+    <Route path='/home' element={<Content />} />
     <Route path='*' element={<NotFound />} />
   </Routes>
 );

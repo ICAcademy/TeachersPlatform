@@ -1,5 +1,5 @@
 import React from 'react';
-import { SidebarList } from 'components/sidebar-list/SidebarList';
+import { SidebarList } from 'components/SidebarList/SidebarList';
 import styles from './Sidebar.module.scss';
 import logo from 'assets/sidebar/logo-dark-text.png';
 import logo1 from 'assets/sidebar/logo-letter.png';
