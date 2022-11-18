@@ -1,8 +1,9 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
+import { BrowserRouter } from 'react-router-dom';
 
-// pages
-import Main from 'pages/Main/Main';
+// routes
+import MainRoutes from 'routes/MainRoutes';
 
 // components
 import Header from 'components/common/Header/Header';
@@ -16,13 +17,15 @@ import './App.scss';
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <div className='wrap'>
-        <Header />
-        <Main />
-      </div>
-      <Footer />
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <div className='wrap'>
+          <Header />
+          <MainRoutes />
+        </div>
+        <Footer />
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 
