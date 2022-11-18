@@ -17,7 +17,7 @@ import './App.scss';
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <div className="wrap">
+      <div className='wrap'>
         <Header />
         <Main />
       </div>
