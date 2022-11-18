@@ -14,7 +14,7 @@ const questionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    body: {
+    questions: {
       type: [
         {
           title: {

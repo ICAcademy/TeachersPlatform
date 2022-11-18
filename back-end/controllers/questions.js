@@ -1,7 +1,7 @@
 const {
   getQuestions,
   createQuestion,
-  findQuestion,
+  findQuestionById,
   editQuestion,
   removeQuestion,
 } = require('../services/Questions');
@@ -9,9 +9,9 @@ const {
 const getAllQuestions = async (req, res) => {
   try {
     const questions = await getQuestions();
-    res.status(200).json({ questions });
+    res.status(200).json(questions);
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(400).json(error);
   }
 };
 
@@ -24,13 +24,10 @@ const createNewQuestion = async (req, res) => {
   }
 };
 
-const getQuestion = async (req, res) => {
+const getQuestionById = async (req, res) => {
   try {
     const { id } = req.params;
-    const question = await findQuestion(id);
-    if (!question) {
-      return res.status(404).json({ msg: `There is no question with id: ${id}` });
-    }
+    const question = await findQuestionById(id);
     res.status(200).json({ question });
   } catch (error) {
     res.status(500).json({ error });
@@ -41,9 +38,6 @@ const updateQuestion = async (req, res) => {
   try {
     const { id } = req.params;
     const question = await editQuestion(id, req.body);
-    if (!question) {
-      return res.status(404).json({ msg: `There is no question with id: ${id}` });
-    }
     res.status(200).json({ question });
   } catch (error) {
     res.status(500).json({ error });
@@ -54,9 +48,6 @@ const deleteQuestion = async (req, res) => {
   try {
     const { id } = req.params;
     const question = await removeQuestion(id);
-    if (!question) {
-      return res.status(404).json({ msg: `There is no question with id: ${id}` });
-    }
     res.status(200).json({ question });
   } catch (error) {
     res.status(500).json({ error });
@@ -66,7 +57,7 @@ const deleteQuestion = async (req, res) => {
 module.exports = {
   getAllQuestions,
   createNewQuestion,
-  getQuestion,
+  getQuestionById,
   updateQuestion,
   deleteQuestion,
 };
