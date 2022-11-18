@@ -1,10 +1,21 @@
-const UserModel = require('../models/User');
+const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 
-exports.createUser = async (_, res) => {
-  try {
-    const blog = await UserModel.create();
-    res.json({ data: blog, status: 'success' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+const register = (data) => {
+  bcrypt.hash(data.password, 10, (err, hashedPass) => {
+    if (err) {
+      throw new Error('Something went wrong');
+    }
+
+    User.create({
+      fullName: data.fullName,
+      dateOfBirth: data.dateOfBirth,
+      email: data.email,
+      password: hashedPass,
+      repeatPassword: hashedPass,
+    });
+  });
+  return data;
 };
+
+module.exports = register;

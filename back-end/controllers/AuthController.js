@@ -1,34 +1,15 @@
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
+const registerValidation = require('../helpers/validation');
+const register = require('../services/AuthService');
 
-const register = (req, res, next) => {
-  bcrypt.hash(req.body.password, 10, (err, hashedPass) => {
-    if (err) {
-      res.json({
-        error: err,
-      });
-    }
+exports.createUser = async (req, res) => {
+  try {
+    const { error } = registerValidation(req.body);
 
-    let user = new User({
-      fullName: req.body.fullName,
-      dateBirth: req.body.dateBirth,
-      email: req.body.email,
-      password: hashedPass,
-    });
+    if (error) return res.status(400).send(error.details[0].message);
 
-    user
-      .save()
-      .then(() => {
-        return res.json({
-          message: 'User added successfully!',
-        });
-      })
-      .catch((err) => {
-        return res.json({
-          message: console.error(err),
-        });
-      });
-  });
+    const user = await register(req.body);
+    res.status(200).json({ user });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
-
-module.exports = { register };

@@ -7,7 +7,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    dateBirth: {
+    dateOfBirth: {
       type: String,
       required: true,
     },
@@ -16,6 +16,10 @@ const userSchema = new Schema(
       required: true,
     },
     password: {
+      type: String,
+      required: true,
+    },
+    repeatPassword: {
       type: String,
       required: true,
     },

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable react/jsx-max-depth */
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState, useMemo } from 'react';
@@ -20,7 +21,7 @@ import styles from './RegistrationForm.module.scss';
 const RegistrationForm = () => {
   const [data, setData] = useState({
     fullName: '',
-    dateBirth: '',
+    dateOfBirth: '',
     email: '',
     password: '',
     repeatPassword: '',
@@ -34,7 +35,7 @@ const RegistrationForm = () => {
   });
 
   const handleDateChange = (newValue) => {
-    setData({ ...data, dateBirth: dayjs(newValue).format('YYYY-MM-DD') });
+    setData({ ...data, dateOfBirth: dayjs(newValue).format('MM/DD/YYYY') });
   };
 
   const handleChange = ({ target: { name, value } }) => {
@@ -47,14 +48,14 @@ const RegistrationForm = () => {
   const isDisabledBtn = useMemo(
     () =>
       !data.fullName.trim().length ||
-      !data.dateBirth.trim().length ||
+      !data.dateOfBirth.trim().length ||
       !data.email.trim().length ||
       !data.password.trim().length ||
       !data.repeatPassword.trim().length,
-    [data.fullName, data.dateBirth, data.email, data.password, data.repeatPassword],
+    [data.fullName, data.dateOfBirth, data.email, data.password, data.repeatPassword],
   );
   const regexFullName = /^[a-zA-Z]{2,16}( {1,2}[a-zA-Z]{2,16}){0,}$/;
-  const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const regexEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
   const checkValidation = () => {
     setHasError((prev) => ({
@@ -72,11 +73,12 @@ const RegistrationForm = () => {
  
   useEffect(() => {
     const isError = Object.values(hasError).includes(true);
-    if (!isError) {
+    const isEmpty = Object.values(data).includes('');
+    if (!isError && !isEmpty) {
       sendUserData(data);
       setData({
         fullName: '',
-        dateBirth: '',
+        dateOfBirth: '',
         email: '',
         password: '',
         repeatPassword: '',
@@ -117,9 +119,8 @@ const RegistrationForm = () => {
               <MobileDatePicker
                 maxDate={`${new Date().getFullYear() - minAge}/12/31`}
                 minDate={`${new Date().getFullYear() - maxAge}/12/31`}
-                inputFormat='YYYY/MM/DD'
-                helperText={hasError.hasDateBirthError ? 'Choose data' : ''}
-                value={data.dateBirth}
+                inputFormat='DD/MM/YYYY'
+                value={data.dateOfBirth}
                 onChange={handleDateChange}
                 InputProps={{
                   startAdornment: (
