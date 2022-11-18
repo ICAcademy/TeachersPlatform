@@ -76,6 +76,11 @@ $johnDoe: "../../../assets/images/john-doe.jpeg";
     }
 }
 
+.ourStory {
+    text-decoration: none;
+    color: $white;
+}
+
 .arrow {
     display: flex;
     align-items: center;
@@ -147,7 +152,7 @@ $johnDoe: "../../../assets/images/john-doe.jpeg";
     background-size: cover;
     border-radius: 50%;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .checkContainer {

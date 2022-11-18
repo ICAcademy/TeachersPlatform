@@ -23,7 +23,7 @@ const Card = () => {
                 <p className={styles.explanation}>ScholarshipPortal is the best scholarship website for international students looking to meet their financial needs.</p>
             </div>
             <div className={styles.learnMoreContainer}>
-                <a className={styles.learnMore}>Learn more</a>
+                <a className={styles.learnMore} href="*">Learn more</a>
                 <FontAwesomeIcon icon={faArrowRight} className={styles.arrow} />
             </div>
         </div>

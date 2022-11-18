@@ -73,10 +73,20 @@
         background: $learnMoreBackgroundHover;
         .arrow {
             color: $white;
-            transition: all 0.4s ease-out;
+            transition: all 0.5s ease-out;
+        }
+        .learnMore {
+            color: $white;
+            transition: all 0.5s ease-out;
         }
     }
 }
+
+.learnMore {
+    text-decoration: none;
+    color: $purple;
+    transition: all 0.5s ease-out;
+} 
 
 .arrow {
     display: flex;

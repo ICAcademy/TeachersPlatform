@@ -27,7 +27,7 @@ const Welcome = () => {
                     </div>
                     <div className={styles.ourStoryContainer}>
                         <div>
-                            <a>Our story</a>
+                            <a className={styles.ourStory} href="*">Our story</a>
                         </div>
                         <div className={styles.arrow}>
                             <FontAwesomeIcon icon={faArrowRight} className={styles.faArrowRight} />

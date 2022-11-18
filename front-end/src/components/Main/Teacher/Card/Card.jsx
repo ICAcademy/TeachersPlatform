@@ -10,10 +10,10 @@ const Card = () => {
     return (
         <div className={styles.container}>
             <div className={styles.teacherContainer}>
-                <img className={styles.teacher} src={teacher} />
+                <img className={styles.teacher} src={teacher} alt="teacher" />
             </div>
             <div className={styles.nameContainer}>
-                <a className={styles.name}>Jenny Wilson</a>
+                <a className={styles.name} href="*">Jenny Wilson</a>
             </div>
             <div className={styles.paymentContainer}>
                 <p className={styles.payment}>8,425 Pts</p>

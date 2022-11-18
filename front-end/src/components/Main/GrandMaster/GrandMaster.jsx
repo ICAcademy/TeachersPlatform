@@ -33,7 +33,7 @@ const GrandMaster = () => {
                     </div>
                     <div className={styles.adminSignContainer}>
                         <div>
-                            <img src={adminSign} />
+                            <img src={adminSign} alt="adminSign" />
                         </div>
                         <div className={styles.adminContainer}>
                             <p className={styles.admin}>Calvart luin</p>
@@ -41,7 +41,7 @@ const GrandMaster = () => {
                     </div>
                 </div>
                 <div className={styles.imgContainer}>
-                    <img className={styles.studentsImg} src={students} />
+                    <img className={styles.studentsImg} src={students} alt="students" />
                     <div className={styles.colorBackground}></div>
                 </div>
             </div>

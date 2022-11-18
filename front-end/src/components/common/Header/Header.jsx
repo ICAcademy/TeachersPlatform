@@ -38,7 +38,7 @@ const Header = () => {
                         <a className={styles.logIn} href="*">Log In</a>
                     </div>
                     <div className={styles.signUpContainer}>
-                        <a className={styles.signUp}>Sign Up</a>
+                        <a className={styles.signUp} href="*">Sign Up</a>
                     </div>
                 </div>
             </div>

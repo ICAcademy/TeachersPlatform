@@ -83,6 +83,9 @@
         background: $signUpBackground;
         color: $white;
         transition: all .5s ease-out;
+        .logIn {
+            color: $white;
+        }
     }
 }
 
@@ -90,10 +93,6 @@
     text-decoration: none;
     color: $purple;
     transition: all .5s ease-out;
-    &:hover {
-        transition: all .5s ease-out;
-        color: $white;
-    }
 }
 
 .signUpContainer {
@@ -114,4 +113,9 @@
         box-shadow: 0 0 1px 0 $signUpBackgroundShadow inset, 0 0 1px 2px $signUpBackgroundShadow;
         transition: all .5s ease-out;
     }
+}
+
+.signUp {
+    text-decoration: none;
+    color: $white;
 }
