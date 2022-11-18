@@ -1,11 +1,10 @@
 require('dotenv').config();
+
 const mongoose = require('mongoose');
 const express = require('express');
+
 const materialRouter = require('./routes/MaterialRoutes');
-
 const questionRouter = require('./routes/Questions');
-
-require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT;
@@ -14,11 +13,10 @@ app.use(express.json());
 
 app.get('/', (req, res) => {});
 
-app.use('/api/v1/questions', questionRouter);
-
 //middleware
 app.use(express.json());
 app.use('/api/materials', materialRouter);
+app.use('/api/questions', questionRouter);
 
 async function main() {
   try {
