@@ -1,6 +1,5 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
 
 const register = (req, res, next) => {
   bcrypt.hash(req.body.password, 10, (err, hashedPass) => {
@@ -10,14 +9,11 @@ const register = (req, res, next) => {
       });
     }
 
-    console.log(hashedPass);
-
     let user = new User({
       fullName: req.body.fullName,
       dateBirth: req.body.dateBirth,
       email: req.body.email,
       password: hashedPass,
-      retypePassword: hashedPass,
     });
 
     user
@@ -28,7 +24,9 @@ const register = (req, res, next) => {
         });
       })
       .catch((err) => {
-        return res.json(err);
+        return res.json({
+          message: console.error(err),
+        });
       });
   });
 };

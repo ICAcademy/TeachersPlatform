@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 // Components
-import Form from 'components/Form';
+import RegistrationForm from 'components/RegistrationForm';
 
-const Registration = () => <Form />;
+const Registration = () => <RegistrationForm />;
 
 export default Registration;
