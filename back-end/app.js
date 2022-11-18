@@ -4,12 +4,16 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT;
 const materialRouter = require('./routes/MaterialRoutes');
+const teacherRouter = require('./routes/TeacherRoutes');
 
-app.get('/', (req, res) => {});
+/* app.get('/', (req, res) => {
+  res.send('hi');
+}); */
 
 //middleware
 app.use(express.json());
 app.use('/api/materials', materialRouter);
+app.use('/api/teachers', teacherRouter);
 
 async function main() {
   try {
@@ -27,3 +31,4 @@ async function main() {
 }
 
 main();
+
