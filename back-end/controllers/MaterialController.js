@@ -44,3 +44,21 @@ exports.deleteMaterial = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+exports.getLevels = async (req, res) => {
+  try {
+    const levels = await materialService.getLevels();
+    res.json(levels);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+exports.getUnitsByLevel = async (req, res) => {
+  try {
+    const units = await materialService.getUnitsByLevel(req.params.level);
+    res.json(units);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};

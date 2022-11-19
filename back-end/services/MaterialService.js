@@ -19,3 +19,18 @@ exports.updateMaterial = async (id, material) => {
 exports.deleteMaterial = async (id) => {
   return await MaterialModel.findByIdAndDelete(id);
 };
+
+exports.getLevels = async () => {
+  return await MaterialModel.distinct('level');
+};
+
+exports.getUnitsByLevel = async (level) => {
+  return await MaterialModel.aggregate([
+    {
+      $match: { level: { $eq: level } },
+    },
+    {
+      $project: { level: 1, unit: 1 },
+    },
+  ]);
+};
