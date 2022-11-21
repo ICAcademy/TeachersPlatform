@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter } from 'react-router-dom';
 
 // routes
-import MainRoutes from 'routes/MainRoutes';
+import AppRouter from 'routes/AppRouter';
 
 // components
 import Header from 'components/common/Header/Header';
@@ -11,9 +11,7 @@ import Footer from 'components/common/Footer/Footer';
 
 // theme style
 import theme from './styles/customTheme';
-
-// styles
-import './App.scss';
+import 'App.scss';
 
 const App = () => {
   return (
@@ -21,7 +19,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <div className='wrap'>
           <Header />
-          <MainRoutes />
+          <AppRouter />
         </div>
         <Footer />
       </ThemeProvider>
