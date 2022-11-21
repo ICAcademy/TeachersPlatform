@@ -1,6 +1,3 @@
-/* eslint-disable no-useless-escape */
-/* eslint-disable react/jsx-max-depth */
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
