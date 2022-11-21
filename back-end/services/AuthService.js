@@ -13,10 +13,8 @@ const register = (data) => {
       dateOfBirth: data.dateOfBirth,
       email: data.email,
       password: hashedPass,
-      repeatPassword: hashedPass,
     });
   });
-  return data;
 };
 
 module.exports = register;

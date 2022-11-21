@@ -19,6 +19,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { nanoid } from 'nanoid';
 
+// Regex
+import { regexEmail, regexFullName, regexPassword } from 'helpers/regex';
+
 // Requests
 import { sendUserData } from 'requests/auth';
 
@@ -65,9 +68,6 @@ const RegistrationForm = () => {
     [data.fullName, data.dateOfBirth, data.email, data.password, data.repeatPassword],
   );
 
-  const regexFullName = /^([A-Z][a-z]{1,15} )([A-Z][a-z]{1,15}){0,30}$/;
-  const regexEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*?[/#?!@$%^&*-.)()]).{8,10}$/;
   const checkValidation = () => {
     setHasError((prev) => ({
       ...prev,

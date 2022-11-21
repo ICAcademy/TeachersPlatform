@@ -15,8 +15,7 @@ const schema = Joi.object({
   password: Joi.string()
     .regex(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*?[/#?!@$%^&*-.)()]).{8,10}$'))
     .required(),
-  repeatPassword: Joi.ref('password'),
-}).with('password', 'repeatPassword');
+});
 
 const registerValidation = (data) => schema.validate(data);
 

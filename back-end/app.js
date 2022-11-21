@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {});
 
-app.use('/register', authUser);
+app.use('/auth', authUser);
 app.use('/api/materials', materialRouter);
 
 async function main() {

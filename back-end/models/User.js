@@ -23,10 +23,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    repeatPassword: {
-      type: String,
-      required: true,
-    },
   },
   { timestamps: true },
 );
