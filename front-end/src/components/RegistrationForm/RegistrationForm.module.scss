@@ -7,7 +7,11 @@
   align-items: center;
   height: 100vh;
   background: $purpleBlue;
-  background: linear-gradient(70deg, rgba(102,16,242,0.8914916308320203) 0%, rgba(245,222,255,1) 100%);
+  background: linear-gradient(
+    70deg,
+    rgba(102, 16, 242, 0.8914916308320203) 0%,
+    rgba(245, 222, 255, 1) 100%
+  );
 }
 
 .blocksWrap {
@@ -17,7 +21,7 @@
   align-items: center;
   background-color: $white;
   width: 560px;
-  height: 575px;
+  height: 600px;
   border-radius: 15px;
   padding: 15px;
 }
@@ -33,7 +37,7 @@
     font-size: $f16;
     color: $santaGrey;
   }
-  
+
   & span {
     font-size: $f14;
     color: $vividViolet;
@@ -71,6 +75,7 @@
   display: flex;
   justify-content: space-evenly;
   width: 100%;
+  margin-bottom: 15px;
 
   & svg {
     width: 20px;
@@ -107,4 +112,4 @@
 .active {
   background-color: transparent;
   border-bottom: 2px solid $vividViolet;
-}  
+}

@@ -9,7 +9,14 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faCakeCandles, faEnvelope, faLock, faGraduationCap, faChalkboardUser } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUser,
+  faCakeCandles,
+  faEnvelope,
+  faLock,
+  faGraduationCap,
+  faChalkboardUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { nanoid } from 'nanoid';
 
 // Requests
@@ -57,9 +64,10 @@ const RegistrationForm = () => {
       !data.repeatPassword.trim().length,
     [data.fullName, data.dateOfBirth, data.email, data.password, data.repeatPassword],
   );
-  const regexFullName = /^[a-zA-Z]{2,16}( {1,2}[a-zA-Z]{2,16}){0,}$/;
+
+  const regexFullName = /^([A-Z][a-z]{1,15} )([A-Z][a-z]{1,15}){0,30}$/;
   const regexEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
+  const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*?[/#?!@$%^&*-.)()]).{8,10}$/;
   const checkValidation = () => {
     setHasError((prev) => ({
       ...prev,
@@ -75,16 +83,17 @@ const RegistrationForm = () => {
   };
 
   const handleChangeActive = () => {
-    setIsActive(current => !current);
+    setIsActive((current) => !current);
     setData((prev) => ({ ...prev, role: `${isActive ? 'student' : 'teacher'}` }));
   };
- 
+
   useEffect(() => {
     const isError = Object.values(hasError).includes(true);
     const isEmpty = Object.values(data).includes('');
     if (!isError && !isEmpty) {
       sendUserData(data);
       setData({
+        role: 'student',
         fullName: '',
         dateOfBirth: '',
         email: '',
@@ -99,19 +108,13 @@ const RegistrationForm = () => {
       <div className={styles.blocksWrap}>
         <div className={styles.roles}>
           <div className={`${styles.tab} ${isActive ? '' : styles.active}`}>
-            <button
-              onClick={handleChangeActive}
-              className={styles.button}
-            >
+            <button onClick={handleChangeActive} className={styles.button}>
               <FontAwesomeIcon icon={faGraduationCap} />
               <h2>Student</h2>
             </button>
           </div>
           <div className={`${styles.tab} ${isActive ? styles.active : ''}`}>
-            <button
-              onClick={handleChangeActive}
-              className={styles.button}
-            >
+            <button onClick={handleChangeActive} className={styles.button}>
               <FontAwesomeIcon icon={faChalkboardUser} />
               <h2>Teacher</h2>
             </button>
@@ -125,7 +128,11 @@ const RegistrationForm = () => {
           <FormControl margin='normal'>
             <TextField
               error={hasError.hasFullNameError}
-              helperText={hasError.hasFullNameError ? 'Enter 2 capitalized words; each word has a min of 2 and a max of 16 letters' : ''}
+              helperText={
+                hasError.hasFullNameError
+                  ? 'Enter 2 capitalized words; each word has a min of 2 and a max of 16 letters'
+                  : ''
+              }
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='text'
               name='fullName'
@@ -158,18 +165,17 @@ const RegistrationForm = () => {
                   ),
                 }}
                 renderInput={(params) => (
-                  <TextField
-                    placeholder='Date birth'
-                    size='small'
-                    color='purple'
-                    {...params}
-                  />
+                  <TextField placeholder='Date birth' size='small' color='purple' {...params} />
                 )}
               />
             </LocalizationProvider>
             <TextField
               error={hasError.hasEmailError}
-              helperText={hasError.hasEmailError ? 'Please enter a valid email address; examples: cockroaches@gmail.com' : ''}
+              helperText={
+                hasError.hasEmailError
+                  ? 'Please enter a valid email address; examples: cockroaches@gmail.com'
+                  : ''
+              }
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='email'
               name='email'
@@ -189,7 +195,9 @@ const RegistrationForm = () => {
             />
             <TextField
               error={hasError.hasPassword}
-              helperText={hasError.hasPassword ? 'Enter min 8 characters; example: Jerry77)' : ''}
+              helperText={
+                hasError.hasPassword ? 'Enter min 8 and max 10 characters; example: Jerry77)' : ''
+              }
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='password'
               name='password'
@@ -208,7 +216,9 @@ const RegistrationForm = () => {
             />
             <TextField
               error={hasError.hasRepeatPassword}
-              helperText={hasError.hasRepeatPassword ? 'Incorrect! Your passwords is not the same' : ''}
+              helperText={
+                hasError.hasRepeatPassword ? 'Incorrect! Your passwords is not the same' : ''
+              }
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='password'
               name='repeatPassword'

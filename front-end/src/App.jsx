@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 
 // Components
-import AppRouter from 'routes/AppRouter';
+import RouterWrapper from 'routes/RouterWrapper';
 
 // theme style
 import theme from './styles/customTheme';
@@ -10,7 +10,7 @@ import theme from './styles/customTheme';
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <AppRouter />
+      <RouterWrapper />
     </ThemeProvider>
   );
 };
