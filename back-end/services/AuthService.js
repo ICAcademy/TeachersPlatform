@@ -8,6 +8,7 @@ const register = (data) => {
     }
 
     User.create({
+      role: data.role,
       fullName: data.fullName,
       dateOfBirth: data.dateOfBirth,
       email: data.email,

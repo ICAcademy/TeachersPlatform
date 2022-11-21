@@ -17,7 +17,7 @@
   align-items: center;
   background-color: $white;
   width: 560px;
-  height: 545px;
+  height: 575px;
   border-radius: 15px;
   padding: 15px;
 }
@@ -66,3 +66,45 @@
     color: $santaGrey;
   }
 }
+
+.roles {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+
+  & svg {
+    width: 20px;
+    height: 25+0px;
+    margin-right: 5px;
+
+    & path {
+      fill: $vividViolet;
+    }
+  }
+
+  & h2 {
+    font-size: $f20;
+    color: $vividViolet;
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45%;
+}
+
+.active {
+  background-color: transparent;
+  border-bottom: 2px solid $vividViolet;
+}  

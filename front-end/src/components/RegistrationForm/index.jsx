@@ -9,7 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faCakeCandles, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faCakeCandles, faEnvelope, faLock, faGraduationCap, faChalkboardUser } from '@fortawesome/free-solid-svg-icons';
 import { nanoid } from 'nanoid';
 
 // Requests
@@ -20,6 +20,7 @@ import styles from './RegistrationForm.module.scss';
 
 const RegistrationForm = () => {
   const [data, setData] = useState({
+    role: 'student',
     fullName: '',
     dateOfBirth: '',
     email: '',
@@ -33,6 +34,8 @@ const RegistrationForm = () => {
     hasPassword: false,
     hasRepeatPassword: false,
   });
+
+  const [isActive, setIsActive] = useState(false);
 
   const handleDateChange = (newValue) => {
     setData({ ...data, dateOfBirth: dayjs(newValue).format('MM/DD/YYYY') });
@@ -70,6 +73,13 @@ const RegistrationForm = () => {
   const handleSubmit = () => {
     checkValidation();
   };
+
+  const handleChangeActive = () => {
+    setIsActive(current => !current);
+    setData((prev) => ({ ...prev, role: `${isActive ? 'student' : 'teacher'}` }));
+  };
+
+  console.log(data);
  
   useEffect(() => {
     const isError = Object.values(hasError).includes(true);
@@ -89,6 +99,26 @@ const RegistrationForm = () => {
   return (
     <div className={styles.contentWrap}>
       <div className={styles.blocksWrap}>
+        <div className={styles.roles}>
+          <div className={`${styles.tab} ${isActive ? '' : styles.active}`}>
+            <button
+              onClick={handleChangeActive}
+              className={styles.button}
+            >
+              <FontAwesomeIcon icon={faGraduationCap} />
+              <h2>Student</h2>
+            </button>
+          </div>
+          <div className={`${styles.tab} ${isActive ? styles.active : ''}`}>
+            <button
+              onClick={handleChangeActive}
+              className={styles.button}
+            >
+              <FontAwesomeIcon icon={faChalkboardUser} />
+              <h2>Teacher</h2>
+            </button>
+          </div>
+        </div>
         <div className={styles.topWrap}>
           <h1>Get started with Us</h1>
           <p>Register a new membership</p>

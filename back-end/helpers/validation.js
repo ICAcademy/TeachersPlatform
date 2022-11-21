@@ -3,6 +3,7 @@
 const Joi = require('joi');
 
 const schema = Joi.object({
+  role: Joi.string().required(),
   fullName: Joi.string().regex(new RegExp('^[a-zA-Z]{2,16}( {1,2}[a-zA-Z]{2,16}){0,}$')).required(),
   dateOfBirth: Joi.string().required(),
   email: Joi.string()
