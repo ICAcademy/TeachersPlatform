@@ -9,12 +9,15 @@ const questionRouter = require('./routes/Questions');
 const app = express();
 const port = process.env.PORT;
 
+const authUser = require('./routes/auth');
+const cors = require('cors');
+
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {});
 
-//middleware
-app.use(express.json());
+app.use('/auth', authUser);
 app.use('/api/materials', materialRouter);
 app.use('/api/questions', questionRouter);
 
