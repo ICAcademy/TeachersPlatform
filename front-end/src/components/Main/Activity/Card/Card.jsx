@@ -1,7 +1,7 @@
 import React from 'react';
 
 // components
-import Explanation from 'components/Guest/common/Explanation/Explanation';
+import Explanation from 'components/Main/common/Explanation/Explanation';
 
 // styles
 import styles from './Card.module.scss';

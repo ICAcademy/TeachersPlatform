@@ -2,12 +2,12 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 // pages
-import Guest from 'pages/Guest/Guest';
+import Main from 'pages/Main/Main';
 
 const MainRoutes = () => {
   return (
     <Routes>
-      <Route path='/guest' element={<Guest />} />
+      <Route path='/main' element={<Main />} />
     </Routes>
   );
 };
