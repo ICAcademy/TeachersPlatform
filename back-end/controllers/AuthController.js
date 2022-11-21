@@ -8,7 +8,7 @@ exports.createUser = async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     await register(req.body);
-    res.status(200).json({ message: 'User successfully created!' });
+    res.status(200).json({ message: 'User was successfully created!' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
