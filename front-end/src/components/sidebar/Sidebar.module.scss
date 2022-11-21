@@ -1,0 +1,38 @@
+@import '../../styles/colors.scss';
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.sidebar {
+  position: fixed;
+  border-right: 0px solid rgba(95, 99, 121, 0.16);
+  box-shadow: 0 0 35px 0 rgb(154 161 171 / 0%);
+  background-color: $white;
+  padding: 20px 20px 10px 20px;
+  min-height: 100%;
+
+  .sidebarImgHolder {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 15px;
+    margin-bottom: 20px;
+  }
+
+  .sidebarImgAvatar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-self: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .sidebarAvatar {
+    border-radius: 90px;
+    border: 1px solid $lightBlue;
+    background-color: $sideBackground;
+    margin-bottom: 20px;
+  }
+}
+
