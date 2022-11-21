@@ -11,10 +11,6 @@ const {
 const router = express.Router();
 
 router.route('/').get(getAllMaterials).post(createMaterial);
-router
-  .route('/:id')
-  .get(getMaterialById)
-  .put(updateMaterial)
-  .delete(deleteMaterial);
+router.route('/:id').get(getMaterialById).put(updateMaterial).delete(deleteMaterial);
 
 module.exports = router;

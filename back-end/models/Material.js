@@ -8,7 +8,7 @@ const materialSchema = new Schema(
     unit: { type: String, required: true },
     lessons: [{ type: JSON, required: true }],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model('Material', materialSchema);
