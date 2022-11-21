@@ -37,7 +37,7 @@ const getQuestionById = async (req, res) => {
 const updateQuestion = async (req, res) => {
   try {
     const { id } = req.params;
-    const question = await editQuestion(id);
+    const question = await editQuestion(id, req.body);
     res.status(200).json(question);
   } catch (error) {
     res.status(400).json(error);
