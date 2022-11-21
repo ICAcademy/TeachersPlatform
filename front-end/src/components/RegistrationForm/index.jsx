@@ -78,8 +78,6 @@ const RegistrationForm = () => {
     setIsActive(current => !current);
     setData((prev) => ({ ...prev, role: `${isActive ? 'student' : 'teacher'}` }));
   };
-
-  console.log(data);
  
   useEffect(() => {
     const isError = Object.values(hasError).includes(true);
