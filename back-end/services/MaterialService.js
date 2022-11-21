@@ -30,7 +30,7 @@ exports.getUnitsByLevel = async (level) => {
       $match: { level: { $eq: level } },
     },
     {
-      $project: { level: 1, unit: 1 },
+      $project: { level: 1, unit: 1, image: 1 },
     },
   ]);
 };

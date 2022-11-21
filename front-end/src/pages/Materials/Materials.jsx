@@ -6,6 +6,7 @@ import { getUnitsByLevel } from 'services/MaterialsService/MaterialsService';
 //Components
 import Levels from 'components/Materials/Levels/Levels';
 import Units from 'components/Materials/Units/Units';
+import Loader from 'components/common/Loader/Loader';
 
 //Styles
 import styles from './Materials.module.scss';
@@ -36,7 +37,7 @@ const Materials = () => {
       <Levels selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
       {!isLoading && unitsByLevel.length > 0 && <Units materials={unitsByLevel} />}
       {!isLoading && unitsByLevel.length === 0 && <p>There is no units for this level</p>}
-      {isLoading && <p>Downloading...</p>}
+      {isLoading && <Loader />}
     </div>
   );
 };

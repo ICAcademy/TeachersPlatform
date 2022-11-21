@@ -9,6 +9,7 @@ app.get('/', (req, res) => {});
 
 //middleware
 app.use(express.json());
+app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use('/api/materials', materialRouter);
 
 async function main() {

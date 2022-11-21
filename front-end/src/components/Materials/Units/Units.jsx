@@ -1,20 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-//Components
-import Unit from './Unit/Unit';
-
 //Styles
 import styles from './Units.module.scss';
+
+//Components
+import UnitCard from 'components/common/UnitCard/UnitCard';
 
 const Units = (props) => {
   return (
     <div className={styles.units}>
-      <div className={styles.unitColumn}>
-        {props.materials.map((material) => (
-          <Unit key={material._id} unit={material.unit} />
-        ))}
-      </div>
+      {props.materials.map((item) => (
+        <UnitCard key={item._id} item={item} />
+      ))}
     </div>
   );
 };
