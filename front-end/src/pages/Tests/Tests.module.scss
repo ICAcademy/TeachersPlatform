@@ -1,0 +1,18 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.newTestForm {
+  width: 770px;
+  height: 287px;
+  border: 1px solid black;
+}
+

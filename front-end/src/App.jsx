@@ -4,20 +4,18 @@ import { ThemeProvider } from '@mui/material/styles';
 // theme style
 import theme from './styles/customTheme';
 import { Button } from '@mui/material';
+import { BrowserRouter } from 'react-router-dom';
+import MainRoutes from 'routes/MainRoutes';
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <div>Teachers platform</div>
-      <Button
-        onClick={() => console.log('you clicked me')}
-        color='primary'
-        variant='contained'
-      >
-        Button
-      </Button>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <MainRoutes />
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 
 export default App;
+
