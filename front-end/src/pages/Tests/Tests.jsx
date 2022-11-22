@@ -6,36 +6,27 @@ import styles from './Tests.module.scss';
 
 const Tests = () => {
   const [question, setQuestion] = useState('Question');
-  const [variant, setVariant] = useState('variant');
-  const [variants, setVariants] = useState([]);
   const [form, setForm] = useState({
     question: '',
     variants: [
-      { id: 1, variant: variant },
-      { id: 2, variant: variant },
+      { id: 0, variant: 'variant' },
+      { id: 1, variant: 'variant' },
     ],
   });
 
   console.log('form', form);
-  console.log('variant', variant);
-  console.log('variants', variants);
 
-  const handleAddVariant = (variant) => {
-    setForm({ ...form, variants: [...form.variants, variant] });
+  const handleAddVariant = (id) => {
+    setForm({ ...form, variants: [...form.variants, { id: id, variant: 'variant' }] });
   };
 
   const handleChangeInput = (id, event) => {
-    setVariant(event);
-    console.log(id);
-    /* setForm({
+    setForm({
       ...form,
       variants: form.variants.map((item) => {
-        id === item.id ? { ...form.variants, variant: event } : { ...item };
-        console.log(item);
+        return id === item.id ? { id: item.id, variant: event } : { ...item };
       }),
-    }); */
-    const res = { id: id, variant: event };
-    setVariants([...variants, res]);
+    });
   };
 
   const handleChange = (event) => {
@@ -62,7 +53,7 @@ const Tests = () => {
               <div key={item.id}>
                 <Checkbox />
                 <Input
-                  defaultValue={variant}
+                  defaultValue={item.variant}
                   onChange={(event) => handleChangeInput(item.id, event.target.value)}
                 />
               </div>
@@ -70,9 +61,7 @@ const Tests = () => {
           })}
         </div>
         <div>
-          <Button onClick={() => handleAddVariant({ id: 3, variant: 'Variant3' })}>
-            Add Variant
-          </Button>
+          <Button onClick={() => handleAddVariant(form.variants.length)}>Add Variant</Button>
         </div>
         <div>
           <Button type='submit'>Submit</Button>
