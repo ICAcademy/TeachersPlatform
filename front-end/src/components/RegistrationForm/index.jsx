@@ -38,8 +38,8 @@ const RegistrationForm = () => {
   const [hasError, setHasError] = useState({
     hasFullNameError: false,
     hasEmailError: false,
-    hasPassword: false,
-    hasRepeatPassword: false,
+    hasPasswordError: false,
+    hasRepeatPasswordError: false,
   });
 
   const [isActive, setIsActive] = useState(false);
@@ -70,8 +70,8 @@ const RegistrationForm = () => {
       ...prev,
       hasFullNameError: !regexFullName.test(data.fullName),
       hasEmailError: !regexEmail.test(data.email),
-      hasPassword: !regexPassword.test(data.password),
-      hasRepeatPassword: data.password !== data.repeatPassword,
+      hasPasswordError: !regexPassword.test(data.password),
+      hasRepeatPasswordError: data.password !== data.repeatPassword,
     }));
   };
 
@@ -191,9 +191,11 @@ const RegistrationForm = () => {
               }}
             />
             <TextField
-              error={hasError.hasPassword}
+              error={hasError.hasPasswordError}
               helperText={
-                hasError.hasPassword ? 'Enter min 8 and max 10 characters; example: Jerry77)' : ''
+                hasError.hasPasswordError
+                  ? 'Enter min 8 and max 10 characters; example: Jerry77)'
+                  : ''
               }
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='password'
@@ -212,9 +214,9 @@ const RegistrationForm = () => {
               }}
             />
             <TextField
-              error={hasError.hasRepeatPassword}
+              error={hasError.hasRepeatPasswordError}
               helperText={
-                hasError.hasRepeatPassword ? 'Incorrect! Your passwords is not the same' : ''
+                hasError.hasRepeatPasswordError ? 'Incorrect! Your passwords is not the same' : ''
               }
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='password'
@@ -246,7 +248,7 @@ const RegistrationForm = () => {
         </Box>
         <div className={styles.bottomWrap}>
           <p>Already have an account?</p>
-          <Link className={styles.link} to='/'>
+          <Link className={styles.link} to='/login'>
             <span>Sign In</span>
           </Link>
         </div>
