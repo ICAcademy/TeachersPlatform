@@ -15,6 +15,8 @@ const Tests = () => {
   const [title, setTitle] = useState('New Test');
   const [description, setDescription] = useState('Description');
   const [form, setForm] = useState({
+    level: 'Beginner',
+    unit: 'Unit 5',
     title: 'Title',
     description: 'Description',
     question: '',
@@ -111,7 +113,7 @@ const Tests = () => {
                   <div className={styles.inputVariantContainer}>
                     <Input
                       sx={inputVariantStyles}
-                      defaultValue={item.variant}
+                      value={item.variant}
                       onChange={(event) => handleChangeInput(item.id, event.target.value)}
                     />
                   </div>

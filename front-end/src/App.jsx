@@ -1,19 +1,17 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 
+// Components
+import RouterWrapper from 'routes/RouterWrapper';
+
 // theme style
 import theme from './styles/customTheme';
-import { Button } from '@mui/material';
-import { BrowserRouter } from 'react-router-dom';
-import MainRoutes from 'routes/MainRoutes';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <MainRoutes />
-      </ThemeProvider>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <RouterWrapper />
+    </ThemeProvider>
   );
 };
 
