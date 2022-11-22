@@ -55,12 +55,12 @@
         "allowExpressions": true
       }
     ],
-    "react/jsx-max-depth": [
-      "error",
-      {
-        "max": 4
-      }
-    ],
+    // "react/jsx-max-depth": [
+    //   "error",
+    //   {
+    //     "max": 4
+    //   }
+    // ],
     "react/jsx-wrap-multilines": [
       "error",
       {
@@ -77,3 +77,4 @@
     "react-hooks/exhaustive-deps": "warn"
   }
 }
+

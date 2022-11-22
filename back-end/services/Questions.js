@@ -19,42 +19,19 @@ const getQuestions = async (queryParams) => {
   }
 };
 
-const createQuestion = async (question) => {
-  try {
-    return await Question.create(question);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+const createQuestion = async (question) => await Question.create(question);
 
-const findQuestion = async (id) => {
-  try {
-    return await Question.findById(id);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+const findQuestionById = async (id) => await Question.findById(id);
 
-const editQuestion = async (id, body) => {
-  try {
-    return await Question.findByIdAndUpdate(id, body, { new: true, runValidators: true });
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+const editQuestion = async (id, body) =>
+  await Question.findByIdAndUpdate(id, body, { new: true, runValidators: true });
 
-const removeQuestion = async (id) => {
-  try {
-    return await Question.findByIdAndDelete(id);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+const removeQuestion = async (id) => await Question.findByIdAndDelete(id);
 
 module.exports = {
   getQuestions,
   createQuestion,
-  findQuestion,
+  findQuestionById,
   editQuestion,
   removeQuestion,
 };

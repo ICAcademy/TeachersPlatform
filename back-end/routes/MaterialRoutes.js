@@ -10,7 +10,10 @@ const {
 
 const router = express.Router();
 
-router.route('/').get(getAllMaterials).post(createMaterial);
-router.route('/:id').get(getMaterialById).put(updateMaterial).delete(deleteMaterial);
+router.get('/', getAllMaterials);
+router.post('/', createMaterial);
+router.get('/:id', getMaterialById);
+router.put('/:id', updateMaterial);
+router.delete('/:id', deleteMaterial);
 
 module.exports = router;
