@@ -1,18 +1,40 @@
 .container {
   width: 100%;
   display: flex;
-  justify-content: center;
   flex-direction: column;
-}
-
-.titleContainer {
-  display: flex;
-  justify-content: center;
+  height: 100vh;
+  background: #f5edff;
 }
 
 .newTestForm {
   width: 770px;
   height: 287px;
-  border: 1px solid black;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  margin-top: 100px;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 22px 0 24px;
+  background: #fff;
+  border-radius: 10px;
+  border-top: 10px solid #673ab7;
+  border-right: 1px solid #f8f9fa;
+  border-bottom: 1px solid #f8f9fa;
+  border-left: 1px solid #f8f9fa;
+  margin-bottom: 15px;
+  box-shadow: 0px 4px 74px rgb(0 0 0 / 8%);
+}
+
+.titleContainer {
+  margin-left: 20px;
+}
+
+.descriptionContainer {
+  margin-left: 20px;
 }
 

@@ -4,9 +4,21 @@ import React, { useState } from 'react';
 // styles
 import styles from './Tests.module.scss';
 
+const inputTitleStyles = {
+  fontWeight: 400,
+  fontSize: '24pt',
+  lineHeight: 1.25,
+  letterSpacing: 0,
+  border: 0,
+};
+
 const Tests = () => {
   const [question, setQuestion] = useState('Question');
+  const [title, setTitle] = useState('New Test');
+  const [description, setDescription] = useState('Description');
   const [form, setForm] = useState({
+    title: 'Title',
+    description: 'Description',
     question: '',
     variants: [
       { id: 0, variant: 'variant' },
@@ -16,8 +28,16 @@ const Tests = () => {
 
   console.log('form', form);
 
-  const handleAddVariant = (id) => {
-    setForm({ ...form, variants: [...form.variants, { id: id, variant: 'variant' }] });
+  const handleChangeQuestion = (event) => {
+    setQuestion(event.target.value);
+  };
+
+  const handleChangeTitle = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleChangeDescription = (event) => {
+    setDescription(event.target.value);
   };
 
   const handleChangeInput = (id, event) => {
@@ -29,23 +49,37 @@ const Tests = () => {
     });
   };
 
-  const handleChange = (event) => {
-    setQuestion(event.target.value);
+  const handleAddVariant = (id) => {
+    setForm({ ...form, variants: [...form.variants, { id: id, variant: 'variant' }] });
+  };
+
+  const handleDelete = (id) => {
+    setForm({ ...form, variants: form.variants.filter((variant) => variant.id !== id) });
   };
 
   const handleSubmit = (event) => {
-    setForm({ ...form, question: question });
+    setForm({
+      ...form,
+      title: title,
+      description: description,
+      question: question,
+    });
     event.preventDefault();
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.titleContainer}>
-        <h1 className={styles.title}>New Test</h1>
-      </div>
       <form className={styles.newTestForm} onSubmit={handleSubmit}>
+        <header className={styles.headerContainer}>
+          <div className={styles.titleContainer}>
+            <Input sx={inputTitleStyles} value={title} onChange={handleChangeTitle} />
+          </div>
+          <div className={styles.descriptionContainer}>
+            <Input value={description} onChange={handleChangeDescription} />
+          </div>
+        </header>
         <div className={styles.inputContainer}>
-          <Input value={question} onChange={handleChange} />
+          <Input value={question} onChange={handleChangeQuestion} />
         </div>
         <div>
           {form.variants.map((item) => {
@@ -56,6 +90,7 @@ const Tests = () => {
                   defaultValue={item.variant}
                   onChange={(event) => handleChangeInput(item.id, event.target.value)}
                 />
+                <Button onClick={() => handleDelete(item.id)}>Delete</Button>
               </div>
             );
           })}
