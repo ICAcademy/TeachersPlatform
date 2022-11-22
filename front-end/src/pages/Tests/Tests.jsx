@@ -3,14 +3,12 @@ import React, { useState } from 'react';
 
 // styles
 import styles from './Tests.module.scss';
-
-const inputTitleStyles = {
-  fontWeight: 400,
-  fontSize: '24pt',
-  lineHeight: 1.25,
-  letterSpacing: 0,
-  border: 0,
-};
+import {
+  inputTitleStyles,
+  inputDescriptionStyles,
+  inputQuestinStyles,
+  inputVariantStyles,
+} from './styles';
 
 const Tests = () => {
   const [question, setQuestion] = useState('Question');
@@ -21,8 +19,8 @@ const Tests = () => {
     description: 'Description',
     question: '',
     variants: [
-      { id: 0, variant: 'variant' },
-      { id: 1, variant: 'variant' },
+      { id: 0, variant: 'variant', right: false },
+      { id: 1, variant: 'variant', right: false },
     ],
   });
 
@@ -40,6 +38,17 @@ const Tests = () => {
     setDescription(event.target.value);
   };
 
+  const handleChangeRightAnswer = (id) => {
+    setForm({
+      ...form,
+      variants: form.variants.map((variant) => {
+        return id === variant.id
+          ? { ...variant, right: !variant.right }
+          : { ...variant, right: false };
+      }),
+    });
+  };
+
   const handleChangeInput = (id, event) => {
     setForm({
       ...form,
@@ -49,12 +58,15 @@ const Tests = () => {
     });
   };
 
-  const handleAddVariant = (id) => {
-    setForm({ ...form, variants: [...form.variants, { id: id, variant: 'variant' }] });
-  };
-
   const handleDelete = (id) => {
     setForm({ ...form, variants: form.variants.filter((variant) => variant.id !== id) });
+  };
+
+  const handleAddVariant = (id) => {
+    setForm({
+      ...form,
+      variants: [...form.variants, { id: id, variant: 'variant', right: false }],
+    });
   };
 
   const handleSubmit = (event) => {
@@ -75,31 +87,47 @@ const Tests = () => {
             <Input sx={inputTitleStyles} value={title} onChange={handleChangeTitle} />
           </div>
           <div className={styles.descriptionContainer}>
-            <Input value={description} onChange={handleChangeDescription} />
+            <Input
+              sx={inputDescriptionStyles}
+              value={description}
+              onChange={handleChangeDescription}
+            />
           </div>
         </header>
-        <div className={styles.inputContainer}>
-          <Input value={question} onChange={handleChangeQuestion} />
-        </div>
-        <div>
-          {form.variants.map((item) => {
-            return (
-              <div key={item.id}>
-                <Checkbox />
-                <Input
-                  defaultValue={item.variant}
-                  onChange={(event) => handleChangeInput(item.id, event.target.value)}
-                />
-                <Button onClick={() => handleDelete(item.id)}>Delete</Button>
-              </div>
-            );
-          })}
-        </div>
-        <div>
-          <Button onClick={() => handleAddVariant(form.variants.length)}>Add Variant</Button>
-        </div>
-        <div>
-          <Button type='submit'>Submit</Button>
+        <div className={styles.configurateContainer}>
+          <div className={styles.questionContainer}>
+            <Input sx={inputQuestinStyles} value={question} onChange={handleChangeQuestion} />
+          </div>
+          <div className={styles.variantsContainer}>
+            {form.variants.map((item) => {
+              return (
+                <div className={styles.variantContainer} key={item.id}>
+                  <div>
+                    <Checkbox
+                      checked={item.right}
+                      onChange={() => handleChangeRightAnswer(item.id)}
+                    />
+                  </div>
+                  <div className={styles.inputVariantContainer}>
+                    <Input
+                      sx={inputVariantStyles}
+                      defaultValue={item.variant}
+                      onChange={(event) => handleChangeInput(item.id, event.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Button onClick={() => handleDelete(item.id)}>Delete</Button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className={styles.addVariantContainer}>
+            <Button onClick={() => handleAddVariant(form.variants.length)}>Add Variant</Button>
+          </div>
+          <div className={styles.submitContainer}>
+            <Button type='submit'>Submit</Button>
+          </div>
         </div>
       </form>
     </div>
