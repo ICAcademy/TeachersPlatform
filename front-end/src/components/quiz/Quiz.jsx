@@ -1,23 +1,26 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { List, ListItem, ListSubheader, Typography } from '@mui/material';
 
-import AnswerPicker from 'components/answerPicker/AnswerPicker';
+import AnswerPicker from 'components/AnswerPicker/AnswerPicker';
 
-import { getAllQuestions } from 'services/questions';
+import { getQuizByTopic } from 'services/questions';
 
 const Quiz = () => {
   const [questionList, setQuestionList] = useState([]);
+  const { topic } = useParams();
 
-  const fetchQuestions = async () => {
-    const { questions } = await getAllQuestions();
-    setQuestionList(questions);
+  const fetchQuestions = async (topic) => {
+    const [data] = await getQuizByTopic({ topic });
+    setQuestionList(data.questions);
   };
 
   useEffect(() => {
-    fetchQuestions();
-  }, []);
+    fetchQuestions(topic);
+  }, [topic]);
 
-  const quiz = questionList[0]?.body.map((question, i) => (
+  const quiz = questionList.map((question, i) => (
     <ListItem
       divider='true'
       key={question._id}

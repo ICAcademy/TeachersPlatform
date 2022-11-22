@@ -1,23 +1,15 @@
+/* eslint-disable no-unused-vars */
 const Question = require('../models/Question');
 
-const getQuestions = async (queryParams) => {
-  try {
-    const criterias = queryParams;
+const getQuestions = async () => await Question.find({});
 
-    if (criterias.fields === 'level') {
-      return await Question.distinct(criterias.fields);
-    }
+const getLevels = async () => await Question.distinct('level');
 
-    if (Object.keys(criterias).length && criterias.fields) {
-      const fields = criterias.fields.split(',');
-      return await Question.find(criterias).select(fields);
-    }
+const getUnitsByLevel = async (level) => await Question.find(level).select('unit');
 
-    return await Question.find(criterias);
-  } catch (error) {
-    throw new Error(error);
-  }
-};
+const getTopicsByUnit = async (unit) => await Question.find(unit).select('topic');
+
+const getQuizByTopic = async (topic) => await Question.find(topic).select('questions');
 
 const createQuestion = async (question) => await Question.create(question);
 
@@ -30,6 +22,10 @@ const removeQuestion = async (id) => await Question.findByIdAndDelete(id);
 
 module.exports = {
   getQuestions,
+  getLevels,
+  getUnitsByLevel,
+  getTopicsByUnit,
+  getQuizByTopic,
   createQuestion,
   findQuestionById,
   editQuestion,

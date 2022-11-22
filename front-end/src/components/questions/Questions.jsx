@@ -1,25 +1,24 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Box, Button, List, ListItem, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import { getAllQuestions } from 'services/questions';
+import { getLevels, getUnitsByLevel } from 'services/questions';
+import Levels from 'components/Levels/Levels';
+import Units from 'components/Units/Units';
 
 const Questions = () => {
-  const [data, setData] = useState([]);
-
   const [levels, setLevels] = useState([]);
-
-  const fetchData = async (criterias) => {
-    const { questions } = await getAllQuestions(criterias);
-    setData(questions);
-  };
+  const [units, setUnits] = useState([]);
 
   const fetchLevels = async () => {
-    const { questions } = await getAllQuestions('fields=level');
-    setLevels(questions);
+    const data = await getLevels();
+    setLevels(data);
   };
 
-  console.log(data);
+  const fetchUnits = async (level) => {
+    const data = await getUnitsByLevel(level);
+    setUnits(data);
+  };
 
   useEffect(() => {
     fetchLevels();
@@ -28,24 +27,8 @@ const Questions = () => {
   return (
     <Box>
       <Typography variant='h3'>Questions</Typography>
-      <List sx={{ display: 'flex' }}>
-        {levels.map((level, i) => (
-          <ListItem key={i}>
-            <Button onClick={() => fetchData(`level=${level}&fields=level,unit`)}>{level}</Button>
-          </ListItem>
-        ))}
-      </List>
-      <List sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-        {data.map((item) => (
-          <ListItem key={item._id}>
-            <Box sx={{ p: '25px', border: '1px solid black', borderRadius: '20px' }}>
-              <Typography variant='body1'>{item.unit}</Typography>
-              <Typography variant='body2'>Description</Typography>
-              <Button>Go to</Button>
-            </Box>
-          </ListItem>
-        ))}
-      </List>
+      <Levels list={levels} handleUnits={fetchUnits} />
+      <Units list={units} />
     </Box>
   );
 };
