@@ -1,137 +1,211 @@
-import { Button, Checkbox, Input } from '@mui/material';
+/* import { Button, Checkbox, Input } from '@mui/material'; */
 import React, { useState } from 'react';
+import { nanoid } from 'nanoid';
 
 // styles
 import styles from './Tests.module.scss';
-import {
+/* import {
   inputTitleStyles,
   inputDescriptionStyles,
   inputQuestinStyles,
   inputVariantStyles,
-} from './styles';
+} from './styles'; */
+import Header from 'components/Tests/Header/Header';
+import Question from 'components/Tests/Question/Question';
+import { Button } from '@mui/material';
+import axios from 'axios';
 
 const Tests = () => {
-  const [question, setQuestion] = useState('Question');
-  const [title, setTitle] = useState('New Test');
-  const [description, setDescription] = useState('Description');
-  const [form, setForm] = useState({
-    level: 'Beginner',
+  const [tests, setTests] = useState({
+    level: 'Beginer',
     unit: 'Unit 5',
-    title: 'Title',
-    description: 'Description',
-    question: '',
-    variants: [
-      { id: 0, variant: 'variant', right: false },
-      { id: 1, variant: 'variant', right: false },
-    ],
+    topic: 'Present Perfect',
+    questions: [],
   });
 
-  console.log('form', form);
+  const [level, setLevel] = useState('level');
+  const [unit, setUnit] = useState('unit');
+  const [topic, setTopic] = useState('topic');
+  const [questions, setQuestions] = useState([]);
 
-  const handleChangeQuestion = (event) => {
-    setQuestion(event.target.value);
+  console.log('level', level);
+  console.log('unit', unit);
+  console.log('topic', topic);
+  console.log('questions', questions);
+  console.log('tests', tests);
+
+  const addQuestion = () => {
+    setQuestions([
+      ...questions,
+      { id: nanoid(), title: 'title', answers: [{ id: nanoid(), answer: 'answer', right: false }] },
+    ]);
   };
 
-  const handleChangeTitle = (event) => {
-    setTitle(event.target.value);
+  const addAnswer = (id) => {
+    const questionsCopy = JSON.parse(JSON.stringify(questions));
+    setQuestions(
+      questionsCopy.map((question) => {
+        if (question.id === id) {
+          return {
+            ...question,
+            answers: [...question.answers, { id: nanoid(), answer: 'answer', right: false }],
+          };
+        } else {
+          return { ...question };
+        }
+      }),
+    );
   };
 
-  const handleChangeDescription = (event) => {
-    setDescription(event.target.value);
+  const changeTitleForQuestion = (idQuestion, event) => {
+    const questionsCopy = JSON.parse(JSON.stringify(questions));
+    setQuestions(
+      questionsCopy.map((question) => {
+        if (question.id === idQuestion) {
+          return {
+            ...question,
+            title: event.target.value,
+          };
+        } else {
+          return { ...question };
+        }
+      }),
+    );
   };
 
-  const handleChangeRightAnswer = (id) => {
-    setForm({
-      ...form,
-      variants: form.variants.map((variant) => {
-        return id === variant.id
-          ? { ...variant, right: !variant.right }
-          : { ...variant, right: false };
+  const changeRightAnswerForQuestion = (idQuestion, idAnswer) => {
+    const questionsCopy = JSON.parse(JSON.stringify(questions));
+    setQuestions(
+      questionsCopy.map((question) => {
+        if (question.id === idQuestion) {
+          return {
+            ...question,
+            answers: [
+              ...question.answers.map((answer) => {
+                if (answer.id === idAnswer) {
+                  return { ...answer, right: !answer.right };
+                } else {
+                  return { ...answer, right: false };
+                }
+              }),
+            ],
+          };
+        } else {
+          return { ...question };
+        }
+      }),
+    );
+  };
+
+  const changeAnswerForQuestion = (idQuestion, idAnswer, event) => {
+    const questionsCopy = JSON.parse(JSON.stringify(questions));
+    setQuestions(
+      questionsCopy.map((question) => {
+        if (question.id === idQuestion) {
+          return {
+            ...question,
+            answers: [
+              ...question.answers.map((answer) => {
+                if (answer.id === idAnswer) {
+                  return { ...answer, answer: event.target.value };
+                } else {
+                  return { ...answer };
+                }
+              }),
+            ],
+          };
+        } else {
+          return { ...question };
+        }
+      }),
+    );
+  };
+
+  const deleteAnwerForQuestion = (idQuestion, idAnswer) => {
+    const questionsCopy = JSON.parse(JSON.stringify(questions));
+    setQuestions(
+      questionsCopy.map((question) => {
+        if (question.id === idQuestion) {
+          return {
+            ...question,
+            answers: question.answers.filter((answer) => answer.id !== idAnswer),
+          };
+        } else {
+          return { ...question };
+        }
+      }),
+    );
+  };
+
+  const save = () => {
+    const questionsCopy = JSON.parse(JSON.stringify(questions));
+    setTests({
+      ...tests,
+      level: level,
+      unit: unit,
+      topic: topic,
+      questions: questionsCopy.map((question) => {
+        return {
+          title: question.title,
+          answers: question.answers.map((answer) => {
+            return answer.answer;
+          }),
+          correct: question.answers.reduce((acc, current) => {
+            if (current.right) {
+              return current.answer;
+            } else {
+              return acc;
+            }
+          }, ''),
+        };
       }),
     });
   };
 
-  const handleChangeInput = (id, event) => {
-    setForm({
-      ...form,
-      variants: form.variants.map((item) => {
-        return id === item.id ? { id: item.id, variant: event } : { ...item };
-      }),
-    });
-  };
-
-  const handleDelete = (id) => {
-    setForm({ ...form, variants: form.variants.filter((variant) => variant.id !== id) });
-  };
-
-  const handleAddVariant = (id) => {
-    setForm({
-      ...form,
-      variants: [...form.variants, { id: id, variant: 'variant', right: false }],
-    });
-  };
-
-  const handleSubmit = (event) => {
-    setForm({
-      ...form,
-      title: title,
-      description: description,
-      question: question,
-    });
-    event.preventDefault();
+  const postData = () => {
+    return axios.post('http://localhost:5000/api/questions/', tests);
   };
 
   return (
     <div className={styles.container}>
-      <form className={styles.newTestForm} onSubmit={handleSubmit}>
-        <header className={styles.headerContainer}>
-          <div className={styles.titleContainer}>
-            <Input sx={inputTitleStyles} value={title} onChange={handleChangeTitle} />
-          </div>
-          <div className={styles.descriptionContainer}>
-            <Input
-              sx={inputDescriptionStyles}
-              value={description}
-              onChange={handleChangeDescription}
-            />
-          </div>
-        </header>
-        <div className={styles.configurateContainer}>
-          <div className={styles.questionContainer}>
-            <Input sx={inputQuestinStyles} value={question} onChange={handleChangeQuestion} />
-          </div>
-          <div className={styles.variantsContainer}>
-            {form.variants.map((item) => {
+      <div className={styles.content}>
+        <div className={styles.headerContainer}>
+          <Header
+            level={level}
+            setLevel={setLevel}
+            unit={unit}
+            setUnit={setUnit}
+            topic={topic}
+            setTopic={setTopic}
+          />
+        </div>
+        <div className={styles.questionsContainer}>
+          {questions.length > 0 &&
+            questions.map((question) => {
               return (
-                <div className={styles.variantContainer} key={item.id}>
-                  <div>
-                    <Checkbox
-                      checked={item.right}
-                      onChange={() => handleChangeRightAnswer(item.id)}
-                    />
-                  </div>
-                  <div className={styles.inputVariantContainer}>
-                    <Input
-                      sx={inputVariantStyles}
-                      value={item.variant}
-                      onChange={(event) => handleChangeInput(item.id, event.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <Button onClick={() => handleDelete(item.id)}>Delete</Button>
-                  </div>
-                </div>
+                <Question
+                  key={question.id}
+                  question={question}
+                  setQuestions={setQuestions}
+                  addAnswer={addAnswer}
+                  changeTitleForQuestion={changeTitleForQuestion}
+                  changeRightAnswerForQuestion={changeRightAnswerForQuestion}
+                  changeAnswerForQuestion={changeAnswerForQuestion}
+                  deleteAnwerForQuestion={deleteAnwerForQuestion}
+                />
               );
             })}
-          </div>
-          <div className={styles.addVariantContainer}>
-            <Button onClick={() => handleAddVariant(form.variants.length)}>Add Variant</Button>
-          </div>
-          <div className={styles.submitContainer}>
-            <Button type='submit'>Submit</Button>
-          </div>
         </div>
-      </form>
+        <div className={styles.addQuestionContainer}>
+          <Button onClick={addQuestion}>Add Question</Button>
+        </div>
+        <div className={styles.saveTestsContainer}>
+          <Button onClick={save}>Save Test</Button>
+        </div>
+        <div className={styles.postTestsContainer}>
+          <Button onClick={postData}>Post Data</Button>
+        </div>
+      </div>
     </div>
   );
 };
