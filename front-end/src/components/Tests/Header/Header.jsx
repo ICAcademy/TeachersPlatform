@@ -12,14 +12,41 @@ const Header = ({ level, setLevel, unit, setUnit, topic, setTopic }) => {
 
   return (
     <div className={styles.header}>
-      <div>
-        <Input value={level} onChange={(event) => handleChangeInput(setLevel, event)} />
+      <div className={styles.itemContainer}>
+        <div className={styles.textContainer}>
+          <p className={styles.text}>Level</p>
+        </div>
+        <div className={styles.inputContainer}>
+          <Input
+            className={styles.input}
+            value={level}
+            onChange={(event) => handleChangeInput(setLevel, event)}
+          />
+        </div>
       </div>
-      <div>
-        <Input value={unit} onChange={(event) => handleChangeInput(setUnit, event)} />
+      <div className={styles.itemContainer}>
+        <div className={styles.textContainer}>
+          <p className={styles.text}>Unit</p>
+        </div>
+        <div className={styles.inputContainer}>
+          <Input
+            className={styles.input}
+            value={unit}
+            onChange={(event) => handleChangeInput(setUnit, event)}
+          />
+        </div>
       </div>
-      <div>
-        <Input value={topic} onChange={(event) => handleChangeInput(setTopic, event)} />
+      <div className={styles.itemContainer}>
+        <div className={styles.textContainer}>
+          <p className={styles.text}>Topic</p>
+        </div>
+        <div className={styles.inputContainer}>
+          <Input
+            className={styles.input}
+            value={topic}
+            onChange={(event) => handleChangeInput(setTopic, event)}
+          />
+        </div>
       </div>
     </div>
   );

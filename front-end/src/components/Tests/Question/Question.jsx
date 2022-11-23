@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './Question.module.scss';
+// components
 import { Button, Checkbox, Input } from '@mui/material';
+
+// styles
+import styles from './Question.module.scss';
 
 const Question = ({
   question,
@@ -16,6 +19,7 @@ const Question = ({
     <div className={styles.questionContainer}>
       <div className={styles.titleContainer}>
         <Input
+          className={styles.input}
           value={question.title}
           onChange={(event) => changeTitleForQuestion(question.id, event)}
         />
@@ -26,18 +30,25 @@ const Question = ({
             <div className={styles.answerContainer} key={answer.id}>
               <div className={styles.checkboxAnswerContainer}>
                 <Checkbox
+                  size='large'
+                  className={styles.checkbox}
                   checked={answer.right}
                   onChange={() => changeRightAnswerForQuestion(question.id, answer.id)}
                 />
               </div>
               <div className={styles.inputAnswerContainer}>
                 <Input
+                  className={styles.input}
                   value={answer.answer}
                   onChange={(event) => changeAnswerForQuestion(question.id, answer.id, event)}
                 />
               </div>
               <div className={styles.buttonDeleteAnswerContainer}>
-                <Button onClick={() => deleteAnwerForQuestion(question.id, answer.id)}>
+                <Button
+                  className={styles.button}
+                  variant='contained'
+                  onClick={() => deleteAnwerForQuestion(question.id, answer.id)}
+                >
                   Delete
                 </Button>
               </div>
@@ -45,7 +56,11 @@ const Question = ({
           );
         })}
       </div>
-      <Button onClick={() => addAnswer(question.id)}>Add answer</Button>
+      <div className={styles.addAnswerContainer}>
+        <Button variant='contained' onClick={() => addAnswer(question.id)}>
+          Add answer
+        </Button>
+      </div>
     </div>
   );
 };

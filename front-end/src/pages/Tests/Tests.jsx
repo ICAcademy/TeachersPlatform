@@ -1,19 +1,15 @@
 /* import { Button, Checkbox, Input } from '@mui/material'; */
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
+import axios from 'axios';
 
-// styles
-import styles from './Tests.module.scss';
-/* import {
-  inputTitleStyles,
-  inputDescriptionStyles,
-  inputQuestinStyles,
-  inputVariantStyles,
-} from './styles'; */
+// components
 import Header from 'components/Tests/Header/Header';
 import Question from 'components/Tests/Question/Question';
 import { Button } from '@mui/material';
-import axios from 'axios';
+
+// styles
+import styles from './Tests.module.scss';
 
 const Tests = () => {
   const [tests, setTests] = useState({
@@ -139,6 +135,29 @@ const Tests = () => {
 
   const save = () => {
     const questionsCopy = JSON.parse(JSON.stringify(questions));
+
+    const data = {
+      ...tests,
+      level: level,
+      unit: unit,
+      topic: topic,
+      questions: questionsCopy.map((question) => {
+        return {
+          title: question.title,
+          answers: question.answers.map((answer) => {
+            return answer.answer;
+          }),
+          correct: question.answers.reduce((acc, current) => {
+            if (current.right) {
+              return current.answer;
+            } else {
+              return acc;
+            }
+          }, ''),
+        };
+      }),
+    };
+
     setTests({
       ...tests,
       level: level,
@@ -160,11 +179,11 @@ const Tests = () => {
         };
       }),
     });
+
+    postData(data);
   };
 
-  const postData = () => {
-    return axios.post('http://localhost:5000/api/questions/', tests);
-  };
+  const postData = (tests) => axios.post('http://localhost:5000/api/questions/', tests);
 
   return (
     <div className={styles.container}>
@@ -180,30 +199,37 @@ const Tests = () => {
           />
         </div>
         <div className={styles.questionsContainer}>
-          {questions.length > 0 &&
-            questions.map((question) => {
-              return (
-                <Question
-                  key={question.id}
-                  question={question}
-                  setQuestions={setQuestions}
-                  addAnswer={addAnswer}
-                  changeTitleForQuestion={changeTitleForQuestion}
-                  changeRightAnswerForQuestion={changeRightAnswerForQuestion}
-                  changeAnswerForQuestion={changeAnswerForQuestion}
-                  deleteAnwerForQuestion={deleteAnwerForQuestion}
-                />
-              );
-            })}
+          {questions.map((question) => {
+            return (
+              <Question
+                key={question.id}
+                question={question}
+                setQuestions={setQuestions}
+                addAnswer={addAnswer}
+                changeTitleForQuestion={changeTitleForQuestion}
+                changeRightAnswerForQuestion={changeRightAnswerForQuestion}
+                changeAnswerForQuestion={changeAnswerForQuestion}
+                deleteAnwerForQuestion={deleteAnwerForQuestion}
+              />
+            );
+          })}
         </div>
-        <div className={styles.addQuestionContainer}>
-          <Button onClick={addQuestion}>Add Question</Button>
-        </div>
-        <div className={styles.saveTestsContainer}>
-          <Button onClick={save}>Save Test</Button>
-        </div>
-        <div className={styles.postTestsContainer}>
-          <Button onClick={postData}>Post Data</Button>
+        <div className={styles.buttonsContainer}>
+          <div className={styles.addQuestionContainer}>
+            <Button variant='contained' onClick={addQuestion}>
+              Add Question
+            </Button>
+          </div>
+          <div className={styles.saveTestsContainer}>
+            <Button variant='contained' onClick={save}>
+              Save Test
+            </Button>
+          </div>
+          <div className={styles.postTestsContainer}>
+            <Button variant='contained' onClick={postData}>
+              Post Data
+            </Button>
+          </div>
         </div>
       </div>
     </div>

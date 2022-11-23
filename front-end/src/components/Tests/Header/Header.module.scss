@@ -1,5 +1,45 @@
 .header {
   display: flex;
   flex-direction: column;
+  background: #fff;
+  width: 700px;
+  padding: 30px 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 74px rgb(0 0 0 / 8%);
+  margin-top: 30px;
+}
+
+.itemContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.textContainer {
+  display: flex;
+  align-self: center;
+}
+
+.text {
+  height: 20px;
+  font-size: 30px;
+  width: 100px;
+  color: #797979;
+}
+
+.inputContainer {
+  margin-top: 20px;
+  width: 600px;
+  display: flex;
+  justify-content: center;
+}
+
+.input {
+  width: 100%;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 0;
+  padding: 0.5em 0.5em;
+  background: #f0f6f9;
+  color: #797979;
 }
 
