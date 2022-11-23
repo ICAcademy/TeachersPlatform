@@ -4,15 +4,19 @@ dotenv.config();
 
 const templates = {
   registation: `
-<h1>Hello name!</h1>
-<p>Thank you for creating your EduLearn account.</p>
-<br>
-We hope you will enjoy the space that we created for our students.
-<p>The InterLearn team</p>
+  <div style='text-align: center'>
+  <h1>Hello name!</h1>
+  <p>Thank you for creating your EduLearn account.</p>
+  <p>We hope you will enjoy the space that we created for our students.</p>
+  <br>
+  <p style='color:grey'>The InterLearn team</p>
+  </div>
   `,
   subcription: `
+  <div style='text-align: center'>
   <h1>Hello Student!</h1>
-  <p>You have successfully subscribed to your teachers lessons</p>
+  <p style="color:#292929;">You have successfully subscribed to your teachers lessons</p>
+  </div>
   `,
 };
 
@@ -33,7 +37,7 @@ const mail = async (req, res) => {
     to: process.env.EMAIL_USER,
     subject: 'Hello',
     text: 'Hello world',
-    html: templates.registation,
+    html: templates.subcription,
   });
 
   console.log('Message sent: %s', info.messageId);
