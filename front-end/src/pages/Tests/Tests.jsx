@@ -225,11 +225,6 @@ const Tests = () => {
               Save Test
             </Button>
           </div>
-          <div className={styles.postTestsContainer}>
-            <Button variant='contained' onClick={postData}>
-              Post Data
-            </Button>
-          </div>
         </div>
       </div>
     </div>
