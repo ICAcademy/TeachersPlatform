@@ -8,15 +8,20 @@ const questionRouter = require('./routes/Questions');
 
 const app = express();
 const port = process.env.PORT;
-const materialRouter = require('./routes/MaterialRoutes');
+
+const authUser = require('./routes/auth');
+const cors = require('cors');
+
+app.use(cors());
+app.use(express.json());
 const studentsRouter = require('./routes/StudentsRoutes');
 
 app.get('/', (req, res) => {});
 
-//middleware
-app.use(express.json());
+app.use('/auth', authUser);
 app.use('/api/materials', materialRouter);
 app.use('/api/students', studentsRouter);
+app.use('/api/questions', questionRouter);
 
 async function main() {
   try {
