@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 // components
 import { Button, Checkbox, Input } from '@mui/material';
 
+// assets
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 // styles
 import styles from './Question.module.scss';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const Question = ({
   question,
@@ -49,7 +53,7 @@ const Question = ({
                   variant='contained'
                   onClick={() => deleteAnwerForQuestion(question.id, answer.id)}
                 >
-                  Delete
+                  <FontAwesomeIcon icon={faXmark} />
                 </Button>
               </div>
             </div>

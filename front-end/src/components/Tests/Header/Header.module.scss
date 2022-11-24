@@ -21,7 +21,7 @@
 
 .text {
   height: 20px;
-  font-size: 30px;
+  font-size: 20px;
   width: 100px;
   color: #797979;
 }
@@ -39,7 +39,9 @@
   font-size: 20px;
   letter-spacing: 0;
   padding: 0.5em 0.5em;
-  background: #f0f6f9;
+  background-color: #f6f9fb;
+  border-color: #f6f9fb;
   color: #797979;
+  border-radius: 0.25rem;
 }
 
