@@ -1,66 +1,77 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { FormControl, TextField, Box, Button, InputAdornment } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { nanoid } from 'nanoid';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-// Regex
-import { regexFullName, regexPassword } from 'helpers/regex';
+import { loginUser } from 'requests/auth';
 
 // Styles
 import styles from './LoginForm.module.scss';
 
 const LoginForm = () => {
   const [data, setData] = useState({
-    username: '',
+    email: '',
     password: '',
+    token: '',
   });
 
-  const [hasError, setHasError] = useState({
-    hasUsernameError: false,
-    hasPasswordError: false,
+  const [message, setMessage] = useState({
+    success: '',
+    error: '',
   });
+
+  const history = useNavigate();
 
   const handleChange = ({ target: { name, value } }) => {
     setData({ ...data, [name]: value });
   };
 
   const isDisabledBtn = useMemo(
-    () => !data.username.trim().length || !data.password.trim().length,
-    [data.username, data.password],
+    () => !data.email.trim().length || !data.password.trim().length,
+    [data.email, data.password],
   );
 
-  const checkValidation = () => {
-    setHasError((prev) => ({
-      ...prev,
-      hasUsernameError: !regexFullName.test(data.fullName),
-      hasPasswordError: !regexPassword.test(data.password),
-    }));
+  const backendResponse = async (userInfo) => {
+    try {
+      const answer = await loginUser(userInfo);
+      if (answer) {
+        setData((prev) => ({ ...prev, token: answer.data.token }));
+        setMessage((prev) => ({ ...prev, success: answer.data.message }));
+      }
+    } catch (err) {
+      setMessage((prev) => ({ ...prev, error: err.response.data.error }));
+    }
   };
 
   const handleSubmit = () => {
-    checkValidation();
+    backendResponse(data);
   };
 
-  console.log(hasError);
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      history('/home');
+    }
+  }, []);
 
   useEffect(() => {
-    const isError = Object.values(hasError).includes(true);
     const isEmpty = Object.values(data).includes('');
-    if (!isError && !isEmpty) {
-      console.log('useEffect');
-      // sendUserData(data);
-      setData({
-        role: 'student',
-        fullName: '',
-        dateOfBirth: '',
+    if (!isEmpty && message.success !== '') {
+      const cradentials = JSON.stringify(data);
+      localStorage.setItem('user', cradentials);
+      history('/home');
+      setMessage({
+        success: '',
+        error: '',
+      });
+      setData((prev) => ({
+        ...prev,
         email: '',
         password: '',
-        repeatPassword: '',
-      });
+      }));
     }
-  }, [hasError]);
+  }, [message]);
 
   return (
     <div className={styles.wrap}>
@@ -72,21 +83,20 @@ const LoginForm = () => {
         <Box>
           <FormControl sx={{ width: '400px' }}>
             <TextField
+              error={message.error !== ''}
               id={`input-with-icon-textfield ${nanoid(5)}`}
-              type='text'
-              name='username'
-              error={hasError.hasUsernameError}
-              helperText={hasError.hasUsernameError ? 'Wrong username! Please try again' : ''}
-              value={data.username}
+              type='email'
+              name='email'
+              value={data.email}
               onChange={(e) => handleChange(e)}
-              placeholder='Username'
+              placeholder='Email'
               color='purple'
               size='small'
               sx={{ m: '10px 0' }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
-                    <FontAwesomeIcon icon={faUser} fill='#a1a4b5' width={12} height={12} />
+                    <FontAwesomeIcon icon={faEnvelope} fill='#a1a4b5' width={12} height={12} />
                   </InputAdornment>
                 ),
               }}
@@ -95,8 +105,7 @@ const LoginForm = () => {
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='password'
               name='password'
-              error={hasError.hasPasswordError}
-              helperText={hasError.hasPasswordError ? 'Wrong password! Please try again' : ''}
+              error={message.error !== ''}
               value={data.password}
               onChange={(e) => handleChange(e)}
               placeholder='Password'
@@ -119,6 +128,25 @@ const LoginForm = () => {
             >
               Sign in
             </Button>
+            {message.error ? (
+              <div className={styles.error}>
+                <FontAwesomeIcon
+                  icon={faTriangleExclamation}
+                  fill='#d57c77'
+                  width={12}
+                  height={12}
+                />
+                {`
+                ${message.error}
+                `}
+              </div>
+            ) : (
+              <div className={styles.success}>
+                {`
+                ${message.success}
+                `}
+              </div>
+            )}
           </FormControl>
         </Box>
         <div className={styles.bottomWrap}>

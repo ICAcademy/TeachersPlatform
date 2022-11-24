@@ -72,3 +72,17 @@
 .link {
   text-decoration: none;
 }
+
+.error {
+  color: $dirtyPink;
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: $fw600;
+}
+
+.success {
+  color: $vibrantGreen;
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: $fw600;
+}
