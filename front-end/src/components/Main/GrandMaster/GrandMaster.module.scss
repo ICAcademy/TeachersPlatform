@@ -1,0 +1,50 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/font.scss';
+
+.container {
+  width: 100%;
+  height: 78vh;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  padding-top: 120px;
+}
+
+.grandMasterContainer {
+  width: 500px;
+}
+
+.info {
+  color: $grey400;
+  margin-bottom: 10px;
+  font-size: $f16;
+  line-height: 26px;
+}
+
+.admin {
+  margin-bottom: 10px;
+  font-size: $f16;
+  line-height: 26px;
+}
+
+.imgContainer {
+  width: 500px;
+}
+
+.colorBackground {
+  width: 252px;
+  height: 308px;
+  background: $darkPurple;
+  border-radius: 10px;
+  margin-left: 300px;
+}
+
+.studentsImg {
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 180px;
+  border-radius: 10px;
+}
+

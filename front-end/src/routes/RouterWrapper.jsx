@@ -8,7 +8,6 @@ import PublicRoutes from './PublicRoutes';
 
 // Pages
 import { NotFound } from 'components/NotFound/NotFound';
-import Tests from 'pages/Tests/Tests';
 
 const RouterWrapper = () => (
   <>
@@ -16,7 +15,6 @@ const RouterWrapper = () => (
     <AuthRoutes />
     <PublicRoutes />
     <Routes>
-      <Route path='/tests' element={<Tests />} />
       <Route path='*' element={<NotFound />} />
     </Routes>
   </>
