@@ -1,4 +1,3 @@
-/* import { Button, Checkbox, Input } from '@mui/material'; */
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import axios from 'axios';
@@ -23,12 +22,6 @@ const Tests = () => {
   const [unit, setUnit] = useState('unit');
   const [topic, setTopic] = useState('topic');
   const [questions, setQuestions] = useState([]);
-
-  console.log('level', level);
-  console.log('unit', unit);
-  console.log('topic', topic);
-  console.log('questions', questions);
-  console.log('tests', tests);
 
   const addQuestion = () => {
     setQuestions([
