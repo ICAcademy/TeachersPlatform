@@ -1,0 +1,10 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/font.scss';
+
+.title {
+  font-size: $f60;
+  line-height: 70px;
+  font-weight: $fw500;
+  margin: 30px 0;
+}
+

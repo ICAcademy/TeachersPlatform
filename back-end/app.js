@@ -18,6 +18,7 @@ const teacherRouter = require('./routes/TeacherRoutes');
 
 app.use('/auth', authUser);
 app.use('/api/materials', materialRouter);
+app.use('/api/questions', questionRouter);
 app.use('/api/teachers', teacherRouter);
 
 async function main() {
