@@ -2,15 +2,17 @@ import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 
 // Components
-import RouterWrapper from 'routes/RouterWrapper';
+import PublicRoutes from 'routes/PublicRoutes';
 
 // theme style
 import theme from './styles/customTheme';
+import { Sidebar } from 'components/Sidebar/Sidebar';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <RouterWrapper />
+      <Sidebar />
+      <PublicRoutes />
     </ThemeProvider>
   );
 };
