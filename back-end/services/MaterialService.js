@@ -5,7 +5,6 @@ exports.getAllMaterials = async () => {
 };
 
 exports.createMaterial = async (material) => {
-  
   return await MaterialModel.create(material);
 };
 
