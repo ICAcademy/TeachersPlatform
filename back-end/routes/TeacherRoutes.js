@@ -9,11 +9,11 @@ const {
 
 const router = express.Router();
 
-router.route('/get-all-teachers').get(getAllTeachers);
-router.route('/create-teacher').post(createTeacher);
-router.route('/get-teacher/:id').get(getTeacherById);
-router.route('/update-teacher/:id').put(updateTeacher);
-router.route('/delete-teacher/:id').delete(deleteTeacher);
+router.route('/').get(getAllTeachers);
+router.route('/').post(createTeacher);
+router.route('/:id').get(getTeacherById);
+router.route('/:id').put(updateTeacher);
+router.route('/:id').delete(deleteTeacher);
 
 module.exports = router;
 
