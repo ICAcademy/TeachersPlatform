@@ -1,34 +1,35 @@
 .container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 120px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 120px;
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .explanationContainer {
-    width: 470px;
-    text-align: center;
+  width: 470px;
+  text-align: center;
 }
 
 .sliderContainer {
-    margin-top: 40px;
-    width: 1250px;
+  margin-top: 40px;
+  width: 1250px;
 }
 
 .next {
-    position: absolute;
-    top: 100%;
-    margin-left: 640px;
+  position: absolute;
+  top: 100%;
+  margin-left: 610px;
 }
 
 .prev {
-    position: absolute;
-    top: 100%;
-    margin-left: 550px;
+  position: absolute;
+  top: 100%;
+  margin-left: 530px;
 }
+

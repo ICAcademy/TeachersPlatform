@@ -3,18 +3,26 @@ import { ThemeProvider } from '@mui/material/styles';
 
 // Components
 import PublicRoutes from 'routes/PublicRoutes';
+import { Sidebar } from 'components/Sidebar/Sidebar';
+import Header from 'components/common/Header/Header';
+import Footer from 'components/common/Footer/Footer';
 
 // theme style
 import theme from './styles/customTheme';
-import { Sidebar } from 'components/Sidebar/Sidebar';
+import 'App.scss';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Sidebar />
-      <PublicRoutes />
+      <div className='wrap'>
+        <Header />
+        <Sidebar />
+        <PublicRoutes />
+      </div>
+      <Footer />
     </ThemeProvider>
   );
 };
 
 export default App;
+
