@@ -5,21 +5,21 @@
   margin-top: 1rem;
 }
 
-.unitIcon {
-  display: flex;
-  font-size: 1.5rem;
-  background-color: #9000ff;
-  color: #fff;
-  width: 40px;
-  height: 40px;
-  margin-right: 15px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.25rem;
-}
-
-.unitName {
+.unitInfo {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.unitTitle {
+  font-size: 1rem;
+}
+
+.lessonsCount {
+  color: #a1a4b5;
+  font-size: 0.85rem;
+
+  span:first-child {
+    margin-right: 5px;
+  }
 }

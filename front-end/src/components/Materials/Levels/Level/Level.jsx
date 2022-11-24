@@ -25,18 +25,12 @@ const Level = (props) => {
 
 Level.propTypes = {
   level: PropTypes.string,
+  selectedLevel: PropTypes.string,
+  onChangeLevel: PropTypes.func,
 };
 Level.defaultProps = {
   level: '',
-};
-Level.propTypes = {
-  selectedLevel: PropTypes.string,
-};
-Level.defaultProps = {
   selectedLevel: 'beginner',
-};
-Level.propTypes = {
-  onChangeLevel: PropTypes.func,
 };
 
 export default Level;
