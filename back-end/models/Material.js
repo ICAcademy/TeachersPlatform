@@ -5,8 +5,14 @@ const materialSchema = new Schema(
   {
     level: { type: String, required: true },
     unit: { type: String, required: true },
-    image: { type: String, required: true },
-    lessons: [{ type: JSON, required: true }],
+    image: { type: String },
+    url: { type: String, required: true },
+    lessons: [
+      {
+        title: { type: String, required: true },
+        layout: { type: JSON },
+      },
+    ],
   },
   { timestamps: true },
 );
