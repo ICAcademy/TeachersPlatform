@@ -12,9 +12,12 @@ const {
 
 const router = express.Router();
 
-router.route('/').get(getAllMaterials).post(createMaterial);
+router.get('/', getAllMaterials);
+router.post('/', createMaterial);
+router.get('/:id', getMaterialById);
+router.put('/:id', updateMaterial);
+router.delete('/:id', deleteMaterial);
 router.route('/levels').get(getLevels);
 router.route('/:level').get(getUnitsByLevel);
-router.route('/:id').get(getMaterialById).put(updateMaterial).delete(deleteMaterial);
 
 module.exports = router;

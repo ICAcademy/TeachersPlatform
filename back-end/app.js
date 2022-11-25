@@ -1,16 +1,26 @@
 require('dotenv').config();
+
 const mongoose = require('mongoose');
 const express = require('express');
+
+const materialRouter = require('./routes/MaterialRoutes');
+const questionRouter = require('./routes/Questions');
+const teacherRouter = require('./routes/TeacherRoutes');
+
 const app = express();
 const port = process.env.PORT;
-const materialRouter = require('./routes/MaterialRoutes');
 
-app.get('/', (req, res) => {});
+const authUser = require('./routes/auth');
+const cors = require('cors');
 
-//middleware
+app.use(cors());
 app.use(express.json());
+
+app.use('/auth', authUser);
 app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use('/api/materials', materialRouter);
+app.use('/api/questions', questionRouter);
+app.use('/api/teachers', teacherRouter);
 
 async function main() {
   try {
