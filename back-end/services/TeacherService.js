@@ -5,7 +5,12 @@ exports.getAllTeachers = async () => {
 };
 
 exports.createTeacher = async (teacher) => {
-  return await TeacherModel.create(teacher);
+  return await TeacherModel.create({
+    name: teacher.fullName,
+    dateOfBirth: teacher.dateOfBirth,
+    email: teacher.email,
+    phone: '123-456-789',
+  });
 };
 
 exports.getTeacherById = async (id) => {
