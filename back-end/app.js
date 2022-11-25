@@ -7,6 +7,7 @@ const port = process.env.PORT;
 
 // Middlewares
 const cors = require('./middlewares/cors');
+const authentication = require('./middlewares/authentication');
 
 // Routers
 const appRouter = require('./routes/AppRouter');
@@ -17,7 +18,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {});
 
-app.use('/api', appRouter);
+app.use('/api', authentication, appRouter);
 app.use('/auth', authRouter);
 
 async function main() {

@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const registerValidation = require('../helpers/validation');
 const { register, login, findByEmail } = require('../services/AuthService');
 
@@ -22,15 +23,38 @@ exports.createUser = async (req, res) => {
   }
 };
 
+let token;
+
 exports.loginUser = async (req, res) => {
   try {
     const data = req.body;
-    const token = await login(data, res);
+    token = await login(data, res);
+
     if (!token) {
       return res.status(400).json({ message: 'User was not found!' });
     }
     res.status(200).json({ message: 'User was successfully logged!', token });
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+};
+
+exports.getAuthorizedUser = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      throw new Error('Authorization is failed!');
+    }
+
+    const decode = jwt.verify(token, 'secretValue');
+    const authorizedUser = decode?.email;
+
+    const user = await findByEmail(authorizedUser);
+    if (!user) {
+      res.status(401).json({ message: 'User was not found!' });
+    }
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(401).json({ error: err.message });
   }
 };
