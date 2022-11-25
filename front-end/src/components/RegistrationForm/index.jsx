@@ -20,7 +20,7 @@ import { nanoid } from 'nanoid';
 import { regexEmail, regexFullName, regexPassword } from 'helpers/regex';
 
 // Requests
-import { sendUserData } from 'requests/auth';
+import { userService } from 'services/authServices';
 
 // Styles
 import styles from './RegistrationForm.module.scss';
@@ -88,7 +88,7 @@ const RegistrationForm = () => {
     const isError = Object.values(hasError).includes(true);
     const isEmpty = Object.values(data).includes('');
     if (!isError && !isEmpty) {
-      sendUserData(data);
+      userService.registration(data);
       setData({
         role: 'student',
         fullName: '',

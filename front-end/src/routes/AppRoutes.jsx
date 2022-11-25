@@ -8,7 +8,7 @@ const AppRoutes = () => (
   <>
     <Sidebar />
     <Routes>
-      <Route path='/admin' element={<h1>Admin</h1>} />
+      <Route path='/app' element={<h1>App</h1>} />
     </Routes>
   </>
 );

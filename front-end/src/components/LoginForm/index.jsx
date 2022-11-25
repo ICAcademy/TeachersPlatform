@@ -5,7 +5,7 @@ import { faEnvelope, faLock, faTriangleExclamation } from '@fortawesome/free-sol
 import { nanoid } from 'nanoid';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { loginUser } from 'requests/auth';
+import { userService } from 'services/authServices';
 
 // Styles
 import styles from './LoginForm.module.scss';
@@ -14,7 +14,6 @@ const LoginForm = () => {
   const [data, setData] = useState({
     email: '',
     password: '',
-    token: '',
   });
 
   const [message, setMessage] = useState({
@@ -35,13 +34,12 @@ const LoginForm = () => {
 
   const backendResponse = async (userInfo) => {
     try {
-      const answer = await loginUser(userInfo);
+      const answer = await userService.login(userInfo);
       if (answer) {
-        setData((prev) => ({ ...prev, token: answer.data.token }));
-        setMessage((prev) => ({ ...prev, success: answer.data.message }));
+        setMessage((prev) => ({ ...prev, success: answer.data?.message }));
       }
     } catch (err) {
-      setMessage((prev) => ({ ...prev, error: err.response.data.error }));
+      setMessage((prev) => ({ ...prev, error: err.response.data?.error }));
     }
   };
 
@@ -50,26 +48,18 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('user')) {
-      history('/home');
-    }
-  }, []);
-
-  useEffect(() => {
     const isEmpty = Object.values(data).includes('');
     if (!isEmpty && message.success !== '') {
-      const cradentials = JSON.stringify(data);
-      localStorage.setItem('user', cradentials);
-      history('/home');
+      localStorage.getItem('token');
+      history('/app');
       setMessage({
         success: '',
         error: '',
       });
-      setData((prev) => ({
-        ...prev,
+      setData({
         email: '',
         password: '',
-      }));
+      });
     }
   }, [message]);
 

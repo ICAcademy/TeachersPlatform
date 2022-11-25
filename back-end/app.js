@@ -2,16 +2,17 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 const express = require('express');
-const appRouter = require('./routes/AppRouter');
-const authRouter = require('./routes/AuthRouter');
-// const authentication = require('./middlewares/authentication');
-
 const app = express();
 const port = process.env.PORT;
 
-const cors = require('cors');
+// Middlewares
+const cors = require('./middlewares/cors');
 
-app.use(cors());
+// Routers
+const appRouter = require('./routes/AppRouter');
+const authRouter = require('./routes/AuthRouter');
+
+app.use(cors);
 app.use(express.json());
 
 app.get('/', (req, res) => {});
