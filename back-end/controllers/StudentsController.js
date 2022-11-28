@@ -1,8 +1,6 @@
 const studentsService = require('../services/StudentsService');
-console.log();
 
 exports.getAllStudents = async (req, res) => {
-
   try {
     const students = await studentsService.getAllStudents();
     res.json(students);

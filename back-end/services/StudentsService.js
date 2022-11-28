@@ -4,8 +4,13 @@ exports.getAllStudents = async () => {
   return await StudentsModel.find();
 };
 
-exports.createStudents = async (students) => {
-  return await StudentsModel.create(students);
+exports.createStudents = async (student) => {
+  return await StudentsModel.create({
+    name: student.name,
+    dateOfBirth: student.dateOfBirth,
+    email: student.email,
+    number: student.number,
+  });
 };
 
 exports.getStudentsById = async (id) => {

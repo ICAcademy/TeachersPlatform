@@ -1,12 +1,16 @@
-const { createTeacher } = require('../services/TeacherService');
+// helpers
 const registerValidation = require('../helpers/validation');
+
+// services
+const { createStudents } = require('../services/StudentsService');
+const { createTeacher } = require('../services/TeacherService');
 const register = require('../services/AuthService');
 
 const createRoleForUser = async (role, data) => {
   if (role === 'teacher') {
     await createTeacher(data);
   } else {
-    console.log('student');
+    await createStudents(data);
   }
 };
 
@@ -23,4 +27,3 @@ exports.createUser = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
-
