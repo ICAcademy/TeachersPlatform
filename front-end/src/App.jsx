@@ -22,7 +22,7 @@ const App = () => {
       <Footer />
     </ThemeProvider>
   );
+  console.log();
 };
 
 export default App;
-
