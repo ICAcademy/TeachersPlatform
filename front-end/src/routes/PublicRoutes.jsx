@@ -14,7 +14,7 @@ const PublicRoutes = () => (
     <Route path='/home' element={<Content />} />
     <Route path='/materials' element={<Materials />} />
     <Route path='/main' element={<Main />} />
-    <Route path='/admin/materials' element={<AdminMaterials />} />
+    <Route path='/materials/edit-:id' element={<AdminMaterials />} />
   </Routes>
 );
 

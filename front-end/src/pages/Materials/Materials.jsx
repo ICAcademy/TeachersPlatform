@@ -10,6 +10,8 @@ import Loader from 'components/common/Loader/Loader';
 
 //Styles
 import styles from './Materials.module.scss';
+import Button from '@mui/material/Button';
+import Add from '@mui/icons-material/Add';
 
 const Materials = () => {
   const [selectedLevel, setSelectedLevel] = useState('beginner');
@@ -38,7 +40,12 @@ const Materials = () => {
 
   return (
     <div className={styles.materials}>
-      <Levels selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
+      <div className={styles.navigationRow}>
+        <Levels selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
+        <Button variant='contained' endIcon={<Add />}>
+          Create material
+        </Button>
+      </div>
       {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
     </div>
   );
