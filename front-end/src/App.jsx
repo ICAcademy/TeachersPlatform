@@ -21,8 +21,8 @@ const App = () => {
       </div>
       <Footer />
     </ThemeProvider>
+    // comment
   );
-  console.log();
 };
 
 export default App;
