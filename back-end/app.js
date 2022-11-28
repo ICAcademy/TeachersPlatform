@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 
 const materialRouter = require('./routes/MaterialRoutes');
+const materialLevelsRouter = require('./routes/MaterialLevelsRoutes');
 const questionRouter = require('./routes/Questions');
 const teacherRouter = require('./routes/TeacherRoutes');
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use('/auth', authUser);
 app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use('/api/materials', materialRouter);
+app.use('/api/levels', materialLevelsRouter);
 app.use('/api/questions', questionRouter);
 app.use('/api/teachers', teacherRouter);
 
