@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = '/api/materials';
+const baseUrl = 'http://localhost:5000/api';
 
 export const getLevels = async () => {
   try {
@@ -13,7 +13,7 @@ export const getLevels = async () => {
 
 export const getUnitsByLevel = async (level) => {
   try {
-    const response = await axios.get(`${baseUrl}/${level}`);
+    const response = await axios.get(`${baseUrl}/levels/get-units-by-level/${level}`);
     return response.data;
   } catch (error) {
     console.log(error);

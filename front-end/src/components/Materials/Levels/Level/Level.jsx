@@ -9,14 +9,12 @@ const Level = (props) => {
   const changeLevelHandler = (event) => {
     props.onChangeLevel(event.target.value);
   };
+
+  const contained = props.level === props.selectedLevel ? 'contained' : 'outlined';
+
   return (
     <div className={styles.levelItem}>
-      <Button
-        variant={props.level === props.selectedLevel ? 'contained' : 'outlined'}
-        size='small'
-        value={props.level}
-        onClick={changeLevelHandler}
-      >
+      <Button variant={contained} size='small' value={props.level} onClick={changeLevelHandler}>
         {props.level}
       </Button>
     </div>
