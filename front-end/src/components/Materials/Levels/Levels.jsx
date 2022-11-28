@@ -14,8 +14,12 @@ const Levels = (props) => {
   const [levels, setLevels] = useState([]);
 
   const levelsData = async () => {
-    const levels = await getLevels();
-    setLevels(levels);
+    try {
+      const levels = await getLevels();
+      setLevels(levels);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

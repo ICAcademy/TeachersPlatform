@@ -17,10 +17,14 @@ const Materials = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const unitsByLevelData = async (level) => {
-    setIsLoading(true);
-    const units = await getUnitsByLevel(level);
-    setUnitsByLevel(units);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const units = await getUnitsByLevel(level);
+      setUnitsByLevel(units);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const changeLevelHandler = (level) => {
