@@ -21,14 +21,10 @@ const UnitImg = (props) => {
 //propTypes
 UnitImg.propTypes = {
   image: PropTypes.string,
-};
-UnitImg.defaultProps = {
-  image: '',
-};
-UnitImg.propTypes = {
   unit: PropTypes.string,
 };
 UnitImg.defaultProps = {
+  image: '',
   init: '',
 };
 
