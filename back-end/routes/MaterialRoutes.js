@@ -1,7 +1,4 @@
 const express = require('express');
-const text = 'text';
-text;
-text;
 
 const {
   getAllMaterials,
