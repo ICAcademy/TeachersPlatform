@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { List, ListSubheader, ListItem, Button } from '@mui/material';
+import { List, ListSubheader, ListItem } from '@mui/material';
 
 import { getTopicsByUnit } from 'services/questions';
 

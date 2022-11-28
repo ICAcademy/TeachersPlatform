@@ -1,0 +1,15 @@
+@import 'styles/colors.scss';
+
+.list {
+  display: flex;
+  justify-content: flex-start;
+
+  &__item {
+    width: auto;
+  }
+
+  &__itemBtn {
+    border: 1px solid $lightBlue !important;
+    color: $lightBlue !important;
+  }
+}

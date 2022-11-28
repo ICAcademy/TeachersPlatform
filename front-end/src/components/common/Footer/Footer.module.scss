@@ -1,0 +1,160 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/font.scss';
+
+.container {
+  width: 100%;
+  background: $darkBlue;
+  color: $white;
+  padding: 120px 0 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-bottom: 70px;
+  border-bottom: 0.1px solid $darkGrey;
+}
+
+.description {
+  width: 300px;
+  margin-right: 50px;
+}
+
+.logoContainer {
+  width: 130px;
+  margin: 0 0 30px;
+}
+
+.logo {
+  width: 100%;
+}
+
+.explanationContainer {
+  padding-bottom: 30px;
+}
+
+.explanation {
+  hyphens: auto;
+  margin-bottom: 10px;
+  font-size: $f16;
+  line-height: 26px;
+}
+
+.iconsList {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  padding: 0 0 0 0;
+}
+
+.iconItem {
+  margin-right: 15px;
+  border: 1px solid $black;
+  background: $white;
+  color: $black;
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+}
+
+.icon {
+  display: flex;
+  align-self: center;
+  transition: all 0.3s ease;
+  width: 15px;
+  height: 15px;
+  color: $black;
+  cursor: pointer;
+  &:hover {
+    transition: all 0.3s ease;
+    color: $purple200;
+  }
+}
+
+.companyContainer {
+  margin-left: 100px;
+}
+
+.companyHeader {
+  font-size: 20px;
+  line-height: 30px;
+  margin: 0 0 32px;
+}
+
+.companyInfoList {
+  padding: 0;
+}
+
+.companyInfoContainer {
+  display: flex;
+}
+
+.companyInfoItem {
+  list-style-type: none;
+  margin-bottom: 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    transition: all 0.3s ease;
+    color: $purple200;
+  }
+}
+
+.companyInfoItemSvg {
+  display: flex;
+  align-self: center;
+  transition: all 0.3s ease;
+  width: 10px;
+  height: 10px;
+  color: $white;
+  &:hover {
+    transition: all 0.3s ease;
+    color: $purple200;
+  }
+}
+
+.info {
+  margin-left: 8px;
+  font-size: 15px;
+  line-height: 30px;
+  text-decoration: none;
+  color: $white;
+  transition: all 0.3s ease;
+  &:hover {
+    color: $purple200;
+    transition: all 0.3s ease;
+  }
+}
+
+.contactContainer {
+  display: flex;
+  align-items: center;
+}
+
+.contactIcon {
+  display: flex;
+  align-self: center;
+  transition: all 0.3s ease;
+  width: 12px;
+  height: 12px;
+  color: $white;
+  &:hover {
+    transition: all 0.3s ease;
+    color: $purple200;
+  }
+}
+
+.copyrightContainer {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.copyright {
+  font-size: 16px;
+  line-height: 26px;
+}
+

@@ -1,5 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { List, ListItem, Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -17,6 +18,14 @@ const Units = ({ list }) => {
       ))}
     </List>
   );
+};
+
+Units.propTypes = {
+  list: PropTypes.array,
+};
+
+Units.defaultProps = {
+  list: [],
 };
 
 export default Units;

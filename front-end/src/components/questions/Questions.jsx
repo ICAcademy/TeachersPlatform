@@ -1,10 +1,10 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material';
 
 import { getLevels, getUnitsByLevel } from 'services/questions';
 import Levels from 'components/Levels/Levels';
 import Units from 'components/Units/Units';
+
+import styles from './Questions.module.scss';
 
 const Questions = () => {
   const [levels, setLevels] = useState([]);
@@ -25,11 +25,11 @@ const Questions = () => {
   }, []);
 
   return (
-    <Box>
-      <Typography variant='h3'>Questions</Typography>
+    <>
+      <h1 className={styles.title}>Questions</h1>
       <Levels list={levels} handleUnits={fetchUnits} />
       <Units list={units} />
-    </Box>
+    </>
   );
 };
 

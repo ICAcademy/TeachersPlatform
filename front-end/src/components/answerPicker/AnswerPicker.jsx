@@ -28,4 +28,9 @@ AnswerPicker.propTypes = {
   options: PropTypes.array,
 };
 
+AnswerPicker.defaultProps = {
+  id: '',
+  options: [],
+};
+
 export default AnswerPicker;

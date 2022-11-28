@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { List, ListItem, ListSubheader, Typography } from '@mui/material';
@@ -22,7 +21,7 @@ const Quiz = () => {
 
   const quiz = questionList.map((question, i) => (
     <ListItem
-      divider='true'
+      divider
       key={question._id}
       sx={{ display: 'flex', justifyContent: 'space-between', py: '15px' }}
     >
