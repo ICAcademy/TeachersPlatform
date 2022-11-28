@@ -5,23 +5,23 @@ const express = require('express');
 
 const materialRouter = require('./routes/MaterialRoutes');
 const questionRouter = require('./routes/Questions');
+const studentsRouter = require('./routes/StudentsRoutes');
+const teacherRouter = require('./routes/TeacherRoutes');
+const authUser = require('./routes/auth');
 
 const app = express();
 const port = process.env.PORT;
 
-const authUser = require('./routes/auth');
 const cors = require('cors');
 
 app.use(cors());
 app.use(express.json());
-const studentsRouter = require('./routes/StudentsRoutes');
-
-app.get('/', (req, res) => {});
 
 app.use('/auth', authUser);
 app.use('/api/materials', materialRouter);
 app.use('/api/students', studentsRouter);
 app.use('/api/questions', questionRouter);
+app.use('/api/teachers', teacherRouter);
 
 async function main() {
   try {
