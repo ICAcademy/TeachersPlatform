@@ -18,15 +18,21 @@ const Material = () => {
   const { url } = useParams();
 
   const getMaterialData = async (url) => {
-    setIsLoading(true);
-    const material = await getMaterialByUrl(url);
-    setMaterial(material);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const material = await getMaterialByUrl(url);
+      setMaterial(material);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     getMaterialData(url);
   }, [url]);
+
+  console.log(material);
 
   return (
     <div className={styles.materials}>
