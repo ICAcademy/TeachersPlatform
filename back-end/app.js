@@ -16,11 +16,11 @@ const cors = require('cors');
 
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 app.use('/auth', authUser);
-app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use('/api/materials', materialRouter);
-app.use('/api/levels', materialLevelsRouter);
+app.use('/api/materials-levels', materialLevelsRouter);
 app.use('/api/questions', questionRouter);
 app.use('/api/teachers', teacherRouter);
 
