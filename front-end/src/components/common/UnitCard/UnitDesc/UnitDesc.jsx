@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 //Styles
 import styles from './UnitDesc.module.scss';
@@ -11,30 +12,28 @@ import FirstLetterIcon from 'components/common/FirstLetterIcon/FirstLetterIcon';
 
 const UnitDesc = (props) => {
   return (
-    <div className={styles.unitDesc}>
+    <Link className={styles.unitDesc} to={`/materials/${props.item.url}`}>
       <div className={styles.unitInfo}>
-        <FirstLetterIcon firstLetter={props.unit[0]} />
+        <FirstLetterIcon firstLetter={props.item.unit[0]} />
         <div className={styles.dFlex}>
-          <div className={styles.unitTitle}>{props.unit}</div>
+          <div className={styles.unitTitle}>{props.item.unit}</div>
           <div className={styles.lessonsCount}>
             <span>Lessons:</span>
-            <span>{props.numberOfLessons}</span>
+            <span>{props.item.numberOfLessons}</span>
           </div>
         </div>
       </div>
       <FontAwesomeIcon icon={faArrowRight} />
-    </div>
+    </Link>
   );
 };
 
 //propTypes
 UnitDesc.propTypes = {
-  unit: PropTypes.string,
-  numberOfLessons: PropTypes.number,
+  item: PropTypes.object,
 };
 UnitDesc.defaultProps = {
-  unit: '',
-  numberOfLessons: 0,
+  item: {},
 };
 
 export default UnitDesc;

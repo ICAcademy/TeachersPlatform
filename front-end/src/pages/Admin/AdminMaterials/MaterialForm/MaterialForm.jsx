@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 //Services
 import { getLevels } from 'services/MaterialsService/MaterialsService';
 
 //Styles
-import styles from './CreateMaterial.module.scss';
+import styles from './MaterialForm.module.scss';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,7 +14,7 @@ import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 
-const CreateMaterial = () => {
+const CreateMaterial = (props) => {
   const [levels, setLevels] = useState([]);
 
   const [selectedLevel, setSelectedLevel] = useState('');
@@ -35,8 +36,10 @@ const CreateMaterial = () => {
     setSelectedLevel(event.target.value);
   };
 
+  console.log(props.material.unit);
+
   return (
-    <div className={styles.createFormWrapper}>
+    <div className={styles.formWrapper}>
       <h3>Create material</h3>
       <form className={styles.adminForm}>
         <Box>
@@ -46,6 +49,7 @@ const CreateMaterial = () => {
             variant='outlined'
             fullWidth
             margin='normal'
+            defaultValue='uses of like'
           />
         </Box>
         <Box>
@@ -75,6 +79,15 @@ const CreateMaterial = () => {
       </form>
     </div>
   );
+};
+
+//propTypes
+CreateMaterial.propTypes = {
+  material: PropTypes.object,
+};
+
+CreateMaterial.defaultProps = {
+  material: {},
 };
 
 export default CreateMaterial;

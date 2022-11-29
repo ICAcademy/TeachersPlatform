@@ -1,31 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 //Styles
 import styles from './UnitImg.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
-import { Link } from 'react-router-dom';
 
 const UnitImg = (props) => {
   return (
     <div className={styles.unitImg}>
-      <Link to='/asdasd'>
+      <Link to={`/materials/edit-${props.item.url}`}>
         <EditIcon className={styles.editIcon} fontSize='large' />
       </Link>
-      {props.image && <img src={`http://localhost:5000/uploads/${props.image}`} />}
-      {!props.image && <p className={styles.noImage}>{props.unit}</p>}
+      {props.item.image && (
+        <Link to={`/materials/${props.item.url}`}>
+          <img src={`http://localhost:5000/uploads/${props.item.image}`} />
+        </Link>
+      )}
+      {!props.item.image && <p className={styles.noImage}>{props.item.unit}</p>}
     </div>
   );
 };
 
 //propTypes
 UnitImg.propTypes = {
-  image: PropTypes.string,
-  unit: PropTypes.string,
+  item: PropTypes.object,
 };
 UnitImg.defaultProps = {
-  image: '',
-  init: '',
+  item: {},
 };
 
 export default UnitImg;
