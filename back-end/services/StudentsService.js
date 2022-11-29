@@ -5,12 +5,7 @@ exports.getAllStudents = async () => {
 };
 
 exports.createStudents = async (student) => {
-  return await StudentsModel.create({
-    name: student.name,
-    dateOfBirth: student.dateOfBirth,
-    email: student.email,
-    number: student.number,
-  });
+  return await StudentsModel.create(student);
 };
 
 exports.getStudentsById = async (id) => {

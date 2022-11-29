@@ -1,0 +1,1 @@
+exports.teacher = 'teacher';
