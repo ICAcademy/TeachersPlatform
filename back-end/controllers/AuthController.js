@@ -7,7 +7,7 @@ const { createTeacher } = require('../services/TeacherService');
 const register = require('../services/AuthService');
 
 // constants
-const { TEACHER } = require('../constants/constants');
+const { TEACHER } = require('../constants/UserRoles');
 
 const createRoleForUser = async (role, data) => {
   if (role === TEACHER) {
