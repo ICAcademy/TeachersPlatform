@@ -16,8 +16,8 @@ import Button from '@mui/material/Button';
 
 const CreateMaterial = (props) => {
   const [levels, setLevels] = useState([]);
-
   const [selectedLevel, setSelectedLevel] = useState('');
+  const [unitName, setUnitName] = useState(props.material.unit);
 
   const levelsData = async () => {
     try {
@@ -28,15 +28,19 @@ const CreateMaterial = (props) => {
     }
   };
 
+  const handleInputChange = (event) => {
+    setUnitName(event.target.value);
+  };
+
+  const handleSelectChange = (event) => {
+    setSelectedLevel(event.target.value);
+  };
+
   useEffect(() => {
     levelsData();
   }, []);
 
-  const handleChange = (event) => {
-    setSelectedLevel(event.target.value);
-  };
-
-  console.log(props.material.unit);
+  console.log(unitName);
 
   return (
     <div className={styles.formWrapper}>
@@ -44,12 +48,10 @@ const CreateMaterial = (props) => {
       <form className={styles.adminForm}>
         <Box>
           <TextField
-            id='outlined-basic'
-            label='Unit name'
-            variant='outlined'
-            fullWidth
-            margin='normal'
-            defaultValue='uses of like'
+            id='outlined-name'
+            label='Name'
+            value={unitName}
+            onChange={handleInputChange}
           />
         </Box>
         <Box>
@@ -59,7 +61,7 @@ const CreateMaterial = (props) => {
               labelId='levels-select-label'
               id='levels-select'
               value={selectedLevel}
-              onChange={handleChange}
+              onChange={handleSelectChange}
               label='Age'
             >
               {levels.map((level) => (
