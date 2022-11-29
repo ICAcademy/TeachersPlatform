@@ -1,0 +1,25 @@
+.unitDesc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.unitInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.unitTitle {
+  font-size: 1rem;
+}
+
+.lessonsCount {
+  color: #a1a4b5;
+  font-size: 0.85rem;
+
+  span:first-child {
+    margin-right: 5px;
+  }
+}
