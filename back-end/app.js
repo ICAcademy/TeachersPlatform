@@ -5,7 +5,7 @@ const express = require('express');
 
 const materialRouter = require('./routes/MaterialRoutes');
 const questionRouter = require('./routes/Questions');
-const studentsRouter = require('./routes/StudentsRoutes');
+const studentRouter = require('./routes/StudentRoutes');
 const teacherRouter = require('./routes/TeacherRoutes');
 const authUser = require('./routes/auth');
 
@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.use('/auth', authUser);
 app.use('/api/materials', materialRouter);
-app.use('/api/students', studentsRouter);
+app.use('/api/students', studentRouter);
 app.use('/api/questions', questionRouter);
 app.use('/api/teachers', teacherRouter);
 

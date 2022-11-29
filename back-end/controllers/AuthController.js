@@ -2,7 +2,7 @@
 const registerValidation = require('../helpers/validation');
 
 // services
-const { createStudents } = require('../services/StudentsService');
+const { createStudent } = require('../services/StudentService');
 const { createTeacher } = require('../services/TeacherService');
 const register = require('../services/AuthService');
 
@@ -13,7 +13,7 @@ const createRoleForUser = async (role, data) => {
   if (role === TEACHER) {
     return await createTeacher(data);
   }
-  return await createStudents(data);
+  return await createStudent(data);
 };
 
 exports.createUser = async (req, res) => {
