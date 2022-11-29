@@ -1,0 +1,40 @@
+.loader {
+  display: inline-block;
+  position: absolute;
+  width: 3em;
+  height: 3em;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  color: inherit;
+  vertical-align: middle;
+  pointer-events: none;
+  &:before,
+  &:after {
+    content: '';
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    background-color: #b464a6;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: loader 2s infinite ease-in-out;
+  }
+  &:after {
+    animation-delay: -1s;
+  }
+}
+
+@keyframes loader {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
