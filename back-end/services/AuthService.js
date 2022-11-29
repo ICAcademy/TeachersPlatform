@@ -18,8 +18,6 @@ const register = (data) => {
   });
 };
 
-const findByEmail = async (email) => await User.findOne({ email });
-
 const login = async (data) => {
   const email = data.email;
   const password = data.password;
@@ -44,5 +42,7 @@ const comparePasswords = (pass1, pass2) =>
       return resolve(result);
     });
   });
+
+const findByEmail = async (email) => await User.findOne({ email });
 
 module.exports = { register, login, findByEmail };

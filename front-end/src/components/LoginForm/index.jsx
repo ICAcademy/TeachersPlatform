@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FormControl, TextField, Box, Button, InputAdornment } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { nanoid } from 'nanoid';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { userService } from 'services/authServices';
+// Services
+import { authService } from 'services/authServices';
 
 // Styles
 import styles from './LoginForm.module.scss';
@@ -16,10 +17,7 @@ const LoginForm = () => {
     password: '',
   });
 
-  const [message, setMessage] = useState({
-    success: '',
-    error: '',
-  });
+  const [isError, setIsError] = useState(false);
 
   const history = useNavigate();
 
@@ -32,36 +30,23 @@ const LoginForm = () => {
     [data.email, data.password],
   );
 
-  const backendResponse = async (userInfo) => {
+  const loginUser = async (userInfo) => {
     try {
-      const answer = await userService.login(userInfo);
-      if (answer) {
-        setMessage((prev) => ({ ...prev, success: answer.data?.message }));
+      const {
+        data: { token },
+      } = await authService.login(userInfo);
+      if (token) {
+        history('/app');
       }
     } catch (err) {
-      setMessage((prev) => ({ ...prev, error: err.response.data?.error }));
+      setIsError(true);
+      console.log(err);
     }
   };
 
   const handleSubmit = () => {
-    backendResponse(data);
+    loginUser(data);
   };
-
-  useEffect(() => {
-    const isEmpty = Object.values(data).includes('');
-    if (!isEmpty && message.success !== '') {
-      localStorage.getItem('token');
-      history('/app');
-      setMessage({
-        success: '',
-        error: '',
-      });
-      setData({
-        email: '',
-        password: '',
-      });
-    }
-  }, [message]);
 
   return (
     <div className={styles.wrap}>
@@ -73,7 +58,7 @@ const LoginForm = () => {
         <Box>
           <FormControl sx={{ width: '400px' }}>
             <TextField
-              error={message.error !== ''}
+              error={false}
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='email'
               name='email'
@@ -95,7 +80,7 @@ const LoginForm = () => {
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='password'
               name='password'
-              error={message.error !== ''}
+              error={false}
               value={data.password}
               onChange={(e) => handleChange(e)}
               placeholder='Password'
@@ -118,7 +103,7 @@ const LoginForm = () => {
             >
               Sign in
             </Button>
-            {message.error ? (
+            {isError ? (
               <div className={styles.error}>
                 <FontAwesomeIcon
                   icon={faTriangleExclamation}
@@ -126,16 +111,10 @@ const LoginForm = () => {
                   width={12}
                   height={12}
                 />
-                {`
-                ${message.error}
-                `}
+                {' Wrong password or email address...'}
               </div>
             ) : (
-              <div className={styles.success}>
-                {`
-                ${message.success}
-                `}
-              </div>
+              ''
             )}
           </FormControl>
         </Box>

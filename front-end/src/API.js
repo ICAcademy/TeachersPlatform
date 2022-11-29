@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Services
-import { tokenService } from 'services/tokenServices';
+import { tokenServices } from 'services/tokenServices';
 
 export const API_URL = 'http://localhost:5000';
 export const URL = 'http://localhost:3000';
@@ -13,10 +13,10 @@ const API = axios.create({
   },
 });
 const onRequestSuccess = async (config) => {
-  const tokens = tokenService.getTokens();
-  if (tokens?.accessToken) {
+  const token = tokenServices.getToken();
+  if (token) {
     if (config?.headers) {
-      config.headers.Authorization = `Bearer ${tokenService.getAccessToken()}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
   }
   return config;

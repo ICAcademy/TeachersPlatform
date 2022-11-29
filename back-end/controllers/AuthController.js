@@ -10,7 +10,7 @@ exports.createUser = async (req, res) => {
     const candidate = await findByEmail(email);
 
     if (candidate) {
-      return res.status(400).json({ message: 'A user with that name already exists' });
+      return res.status(400).json({ message: 'A user with that email address already exists' });
     }
     if (error) {
       return res.status(400).send(error.details[0].message);
@@ -39,7 +39,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-exports.getAuthorizedUser = async (req, res) => {
+exports.getUser = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {

@@ -1,23 +1,20 @@
 import API, { API_URL } from 'API';
-import { tokenService } from 'services/tokenServices';
+import { tokenServices } from 'services/tokenServices';
 
-export const userService = {
-  registration: async (userData) => {
-    const { data } = API.post(`${API_URL}/auth/register`, userData);
-    tokenService.updateTokens(data);
+export const authService = {
+  registration: async (user) => {
+    const { data } = API.post(`${API_URL}/auth/register`, user);
     return data;
   },
 
-  login: async (userData) => {
-    const { data } = await API.post(`${API_URL}/auth/login`, userData);
-    tokenService.updateTokens(data);
+  login: async (user) => {
+    const data = await API.post(`${API_URL}/auth/login`, user);
+    tokenServices.updateToken(data.data.token);
     return data;
   },
 
   logout: async () => {
-    await API.post('/auth/logout');
-    localStorage.removeItem('token');
+    await API.post(`${API_URL}/auth/logout`);
+    tokenServices.removeToken();
   },
 };
-
-// export const fetchUserByToken = (data) => axios.post('http://localhost:5000/api/me', data);

@@ -1,31 +1,11 @@
-const TOKENS_LS_NAME = 'token';
+const TOKEN_NAME = 'token';
 
-export const tokenService = {
-  getTokens: () =>
-    localStorage.getItem(TOKENS_LS_NAME) ?? JSON.parse(localStorage.getItem(TOKENS_LS_NAME)),
-  getAccessToken: () => {
-    const tokens = tokenService.getTokens();
-    return tokens?.accessToken;
+export const tokenServices = {
+  getToken: () => localStorage.getItem(TOKEN_NAME) ?? JSON.parse(localStorage.getItem(TOKEN_NAME)),
+  updateToken: (token) => {
+    localStorage.setItem(TOKEN_NAME, token);
   },
-  updateTokens: (tokens) => {
-    localStorage.setItem(TOKENS_LS_NAME, JSON.stringify(tokens));
+  removeToken: () => {
+    localStorage.removeItem(TOKEN_NAME);
   },
-  updateAccessTokens: (accessToken) => {
-    const tokens = tokenService.getTokens();
-    tokens.accessToken = accessToken;
-    tokenService.updateTokens(tokens);
-  },
-  removeTokens: () => {
-    localStorage.removeItem(TOKENS_LS_NAME);
-  },
-  // getUserInfo: () => {
-  //   const tokens = JSON.parse(tokenService.getTokens());
-  //   return (
-  //     tokens?.user ?? {
-  //       email: '',
-  //       id: '',
-  //       isActivated: false,
-  //     }
-  //   );
-  // },
 };
