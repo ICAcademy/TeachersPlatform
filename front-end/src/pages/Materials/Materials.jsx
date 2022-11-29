@@ -40,12 +40,7 @@ const Materials = () => {
 
   return (
     <div className={styles.materials}>
-      <div className={styles.navigationRow}>
-        <Levels selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
-        <Button variant='contained' endIcon={<Add />}>
-          Create material
-        </Button>
-      </div>
+      <Levels selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
       {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
     </div>
   );
