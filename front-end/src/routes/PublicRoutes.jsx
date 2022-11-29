@@ -1,5 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { NotFound } from 'components/NotFound/NotFound';
+import { Content } from 'components/Content/Content';
+import Main from 'pages/Main/Main';
 
 // Pages
 import { Content } from 'components/Content/Content';
@@ -19,4 +22,3 @@ const PublicRoutes = () => (
 );
 
 export default PublicRoutes;
-

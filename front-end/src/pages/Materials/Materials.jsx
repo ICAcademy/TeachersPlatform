@@ -17,10 +17,14 @@ const Materials = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const unitsByLevelData = async (level) => {
-    setIsLoading(true);
-    const units = await getUnitsByLevel(level);
-    setUnitsByLevel(units);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const units = await getUnitsByLevel(level);
+      setUnitsByLevel(units);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const changeLevelHandler = (level) => {
@@ -35,8 +39,7 @@ const Materials = () => {
   return (
     <div className={styles.materials}>
       <Levels selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
-      {!isLoading && unitsByLevel.length > 0 && <Units materials={unitsByLevel} />}
-      {isLoading && <Loader />}
+      {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
     </div>
   );
 };
