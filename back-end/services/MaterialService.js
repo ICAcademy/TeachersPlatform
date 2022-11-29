@@ -30,7 +30,22 @@ exports.getUnitsByLevel = async (level) => {
       $match: { level: { $eq: level } },
     },
     {
-      $project: { level: 1, unit: 1, image: 1 },
+      $project: {
+        _id: 1,
+        level: 1,
+        unit: 1,
+        image: 1,
+        url: 1,
+        numberOfLessons: {
+          $cond: { if: { $isArray: '$lessons' }, then: { $size: '$lessons' }, else: null },
+        },
+      },
     },
   ]);
+};
+
+exports.getMaterialByUrl = async (url) => {
+  return await MaterialModel.findOne({
+    url: { $eq: url },
+  });
 };

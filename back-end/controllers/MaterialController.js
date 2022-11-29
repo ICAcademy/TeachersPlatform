@@ -62,3 +62,12 @@ exports.getUnitsByLevel = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+exports.getMaterialByUrl = async (req, res) => {
+  try {
+    const material = await materialService.getMaterialByUrl(req.params.url);
+    res.json(material);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};

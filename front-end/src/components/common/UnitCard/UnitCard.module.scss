@@ -25,3 +25,9 @@
   flex: 1 1 auto;
   border-radius: 5px;
 }
+
+@media screen and (max-width: 1680px) {
+  .unitItem {
+    flex: 0 0 33.33%;
+  }
+}

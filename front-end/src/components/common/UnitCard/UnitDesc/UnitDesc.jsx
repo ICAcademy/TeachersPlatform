@@ -6,12 +6,21 @@ import styles from './UnitDesc.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
+//Components
+import FirstLetterIcon from 'components/common/FirstLetterIcon/FirstLetterIcon';
+
 const UnitDesc = (props) => {
   return (
     <div className={styles.unitDesc}>
-      <div className={styles.unitName}>
-        <div className={styles.unitIcon}>{props.unit[0]}</div>
-        <div className={styles.dFlex}>{props.unit}</div>
+      <div className={styles.unitInfo}>
+        <FirstLetterIcon firstLetter={props.unit[0]} />
+        <div className={styles.dFlex}>
+          <div className={styles.unitTitle}>{props.unit}</div>
+          <div className={styles.lessonsCount}>
+            <span>Lessons:</span>
+            <span>{props.numberOfLessons}</span>
+          </div>
+        </div>
       </div>
       <FontAwesomeIcon icon={faArrowRight} />
     </div>
@@ -21,9 +30,11 @@ const UnitDesc = (props) => {
 //propTypes
 UnitDesc.propTypes = {
   unit: PropTypes.string,
+  numberOfLessons: PropTypes.number,
 };
 UnitDesc.defaultProps = {
   unit: '',
+  numberOfLessons: 0,
 };
 
 export default UnitDesc;

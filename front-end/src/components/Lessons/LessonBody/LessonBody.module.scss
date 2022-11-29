@@ -1,0 +1,29 @@
+.lessonBody {
+  position: relative;
+  min-height: calc(100vh - 3rem);
+  padding: 3rem;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+
+  h2 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.85rem;
+  }
+
+  p {
+    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (max-width: 1680px) {
+  .lessonBody {
+    p {
+      font-size: 1rem;
+    }
+  }
+}
