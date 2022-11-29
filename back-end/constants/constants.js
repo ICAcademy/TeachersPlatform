@@ -1,1 +1,1 @@
-exports.teacher = 'teacher';
+exports.TEACHER = 'teacher';
