@@ -1,0 +1,27 @@
+.unitItem {
+  flex: 0 0 25%;
+}
+
+.unitWrapper {
+  margin: 0 0.75rem 1.5rem;
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 0px;
+  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 14px 24px rgb(0 0 0 / 20%);
+    z-index: 999;
+  }
+}
+
+.unitBody {
+  padding: 1rem;
+  flex: 1 1 auto;
+  border-radius: 5px;
+}
