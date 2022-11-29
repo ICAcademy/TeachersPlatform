@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 
-// Components
-import RouterWrapper from 'routes/RouterWrapper';
+// Router
+import AppRouter from 'routes/AppRouter';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Theme style
-import theme from './styles/customTheme';
+import theme from 'styles/customTheme';
 
 const App = () => {
   const { fetchUser } = useContext(CurrentUserContext);
@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <RouterWrapper />
+      <AppRouter />
     </ThemeProvider>
   );
 };
