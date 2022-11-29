@@ -13,7 +13,7 @@ app.use('/public', express.static(path.join(__dirname, 'static', 'public')));
 const router = express.Router();
 
 const admin = require('firebase-admin');
-const serviceAccount = require('./serviceAccountKey.json');
+const serviceAccount = require(process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -21,13 +21,20 @@ admin.initializeApp({
   storageBucket: process.env.BUCKET_URL,
 });
 
-app.locals.bucket = admin.storage().bucket();
+const storage = admin.storage().bucket();
 
 router.post('/', upload.single('file'), async (req, res) => {
-  const name = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
-  const fileName = name + path.extname(req.file.originalname);
-  await app.locals.bucket.file(fileName).createWriteStream().end(req.file.buffer);
-  res.send('done');
+  try {
+    const name = saltedMd5(req.file.originalname, 'SUPER-S@LT!');
+    const fileName = name + path.extname(req.file.originalname);
+    const fileToUpload = storage.file(fileName);
+    fileToUpload.createWriteStream().end(req.file.buffer);
+    const storageURL = fileToUpload.publicUrl();
+    res.status(200).send(storageURL);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
 });
 
 module.exports = router;

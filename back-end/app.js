@@ -2,6 +2,9 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const compression = require('compression');
 
 const teacherRouter = require('./routes/TeacherRoutes');
 const materialRouter = require('./routes/MaterialRoutes');
@@ -11,9 +14,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const authUser = require('./routes/auth');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const compression = require('compression');
 
 const upload = require('./Firebase');
 
