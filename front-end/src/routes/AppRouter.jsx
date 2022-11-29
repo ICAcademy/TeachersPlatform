@@ -6,12 +6,12 @@ import PrivateRoute from 'routes/PrivateRoute';
 
 // Components
 import Content from 'components/Content/Content';
-import { NotFound } from 'components/NotFound/NotFound';
 import { Sidebar } from 'components/Sidebar/Sidebar';
 
 // Pages
 import Login from 'pages/Login';
 import Registration from 'pages/Registration';
+import NotFound from 'pages/NotFound';
 
 const RouterWrapper = () => (
   <Routes>
