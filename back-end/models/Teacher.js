@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const teacherSchema = new Schema(
   {
-    name: {
+    fullName: {
       type: String,
     },
     dateOfBirth: {
@@ -19,4 +19,3 @@ const teacherSchema = new Schema(
 );
 
 module.exports = model('Teacher', teacherSchema);
-

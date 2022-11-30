@@ -19,4 +19,3 @@ exports.updateTeacher = async (id, teacher) => {
 exports.deleteTeacher = async (id) => {
   return await TeacherModel.findByIdAndDelete(id);
 };
-

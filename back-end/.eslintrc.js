@@ -1,4 +1,3 @@
-require('dotenv').config();
 module.exports = exports = {
   env: {
     commonjs: true,
@@ -13,7 +12,7 @@ module.exports = exports = {
   plugins: ['prettier'],
   rules: {
     indent: ['error', 2],
-    'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
+    'linebreak-style': 0,
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'eol-last': ['error', 'always'],
