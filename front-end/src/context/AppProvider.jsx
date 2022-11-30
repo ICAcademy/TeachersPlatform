@@ -14,7 +14,9 @@ const AppProvider = ({ children }) => {
     const accessToken = localStorage.getItem('token');
     try {
       const { data } = await userServices.getUser(accessToken);
-      setCurrentUser(data);
+      if (data) {
+        setCurrentUser(data);
+      }
     } catch (err) {
       console.log(err);
     }

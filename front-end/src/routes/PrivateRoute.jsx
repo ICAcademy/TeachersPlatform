@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Navigate } from 'react-router';
 import PropTypes from 'prop-types';
-import Login from 'pages/Login';
+
+// Context
+import { CurrentUserContext } from 'context/AppProvider';
 
 const PrivateRoute = ({ children }) => {
-  const activated = localStorage.getItem('token');
-  return activated ? children : <Login />;
+  const { currentUser } = useContext(CurrentUserContext);
+  return Object.keys(currentUser).length !== 0 ? children : <Navigate to='/login' replace />;
 };
 
 PrivateRoute.propTypes = {

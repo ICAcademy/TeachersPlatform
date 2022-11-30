@@ -6,7 +6,7 @@ const userServices = {
       const user = await API.get(`${API_URL}/auth/me`);
       return user;
     } catch (e) {
-      console.log(e, '1');
+      console.log(e);
     }
   },
 };

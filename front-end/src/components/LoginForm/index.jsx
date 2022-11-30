@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import { FormControl, TextField, Box, Button, InputAdornment } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -8,10 +8,15 @@ import { Link, useNavigate } from 'react-router-dom';
 // Services
 import { authService } from 'services/authServices';
 
+// Context
+import { CurrentUserContext } from 'context/AppProvider';
+
 // Styles
 import styles from './LoginForm.module.scss';
 
 const LoginForm = () => {
+  const { fetchUser } = useContext(CurrentUserContext);
+
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -36,6 +41,7 @@ const LoginForm = () => {
         data: { token },
       } = await authService.login(userInfo);
       if (token) {
+        await fetchUser();
         history('/app');
       }
     } catch (err) {
