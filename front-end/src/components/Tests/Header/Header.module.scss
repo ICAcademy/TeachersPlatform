@@ -1,29 +1,21 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/font.scss';
+
 .header {
   display: flex;
   flex-direction: column;
-  background: #fff;
-  width: 700px;
+  background: $white;
+  width: 1060px;
   padding: 30px 30px;
   border-radius: 10px;
   box-shadow: 0px 4px 74px rgb(0 0 0 / 8%);
   margin-top: 30px;
+  border: 1px solid $lightGrey;
 }
 
 .itemContainer {
   display: flex;
   justify-content: center;
-}
-
-.textContainer {
-  display: flex;
-  align-self: center;
-}
-
-.text {
-  height: 20px;
-  font-size: 20px;
-  width: 100px;
-  color: #797979;
 }
 
 .inputContainer {
@@ -35,13 +27,12 @@
 
 .input {
   width: 100%;
-  font-weight: 400;
-  font-size: 20px;
+  font-weight: $fw400;
+  font-size: $f20;
   letter-spacing: 0;
   padding: 0.5em 0.5em;
-  background-color: #f6f9fb;
-  border-color: #f6f9fb;
-  color: #797979;
+  border-color: $grey400;
+  color: $grey400;
   border-radius: 0.25rem;
 }
 

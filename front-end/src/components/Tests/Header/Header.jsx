@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { Input } from '@mui/material';
+import { TextField } from '@mui/material';
 
 // styles
 import styles from './Header.module.scss';
@@ -13,36 +13,33 @@ const Header = ({ level, setLevel, unit, setUnit, topic, setTopic }) => {
   return (
     <div className={styles.header}>
       <div className={styles.itemContainer}>
-        <div className={styles.textContainer}>
-          <p className={styles.text}>Level</p>
-        </div>
         <div className={styles.inputContainer}>
-          <Input
+          <TextField
             className={styles.input}
+            variant='outlined'
+            label='level'
             value={level}
             onChange={(event) => handleChangeInput(setLevel, event)}
           />
         </div>
       </div>
       <div className={styles.itemContainer}>
-        <div className={styles.textContainer}>
-          <p className={styles.text}>Unit</p>
-        </div>
         <div className={styles.inputContainer}>
-          <Input
+          <TextField
             className={styles.input}
+            variant='outlined'
+            label='unit'
             value={unit}
             onChange={(event) => handleChangeInput(setUnit, event)}
           />
         </div>
       </div>
       <div className={styles.itemContainer}>
-        <div className={styles.textContainer}>
-          <p className={styles.text}>Topic</p>
-        </div>
         <div className={styles.inputContainer}>
-          <Input
+          <TextField
             className={styles.input}
+            variant='outlined'
+            label='topic'
             value={topic}
             onChange={(event) => handleChangeInput(setTopic, event)}
           />
@@ -52,7 +49,7 @@ const Header = ({ level, setLevel, unit, setUnit, topic, setTopic }) => {
   );
 };
 
-export default Header;
+export default memo(Header);
 
 Header.propTypes = {
   level: PropTypes.string,

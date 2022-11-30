@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // components
-import { Button, Checkbox, Input } from '@mui/material';
+import { Button, Checkbox, Input, TextField } from '@mui/material';
 
 // assets
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +12,7 @@ import styles from './Question.module.scss';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const Question = ({
+  index,
   question,
   addAnswer,
   changeTitleForQuestion,
@@ -22,11 +23,19 @@ const Question = ({
   return (
     <div className={styles.questionContainer}>
       <div className={styles.titleContainer}>
-        <Input
-          className={styles.input}
-          value={question.title}
-          onChange={(event) => changeTitleForQuestion(question.id, event)}
-        />
+        <div className={styles.numberOfQuestion}>
+          <span className={styles.question}>Question</span>
+          {index + 1}
+        </div>
+        <div className={styles.titleInputContainer}>
+          <TextField
+            className={styles.input}
+            variant='outlined'
+            label='title'
+            value={question.title}
+            onChange={(event) => changeTitleForQuestion(question.id, event)}
+          />
+        </div>
       </div>
       <div className={styles.answersContainer}>
         {question.answers.map((answer) => {
@@ -34,7 +43,7 @@ const Question = ({
             <div className={styles.answerContainer} key={answer.id}>
               <div className={styles.checkboxAnswerContainer}>
                 <Checkbox
-                  size='large'
+                  size='medium'
                   className={styles.checkbox}
                   checked={answer.right}
                   onChange={() => changeRightAnswerForQuestion(question.id, answer.id)}
@@ -50,7 +59,7 @@ const Question = ({
               <div className={styles.buttonDeleteAnswerContainer}>
                 <Button
                   className={styles.button}
-                  variant='contained'
+                  size='small'
                   onClick={() => deleteAnwerForQuestion(question.id, answer.id)}
                 >
                   <FontAwesomeIcon icon={faXmark} />
@@ -70,6 +79,7 @@ const Question = ({
 };
 
 Question.propTypes = {
+  index: PropTypes.number,
   question: PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,

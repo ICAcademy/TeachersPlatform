@@ -179,44 +179,49 @@ const Tests = () => {
   const postData = (tests) => axios.post('http://localhost:5000/api/questions/', tests);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <div className={styles.headerContainer}>
-          <Header
-            level={level}
-            setLevel={setLevel}
-            unit={unit}
-            setUnit={setUnit}
-            topic={topic}
-            setTopic={setTopic}
-          />
-        </div>
-        <div className={styles.questionsContainer}>
-          {questions.map((question) => {
-            return (
-              <Question
-                key={question.id}
-                question={question}
-                setQuestions={setQuestions}
-                addAnswer={addAnswer}
-                changeTitleForQuestion={changeTitleForQuestion}
-                changeRightAnswerForQuestion={changeRightAnswerForQuestion}
-                changeAnswerForQuestion={changeAnswerForQuestion}
-                deleteAnwerForQuestion={deleteAnwerForQuestion}
-              />
-            );
-          })}
-        </div>
-        <div className={styles.buttonsContainer}>
-          <div className={styles.addQuestionContainer}>
-            <Button variant='contained' onClick={addQuestion}>
-              Add Question
-            </Button>
+    <div className={styles.pageContainer}>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <div className={styles.headerContainer}>
+            <Header
+              level={level}
+              setLevel={setLevel}
+              unit={unit}
+              setUnit={setUnit}
+              topic={topic}
+              setTopic={setTopic}
+            />
           </div>
-          <div className={styles.saveTestsContainer}>
-            <Button variant='contained' onClick={save}>
-              Save Test
-            </Button>
+          {questions.length > 0 && (
+            <div className={styles.questionsContainer}>
+              {questions.map((question, index) => {
+                return (
+                  <Question
+                    key={question.id}
+                    index={index}
+                    question={question}
+                    setQuestions={setQuestions}
+                    addAnswer={addAnswer}
+                    changeTitleForQuestion={changeTitleForQuestion}
+                    changeRightAnswerForQuestion={changeRightAnswerForQuestion}
+                    changeAnswerForQuestion={changeAnswerForQuestion}
+                    deleteAnwerForQuestion={deleteAnwerForQuestion}
+                  />
+                );
+              })}
+            </div>
+          )}
+          <div className={styles.buttonsContainer}>
+            <div className={styles.addQuestionContainer}>
+              <Button variant='contained' onClick={addQuestion}>
+                Add Question
+              </Button>
+            </div>
+            <div className={styles.saveTestsContainer}>
+              <Button variant='contained' onClick={save}>
+                Save Test
+              </Button>
+            </div>
           </div>
         </div>
       </div>
