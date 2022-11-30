@@ -22,7 +22,7 @@
   },
   "rules": {
     "indent": ["error", 2],
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": 0,
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "prefer-arrow-callback": ["error"],
@@ -46,7 +46,7 @@
     "react/jsx-one-expression-per-line": [
       "error",
       {
-        "allow": "literal"
+        "allow": "single-child"
       }
     ],
     "react/jsx-no-useless-fragment": [
@@ -55,12 +55,12 @@
         "allowExpressions": true
       }
     ],
-    // "react/jsx-max-depth": [
-    //   "error",
-    //   {
-    //     "max": 4
-    //   }
-    // ],
+    "react/jsx-max-depth": [
+      "error",
+      {
+        "max": 4
+      }
+    ],
     "react/jsx-wrap-multilines": [
       "error",
       {
@@ -74,7 +74,12 @@
       }
     ],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
-

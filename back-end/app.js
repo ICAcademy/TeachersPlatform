@@ -2,6 +2,10 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 const express = require('express');
+
+const studentRouter = require('./routes/StudentRoutes');
+const teacherRouter = require('./routes/TeacherRoutes');
+
 const app = express();
 const port = process.env.PORT;
 
@@ -15,11 +19,12 @@ const authRouter = require('./routes/AuthRouter');
 
 app.use(cors);
 app.use(express.json());
-
-app.get('/', (req, res) => {});
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 app.use('/api', authentication, appRouter);
+app.use('/api/students', studentRouter);
 app.use('/auth', authRouter);
+app.use('/api/teachers', teacherRouter);
 
 async function main() {
   try {

@@ -21,7 +21,6 @@ const RouterWrapper = () => (
       element={
         <PrivateRoute>
           <Sidebar />
-          <h1>App</h1>
         </PrivateRoute>
       }
     />
