@@ -9,13 +9,17 @@ export const CurrentUserContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchUser = async () => {
     const accessToken = localStorage.getItem('token');
     try {
       const { data } = await userServices.getUser(accessToken);
-      if (data) {
-        setCurrentUser(data);
+      if (isLoading) {
+        if (data) {
+          setIsLoading(false);
+          setCurrentUser(data);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -23,7 +27,7 @@ const AppProvider = ({ children }) => {
   };
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, fetchUser }}>
+    <CurrentUserContext.Provider value={{ currentUser, fetchUser, isLoading }}>
       {children}
     </CurrentUserContext.Provider>
   );

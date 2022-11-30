@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Services
-import { authService } from 'services/authServices';
+import { authServices } from 'services/authServices';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -39,7 +39,7 @@ const LoginForm = () => {
     try {
       const {
         data: { token },
-      } = await authService.login(userInfo);
+      } = await authServices.login(userInfo);
       if (token) {
         await fetchUser();
         history('/app');

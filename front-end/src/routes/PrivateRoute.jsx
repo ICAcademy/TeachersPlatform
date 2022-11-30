@@ -6,8 +6,14 @@ import PropTypes from 'prop-types';
 import { CurrentUserContext } from 'context/AppProvider';
 
 const PrivateRoute = ({ children }) => {
-  const { currentUser } = useContext(CurrentUserContext);
-  return Object.keys(currentUser).length !== 0 ? children : <Navigate to='/login' replace />;
+  const { currentUser, isLoading } = useContext(CurrentUserContext);
+  if (!isLoading) {
+    return children;
+  }
+
+  if (!isLoading || Object.keys(currentUser).length === 0) {
+    return <Navigate to='/login' replace />;
+  }
 };
 
 PrivateRoute.propTypes = {

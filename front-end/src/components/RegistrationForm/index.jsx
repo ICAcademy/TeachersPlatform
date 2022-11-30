@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -20,7 +21,7 @@ import { nanoid } from 'nanoid';
 import { regexEmail, regexFullName, regexPassword } from 'helpers/regex';
 
 // Services
-import { authService } from 'services/authServices';
+import { authServices } from 'services/authServices';
 
 // Styles
 import styles from './RegistrationForm.module.scss';
@@ -81,7 +82,7 @@ const RegistrationForm = () => {
   };
 
   const handleSubmit = () => {
-    if (!checkValidation()) authService.registration(data);
+    if (!checkValidation()) authServices.registration(data);
     history('/login');
   };
 

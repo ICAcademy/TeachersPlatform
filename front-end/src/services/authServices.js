@@ -1,7 +1,7 @@
 import API, { API_URL } from 'API';
 import { tokenServices } from 'services/tokenServices';
 
-export const authService = {
+export const authServices = {
   registration: async (user) => {
     const { data } = API.post(`${API_URL}/auth/register`, user);
     return data;
@@ -14,7 +14,6 @@ export const authService = {
   },
 
   logout: async () => {
-    await API.post(`${API_URL}/auth/logout`);
     tokenServices.removeToken();
   },
 };

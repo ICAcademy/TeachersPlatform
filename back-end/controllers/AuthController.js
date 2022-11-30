@@ -1,13 +1,14 @@
-// helpers
 const jwt = require('jsonwebtoken');
+
+// Helpers
 const registerValidation = require('../helpers/validation');
 
-// services
+// Services
 const { createStudent } = require('../services/StudentService');
 const { createTeacher } = require('../services/TeacherService');
 const { register, login, findByEmail } = require('../services/AuthService');
 
-// constants
+// Constants
 const { TEACHER } = require('../constants/UserRoles');
 
 const createRoleForUser = async (role, data) => {
@@ -44,7 +45,7 @@ let token;
 exports.loginUser = async (req, res) => {
   try {
     const data = req.body;
-    token = await login(data, res);
+    token = await login(data);
 
     if (!token) {
       return res.status(400).json({ message: 'User was not found!' });
@@ -69,6 +70,7 @@ exports.getUser = async (req, res) => {
     if (!user) {
       res.status(401).json({ message: 'User was not found!' });
     }
+
     res.status(200).json(user);
   } catch (err) {
     res.status(401).json({ error: err.message });
