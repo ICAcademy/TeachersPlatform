@@ -10,7 +10,8 @@ const teacherRouter = require('./routes/TeacherRoutes');
 const materialRouter = require('./routes/MaterialRoutes');
 const materialLevelsRouter = require('./routes/MaterialLevelsRoutes');
 const questionRouter = require('./routes/Questions');
-const studentsRouter = require('./routes/StudentsRoutes');
+const studentRouter = require('./routes/StudentRoutes');
+const teacherRouter = require('./routes/TeacherRoutes');
 const authUser = require('./routes/auth');
 
 const app = express();
@@ -28,7 +29,7 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use('/auth', authUser);
 app.use('/api/materials', materialRouter);
 app.use('/api/materials-levels', materialLevelsRouter);
-app.use('/api/students', studentsRouter);
+app.use('/api/students', studentRouter);
 app.use('/api/questions', questionRouter);
 app.use('/api/teachers', teacherRouter);
 app.use('/api/upload-photo', upload);
