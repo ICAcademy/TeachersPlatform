@@ -30,13 +30,13 @@ export const SidebarList = () => {
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/home' className={styles.sidebarLink}>
+          <Link to='/materials' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
             Materials
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/home' className={styles.sidebarLink}>
+          <Link to='/questions' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />
             Grammar
           </Link>

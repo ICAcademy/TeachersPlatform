@@ -2,8 +2,6 @@ const {
   getQuestions,
   getLevels,
   getUnitsByLevel,
-  getTopicsByUnit,
-  getQuizByTopic,
   createQuestion,
   findQuestionById,
   editQuestion,
@@ -33,25 +31,7 @@ const getQuestionUnitsByLevel = async (req, res) => {
     const units = await getUnitsByLevel(req.query);
     res.status(200).json(units);
   } catch (error) {
-    res.status(400).json(error);
-  }
-};
-
-const getQuestionTopicsByUnit = async (req, res) => {
-  try {
-    const topics = await getTopicsByUnit(req.query);
-    res.status(200).json(topics);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
-
-const getQuestionQuizByTopic = async (req, res) => {
-  try {
-    const quiz = await getQuizByTopic(req.query);
-    res.status(200).json(quiz);
-  } catch (error) {
-    res.status(400).json(error);
+    res.sattus(400).json(error);
   }
 };
 
@@ -98,8 +78,6 @@ module.exports = {
   getAllQuestions,
   getQuestionLevels,
   getQuestionUnitsByLevel,
-  getQuestionTopicsByUnit,
-  getQuestionQuizByTopic,
   createNewQuestion,
   getQuestionById,
   updateQuestion,

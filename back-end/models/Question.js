@@ -14,9 +14,11 @@ const questionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+    },
     url: {
       type: String,
-      required: true,
     },
     questions: {
       type: [
@@ -39,6 +41,10 @@ const questionSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+questionSchema.pre('save', function (next) {
+  this.url = this.unit.toLowerCase().match(/\w|\s/g).join('').replaceAll(' ', '-');
+  next();
+});
 
 const Question = mongoose.model('Questions', questionSchema);
 

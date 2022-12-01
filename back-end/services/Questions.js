@@ -5,11 +5,7 @@ const getQuestions = async () => await Question.find({});
 
 const getLevels = async () => await Question.distinct('level');
 
-const getUnitsByLevel = async (level) => await Question.find(level).select('unit');
-
-const getTopicsByUnit = async (unit) => await Question.find(unit).select('topic');
-
-const getQuizByTopic = async (topic) => await Question.find(topic).select('questions');
+const getUnitsByLevel = async (level) => await Question.find(level).distinct('unit');
 
 const createQuestion = async (question) => await Question.create(question);
 
@@ -24,8 +20,6 @@ module.exports = {
   getQuestions,
   getLevels,
   getUnitsByLevel,
-  getTopicsByUnit,
-  getQuizByTopic,
   createQuestion,
   findQuestionById,
   editQuestion,
