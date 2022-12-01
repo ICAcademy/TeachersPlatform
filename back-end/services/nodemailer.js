@@ -53,6 +53,4 @@ const sendMail = async (emailTo, name) => {
   });
 };
 
-sendMail();
-
 module.exports = sendMail;
