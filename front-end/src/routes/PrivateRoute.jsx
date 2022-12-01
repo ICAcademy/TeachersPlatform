@@ -11,7 +11,7 @@ const PrivateRoute = ({ children }) => {
     return children;
   }
 
-  if (!isLoading || Object.keys(currentUser).length === 0) {
+  if (!isLoading && Object.keys(currentUser).length === 0) {
     return <Navigate to='/login' replace />;
   }
 };
