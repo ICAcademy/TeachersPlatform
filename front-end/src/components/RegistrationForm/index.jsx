@@ -82,8 +82,10 @@ const RegistrationForm = () => {
   };
 
   const handleSubmit = () => {
-    if (!checkValidation()) authServices.registration(data);
-    history('/login');
+    if (!checkValidation()) {
+      authServices.registration(data);
+      history('/login');
+    }
   };
 
   const handleChangeActive = (tab) => {

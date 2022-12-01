@@ -8,26 +8,29 @@ import userServices from 'services/userServices';
 export const CurrentUserContext = createContext();
 
 const AppProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const fetchUser = async () => {
-    const accessToken = localStorage.getItem('token');
     try {
-      const { data } = await userServices.getUser(accessToken);
-      if (isLoading) {
-        if (data) {
-          setIsLoading(false);
-          setCurrentUser(data);
-        }
+      const accessToken = localStorage.getItem('token');
+      const user = accessToken ? await userServices.getUser(accessToken) : isAuthenticated;
+      if (user) {
+        setCurrentUser(user);
+        setIsLoading(false);
+        setIsAuthenticated(true);
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.error(e);
+      setIsAuthenticated(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, fetchUser, isLoading }}>
+    <CurrentUserContext.Provider value={{ currentUser, fetchUser, isLoading, isAuthenticated }}>
       {children}
     </CurrentUserContext.Provider>
   );

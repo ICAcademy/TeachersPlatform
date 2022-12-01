@@ -1,18 +1,15 @@
 import React, { useContext } from 'react';
-import { Navigate } from 'react-router';
+import { Outlet, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
 
 const PrivateRoute = ({ children }) => {
-  const { currentUser, isLoading } = useContext(CurrentUserContext);
-  if (!isLoading) {
-    return children;
-  }
+  const { isAuthenticated, isLoading } = useContext(CurrentUserContext);
 
-  if (!isLoading && Object.keys(currentUser).length === 0) {
-    return <Navigate to='/login' replace />;
+  if (!isLoading) {
+    return isAuthenticated ? children || <Outlet /> : <Navigate to={'/login'} />;
   }
 };
 
