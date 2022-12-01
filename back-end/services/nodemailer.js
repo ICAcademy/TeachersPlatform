@@ -1,5 +1,5 @@
+require('dotenv').config({ path: '../.env' });
 const nodemailer = require('nodemailer');
-require('dotenv').config();
 
 const registrationTemplate = (name) =>
   `<div style='text-align: center'>
@@ -53,7 +53,6 @@ const sendMail = async (emailTo, name) => {
   });
 };
 
-// sendMail();
-console.log('str', process.env);
+sendMail();
 
 module.exports = sendMail;
