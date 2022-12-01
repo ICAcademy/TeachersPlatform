@@ -6,7 +6,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 
-const teacherRouter = require('./routes/TeacherRoutes');
 const materialRouter = require('./routes/MaterialRoutes');
 const materialLevelsRouter = require('./routes/MaterialLevelsRoutes');
 const questionRouter = require('./routes/Questions');
