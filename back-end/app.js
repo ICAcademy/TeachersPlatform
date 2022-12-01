@@ -16,7 +16,7 @@ const authUser = require('./routes/auth');
 const app = express();
 const port = process.env.PORT || 5000;
 
-const upload = require('./Firebase');
+const upload = require('./services/Firebase');
 
 app.use(cors());
 app.use(express.json());
@@ -31,7 +31,7 @@ app.use('/api/materials-levels', materialLevelsRouter);
 app.use('/api/students', studentsRouter);
 app.use('/api/questions', questionRouter);
 app.use('/api/teachers', teacherRouter);
-app.use('/upload', upload);
+app.use('/api/upload-photo', upload);
 
 async function main() {
   try {
