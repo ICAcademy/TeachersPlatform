@@ -8,7 +8,7 @@ import Material from 'pages/Material/Material';
 import Main from 'pages/Main/Main';
 
 import Questions from 'pages/Questions/Questions';
-// import Quiz from 'pages/Quiz/Quiz';
+import Topics from 'components/Questions/Topics/Topics';
 
 const PublicRoutes = () => (
   <Routes>
@@ -18,7 +18,7 @@ const PublicRoutes = () => (
     <Route path='/materials/:url' element={<Material />} />
     <Route path='/questions'>
       <Route index element={<Questions />} />
-      {/* <Route path=':url' element={<Quiz />} /> */}
+      <Route path=':url' element={<Topics />} />
     </Route>
     <Route path='/main' element={<Main />} />
   </Routes>

@@ -2,6 +2,7 @@ const {
   getQuestions,
   getLevels,
   getUnitsByLevel,
+  getTopicDataByUrl,
   createQuestion,
   findQuestionById,
   editQuestion,
@@ -35,6 +36,14 @@ const getQuestionUnitsByLevel = async (req, res) => {
   }
 };
 
+const getQuestionDataByLevel = async (req, res) => {
+  try {
+    const data = await getTopicDataByUrl(req.query);
+    res.status(200).json(data);
+  } catch (error) {
+    res.sattus(400).json(error);
+  }
+};
 const createNewQuestion = async (req, res) => {
   try {
     const question = await createQuestion(req.body);
@@ -78,6 +87,7 @@ module.exports = {
   getAllQuestions,
   getQuestionLevels,
   getQuestionUnitsByLevel,
+  getQuestionDataByLevel,
   createNewQuestion,
   getQuestionById,
   updateQuestion,

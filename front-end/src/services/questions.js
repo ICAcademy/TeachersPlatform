@@ -11,3 +11,8 @@ export const getUnitsByLevel = async (level) => {
   const { data } = await axios.get(`${baseUrl}/units`, { params: { level } });
   return data;
 };
+
+export const getTopicDataByUrl = async (url) => {
+  const { data } = await axios.get(`${baseUrl}/url`, { params: { url } });
+  return data;
+};
