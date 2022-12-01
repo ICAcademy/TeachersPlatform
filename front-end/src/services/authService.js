@@ -1,7 +1,7 @@
 import API, { API_URL } from 'API';
-import { tokenServices } from 'services/tokenServices';
+import { tokenService } from 'services/tokenService';
 
-export const authServices = {
+export const authService = {
   registration: async (user) => {
     const { data } = API.post(`${API_URL}/auth/register`, user);
     return data;
@@ -9,11 +9,11 @@ export const authServices = {
 
   login: async (user) => {
     const data = await API.post(`${API_URL}/auth/login`, user);
-    tokenServices.updateToken(data.data.token);
+    tokenService.updateToken(data.data.token);
     return data;
   },
 
   logout: async () => {
-    tokenServices.removeToken();
+    tokenService.removeToken();
   },
 };

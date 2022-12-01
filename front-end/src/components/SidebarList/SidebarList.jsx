@@ -15,13 +15,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // Services
-import { authServices } from 'services/authServices';
+import { authService } from 'services/authService';
 
 export const SidebarList = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    authServices.logout();
+    authService.logout();
     navigate('/login', { replace: true });
   };
 

@@ -21,7 +21,7 @@ import { nanoid } from 'nanoid';
 import { regexEmail, regexFullName, regexPassword } from 'helpers/regex';
 
 // Services
-import { authServices } from 'services/authServices';
+import { authService } from 'services/authService';
 
 // Styles
 import styles from './RegistrationForm.module.scss';
@@ -83,7 +83,7 @@ const RegistrationForm = () => {
 
   const handleSubmit = () => {
     if (!checkValidation()) {
-      authServices.registration(data);
+      authService.registration(data);
       history('/login');
     }
   };

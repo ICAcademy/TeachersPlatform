@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Services
-import { tokenServices } from 'services/tokenServices';
+import { tokenService } from 'services/tokenService';
 
 export const API_URL = 'http://localhost:5000';
 export const URL = 'http://localhost:3000';
@@ -12,8 +12,8 @@ const API = axios.create({
     'Content-Type': 'application/json',
   },
 });
-const onRequestSuccess = async (config) => {
-  const token = tokenServices.getToken();
+const addAuthHeaders = async (config) => {
+  const token = tokenService.getToken();
   if (token) {
     if (config?.headers) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -22,6 +22,6 @@ const onRequestSuccess = async (config) => {
   return config;
 };
 
-API.interceptors.request.use(onRequestSuccess);
+API.interceptors.request.use(addAuthHeaders);
 
 export default API;

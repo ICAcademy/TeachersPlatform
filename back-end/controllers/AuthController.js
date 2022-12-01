@@ -23,9 +23,9 @@ exports.createUser = async (req, res) => {
     const { email } = req.body;
     const { error } = registerValidation(req.body);
 
-    const candidate = await findByEmail(email);
+    const user = await findByEmail(email);
 
-    if (candidate) {
+    if (user) {
       return res.status(400).json({ message: 'A user with that email address already exists' });
     }
     if (error) {
@@ -40,12 +40,10 @@ exports.createUser = async (req, res) => {
   }
 };
 
-let token;
-
 exports.loginUser = async (req, res) => {
   try {
     const data = req.body;
-    token = await login(data);
+    const token = await login(data);
 
     if (!token) {
       return res.status(400).json({ message: 'User was not found!' });

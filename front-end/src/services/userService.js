@@ -1,6 +1,6 @@
 import API, { API_URL } from 'API';
 
-const userServices = {
+export const userService = {
   getUser: async () => {
     try {
       const user = await API.get(`${API_URL}/auth/me`);
@@ -10,5 +10,3 @@ const userServices = {
     }
   },
 };
-
-export default userServices;

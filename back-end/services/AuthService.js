@@ -22,7 +22,7 @@ const login = async (data) => {
   const email = data.email;
   const password = data.password;
 
-  const user = await User.findOne({ email });
+  const user = await findByEmail(email);
   if (!user) {
     throw new Error('User was not found!');
   }
