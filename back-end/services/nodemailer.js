@@ -18,7 +18,7 @@ const subcriptionTemplate = (name) =>
 
 const registrationMailOptions = (emailTo, name) => ({
   from: process.env.EMAIL_TEST,
-  to: process.env.EMAIL_USER,
+  to: emailTo,
   subject: 'Registration on Teachers Platform',
   html: registrationTemplate(name),
 });
