@@ -11,3 +11,8 @@ export const getUnitsByLevel = async (level) => {
   const response = await axios.get(`${baseUrl}/materials-levels/get-units-by-level/${level}`);
   return response.data;
 };
+
+export const getMaterialsByUnit = async (unit) => {
+  const response = await axios.get(`${baseUrl}/materials`, { params: { unitName: unit } });
+  return response.data;
+};

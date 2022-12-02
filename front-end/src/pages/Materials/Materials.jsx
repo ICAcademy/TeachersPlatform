@@ -15,6 +15,7 @@ const Materials = () => {
   const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [unitsByLevel, setUnitsByLevel] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState('');
 
   const unitsByLevelData = async (level) => {
     try {
@@ -32,12 +33,21 @@ const Materials = () => {
     unitsByLevelData(level);
   };
 
+  const handleInput = (e) => setSearch(e.target.value);
+
   useEffect(() => {
     unitsByLevelData(selectedLevel);
   }, [selectedLevel]);
 
   return (
     <div className={styles.materials}>
+      <input
+        className={styles.materialsSearch}
+        type='text'
+        placeholder='Enter here to find a lesson'
+        value={search}
+        onChange={handleInput}
+      />
       <Levels selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
       {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
     </div>
