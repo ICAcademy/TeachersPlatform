@@ -6,6 +6,7 @@ const express = require('express');
 const materialRouter = require('./routes/MaterialRoutes');
 const materialLevelsRouter = require('./routes/MaterialLevelsRoutes');
 const questionRouter = require('./routes/Questions');
+const filterQuestionRouter = require('./routes/FilterQuestionsRoutes');
 const studentRouter = require('./routes/StudentRoutes');
 const teacherRouter = require('./routes/TeacherRoutes');
 const authUser = require('./routes/auth');
@@ -24,6 +25,7 @@ app.use('/api/materials', materialRouter);
 app.use('/api/materials-levels', materialLevelsRouter);
 app.use('/api/students', studentRouter);
 app.use('/api/questions', questionRouter);
+app.use('/api/filter-questions', filterQuestionRouter);
 app.use('/api/teachers', teacherRouter);
 
 async function main() {
