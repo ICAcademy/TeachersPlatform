@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-//Services
-
 //Components
 import Level from './Level/Level';
 
