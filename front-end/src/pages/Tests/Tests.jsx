@@ -7,10 +7,6 @@ import Header from 'components/Tests/Header/Header';
 import Question from 'components/Tests/Question/Question';
 import { Button } from '@mui/material';
 
-// assets
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
 // styles
 import styles from './Tests.module.scss';
 
@@ -22,31 +18,29 @@ const Tests = () => {
     questions: [],
   });
 
-  const [level, setLevel] = useState('level');
-  const [unit, setUnit] = useState('unit');
-  const [topic, setTopic] = useState('topic');
+  const [level, setLevel] = useState('');
+  const [unit, setUnit] = useState('');
+  const [topic, setTopic] = useState('');
   const [questions, setQuestions] = useState([
     {
       id: nanoid(),
-      title: 'title',
+      title: '',
       answers: [
-        { id: nanoid(), answer: 'answer', right: false },
-        { id: nanoid(), answer: 'answer', right: false },
+        { id: nanoid(), answer: '', right: false },
+        { id: nanoid(), answer: '', right: false },
       ],
     },
   ]);
-
-  console.log('questions', questions);
 
   const addQuestion = () => {
     setQuestions([
       ...questions,
       {
         id: nanoid(),
-        title: 'title',
+        title: '',
         answers: [
-          { id: nanoid(), answer: 'answer', right: false },
-          { id: nanoid(), answer: 'answer', right: false },
+          { id: nanoid(), answer: '', right: false },
+          { id: nanoid(), answer: '', right: false },
         ],
       },
     ]);
@@ -59,7 +53,7 @@ const Tests = () => {
         if (question.id === id) {
           return {
             ...question,
-            answers: [...question.answers, { id: nanoid(), answer: 'answer', right: false }],
+            answers: [...question.answers, { id: nanoid(), answer: '', right: false }],
           };
         } else {
           return { ...question };
@@ -238,11 +232,11 @@ const Tests = () => {
                 <div className={styles.addQuestionContainer}>
                   <Button
                     className={styles.button}
-                    sx={{ borderRadius: 100 }}
+                    sx={{ borderRadius: 50 }}
                     variant='contained'
                     onClick={addQuestion}
                   >
-                    <FontAwesomeIcon icon={faPlus} />
+                    Add Question
                   </Button>
                 </div>
                 <div className={styles.saveTestsContainer}>

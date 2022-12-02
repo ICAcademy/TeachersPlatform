@@ -17,7 +17,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  margin-left: 315px;
+  margin-left: 340px;
 }
 
 .editTestContainer {
@@ -52,31 +52,29 @@
   .button {
     padding: 0 25px;
     line-height: 25px;
-    min-height: 25px;
-    width: 25px;
     cursor: pointer;
-    background: $darkPurple;
+    background: $lightPurple;
     height: 42px;
-    color: $white;
+    color: $purple;
     transition: all 0.5s ease-out;
     font-size: $f14;
     font-weight: $fw500;
     margin-left: 5px;
     transition: all 0.5s ease-out;
     &:hover {
-      box-shadow: 0 0 1px 0 $purple400 inset, 0 0 1px 2px $purple400;
       transition: all 0.5s ease-out;
       background: $darkPurple;
+      color: $white;
     }
   }
 }
 
 .saveTestsContainer {
   display: flex;
-  width: 800px;
+  width: 625px;
   justify-content: center;
   .button {
-    padding: 0 25px;
+    padding: 0 20px;
     line-height: 35px;
     min-height: 25px;
     cursor: pointer;

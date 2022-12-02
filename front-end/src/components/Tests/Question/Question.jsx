@@ -33,6 +33,7 @@ const Question = ({
             variant='outlined'
             label='title'
             size='small'
+            placeholder='title'
             value={question.title}
             onChange={(event) => changeTitleForQuestion(question.id, event)}
           />
@@ -53,6 +54,7 @@ const Question = ({
               <div className={styles.inputAnswerContainer}>
                 <Input
                   className={styles.input}
+                  placeholder='answer'
                   value={answer.answer}
                   onChange={(event) => changeAnswerForQuestion(question.id, answer.id, event)}
                 />
@@ -71,7 +73,11 @@ const Question = ({
         })}
       </div>
       <div className={styles.addAnswerContainer}>
-        <Button className={styles.button} onClick={() => addAnswer(question.id)}>
+        <Button
+          className={styles.button}
+          sx={{ minHeight: 23, minWidth: 23, padding: 0, borderRadius: 100 }}
+          onClick={() => addAnswer(question.id)}
+        >
           <FontAwesomeIcon icon={faPlus} />
         </Button>
       </div>
