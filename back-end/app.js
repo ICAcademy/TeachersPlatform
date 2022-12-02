@@ -9,7 +9,9 @@ const questionRouter = require('./routes/Questions');
 const studentRouter = require('./routes/StudentRoutes');
 const teacherRouter = require('./routes/TeacherRoutes');
 const authUser = require('./routes/auth');
-const materialFilterMiddleware = require('./middlewares/materialFilterMiddleware');
+
+// Middlewares
+const materialsFilterByUnit = require('./middlewares/materialsFilterByUnit');
 
 const app = express();
 const port = process.env.PORT;
@@ -21,7 +23,7 @@ app.use(express.json());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
 app.use('/auth', authUser);
-app.use('/api/materials', materialFilterMiddleware, materialRouter);
+app.use('/api/materials', materialsFilterByUnit, materialRouter);
 app.use('/api/materials-levels', materialLevelsRouter);
 app.use('/api/students', studentRouter);
 app.use('/api/questions', questionRouter);

@@ -17,6 +17,4 @@ const materialSchema = new Schema(
   { timestamps: true },
 );
 
-materialSchema.index({ title: 'unit' });
-
 module.exports = mongoose.model('Material', materialSchema);
