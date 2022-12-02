@@ -4,7 +4,7 @@ import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
 import Units from 'components/Questions/Units/Units';
 
-import { getLevels, getUnitsByLevel } from 'services/questions';
+import { getLevels, getUnitsByLevel } from 'services/Questions';
 
 import styles from './Questions.module.scss';
 
@@ -21,7 +21,7 @@ const Questions = () => {
       const levels = await getLevels();
       setLevels(levels);
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
 
@@ -32,7 +32,7 @@ const Questions = () => {
       setUnits(units);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   };
 

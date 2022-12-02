@@ -6,21 +6,25 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './TopicsBody.module.scss';
 
-const TopicsBody = ({ topics }) => {
+const TopicsBody = ({ topics, selectHandler, fullscreen }) => {
   const navigate = useNavigate();
 
   const topicsList = topics.map((item, i) => (
-    <div className={styles.topic} key={item._id}>
+    <div className={styles.topic} key={item._id} onClick={() => selectHandler(item._id)}>
       <div className={styles.topic__index}>{i + 1}</div>
-      <p className={styles.topic__title}>{item.topic}</p>
-      <FontAwesomeIcon icon={faArrowRight} />
+      {!fullscreen && (
+        <>
+          <p className={styles.topic__title}>{item.topic}</p>
+          <FontAwesomeIcon icon={faArrowRight} />
+        </>
+      )}
     </div>
   ));
 
   return (
     <>
       <div className={styles.section__head}>
-        <h3>Topics</h3>
+        {!fullscreen && <h3>Topics</h3>}
         <div className={styles.section__backBtn} onClick={() => navigate(-1)}>
           Back to units
         </div>
@@ -32,6 +36,8 @@ const TopicsBody = ({ topics }) => {
 
 TopicsBody.propTypes = {
   topics: PropTypes.array,
+  selectHandler: PropTypes.func,
+  fullscreen: PropTypes.boolean,
 };
 
 TopicsBody.defaultProps = {

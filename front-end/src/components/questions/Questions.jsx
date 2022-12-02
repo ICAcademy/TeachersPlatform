@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import { getLevels, getUnitsByLevel } from 'services/questions';
 import Levels from 'components/Levels/Levels';
 import Units from 'components/Units/Units';
+
+import { getLevels, getUnitsByLevel } from 'services/Questions';
 
 import styles from './Questions.module.scss';
 
@@ -16,8 +17,12 @@ const Questions = () => {
   };
 
   const fetchUnits = async (level) => {
-    const data = await getUnitsByLevel(level);
-    setUnits(data);
+    try {
+      const data = await getUnitsByLevel(level);
+      setUnits(data);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   };
 
   useEffect(() => {

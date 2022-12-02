@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const Question = require('../models/Question');
 
 const getQuestions = async () => await Question.find({});
@@ -7,7 +6,7 @@ const getLevels = async () => await Question.distinct('level');
 
 const getUnitsByLevel = async (level) => await Question.find(level).distinct('unit');
 
-const getTopicDataByUrl = async (url) => {
+const getDataByUrl = async (url) => {
   const unitInfo = await Question.findOne(url).select('unit level');
   const topicsInfo = await Question.find(url).select('topic questions');
   return { unitInfo, topicsInfo };
@@ -26,7 +25,7 @@ module.exports = {
   getQuestions,
   getLevels,
   getUnitsByLevel,
-  getTopicDataByUrl,
+  getDataByUrl,
   createQuestion,
   findQuestionById,
   editQuestion,

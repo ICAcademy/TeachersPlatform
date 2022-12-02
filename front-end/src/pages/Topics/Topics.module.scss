@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem 0px 20%;
+}
+
+.topics {
+  flex-basis: 35%;
+  transition: flex-basis ease-in 0.25s;
+
+  &__shrink {
+    flex-basis: 5%;
+  }
+}
+
+.quiz {
+  position: relative;
+  flex-basis: 60%;
+  background-color: #fff;
+  border-radius: 20px;
+  transition: flex-basis ease-in 0.25s;
+
+  &__full {
+    flex-basis: 90%;
+  }
+}
+
+.fullScreen {
+  position: absolute;
+  top: 2%;
+  right: 5%;
+  font-size: 1.25rem;
+  transition: all ease-out 0.25s;
+  cursor: pointer;
+
+  &:hover {
+    color: #9000ff;
+  }
+}
