@@ -7,6 +7,10 @@ import Header from 'components/Tests/Header/Header';
 import Question from 'components/Tests/Question/Question';
 import { Button } from '@mui/material';
 
+// assets
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 // styles
 import styles from './Tests.module.scss';
 
@@ -21,12 +25,30 @@ const Tests = () => {
   const [level, setLevel] = useState('level');
   const [unit, setUnit] = useState('unit');
   const [topic, setTopic] = useState('topic');
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState([
+    {
+      id: nanoid(),
+      title: 'title',
+      answers: [
+        { id: nanoid(), answer: 'answer', right: false },
+        { id: nanoid(), answer: 'answer', right: false },
+      ],
+    },
+  ]);
+
+  console.log('questions', questions);
 
   const addQuestion = () => {
     setQuestions([
       ...questions,
-      { id: nanoid(), title: 'title', answers: [{ id: nanoid(), answer: 'answer', right: false }] },
+      {
+        id: nanoid(),
+        title: 'title',
+        answers: [
+          { id: nanoid(), answer: 'answer', right: false },
+          { id: nanoid(), answer: 'answer', right: false },
+        ],
+      },
     ]);
   };
 
@@ -182,6 +204,9 @@ const Tests = () => {
     <div className={styles.pageContainer}>
       <div className={styles.container}>
         <div className={styles.content}>
+          <div className={styles.editTestContainer}>
+            <h2>Edit Test</h2>
+          </div>
           <div className={styles.headerContainer}>
             <Header
               level={level}
@@ -209,20 +234,30 @@ const Tests = () => {
                   />
                 );
               })}
+              <div className={styles.buttonsContainer}>
+                <div className={styles.addQuestionContainer}>
+                  <Button
+                    className={styles.button}
+                    sx={{ borderRadius: 100 }}
+                    variant='contained'
+                    onClick={addQuestion}
+                  >
+                    <FontAwesomeIcon icon={faPlus} />
+                  </Button>
+                </div>
+                <div className={styles.saveTestsContainer}>
+                  <Button
+                    className={styles.button}
+                    sx={{ borderRadius: 100 }}
+                    variant='contained'
+                    onClick={save}
+                  >
+                    Save Test
+                  </Button>
+                </div>
+              </div>
             </div>
           )}
-          <div className={styles.buttonsContainer}>
-            <div className={styles.addQuestionContainer}>
-              <Button variant='contained' onClick={addQuestion}>
-                Add Question
-              </Button>
-            </div>
-            <div className={styles.saveTestsContainer}>
-              <Button variant='contained' onClick={save}>
-                Save Test
-              </Button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

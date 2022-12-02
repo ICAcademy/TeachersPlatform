@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // components
-import { Button, Checkbox, Input, TextField } from '@mui/material';
+import { Button, Checkbox, Input } from '@mui/material';
 
 // assets
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 // styles
 import styles from './Question.module.scss';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const Question = ({
   index,
@@ -28,10 +28,11 @@ const Question = ({
           {index + 1}
         </div>
         <div className={styles.titleInputContainer}>
-          <TextField
+          <Input
             className={styles.input}
             variant='outlined'
             label='title'
+            size='small'
             value={question.title}
             onChange={(event) => changeTitleForQuestion(question.id, event)}
           />
@@ -70,8 +71,8 @@ const Question = ({
         })}
       </div>
       <div className={styles.addAnswerContainer}>
-        <Button variant='contained' onClick={() => addAnswer(question.id)}>
-          Add answer
+        <Button className={styles.button} onClick={() => addAnswer(question.id)}>
+          <FontAwesomeIcon icon={faPlus} />
         </Button>
       </div>
     </div>

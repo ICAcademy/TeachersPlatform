@@ -12,39 +12,45 @@ const Header = ({ level, setLevel, unit, setUnit, topic, setTopic }) => {
 
   return (
     <div className={styles.header}>
-      <div className={styles.itemContainer}>
-        <div className={styles.inputContainer}>
-          <TextField
-            className={styles.input}
-            variant='outlined'
-            label='level'
-            value={level}
-            onChange={(event) => handleChangeInput(setLevel, event)}
-          />
+      <div className={styles.inputsContainer}>
+        <div className={styles.itemContainer}>
+          <div className={styles.inputContainer}>
+            <TextField
+              className={styles.input}
+              variant='outlined'
+              size='small'
+              label='level'
+              value={level}
+              onChange={(event) => handleChangeInput(setLevel, event)}
+            />
+          </div>
+        </div>
+        <div className={styles.itemContainer}>
+          <div className={styles.inputContainer}>
+            <TextField
+              className={styles.input}
+              variant='outlined'
+              size='small'
+              label='unit'
+              value={unit}
+              onChange={(event) => handleChangeInput(setUnit, event)}
+            />
+          </div>
+        </div>
+        <div className={styles.itemContainer}>
+          <div className={styles.inputContainer}>
+            <TextField
+              className={styles.input}
+              variant='outlined'
+              size='small'
+              label='topic'
+              value={topic}
+              onChange={(event) => handleChangeInput(setTopic, event)}
+            />
+          </div>
         </div>
       </div>
-      <div className={styles.itemContainer}>
-        <div className={styles.inputContainer}>
-          <TextField
-            className={styles.input}
-            variant='outlined'
-            label='unit'
-            value={unit}
-            onChange={(event) => handleChangeInput(setUnit, event)}
-          />
-        </div>
-      </div>
-      <div className={styles.itemContainer}>
-        <div className={styles.inputContainer}>
-          <TextField
-            className={styles.input}
-            variant='outlined'
-            label='topic'
-            value={topic}
-            onChange={(event) => handleChangeInput(setTopic, event)}
-          />
-        </div>
-      </div>
+      <div className={styles.logoHeaderContainer}></div>
     </div>
   );
 };

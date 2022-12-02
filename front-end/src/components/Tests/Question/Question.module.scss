@@ -8,15 +8,16 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  border: 1px solid $lightGrey;
+  border: 1px solid #d8dde0;
 }
 
 .titleContainer {
   width: 100%;
-  height: 200px;
-  background: $lightGrey;
+  height: 150px;
+  background: $lightPurple;
   border-radius: 10px 10px 0px 0px;
   padding: 30px 40px;
+  border-bottom: 1px solid #d8dde0;
 }
 
 .numberOfQuestion {
@@ -30,18 +31,22 @@
 }
 
 .titleInputContainer {
-  width: 500px;
-  margin-top: 50px;
+  width: 540px;
+  margin-top: 30px;
 }
 
 .input {
   width: 100%;
 }
 
+.answersContainer {
+  padding-top: 15px;
+}
+
 .answerContainer {
   display: flex;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 5px;
   margin-left: 30px;
   width: 500px;
 }
@@ -61,13 +66,45 @@
 .buttonDeleteAnswerContainer {
   width: 130px;
   margin-top: 5px;
-}
-
-.button {
-  height: 30px;
+  margin-left: 10px;
+  .button {
+    line-height: 35px;
+    cursor: pointer;
+    background: $lightPurple;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    color: $purple;
+    transition: all 0.5s ease-out;
+    font-size: 12px;
+    font-weight: 400;
+    &:hover {
+      background: $darkPurple;
+      color: $white;
+      transition: all 0.5s ease-out;
+    }
+  }
 }
 
 .addAnswerContainer {
-  margin: 25px 0px 30px 30px;
+  margin: 20px 0px 30px 38px;
+  .button {
+    line-height: 35px;
+    cursor: pointer;
+    background: $lightPurple;
+    width: 42px;
+    height: 42px;
+    border-radius: 6px;
+    color: $purple;
+    transition: all 0.5s ease-out;
+    font-size: 16px;
+    font-weight: 500;
+    &:hover {
+      background: $darkPurple;
+      color: $white;
+      transition: all 0.5s ease-out;
+    }
+  }
 }
 
