@@ -1,0 +1,1 @@
+exports.TEACHER = 'teacher';

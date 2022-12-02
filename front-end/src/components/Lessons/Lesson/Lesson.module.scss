@@ -1,0 +1,49 @@
+.lesson {
+  position: relative;
+  background-color: #fff;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
+  transition: all 0.25s ease;
+  cursor: pointer;
+  &.active {
+    border: 1px solid #9000ff;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 14px 24px rgb(0 0 0 / 20%);
+    z-index: 999;
+
+    svg {
+      color: #9000ff;
+    }
+  }
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 14px 24px rgb(0 0 0 / 20%);
+    z-index: 999;
+  }
+}
+
+.lessonBody {
+  display: flex;
+  padding: 1.5rem;
+  border-radius: 5px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lessonInfo {
+  display: flex;
+  align-items: center;
+}
+
+.lessonTitle {
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 1680px) {
+  .lessonBody {
+    padding: 1rem;
+  }
+}

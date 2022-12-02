@@ -1,0 +1,97 @@
+.lessonsColumn {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  position: relative;
+  transition: all 0.25s ease;
+
+  &.w40 {
+    width: 40%;
+    position: sticky;
+    top: 1.5rem;
+    left: 0;
+    align-self: flex-start;
+  }
+
+  &.w60 {
+    width: 60%;
+  }
+
+  &.fullScreen {
+    width: 90%;
+  }
+
+  &.closed {
+    width: 10%;
+
+    [class^='LessonsHeader'] {
+      display: none;
+    }
+
+    [class^='Lesson_lessonTitle'] {
+      display: none;
+    }
+
+    [data-icon='arrow-right'] {
+      display: none;
+    }
+
+    .beforeLessons {
+      display: none;
+    }
+
+    [class^='FirstLetterIcon'] {
+      margin-right: 0;
+    }
+
+    [class^='Lesson_lessonBody'] {
+      justify-content: center;
+    }
+  }
+
+  &:first-child {
+    padding-right: 3rem;
+  }
+
+  .arrow {
+    position: absolute;
+    top: 1rem;
+    right: 3rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.25s ease;
+
+    &:hover {
+      color: #9000ff;
+    }
+  }
+}
+
+.beforeLessons {
+  padding: 0 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h3 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+
+  .backBtn {
+    color: #888;
+    transition: all 0.25s ease;
+    cursor: pointer;
+
+    &:hover {
+      color: #9000ff;
+    }
+  }
+}
+
+@media screen and (max-width: 1680px) {
+  .beforeLessons {
+    padding: 0 0 1rem;
+  }
+}
