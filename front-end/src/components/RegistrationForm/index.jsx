@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-max-depth */
 import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';

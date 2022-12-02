@@ -62,7 +62,7 @@ exports.getUser = async (req, res) => {
     }
 
     const decode = jwt.verify(token, 'secretValue');
-    const authorizedUser = decode?.email;
+    const authorizedUser = decode.email;
 
     const user = await findByEmail(authorizedUser);
     if (!user) {
