@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 const UnitCard = (props) => {
   return (
-    <Link className={styles.unitItem} to={`/materials/${props.url}`}>
+    <Link className={styles.unitItem} to={`/app/materials/${props.url}`}>
       <div className={styles.unitWrapper}>
         <div className={styles.unitBody}>
           <UnitImg image={props.item.image} unit={props.item.unit} />
