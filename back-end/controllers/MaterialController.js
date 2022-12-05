@@ -1,8 +1,14 @@
+const Material = require('../models/Material');
 const materialService = require('../services/MaterialService');
 
 exports.getAllMaterials = async (req, res) => {
   try {
     const materials = await materialService.getAllMaterials();
+    const { unitName } = req.query;
+    if (unitName) {
+      const searchByUnit = await Material.find({ unit: { $regex: unitName, $options: 'i' } });
+      return res.json(searchByUnit);
+    }
     res.json(materials);
   } catch (err) {
     res.status(400).json({ error: err.message });
