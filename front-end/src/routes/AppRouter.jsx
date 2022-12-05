@@ -17,6 +17,7 @@ import Material from 'pages/Material/Material';
 import Materials from 'pages/Materials/Materials';
 
 import NotFound from 'pages/NotFound';
+import Tests from 'pages/Tests/Tests';
 
 const RouterWrapper = () => (
   <Routes>
@@ -55,6 +56,7 @@ const RouterWrapper = () => (
         }
       />
     </Route>
+    <Route path='/tests' element={<Tests />} />
     <Route path='/login' element={<Login />} />
     <Route path='/registration' element={<Registration />} />
     <Route path='*' element={<NotFound />} />

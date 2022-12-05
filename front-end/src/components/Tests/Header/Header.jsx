@@ -20,6 +20,7 @@ const Header = ({ level, setLevel, unit, setUnit, topic, setTopic }) => {
               variant='outlined'
               size='small'
               label='level'
+              autoFocus={level === ''}
               value={level}
               onChange={(event) => handleChangeInput(setLevel, event)}
             />

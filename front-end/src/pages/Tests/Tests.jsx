@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
-import axios from 'axios';
+import API, { API_URL } from 'API';
 
 // components
 import Header from 'components/Tests/Header/Header';
@@ -31,6 +31,7 @@ const Tests = () => {
       ],
     },
   ]);
+  const [postInfo, setPostInfo] = useState(false);
 
   const addQuestion = () => {
     setQuestions([
@@ -188,11 +189,11 @@ const Tests = () => {
         };
       }),
     });
-
+    setPostInfo(true);
     postData(data);
   };
 
-  const postData = (tests) => axios.post('http://localhost:5000/api/questions/', tests);
+  const postData = (tests) => API.post(`${API_URL}/api/questions/`, tests);
 
   return (
     <div className={styles.pageContainer}>
