@@ -12,13 +12,15 @@
 .content {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-between;
+  width: 1130px;
+  margin: 0 auto;
 }
 
 .logoContainer {
   display: flex;
-  width: 230px;
+  align-self: center;
+  width: 130px;
 }
 
 .button {

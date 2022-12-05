@@ -8,12 +8,10 @@
 
 .content {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   padding-top: 120px;
-}
-
-.grandMasterContainer {
-  width: 500px;
+  width: 1130px;
+  margin: 0 auto;
 }
 
 .info {
