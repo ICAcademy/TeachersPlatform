@@ -16,7 +16,7 @@ const App = () => {
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   return (
     <ThemeProvider theme={theme}>
