@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Levels from 'components/Levels/Levels';
 import Units from 'components/Units/Units';
 
-import { getLevels, getUnitsByLevel } from 'services/Questions';
+import { getLevels, getUnitsByLevel } from 'services/questionService';
 
 import styles from './Questions.module.scss';
 

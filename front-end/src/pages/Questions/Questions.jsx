@@ -4,7 +4,7 @@ import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
 import Units from 'components/Questions/Units/Units';
 
-import { getLevels, getUnitsByLevel } from 'services/Questions';
+import { getLevels, getUnitsByLevel } from 'services/questionService';
 
 import styles from './Questions.module.scss';
 

@@ -7,7 +7,7 @@ import LessonsHeader from 'components/Lessons/LessonsHeader/LessonsHeader';
 import TopicsBody from 'components/Questions/TopicsBody/TopicsBody';
 import Quiz from 'components/Questions/Quiz/Quiz';
 
-import { getTopicDataByUrl } from 'services/Questions';
+import { getTopicDataByUrl } from 'services/questionService';
 
 import styles from './Topics.module.scss';
 

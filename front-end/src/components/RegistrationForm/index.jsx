@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { FormControl, TextField, Box, InputAdornment, Button } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -19,8 +19,8 @@ import { nanoid } from 'nanoid';
 // Regex
 import { regexEmail, regexFullName, regexPassword } from 'helpers/regex';
 
-// Requests
-import { sendUserData } from 'requests/auth';
+// Services
+import { authService } from 'services/authService';
 
 // Styles
 import styles from './RegistrationForm.module.scss';
@@ -38,11 +38,13 @@ const RegistrationForm = () => {
   const [hasError, setHasError] = useState({
     hasFullNameError: false,
     hasEmailError: false,
-    hasPassword: false,
-    hasRepeatPassword: false,
+    hasPasswordError: false,
+    hasRepeatPasswordError: false,
   });
 
-  const [isActive, setIsActive] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
+
+  const history = useNavigate();
 
   const handleDateChange = (newValue) => {
     setData({ ...data, dateOfBirth: dayjs(newValue).format('MM/DD/YYYY') });
@@ -66,52 +68,42 @@ const RegistrationForm = () => {
   );
 
   const checkValidation = () => {
-    setHasError((prev) => ({
-      ...prev,
+    const errors = {
       hasFullNameError: !regexFullName.test(data.fullName),
       hasEmailError: !regexEmail.test(data.email),
-      hasPassword: !regexPassword.test(data.password),
-      hasRepeatPassword: data.password !== data.repeatPassword,
-    }));
+      hasPasswordError: !regexPassword.test(data.password),
+      hasRepeatPasswordError: data.password !== data.repeatPassword,
+    };
+
+    setHasError((prev) => ({ ...prev, ...errors }));
+
+    return Object.values(errors).includes(true);
   };
 
   const handleSubmit = () => {
-    checkValidation();
-  };
-
-  const handleChangeActive = () => {
-    setIsActive((current) => !current);
-    setData((prev) => ({ ...prev, role: `${isActive ? 'student' : 'teacher'}` }));
-  };
-
-  useEffect(() => {
-    const isError = Object.values(hasError).includes(true);
-    const isEmpty = Object.values(data).includes('');
-    if (!isError && !isEmpty) {
-      sendUserData(data);
-      setData({
-        role: 'student',
-        fullName: '',
-        dateOfBirth: '',
-        email: '',
-        password: '',
-        repeatPassword: '',
-      });
+    if (!checkValidation()) {
+      authService.registration(data);
+      history('/login');
     }
-  }, [hasError]);
+  };
+
+  const handleChangeActive = (tab) => {
+    setActiveTab(tab);
+    setData((prev) => ({ ...prev, role: `${tab === 0 ? 'student' : 'teacher'}` }));
+  };
 
   return (
     <div className={styles.contentWrap}>
       <div className={styles.blocksWrap}>
         <div className={styles.roles}>
-          <div className={`${styles.tab} ${isActive ? '' : styles.active}`}>
-            <button onClick={handleChangeActive} className={styles.button}>
+          <div className={`${styles.tab} ${activeTab === 0 ? styles.active : ''}`}>
+            <button onClick={() => handleChangeActive(0)} className={styles.button}>
               <FontAwesomeIcon icon={faGraduationCap} />
               <h2>Student</h2>
             </button>
           </div>
-          <div className={`${styles.tab} ${isActive ? styles.active : ''}`}>
-            <button onClick={handleChangeActive} className={styles.button}>
+          <div className={`${styles.tab} ${activeTab === 1 ? styles.active : ''}`}>
+            <button onClick={() => handleChangeActive(1)} className={styles.button}>
               <FontAwesomeIcon icon={faChalkboardUser} />
               <h2>Teacher</h2>
             </button>
@@ -149,6 +141,7 @@ const RegistrationForm = () => {
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <MobileDatePicker
+                className={styles.test1}
                 maxDate={`${new Date().getFullYear() - minAge}/12/31`}
                 minDate={`${new Date().getFullYear() - maxAge}/12/31`}
                 inputFormat='DD/MM/YYYY'
@@ -191,9 +184,11 @@ const RegistrationForm = () => {
               }}
             />
             <TextField
-              error={hasError.hasPassword}
+              error={hasError.hasPasswordError}
               helperText={
-                hasError.hasPassword ? 'Enter min 8 and max 10 characters; example: Jerry77)' : ''
+                hasError.hasPasswordError
+                  ? 'Enter min 8 and max 10 characters; example: Jerry77)'
+                  : ''
               }
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='password'
@@ -212,9 +207,9 @@ const RegistrationForm = () => {
               }}
             />
             <TextField
-              error={hasError.hasRepeatPassword}
+              error={hasError.hasRepeatPasswordError}
               helperText={
-                hasError.hasRepeatPassword ? 'Incorrect! Your passwords is not the same' : ''
+                hasError.hasRepeatPasswordError ? 'Incorrect! Your passwords is not the same' : ''
               }
               id={`input-with-icon-textfield ${nanoid(5)}`}
               type='password'
@@ -246,7 +241,7 @@ const RegistrationForm = () => {
         </Box>
         <div className={styles.bottomWrap}>
           <p>Already have an account?</p>
-          <Link className={styles.link} to='/'>
+          <Link className={styles.link} to='/login'>
             <span>Sign In</span>
           </Link>
         </div>
