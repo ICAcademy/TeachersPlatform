@@ -157,7 +157,6 @@ const RegistrationForm = () => {
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <MobileDatePicker
-                className={styles.test1}
                 maxDate={`${new Date().getFullYear() - minAge}/12/31`}
                 minDate={`${new Date().getFullYear() - maxAge}/12/31`}
                 inputFormat='DD/MM/YYYY'
@@ -171,7 +170,13 @@ const RegistrationForm = () => {
                   ),
                 }}
                 renderInput={(params) => (
-                  <TextField placeholder='Date birth' size='small' color='purple' {...params} />
+                  <TextField
+                    placeholder='Date birth'
+                    size='small'
+                    color='purple'
+                    {...params}
+                    error={false}
+                  />
                 )}
               />
             </LocalizationProvider>
