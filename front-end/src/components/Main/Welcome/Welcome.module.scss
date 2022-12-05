@@ -35,7 +35,8 @@ $johnDoe: '../../../assets/images/john-doe.jpeg';
 }
 
 .titleContainer {
-  margin-top: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .title {
@@ -47,6 +48,10 @@ $johnDoe: '../../../assets/images/john-doe.jpeg';
 
 .future {
   color: $purple;
+}
+
+.infoContainer {
+  margin-bottom: 40px;
 }
 
 .info {
@@ -187,4 +192,3 @@ $johnDoe: '../../../assets/images/john-doe.jpeg';
   font-size: $f16;
   line-height: 26px;
 }
-
