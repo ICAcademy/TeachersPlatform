@@ -1,10 +1,11 @@
 const MaterialModel = require('../models/Material');
 
-exports.getAllMaterials = async (unitName) => {
-  if (unitName) {
-    return await MaterialModel.find({ unit: { $regex: unitName, $options: 'i' } });
-  }
+exports.getAllMaterials = async () => {
   return await MaterialModel.find();
+};
+
+exports.getMaterialsByUnit = async (unitName) => {
+  return await MaterialModel.find({ unit: { $regex: unitName, $options: 'i' } });
 };
 
 exports.createMaterial = async (material) => {
