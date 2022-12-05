@@ -6,6 +6,7 @@ import { faArrowRight, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 // styles
 import styles from './Welcome.module.scss';
+import { Link } from 'react-router-dom';
 
 const Welcome = () => {
   return (
@@ -30,9 +31,9 @@ const Welcome = () => {
           </div>
           <div className={styles.ourStoryContainer}>
             <div>
-              <a className={styles.ourStory} href='*'>
+              <Link className={styles.ourStory} to='*'>
                 Our story
-              </a>
+              </Link>
             </div>
             <div className={styles.arrow}>
               <FontAwesomeIcon icon={faArrowRight} className={styles.faArrowRight} />

@@ -21,29 +21,29 @@ const Header = () => {
         <nav className={styles.menuContainer}>
           <ul className={styles.menu}>
             <li className={styles.itemMenu}>
-              <a className={styles.sign} href='*'>
+              <Link className={styles.sign} to='*'>
                 Home
-              </a>
+              </Link>
             </li>
             <li className={styles.itemMenu}>
-              <a className={styles.sign} href='*'>
+              <Link className={styles.sign} to='*'>
                 Course
-              </a>
+              </Link>
             </li>
             <li className={styles.itemMenu}>
-              <a className={styles.sign} href='*'>
+              <Link className={styles.sign} to='*'>
                 Pages
-              </a>
+              </Link>
             </li>
             <li className={styles.itemMenu}>
-              <a className={styles.sign} href='*'>
+              <Link className={styles.sign} to='*'>
                 Blog
-              </a>
+              </Link>
             </li>
             <li className={styles.itemMenu}>
-              <a className={styles.sign} href='*'>
+              <Link className={styles.sign} to='*'>
                 Contact Us
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

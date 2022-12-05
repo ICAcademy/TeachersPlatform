@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // assets
 import teacher from '../../../../assets/images/teacher.jpeg';
@@ -13,9 +14,9 @@ const Card = () => {
         <img className={styles.teacher} src={teacher} alt='teacher' />
       </div>
       <div className={styles.nameContainer}>
-        <a className={styles.name} href='*'>
+        <Link className={styles.name} to='*'>
           Jenny Wilson
-        </a>
+        </Link>
       </div>
       <div className={styles.paymentContainer}>
         <p className={styles.payment}>8,425 Pts</p>

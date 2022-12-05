@@ -18,6 +18,7 @@ import {
 
 // styles
 import styles from './Footer.module.scss';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -54,41 +55,41 @@ const Footer = () => {
             <li className={styles.companyInfoItem}>
               <div className={styles.companyInfoContainer}>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.companyInfoItemSvg} />
-                <a className={styles.info} href='*'>
+                <Link className={styles.info} to='/*'>
                   Home
-                </a>
+                </Link>
               </div>
             </li>
             <li className={styles.companyInfoItem}>
               <div className={styles.companyInfoContainer}>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.companyInfoItemSvg} />
-                <a className={styles.info} href='*'>
+                <Link className={styles.info} to='/*'>
                   About
-                </a>
+                </Link>
               </div>
             </li>
             <li className={styles.companyInfoItem}>
               <div className={styles.companyInfoContainer}>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.companyInfoItemSvg} />
-                <a className={styles.info} href='*'>
+                <Link className={styles.info} to='/*'>
                   Blog
-                </a>
+                </Link>
               </div>
             </li>
             <li className={styles.companyInfoItem}>
               <div className={styles.companyInfoContainer}>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.companyInfoItemSvg} />
-                <a className={styles.info} href='*'>
+                <Link className={styles.info} to='/*'>
                   Course
-                </a>
+                </Link>
               </div>
             </li>
             <li className={styles.companyInfoItem}>
               <div className={styles.companyInfoContainer}>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.companyInfoItemSvg} />
-                <a className={styles.info} href='*'>
+                <Link className={styles.info} to='/*'>
                   Contact Us
-                </a>
+                </Link>
               </div>
             </li>
           </ul>
@@ -99,41 +100,41 @@ const Footer = () => {
             <li className={styles.companyInfoItem}>
               <div className={styles.companyInfoContainer}>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.companyInfoItemSvg} />
-                <a className={styles.info} href='*'>
+                <Link className={styles.info} to='/*'>
                   All Course
-                </a>
+                </Link>
               </div>
             </li>
             <li className={styles.companyInfoItem}>
               <div className={styles.companyInfoContainer}>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.companyInfoItemSvg} />
-                <a className={styles.info} href='*'>
+                <Link className={styles.info} to='/*'>
                   Marketing
-                </a>
+                </Link>
               </div>
             </li>
             <li className={styles.companyInfoItem}>
               <div className={styles.companyInfoContainer}>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.companyInfoItemSvg} />
-                <a className={styles.info} href='*'>
+                <Link className={styles.info} to='/*'>
                   Art
-                </a>
+                </Link>
               </div>
             </li>
             <li className={styles.companyInfoItem}>
               <div className={styles.companyInfoContainer}>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.companyInfoItemSvg} />
-                <a className={styles.info} href='*'>
+                <Link className={styles.info} to='/*'>
                   Designing
-                </a>
+                </Link>
               </div>
             </li>
             <li className={styles.companyInfoItem}>
               <div className={styles.companyInfoContainer}>
                 <FontAwesomeIcon icon={faChevronRight} className={styles.companyInfoItemSvg} />
-                <a className={styles.info} href='*'>
+                <Link className={styles.info} to='/*'>
                   Data Analist
-                </a>
+                </Link>
               </div>
             </li>
           </ul>
@@ -144,25 +145,19 @@ const Footer = () => {
             <li className={styles.companyInfoItem}>
               <div className={styles.contactContainer}>
                 <FontAwesomeIcon icon={faPhone} className={styles.contactIcon} />
-                <a className={styles.info} href='*'>
-                  +(111)256 3527 56
-                </a>
+                <span className={styles.info}>+(111)256 3527 56</span>
               </div>
             </li>
             <li className={styles.companyInfoItem}>
               <div className={styles.contactContainer}>
                 <FontAwesomeIcon icon={faEnvelope} className={styles.contactIcon} />
-                <a className={styles.info} href='*'>
-                  info@drivic.com
-                </a>
+                <span className={styles.info}>info@drivic.com</span>
               </div>
             </li>
             <li className={styles.companyInfoItem}>
               <div className={styles.contactContainer}>
                 <FontAwesomeIcon icon={faLocationDot} className={styles.contactIcon} />
-                <a className={styles.info} href='*'>
-                  Pl, London NW1 The United of Rochester Kingdom
-                </a>
+                <span className={styles.info}>Pl, London NW1 The United of Rochester Kingdom</span>
               </div>
             </li>
           </ul>
