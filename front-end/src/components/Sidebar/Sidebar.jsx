@@ -34,7 +34,9 @@ export const Sidebar = () => {
           </div>
         </div>
         <div className={styles.sidebarImgAvatar}>
-          <img src={avatar} alt='logo' className={styles.sidebarAvatar} />
+          <Link to='profile'>
+            <img src={avatar} alt='logo' className={styles.sidebarAvatar} />
+          </Link>
           <Typography variant='h6'>{` Welcome back, ${fullName}`}</Typography>
         </div>
         <SidebarList />

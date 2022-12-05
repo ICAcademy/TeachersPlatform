@@ -8,6 +8,7 @@ import PrivateRoute from 'routes/PrivateRoute';
 import { Sidebar } from 'components/Sidebar/Sidebar';
 import Header from 'components/common/Header/Header';
 import Footer from 'components/common/Footer/Footer';
+import Profile from 'components/Profile/Profile';
 
 // Pages
 import Login from 'pages/Login';
@@ -38,6 +39,7 @@ const RouterWrapper = () => (
         </PrivateRoute>
       }
     >
+      <Route path='/app/profile' element={<Profile />} />
       <Route
         path='/app/materials'
         element={
