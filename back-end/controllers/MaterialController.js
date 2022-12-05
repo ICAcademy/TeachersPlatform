@@ -1,4 +1,3 @@
-// const Material = require('../models/Material');
 const materialService = require('../services/MaterialService');
 
 exports.getAllMaterials = async (req, res) => {
