@@ -56,7 +56,14 @@ const RouterWrapper = () => (
         }
       />
     </Route>
-    <Route path='/tests' element={<Tests />} />
+    <Route
+      path='/app/tests'
+      element={
+        <PrivateRoute>
+          <Tests />
+        </PrivateRoute>
+      }
+    />
     <Route path='/login' element={<Login />} />
     <Route path='/registration' element={<Registration />} />
     <Route path='*' element={<NotFound />} />
