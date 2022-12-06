@@ -1,9 +1,9 @@
-import API, { API_URL } from 'API';
+import API from 'API';
 
 export const userService = {
   getUser: async () => {
     try {
-      const user = await API.get(`${API_URL}/auth/me`);
+      const user = await API.get('/auth/me');
       return user;
     } catch (e) {
       console.log(e);

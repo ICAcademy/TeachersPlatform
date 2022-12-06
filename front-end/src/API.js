@@ -35,11 +35,9 @@ API.interceptors.response.use(
   },
   (error) => {
     const status = error?.response?.status || 0;
-    const resBaseURL = error?.response?.config?.baseURL;
-    if (resBaseURL === API_URL && status === 401) {
+    if (status === 401) {
       if (localStorage.getItem('token')) {
         localStorage.clear();
-        window.location.assign('/login');
         return Promise.reject(error);
       } else {
         return Promise.reject(error);
