@@ -69,7 +69,15 @@ exports.getUser = async (req, res) => {
       res.status(401).json({ message: 'User was not found!' });
     }
 
-    res.status(200).json(user);
+    res.status(200).json({
+      id: user._id,
+      role: user.role,
+      fullName: user.fullName,
+      dateOfBirth: user.dateOfBirth,
+      email: user.email,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }
