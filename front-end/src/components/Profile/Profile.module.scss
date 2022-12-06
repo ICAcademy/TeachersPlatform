@@ -1,0 +1,28 @@
+.profile {
+  padding: 1% 5% 1% 20%;
+  padding: 30px;
+  border-radius: 20px;
+  height: 100vh;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__img {
+    margin: 0 auto;
+    border: 1px solid #1ec997;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    max-width: 400px;
+    width: 100%;
+    padding: 20px 0;
+  }
+}
