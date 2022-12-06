@@ -1,8 +1,8 @@
-const { upload, erase } = require('../services/FirebaseService');
+const firebaseService = require('../services/FirebaseService');
 
 const uploadPhoto = (req, res) => {
   try {
-    const storageURL = upload(req.file);
+    const storageURL = firebaseService.upload(req.file);
     res.status(200).send(storageURL);
   } catch (error) {
     console.log(error);
@@ -13,7 +13,10 @@ const uploadPhoto = (req, res) => {
 const deletePhoto = (req, res) => {
   try {
     const { name } = req.params;
-    erase(name);
+    if (name !== '') {
+      return res.status(400).send('please provide name');
+    }
+    firebaseService.erase(name);
     res.status(200).send('file deleted');
   } catch (error) {
     console.log(error);
