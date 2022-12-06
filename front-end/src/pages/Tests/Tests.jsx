@@ -26,12 +26,15 @@ const Tests = () => {
       id: nanoid(),
       title: '',
       answers: [
-        { id: nanoid(), answer: '', right: false },
+        { id: nanoid(), answer: '', right: true },
         { id: nanoid(), answer: '', right: false },
       ],
     },
   ]);
   const [postInfo, setPostInfo] = useState(false);
+
+  console.log('tests', tests);
+  console.log('postsInfo', postInfo);
 
   const addQuestion = () => {
     setQuestions([
@@ -40,7 +43,7 @@ const Tests = () => {
         id: nanoid(),
         title: '',
         answers: [
-          { id: nanoid(), answer: '', right: false },
+          { id: nanoid(), answer: '', right: true },
           { id: nanoid(), answer: '', right: false },
         ],
       },
@@ -168,6 +171,8 @@ const Tests = () => {
       }),
     };
 
+    setPostInfo(true);
+
     setTests({
       ...tests,
       level: level,
@@ -189,8 +194,16 @@ const Tests = () => {
         };
       }),
     });
-    setPostInfo(true);
-    postData(data);
+    if (
+      level !== '' &&
+      unit !== '' &&
+      questions.every(
+        (question) =>
+          question.title !== '' && question.answers.every((answer) => answer.answer !== ''),
+      )
+    ) {
+      postData(data);
+    }
   };
 
   const postData = (tests) => API.post(`${API_URL}/api/questions/`, tests);
@@ -210,6 +223,7 @@ const Tests = () => {
               setUnit={setUnit}
               topic={topic}
               setTopic={setTopic}
+              postInfo={postInfo}
             />
           </div>
           {questions.length > 0 && (
@@ -226,6 +240,7 @@ const Tests = () => {
                     changeRightAnswerForQuestion={changeRightAnswerForQuestion}
                     changeAnswerForQuestion={changeAnswerForQuestion}
                     deleteAnwerForQuestion={deleteAnwerForQuestion}
+                    postInfo={postInfo}
                   />
                 );
               })}

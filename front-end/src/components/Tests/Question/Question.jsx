@@ -19,6 +19,7 @@ const Question = ({
   changeRightAnswerForQuestion,
   changeAnswerForQuestion,
   deleteAnwerForQuestion,
+  postInfo,
 }) => {
   return (
     <div className={styles.questionContainer}>
@@ -31,9 +32,9 @@ const Question = ({
           <Input
             className={styles.input}
             variant='outlined'
-            label='title'
             size='small'
             placeholder='title'
+            error={question.title === '' && postInfo}
             value={question.title}
             onChange={(event) => changeTitleForQuestion(question.id, event)}
           />
@@ -55,6 +56,7 @@ const Question = ({
                 <Input
                   className={styles.input}
                   placeholder='answer'
+                  error={answer.answer === '' && postInfo}
                   value={answer.answer}
                   onChange={(event) => changeAnswerForQuestion(question.id, answer.id, event)}
                 />
@@ -97,6 +99,7 @@ Question.propTypes = {
   changeRightAnswerForQuestion: PropTypes.func,
   changeTitleForQuestion: PropTypes.func,
   deleteAnwerForQuestion: PropTypes.func,
+  postInfo: PropTypes.bool,
 };
 
 export default Question;
