@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const register = (data) => {
   bcrypt.hash(data.password, 10, (err, hashedPass) => {
     if (err) {
-      throw new Error('Something went wrong');
+      throw new Error(err);
     }
 
     User.create({
@@ -31,7 +31,7 @@ const login = async (data) => {
   if (!passwords) {
     throw new Error('Password do not match');
   }
-  return jwt.sign({ email: user.email }, 'secretValue', { expiresIn: '300' });
+  return jwt.sign({ email: user.email }, process.env.SECRET_KEY, { expiresIn: '1m' });
 };
 
 const comparePasswords = (pass1, pass2) =>

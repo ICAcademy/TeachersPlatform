@@ -21,6 +21,9 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 
 app.use('/api', authentication, appRouter);
 app.use('/auth', authRouter);
+app.use((req, res, next) => {
+  res.status(404).json({ message: 'Route not found' });
+});
 
 async function main() {
   try {

@@ -4,11 +4,13 @@ const materialLevelsRouter = require('./MaterialLevelsRoutes');
 const studentRouter = require('./StudentRoutes');
 const teacherRouter = require('./TeacherRoutes');
 const questionsRouter = require('./questions');
+const userRouter = require('./UserRouter');
 
 router.use('/materials', materialRouter);
 router.use('/materials-levels', materialLevelsRouter);
 router.use('/students', studentRouter);
 router.use('/teachers', teacherRouter);
 router.use('/questions', questionsRouter);
+router.use('/me', userRouter);
 
 module.exports = router;
