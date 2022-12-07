@@ -8,7 +8,6 @@ const uploadPhoto = async (req, res) => {
     }
     res.json(storageURL);
   } catch (error) {
-    console.log(error);
     res.status(400).send(error.message);
   }
 };

@@ -1,7 +1,6 @@
 const saltedMd5 = require('salted-md5');
 const path = require('path');
 const admin = require('firebase-admin');
-// const Multer = require('multer');
 
 const serviceAccount = process.env.FIREBASE_ADMIN_API;
 
