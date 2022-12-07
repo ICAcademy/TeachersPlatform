@@ -12,14 +12,15 @@
 .content {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-between;
+  width: 1130px;
+  margin: 0 auto;
 }
 
 .logoContainer {
   display: flex;
-  justify-content: center;
-  width: 140px;
+  align-self: center;
+  width: 130px;
 }
 
 .button {
@@ -118,4 +119,3 @@
   text-decoration: none;
   color: $white;
 }
-
