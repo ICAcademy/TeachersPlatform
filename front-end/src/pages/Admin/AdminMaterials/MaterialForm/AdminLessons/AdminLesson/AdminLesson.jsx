@@ -50,7 +50,7 @@ const AdminLesson = ({ lesson, onSave, onDelete, index }) => {
   };
 
   const saveLessonHandler = () => {
-    if (lessonTitle.length === 0) {
+    if (!lessonTitle.length) {
       setError(true);
       return;
     }

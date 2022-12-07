@@ -81,8 +81,8 @@ const CreateMaterial = ({ material, levels, create }) => {
 
   const validation = () => {
     const errors = {
-      unitTitleError: unitTitle.length === 0,
-      selectedLevelError: selectedLevel.length === 0,
+      unitTitleError: !unitTitle.length,
+      selectedLevelError: !selectedLevel.length,
     };
 
     setError((prev) => ({
