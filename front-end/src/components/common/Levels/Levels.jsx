@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-
-//Services
-import { getLevels } from 'services/MaterialsService/MaterialsService';
 
 //Components
 import Level from './Level/Level';
@@ -11,28 +8,13 @@ import Level from './Level/Level';
 import styles from './Levels.module.scss';
 
 const Levels = (props) => {
-  const [levels, setLevels] = useState([]);
-
-  const levelsData = async () => {
-    try {
-      const levels = await getLevels();
-      setLevels(levels);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    levelsData();
-  }, []);
-
   const changeLevelHandler = (level) => {
     props.onChangeLevel(level);
   };
 
   return (
     <div className={styles.levelsBar}>
-      {levels.map((level) => (
+      {props.list.map((level) => (
         <Level
           key={level}
           selectedLevel={props.selectedLevel}
@@ -47,9 +29,8 @@ const Levels = (props) => {
 //propTypes
 Levels.propTypes = {
   selectedLevel: PropTypes.string,
-};
-Levels.propTypes = {
   onChangeLevel: PropTypes.func,
+  list: PropTypes.array,
 };
 
 export default Levels;

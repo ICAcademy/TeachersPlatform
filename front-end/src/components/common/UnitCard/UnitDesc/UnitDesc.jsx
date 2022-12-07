@@ -10,16 +10,22 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import FirstLetterIcon from 'components/common/FirstLetterIcon/FirstLetterIcon';
 
 const UnitDesc = (props) => {
+  const lessonsCount = props.numberOfLessons ? (
+    <div className={styles.lessonsCount}>
+      <span>Lessons:</span>
+      <span>{props.numberOfLessons}</span>
+    </div>
+  ) : (
+    ''
+  );
+
   return (
     <div className={styles.unitDesc}>
       <div className={styles.unitInfo}>
         <FirstLetterIcon firstLetter={props.unit[0]} />
         <div className={styles.dFlex}>
           <div className={styles.unitTitle}>{props.unit}</div>
-          <div className={styles.lessonsCount}>
-            <span>Lessons:</span>
-            <span>{props.numberOfLessons}</span>
-          </div>
+          {lessonsCount}
         </div>
       </div>
       <FontAwesomeIcon icon={faArrowRight} />
