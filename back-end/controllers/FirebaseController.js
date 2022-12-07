@@ -3,7 +3,11 @@ const firebaseService = require('../services/FirebaseService');
 const uploadPhoto = (req, res) => {
   try {
     const storageURL = firebaseService.upload(req.file);
-    res.status(200).send(storageURL);
+    if (storageURL) {
+      res.status(200).send(storageURL);
+    } else {
+      res.status(400).send('Only images allowed');
+    }
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
