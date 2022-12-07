@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
 import { List } from '@mui/material';
 
 import ProfileTab from '../ProfileTab/ProfileTab';
@@ -25,11 +26,20 @@ const tabs = [
 ];
 
 const ProfileTabs = () => {
-  const [selectedTab, setSelectedTab] = useState('General Info');
+  const { state } = useLocation();
+  const [selectedTab, setSelectedTab] = useState(state);
+
+  const setRouteState = (state) => {
+    setSelectedTab(state);
+  };
 
   const selectHandler = (tab) => {
     setSelectedTab(tab);
   };
+
+  useEffect(() => {
+    setRouteState(state);
+  }, [state]);
 
   return (
     <List className={styles.tabs} disablePadding sx={{ mb: '50px' }}>

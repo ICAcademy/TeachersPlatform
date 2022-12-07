@@ -24,8 +24,8 @@ const sx = {
 
 const ProfileTab = ({ title, link, selected, selectTab }) => {
   return (
-    <Link to={''} className={styles.link}>
-      <ListItem selected={title === selected} onClick={() => selectTab(title)} sx={sx.tab}>
+    <Link to={link} className={styles.link} state={link}>
+      <ListItem selected={selected === link} onClick={() => selectTab(link)} sx={sx.tab}>
         {title}
       </ListItem>
     </Link>
@@ -36,7 +36,7 @@ ProfileTab.propTypes = {
   title: PropTypes.string,
   link: PropTypes.string,
   selected: PropTypes.string,
-  selectTab: PropTypes.fn,
+  selectTab: PropTypes.func,
 };
 
 export default ProfileTab;

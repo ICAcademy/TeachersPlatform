@@ -1,0 +1,17 @@
+@import 'styles/colors.scss';
+
+.profile__img {
+  margin: 0 auto;
+  border: 1px solid $softPurple;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile__content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  max-width: 400px;
+  width: 100%;
+  padding: 20px 0;
+}
