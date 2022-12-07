@@ -1,9 +1,10 @@
 import React from 'react';
-
 import { Box, TextField, Button } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+
+import ProfileTabs from './ProfileTabs/ProfileTabs';
 
 import styles from './Profile.module.scss';
 import userImg from 'assets/sidebar/avatar.png';
@@ -19,6 +20,7 @@ const Profile = () => {
   return (
     <Box className={styles.profile}>
       <Box className={styles.profile__container}>
+        <ProfileTabs />
         <Box component='img' src={userImg} alt='User photo' className={styles.profile__img} />
         <Button>Change profile photo</Button>
         <Box className={styles.profile__content}>
