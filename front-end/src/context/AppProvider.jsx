@@ -15,9 +15,9 @@ const AppProvider = ({ children }) => {
   const fetchUser = useCallback(async () => {
     try {
       const accessToken = localStorage.getItem('token');
-      const user = accessToken ? await userService.getUser(accessToken) : isAuthenticated;
-      if (user) {
-        setCurrentUser(user);
+      const { data } = accessToken ? await userService.getUser(accessToken) : isAuthenticated;
+      if (data) {
+        setCurrentUser(data);
         setIsLoading(false);
         setIsAuthenticated(true);
       }

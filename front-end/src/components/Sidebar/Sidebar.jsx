@@ -12,11 +12,7 @@ import logo1 from 'assets/sidebar/logo-letter.png';
 import avatar from 'assets/sidebar/avatar.png';
 
 export const Sidebar = () => {
-  const {
-    currentUser: {
-      data: { fullName },
-    },
-  } = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   return (
     <>
@@ -37,7 +33,7 @@ export const Sidebar = () => {
           <Link to='profile/general-info' state={'general-info'}>
             <img src={avatar} alt='logo' className={styles.sidebarAvatar} />
           </Link>
-          <Typography variant='h6'>{` Welcome back, ${fullName}`}</Typography>
+          <Typography variant='h6'>{` Welcome back, ${currentUser.fullName}`}</Typography>
         </div>
         <SidebarList />
       </aside>
