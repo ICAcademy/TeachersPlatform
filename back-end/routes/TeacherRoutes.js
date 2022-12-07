@@ -16,4 +16,3 @@ router.route('/:id').put(updateTeacher);
 router.route('/:id').delete(deleteTeacher);
 
 module.exports = router;
-

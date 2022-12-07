@@ -37,6 +37,7 @@
         "maxBOF": 0
       }
     ],
+    "no-unused-vars": ["warn"],
     "react/jsx-closing-bracket-location": "error",
     "react/jsx-equals-spacing": "error",
     "react/jsx-first-prop-new-line": "error",
@@ -53,12 +54,6 @@
       "error",
       {
         "allowExpressions": true
-      }
-    ],
-    "react/jsx-max-depth": [
-      "error",
-      {
-        "max": 4
       }
     ],
     "react/jsx-wrap-multilines": [

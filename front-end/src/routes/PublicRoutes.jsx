@@ -8,6 +8,7 @@ import Main from 'pages/Main/Main';
 // Pages
 import Materials from 'pages/Materials/Materials';
 import Material from 'pages/Material/Material';
+import Tests from 'pages/Tests/Tests';
 import AdminMaterial from 'pages/Admin/AdminMaterials/AdminMaterial';
 
 const PublicRoutes = () => (
@@ -18,6 +19,7 @@ const PublicRoutes = () => (
     <Route path='/materials' element={<Materials />} />
     <Route path='/materials/:url' element={<Material />} />
     <Route path='/materials/edit/:url' element={<AdminMaterial />} />
+    <Route path='/tests' element={<Tests />} />
   </Routes>
 );
 
