@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const subscriptionSchema = new Schema({
   teacherID: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   teacherFullName: {
     type: String,
@@ -11,7 +11,7 @@ const subscriptionSchema = new Schema({
     type: String,
   },
   studentID: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   studentFullName: {
     type: String,
