@@ -1,29 +1,28 @@
 const firebaseService = require('../services/FirebaseService');
 
-const uploadPhoto = (req, res) => {
+const uploadPhoto = async (req, res) => {
   try {
-    const storageURL = firebaseService.upload(req.file);
-    if (storageURL) {
-      res.status(200).send(storageURL);
-    } else {
+    const storageURL = await firebaseService.uploadFile(req.file);
+    if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
       res.status(400).send('Only images allowed');
     }
+    res.json(storageURL);
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
   }
 };
 
-const deletePhoto = (req, res) => {
+const deletePhoto = async (req, res) => {
   try {
-    const { name } = req.params;
-    if (name !== '') {
-      return res.status(400).send('please provide name');
+    console.log(req);
+    const { name } = req.query;
+    if (!name) {
+      return res.status(400).send('please provide file name');
     }
-    firebaseService.erase(name);
+    await firebaseService.deleteFile(name);
     res.status(200).send('file deleted');
   } catch (error) {
-    console.log(error);
     res.status(400).send(error.message);
   }
 };
