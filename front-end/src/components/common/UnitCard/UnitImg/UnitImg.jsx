@@ -7,8 +7,9 @@ import styles from './UnitImg.module.scss';
 const UnitImg = (props) => {
   return (
     <div className={styles.unitImg}>
-      {props.image && <img src={`http://localhost:5000/uploads/${props.image}`} />}
-      {!props.image && <p className={styles.noImage}>{props.unit}</p>}
+      {/* {props.image && <img src={`http://localhost:5000/uploads/${props.image}`} />}
+      {!props.image && <p className={styles.noImage}>{props.unit}</p>} */}
+      <p className={styles.noImage}>{props.unit}</p>
     </div>
   );
 };
