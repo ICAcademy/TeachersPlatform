@@ -11,6 +11,6 @@ router.use('/materials-levels', materialLevelsRouter);
 router.use('/students', studentRouter);
 router.use('/teachers', teacherRouter);
 router.use('/questions', questionsRouter);
-router.use('/firebase', files);
+router.use('/files', files);
 
 module.exports = router;

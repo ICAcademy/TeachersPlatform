@@ -14,7 +14,6 @@ const uploadPhoto = async (req, res) => {
 
 const deletePhoto = async (req, res) => {
   try {
-    console.log(req);
     const { name } = req.query;
     if (!name) {
       return res.status(400).send('please provide file name');
