@@ -11,6 +11,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import FirstLetterIcon from 'components/common/FirstLetterIcon/FirstLetterIcon';
 
 const UnitDesc = (props) => {
+  console.log(props.item.url);
   return (
     <Link className={styles.unitDesc} to={`/materials/${props.item.url}`}>
       <div className={styles.unitInfo}>

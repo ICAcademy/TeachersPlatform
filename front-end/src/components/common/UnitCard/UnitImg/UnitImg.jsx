@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 const UnitImg = (props) => {
   return (
     <div className={styles.unitImg}>
-      <Link to={`/materials/edit-${props.item.url}`}>
+      <Link to={`/materials/edit/${props.item.url}`}>
         <EditIcon className={styles.editIcon} fontSize='large' />
       </Link>
       {props.item.image && (
@@ -17,7 +17,11 @@ const UnitImg = (props) => {
           <img src={`http://localhost:5000/uploads/${props.item.image}`} />
         </Link>
       )}
-      {!props.item.image && <p className={styles.noImage}>{props.item.unit}</p>}
+      {!props.item.image && (
+        <Link to={`/materials/${props.item.url}`}>
+          <p className={styles.noImage}>{props.item.unit}</p>
+        </Link>
+      )}
     </div>
   );
 };

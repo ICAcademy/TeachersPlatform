@@ -42,7 +42,7 @@ const Materials = () => {
     <div className={styles.materials}>
       <div className={styles.navigationRow}>
         <Levels selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
-        <Button variant='contained' endIcon={<Add />}>
+        <Button href='/materials/edit/new' variant='contained' endIcon={<Add />}>
           Create material
         </Button>
       </div>

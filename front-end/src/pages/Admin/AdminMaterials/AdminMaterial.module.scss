@@ -4,6 +4,8 @@ body {
 
 .adminMaterials {
   padding-left: 20%;
+  padding-right: 5%;
+  margin-bottom: 50px;
 }
 
 h1 {
@@ -11,15 +13,9 @@ h1 {
   margin: 35px 0;
 }
 
-.modalForm {
-  min-width: 450px;
-  padding: 35px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
+.formWrapper {
   background-color: #ffffff;
+  padding: 50px 35px;
   border-radius: 5px;
-  transform: translate(-50%, -50%);
-  box-sizing: border-box;
+  box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
 }
