@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // components
 import Explanation from '../common/Explanation/Explanation';
@@ -83,3 +84,7 @@ const Activity = () => {
 
 export default Activity;
 
+Arrow.propTypes = {
+  type: PropTypes.string,
+  onClick: PropTypes.func,
+};
