@@ -2,13 +2,15 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 const express = require('express');
+const bodyParser = require('body-parser');
+const compression = require('compression');
 
 const app = express();
 const port = process.env.PORT;
 
 // Middlewares
-const cors = require('./middlewares/cors');
 const authentication = require('./middlewares/authentication');
+const cors = require('./middlewares/cors');
 
 // Routers
 const appRouter = require('./routes/AppRouter');
@@ -16,6 +18,9 @@ const authRouter = require('./routes/AuthRouter');
 
 app.use(cors);
 app.use(express.json());
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(compression());
 
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
