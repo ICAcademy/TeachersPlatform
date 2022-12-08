@@ -59,7 +59,7 @@ const LoginForm = () => {
       <div className={styles.blocksWrap}>
         <div className={styles.topWrap}>
           <h1>Let&apos;s Get Started</h1>
-          <p>Sign in to continue to edulearn.</p>
+          <p>Sign in to continue to edulearn</p>
         </div>
         <Box>
           <FormControl sx={{ width: '400px' }}>
@@ -125,7 +125,7 @@ const LoginForm = () => {
           </FormControl>
         </Box>
         <div className={styles.bottomWrap}>
-          <p>Already have an account?</p>
+          <p>Don&apos;t have an account?</p>
           <Link className={styles.link} to='/registration'>
             <span>Sign Up</span>
           </Link>
