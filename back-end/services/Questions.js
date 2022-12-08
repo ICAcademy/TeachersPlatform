@@ -24,9 +24,18 @@ const removeQuestion = async (id) => await Question.findByIdAndDelete(id);
 const filterQuestion = async (level, searchUnit) => {
   const questions = await Question.find({ level: level });
   const filterUnitsQuestions = questions.filter((question) => {
-    return question.unit.includes(searchUnit);
+    return question.unit.toLowerCase().includes(searchUnit.toLowerCase());
   });
-  return filterUnitsQuestions;
+  const mapUnitsQuestions = filterUnitsQuestions.map((unit) => {
+    return unit.unit;
+  });
+  const result = mapUnitsQuestions.reduce((acc, curr) => {
+    if (!acc.includes(curr)) {
+      acc.push(curr);
+    }
+    return acc;
+  }, []);
+  return result;
 };
 
 module.exports = {

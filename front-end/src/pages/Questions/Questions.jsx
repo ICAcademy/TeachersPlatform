@@ -17,7 +17,6 @@ const Questions = () => {
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchUnit, setSearchUnit] = useState('');
-  const [data, setData] = useState([]);
 
   const fetchLevels = async () => {
     try {
@@ -46,7 +45,7 @@ const Questions = () => {
   const fetchQuestionsByLevelAndUnit = async (selectedLevel, searchUnit) => {
     try {
       const questionsFromInput = await getQuestionsByLevelAndUnit(selectedLevel, searchUnit);
-      setData(questionsFromInput);
+      setUnits(questionsFromInput);
     } catch (error) {
       throw new Error(error.message);
     }
@@ -56,18 +55,13 @@ const Questions = () => {
     setSearchUnit(event.target.value);
   };
 
-  const filterUnits = () => {
-    const filterUnits = units.filter((unit) => {
-      return unit.toLowerCase().includes(searchUnit.toLowerCase());
-    });
-    setUnits(filterUnits);
-  };
-
   useEffect(() => {
-    const timer = setTimeout(() => {
-      return fetchQuestionsByLevelAndUnit(selectedLevel, searchUnit);
-    }, 500);
-    return () => clearTimeout(timer);
+    if (searchUnit.length > 3) {
+      const timer = setTimeout(() => {
+        return fetchQuestionsByLevelAndUnit(selectedLevel, searchUnit);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
   }, [selectedLevel, searchUnit]);
 
   useEffect(() => {
@@ -76,9 +70,10 @@ const Questions = () => {
 
   useEffect(() => {
     if (searchUnit.length < 3) {
-      fetchUnits(selectedLevel);
-    } else {
-      filterUnits();
+      const timer = setTimeout(() => {
+        fetchUnits(selectedLevel);
+      }, 500);
+      return () => clearTimeout(timer);
     }
   }, [selectedLevel, searchUnit]);
 

@@ -12,7 +12,9 @@ const {
 
 const getAllQuestions = async (req, res) => {
   try {
-    const questions = await getQuestions();
+    const { level, searchUnit } = req.query;
+    const questions =
+      level && searchUnit ? await filterQuestion(level, searchUnit) : await getQuestions();
     res.status(200).json(questions);
   } catch (error) {
     res.status(400).json(error);
@@ -84,16 +86,6 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
-const filteredQuestion = async (req, res) => {
-  try {
-    const { level, searchUnit } = req.query;
-    const question = await filterQuestion(level, searchUnit);
-    res.status(200).json(question);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
-
 module.exports = {
   getAllQuestions,
   getQuestionLevels,
@@ -103,5 +95,4 @@ module.exports = {
   getQuestionById,
   updateQuestion,
   deleteQuestion,
-  filteredQuestion,
 };
