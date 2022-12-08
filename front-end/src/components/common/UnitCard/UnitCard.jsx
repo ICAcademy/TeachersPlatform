@@ -11,11 +11,11 @@ import { Link } from 'react-router-dom';
 
 const UnitCard = (props) => {
   return (
-    <Link className={styles.unitItem} to={`/app/materials/${props.url}`}>
+    <Link className={styles.unitItem} to={`${props.url}`}>
       <div className={styles.unitWrapper}>
         <div className={styles.unitBody}>
-          <UnitImg image={props.item.image} unit={props.item.unit} />
-          <UnitDesc unit={props.item.unit} numberOfLessons={props.item.numberOfLessons} />
+          <UnitImg image={props.image} unit={props.unit} />
+          <UnitDesc unit={props.unit} numberOfLessons={props.numberOfLessons} />
         </div>
       </div>
     </Link>
@@ -24,17 +24,14 @@ const UnitCard = (props) => {
 
 //propTypes
 UnitCard.propTypes = {
-  item: PropTypes.object,
+  numberOfLessons: PropTypes.number,
   image: PropTypes.string,
   unit: PropTypes.string,
-  id: PropTypes.string,
   url: PropTypes.string,
 };
 UnitCard.defaultProps = {
-  item: {},
   image: '',
   unit: '',
-  id: '',
   url: '',
 };
 

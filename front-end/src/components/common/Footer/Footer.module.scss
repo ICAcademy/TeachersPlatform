@@ -11,9 +11,10 @@
 .content {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   padding-bottom: 70px;
   border-bottom: 0.1px solid $darkGrey;
+  width: 1130px;
+  margin: 0 auto;
 }
 
 .description {
@@ -45,7 +46,6 @@
   display: flex;
   flex-direction: row;
   list-style-type: none;
-  padding: 0 0 0 0;
 }
 
 .iconItem {
@@ -90,6 +90,7 @@
 
 .companyInfoContainer {
   display: flex;
+  width: 120px;
 }
 
 .companyInfoItem {
@@ -131,12 +132,10 @@
 
 .contactContainer {
   display: flex;
-  align-items: center;
 }
 
 .contactIcon {
-  display: flex;
-  align-self: center;
+  margin-top: 8px;
   transition: all 0.3s ease;
   width: 12px;
   height: 12px;
@@ -145,6 +144,11 @@
     transition: all 0.3s ease;
     color: $purple200;
   }
+}
+
+.info {
+  display: flex;
+  align-self: center;
 }
 
 .copyrightContainer {
@@ -157,4 +161,3 @@
   font-size: 16px;
   line-height: 26px;
 }
-

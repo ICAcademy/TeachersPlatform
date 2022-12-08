@@ -12,8 +12,10 @@ $johnDoe: '../../../assets/images/john-doe.jpeg';
 
 .content {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   padding-top: 120px;
+  width: 1130px;
+  margin: 0 auto;
 }
 
 .welcomeInfo {
@@ -35,7 +37,8 @@ $johnDoe: '../../../assets/images/john-doe.jpeg';
 }
 
 .titleContainer {
-  margin-top: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .title {
@@ -47,6 +50,10 @@ $johnDoe: '../../../assets/images/john-doe.jpeg';
 
 .future {
   color: $purple;
+}
+
+.infoContainer {
+  margin-bottom: 40px;
 }
 
 .info {
@@ -99,6 +106,7 @@ $johnDoe: '../../../assets/images/john-doe.jpeg';
   background-size: cover;
   border-radius: 50%;
   width: 500px;
+  height: 500px;
   margin-left: 30px;
 }
 
@@ -187,4 +195,3 @@ $johnDoe: '../../../assets/images/john-doe.jpeg';
   font-size: $f16;
   line-height: 26px;
 }
-

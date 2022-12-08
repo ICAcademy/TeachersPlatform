@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 //Services
-import { getUnitsByLevel } from 'services/MaterialsService/MaterialsService';
+import { getLevels, getUnitsByLevel } from 'services/MaterialsService/MaterialsService';
 
 //Components
-import Levels from 'components/Materials/Levels/Levels';
+import Levels from 'components/common/Levels/Levels';
 import Units from 'components/Materials/Units/Units';
 import Loader from 'components/common/Loader/Loader';
 
@@ -12,9 +12,19 @@ import Loader from 'components/common/Loader/Loader';
 import styles from './Materials.module.scss';
 
 const Materials = () => {
+  const [levels, setLevels] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [unitsByLevel, setUnitsByLevel] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const fetchLevels = async () => {
+    try {
+      const levels = await getLevels();
+      setLevels(levels);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
 
   const unitsByLevelData = async (level) => {
     try {
@@ -33,12 +43,16 @@ const Materials = () => {
   };
 
   useEffect(() => {
+    fetchLevels();
+  }, []);
+
+  useEffect(() => {
     unitsByLevelData(selectedLevel);
   }, [selectedLevel]);
 
   return (
     <div className={styles.materials}>
-      <Levels selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
+      <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
       {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
     </div>
   );
