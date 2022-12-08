@@ -20,13 +20,12 @@ const createRoleForUser = async (role, data) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const { email } = req.body;
     const { error } = registerValidation(req.body);
 
-    const user = await findByEmail(email);
+    const user = await findByEmail(req.body.email);
 
     if (user) {
-      return res.status(400).json({ message: 'A user with that email address already exists' });
+      return res.status(400).json({ message: 'User with that email address already exists' });
     }
     if (error) {
       return res.status(400).send(error.details[0].message);
@@ -34,7 +33,7 @@ exports.createUser = async (req, res) => {
 
     register(req.body);
     await createRoleForUser(req.body.role, req.body);
-    res.status(200).json({ message: 'User was successfully created!' });
+    res.status(201).json({ message: 'User was successfully created!' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -42,8 +41,7 @@ exports.createUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try {
-    const data = req.body;
-    const token = await login(data);
+    const token = await login(req.body);
 
     if (!token) {
       return res.status(400).json({ message: 'User was not found!' });
