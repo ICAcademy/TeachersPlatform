@@ -21,6 +21,14 @@ const editQuestion = async (id, body) =>
 
 const removeQuestion = async (id) => await Question.findByIdAndDelete(id);
 
+const filterQuestion = async (level, searchUnit) => {
+  const questions = await Question.find({ level: level });
+  const filterUnitsQuestions = questions.filter((question) => {
+    return question.unit.includes(searchUnit);
+  });
+  return filterUnitsQuestions;
+};
+
 module.exports = {
   getQuestions,
   getLevels,
@@ -30,4 +38,5 @@ module.exports = {
   findQuestionById,
   editQuestion,
   removeQuestion,
+  filterQuestion,
 };

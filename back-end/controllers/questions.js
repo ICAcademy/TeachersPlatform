@@ -7,6 +7,7 @@ const {
   findQuestionById,
   editQuestion,
   removeQuestion,
+  filterQuestion,
 } = require('../services/Questions');
 
 const getAllQuestions = async (req, res) => {
@@ -83,6 +84,16 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
+const filteredQuestion = async (req, res) => {
+  try {
+    const { level, searchUnit } = req.query;
+    const question = await filterQuestion(level, searchUnit);
+    res.status(200).json(question);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 module.exports = {
   getAllQuestions,
   getQuestionLevels,
@@ -92,4 +103,5 @@ module.exports = {
   getQuestionById,
   updateQuestion,
   deleteQuestion,
+  filteredQuestion,
 };
