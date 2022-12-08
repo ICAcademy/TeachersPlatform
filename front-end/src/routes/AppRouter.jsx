@@ -15,6 +15,8 @@ import Registration from 'pages/Registration';
 import Main from 'pages/Main/Main';
 import Material from 'pages/Material/Material';
 import Materials from 'pages/Materials/Materials';
+import Questions from 'pages/Questions/Questions';
+import Topics from 'pages/Topics/Topics';
 
 import NotFound from 'pages/NotFound';
 import Tests from 'pages/Tests/Tests';
@@ -55,8 +57,31 @@ const RouterWrapper = () => (
           </PrivateRoute>
         }
       />
+      <Route
+        path='/app/questions'
+        element={
+          <PrivateRoute>
+            <Questions />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path='/app/questions/:url'
+        element={
+          <PrivateRoute>
+            <Topics />
+          </PrivateRoute>
+        }
+      />
     </Route>
-    <Route path='/tests' element={<Tests />} />
+    <Route
+      path='/app/tests'
+      element={
+        <PrivateRoute>
+          <Tests />
+        </PrivateRoute>
+      }
+    />
     <Route path='/login' element={<Login />} />
     <Route path='/registration' element={<Registration />} />
     <Route path='*' element={<NotFound />} />
