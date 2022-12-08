@@ -7,7 +7,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { getUnitsByLevel, getMaterialsByUnit } from 'services/MaterialsService/MaterialsService';
 
 //Components
-import Levels from 'components/Materials/Levels/Levels';
+import Levels from 'components/Levels/Levels';
 import Units from 'components/Materials/Units/Units';
 import Loader from 'components/common/Loader/Loader';
 

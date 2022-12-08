@@ -1,4 +1,4 @@
-import Lessons from 'components/Lessons/Lessons';
+import Lessons from 'components/common/Lessons/Lessons';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -31,8 +31,6 @@ const Material = () => {
   useEffect(() => {
     getMaterialData(url);
   }, [url]);
-
-  console.log(material);
 
   return (
     <div className={styles.materials}>
