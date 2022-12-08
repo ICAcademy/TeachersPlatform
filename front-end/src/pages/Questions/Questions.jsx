@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
-import Units from 'components/Questions/Units/Units';
+import Units from 'components/questions/Units/Units';
 
 import { getLevels, getUnitsByLevel } from 'services/questionService';
 

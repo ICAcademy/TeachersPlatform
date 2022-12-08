@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
 
 import LessonsHeader from 'components/Lessons/LessonsHeader/LessonsHeader';
-import TopicsBody from 'components/Questions/TopicsBody/TopicsBody';
-import Quiz from 'components/Questions/Quiz/Quiz';
+import TopicsBody from 'components/questions/TopicsBody/TopicsBody';
+import Quiz from 'components/questions/Quiz/Quiz';
 
 import { getTopicDataByUrl } from 'services/questionService';
 
