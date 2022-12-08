@@ -30,7 +30,9 @@ const AppProvider = ({ children }) => {
   }, [isAuthenticated]);
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, fetchUser, isLoading, isAuthenticated }}>
+    <CurrentUserContext.Provider
+      value={{ currentUser, setCurrentUser, fetchUser, isLoading, isAuthenticated }}
+    >
       {children}
     </CurrentUserContext.Provider>
   );

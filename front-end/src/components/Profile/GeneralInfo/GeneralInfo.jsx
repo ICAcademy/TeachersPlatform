@@ -7,6 +7,8 @@ import dayjs from 'dayjs';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
+import { updateUserById } from 'services/userService';
+
 import styles from './GeneralInfo.module.scss';
 import userImg from 'assets/sidebar/avatar.png';
 
@@ -39,7 +41,7 @@ const userReduser = (state, action) => {
 };
 
 const GeneralInfo = () => {
-  const { currentUser } = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [user, dispatchUser] = useReducer(userReduser, currentUser);
 
   const changeFullname = (e) => {
@@ -52,6 +54,15 @@ const GeneralInfo = () => {
 
   const changeDate = (date) => {
     dispatchUser({ type: 'CHANGE_BITH_DATE', payload: dayjs(date) });
+  };
+
+  const updateUser = async (id, data) => {
+    try {
+      await updateUserById(id, data);
+      setCurrentUser(user);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -92,7 +103,12 @@ const GeneralInfo = () => {
             )}
           />
         </LocalizationProvider>
-        <Button variant='contained' color='primary' sx={sx.saveBtn}>
+        <Button
+          variant='contained'
+          color='primary'
+          sx={sx.saveBtn}
+          onClick={() => updateUser(user._id, user)}
+        >
           Save
         </Button>
       </Box>
