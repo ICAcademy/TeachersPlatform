@@ -20,6 +20,7 @@ const Levels = (props) => {
           selectedLevel={props.selectedLevel}
           level={level}
           onChangeLevel={changeLevelHandler}
+          setSearchUnit={props.setSearchUnit}
         />
       ))}
     </div>
@@ -31,6 +32,7 @@ Levels.propTypes = {
   selectedLevel: PropTypes.string,
   onChangeLevel: PropTypes.func,
   list: PropTypes.array,
+  setSearchUnit: PropTypes.func,
 };
 
 export default Levels;

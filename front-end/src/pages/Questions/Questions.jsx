@@ -4,9 +4,10 @@ import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
 import Units from 'components/Questions/Units/Units';
 
-import { getLevels, getUnitsByLevel } from 'services/questionService';
+import { getLevels, getUnitsByLevel, getQuestionsByLevelAndUnit } from 'services/questionService';
 
 import styles from './Questions.module.scss';
+import { TextField } from '@mui/material';
 
 const baseUrl = 'questions';
 
@@ -15,6 +16,8 @@ const Questions = () => {
   const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchUnit, setSearchUnit] = useState('');
+  const [data, setData] = useState([]);
 
   const fetchLevels = async () => {
     try {
@@ -40,17 +43,62 @@ const Questions = () => {
     setSelectedLevel(level);
   };
 
+  const fetchQuestionsByLevelAndUnit = async (selectedLevel, searchUnit) => {
+    try {
+      const questionsFromInput = await getQuestionsByLevelAndUnit(selectedLevel, searchUnit);
+      setData(questionsFromInput);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  const handleCangeSearchUnit = (event) => {
+    setSearchUnit(event.target.value);
+  };
+
+  const filterUnits = () => {
+    const filterUnits = units.filter((unit) => {
+      return unit.toLowerCase().includes(searchUnit.toLowerCase());
+    });
+    setUnits(filterUnits);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      return fetchQuestionsByLevelAndUnit(selectedLevel, searchUnit);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [selectedLevel, searchUnit]);
+
   useEffect(() => {
     fetchLevels();
   }, []);
 
   useEffect(() => {
-    fetchUnits(selectedLevel);
-  }, [selectedLevel]);
+    if (searchUnit.length < 3) {
+      fetchUnits(selectedLevel);
+    } else {
+      filterUnits();
+    }
+  }, [selectedLevel, searchUnit]);
 
   return (
     <div className={styles.materials}>
-      <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={levelHandler} />
+      <div className={styles.inputContainer}>
+        <TextField
+          className={styles.input}
+          variant='outlined'
+          label='search unit'
+          value={searchUnit}
+          onChange={handleCangeSearchUnit}
+        />
+      </div>
+      <Levels
+        list={levels}
+        selectedLevel={selectedLevel}
+        onChangeLevel={levelHandler}
+        setSearchUnit={setSearchUnit}
+      />
       {isLoading ? <Loader /> : <Units units={units} baseUrl={baseUrl} />}
     </div>
   );
