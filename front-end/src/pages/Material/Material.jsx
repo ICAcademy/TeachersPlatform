@@ -32,8 +32,6 @@ const Material = () => {
     getMaterialData(url);
   }, [url]);
 
-  console.log(material);
-
   return (
     <div className={styles.materials}>
       {!isLoading && material != '' && (

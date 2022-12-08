@@ -19,6 +19,8 @@ const Material = lazy(() => import('pages/Material/Material'));
 const Materials = lazy(() => import('pages/Materials/Materials'));
 const NotFound = lazy(() => import('pages/NotFound'));
 const Tests = lazy(() => import('pages/Tests/Tests'));
+const Questions = lazy(() => import('pages/Questions/Questions'));
+const Topics = lazy(() => import('pages/Topics/Topics'));
 
 const RouterWrapper = () => {
   const { isAuthenticated } = useContext(CurrentUserContext);
@@ -50,8 +52,31 @@ const RouterWrapper = () => {
               </PrivateRoute>
             }
           />
+          <Route
+            path='/app/questions'
+            element={
+              <PrivateRoute>
+                <Questions />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/app/questions/:url'
+            element={
+              <PrivateRoute>
+                <Topics />
+              </PrivateRoute>
+            }
+          />
         </Route>
-        <Route path='/tests' element={<Tests />} />
+        <Route
+          path='/app/tests'
+          element={
+            <PrivateRoute>
+              <Tests />
+            </PrivateRoute>
+          }
+        />
         <Route path='/login' element={<Login />} />
         <Route path='/registration' element={<Registration />} />
         <Route path='*' element={<NotFound />} />

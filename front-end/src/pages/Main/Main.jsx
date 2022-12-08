@@ -10,9 +10,12 @@ import Activity from 'components/Main/Activity/Activity';
 import Teacher from 'components/Main/Teacher/Teacher';
 import Footer from 'components/common/Footer/Footer';
 
+// styles
+import styles from './Main.module.scss';
+
 const Main = () => {
   return (
-    <>
+    <div className={styles.container}>
       <Header />
       <Welcome />
       <GrandMaster />
@@ -21,7 +24,7 @@ const Main = () => {
       <Activity />
       <Teacher />
       <Footer />
-    </>
+    </div>
   );
 };
 
