@@ -1,5 +1,8 @@
 const {
   getQuestions,
+  getLevels,
+  getUnitsByLevel,
+  getDataByUrl,
   createQuestion,
   findQuestionById,
   editQuestion,
@@ -15,6 +18,32 @@ const getAllQuestions = async (req, res) => {
   }
 };
 
+const getQuestionLevels = async (req, res) => {
+  try {
+    const levels = await getLevels();
+    res.status(200).json(levels);
+  } catch (error) {
+    res.sattus(400).json(error);
+  }
+};
+
+const getQuestionUnitsByLevel = async (req, res) => {
+  try {
+    const units = await getUnitsByLevel(req.query);
+    res.status(200).json(units);
+  } catch (error) {
+    res.sattus(400).json(error);
+  }
+};
+
+const getTopicDataByUrl = async (req, res) => {
+  try {
+    const data = await getDataByUrl(req.query);
+    res.status(200).json(data);
+  } catch (error) {
+    res.sattus(400).json(error);
+  }
+};
 const createNewQuestion = async (req, res) => {
   try {
     const question = await createQuestion(req.body);
@@ -56,6 +85,9 @@ const deleteQuestion = async (req, res) => {
 
 module.exports = {
   getAllQuestions,
+  getQuestionLevels,
+  getQuestionUnitsByLevel,
+  getTopicDataByUrl,
   createNewQuestion,
   getQuestionById,
   updateQuestion,

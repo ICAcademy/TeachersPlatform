@@ -3,7 +3,7 @@ import { tokenService } from 'services/tokenService';
 
 export const authService = {
   registration: async (user) => {
-    const { data } = API.post(`${API_URL}/auth/register`, user);
+    const data = API.post(`${API_URL}/auth/register`, user);
     return data;
   },
 
