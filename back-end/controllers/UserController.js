@@ -2,7 +2,6 @@
 const { findByEmail } = require('../services/AuthService');
 
 exports.getUser = async (req, res) => {
-  console.log(req.userEmail);
   try {
     const user = await findByEmail(req.userEmail);
     if (!user) {

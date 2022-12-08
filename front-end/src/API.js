@@ -34,12 +34,10 @@ API.interceptors.response.use(
     return response;
   },
   (error) => {
-    const status = error?.response?.status || 0;
+    const status = error.response.status || 0;
     if (status === 401) {
       if (localStorage.getItem('token')) {
         localStorage.clear();
-        return Promise.reject(error);
-      } else {
         return Promise.reject(error);
       }
     }
