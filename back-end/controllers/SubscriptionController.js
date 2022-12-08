@@ -19,17 +19,15 @@ exports.createSubscription = async (req, res) => {
       studentID: req.body.student._id,
     });
     if (isSubscripted) {
-      res.status(200).json('subscripted');
-    } else {
-      const student = await studentService.getStudentById(req.body.student._id);
-      const teacher = await teacherService.getTeacherById(req.body.teacher._id);
-      if (student && teacher) {
-        const subscription = await subscriptionService.createSubscription(req.body);
-        res.status(200).json(subscription);
-      } else {
-        throw new Error('Teacher or Student was not found!');
-      }
+      return res.status(200).json('subscripted');
     }
+    const student = await studentService.getStudentById(req.body.student._id);
+    const teacher = await teacherService.getTeacherById(req.body.teacher._id);
+    if (student && teacher) {
+      const subscription = await subscriptionService.createSubscription(req.body);
+      return res.status(200).json(subscription);
+    }
+    throw new Error('Teacher or Student was not found!');
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
