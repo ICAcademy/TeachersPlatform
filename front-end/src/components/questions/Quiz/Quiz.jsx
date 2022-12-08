@@ -2,7 +2,7 @@ import React from 'react';
 import { List, ListItem } from '@mui/material';
 import PropTypes from 'prop-types';
 
-import AnswerPicker from 'components/Questions/AnswerPicker/AnswerPicker';
+import AnswerPicker from 'components/questions/AnswerPicker/AnswerPicker';
 
 import styles from './Quiz.module.scss';
 
