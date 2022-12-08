@@ -4,9 +4,11 @@ import { nanoid } from 'nanoid';
 
 // MUI library
 import { FormControl, TextField, Box, Button, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+
+// FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 // Services
 import { authService } from 'services/authService';
