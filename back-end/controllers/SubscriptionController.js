@@ -1,4 +1,6 @@
 const subscriptionService = require('../services/SubscriptionService');
+const studentService = require('../services/StudentService');
+const teacherService = require('../services/TeacherService');
 const SubscriptionModel = require('../models/Subscription');
 
 exports.getAllSubscriptions = async (req, res) => {
@@ -17,17 +19,15 @@ exports.createSubscription = async (req, res) => {
       studentID: req.body.student._id,
     });
     if (isSubscripted) {
-      res.json('subscripted');
+      res.status(200).json('subscripted');
     } else {
-      const subscription = await subscriptionService.createSubscription(req.body);
-      const teacherAndStudent = await subscriptionService.findByID(
-        req.body.teacher._id,
-        req.body.student._id,
-      );
-      if (!teacherAndStudent) {
-        throw new Error('Teacher or Student was not found!');
+      const student = await studentService.getStudentById(req.body.student._id);
+      const teacher = await teacherService.getTeacherById(req.body.teacher._id);
+      if (student && teacher) {
+        const subscription = await subscriptionService.createSubscription(req.body);
+        res.status(200).json(subscription);
       } else {
-        res.json(subscription);
+        throw new Error('Teacher or Student was not found!');
       }
     }
   } catch (err) {
