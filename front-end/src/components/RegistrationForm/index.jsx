@@ -13,6 +13,7 @@ import {
   faLock,
   faGraduationCap,
   faChalkboardUser,
+  faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { nanoid } from 'nanoid';
 
@@ -36,11 +37,14 @@ const RegistrationForm = () => {
   });
 
   const [hasError, setHasError] = useState({
+    hasMessageError: false,
     hasFullNameError: false,
     hasEmailError: false,
     hasPasswordError: false,
     hasRepeatPasswordError: false,
   });
+
+  const [errMessage, setErrMessage] = useState('');
 
   const [activeTab, setActiveTab] = useState(0);
 
@@ -69,6 +73,7 @@ const RegistrationForm = () => {
 
   const checkValidation = () => {
     const errors = {
+      hasMessageError: errMessage,
       hasFullNameError: !regexFullName.test(data.fullName),
       hasEmailError: !regexEmail.test(data.email),
       hasPasswordError: !regexPassword.test(data.password),
@@ -80,10 +85,21 @@ const RegistrationForm = () => {
     return Object.values(errors).includes(true);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!checkValidation()) {
-      authService.registration(data);
+      await registerUser(data);
+    }
+  };
+
+  const registerUser = async (userInfo) => {
+    try {
+      await authService.registration(userInfo);
       history('/login');
+      setErrMessage('');
+    } catch (err) {
+      setHasError((prev) => ({ ...prev, hasMessageError: true }));
+      setErrMessage(err.response.data.message);
+      console.log(err.response.data.message);
     }
   };
 
@@ -141,7 +157,6 @@ const RegistrationForm = () => {
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <MobileDatePicker
-                className={styles.test1}
                 maxDate={`${new Date().getFullYear() - minAge}/12/31`}
                 minDate={`${new Date().getFullYear() - maxAge}/12/31`}
                 inputFormat='DD/MM/YYYY'
@@ -155,7 +170,13 @@ const RegistrationForm = () => {
                   ),
                 }}
                 renderInput={(params) => (
-                  <TextField placeholder='Date birth' size='small' color='purple' {...params} />
+                  <TextField
+                    placeholder='Date birth'
+                    size='small'
+                    color='purple'
+                    {...params}
+                    error={false}
+                  />
                 )}
               />
             </LocalizationProvider>
@@ -237,6 +258,17 @@ const RegistrationForm = () => {
             >
               Register
             </Button>
+            {errMessage && (
+              <div className={styles.error}>
+                <FontAwesomeIcon
+                  icon={faTriangleExclamation}
+                  fill='#d57c77'
+                  width={12}
+                  height={12}
+                />
+                {errMessage}
+              </div>
+            )}
           </FormControl>
         </Box>
         <div className={styles.bottomWrap}>
