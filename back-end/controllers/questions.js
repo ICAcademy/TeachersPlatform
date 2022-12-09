@@ -7,13 +7,13 @@ const {
   findQuestionById,
   editQuestion,
   removeQuestion,
-  filterQuestion,
+  getQuestionsByUnitName,
 } = require('../services/Questions');
 
 const getAllQuestions = async (req, res) => {
   try {
     const { searchUnit } = req.query;
-    const questions = searchUnit ? await filterQuestion(searchUnit) : await getQuestions();
+    const questions = searchUnit ? await getQuestionsByUnitName(searchUnit) : await getQuestions();
     res.status(200).json(questions);
   } catch (error) {
     res.status(400).json(error);

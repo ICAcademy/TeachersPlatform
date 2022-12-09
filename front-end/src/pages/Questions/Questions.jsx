@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
@@ -13,10 +13,15 @@ const baseUrl = 'questions';
 
 const Questions = () => {
   const [levels, setLevels] = useState([]);
-  const [selectedLevel, setSelectedLevel] = useState('');
+  const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchUnit, setSearchUnit] = useState('');
+  const [prevLevel, setPrevLevel] = useState('beginner');
+
+  console.log('prevLevel', prevLevel);
+
+  console.log('selectedLevel', selectedLevel);
 
   const fetchLevels = async () => {
     try {
@@ -46,7 +51,7 @@ const Questions = () => {
     try {
       const questionsFromInput = await getQuestionsByLevelAndUnit(searchUnit);
       setUnits(questionsFromInput);
-      setSelectedLevel('');
+      setPrevLevel(selectedLevel);
     } catch (error) {
       throw new Error(error.message);
     }
@@ -57,7 +62,7 @@ const Questions = () => {
   };
 
   useEffect(() => {
-    if (searchUnit.length > 3 || selectedLevel === '') {
+    if (searchUnit.length > 3) {
       const timer = setTimeout(() => {
         return fetchQuestionsByLevelAndUnit(searchUnit);
       }, 500);
@@ -80,21 +85,26 @@ const Questions = () => {
 
   return (
     <div className={styles.materials}>
-      <div className={styles.inputContainer}>
-        <TextField
-          className={styles.input}
-          variant='outlined'
-          label='search unit'
-          value={searchUnit}
-          onChange={handleCangeSearchUnit}
-        />
+      <div className={styles.filtersContainer}>
+        <div className={styles.levelsContainer}>
+          <Levels
+            list={levels}
+            selectedLevel={selectedLevel}
+            onChangeLevel={levelHandler}
+            setSearchUnit={setSearchUnit}
+          />
+        </div>
+        <div className={styles.inputContainer}>
+          <TextField
+            className={styles.input}
+            variant='outlined'
+            label='search unit'
+            size='small'
+            value={searchUnit}
+            onChange={handleCangeSearchUnit}
+          />
+        </div>
       </div>
-      <Levels
-        list={levels}
-        selectedLevel={selectedLevel}
-        onChangeLevel={levelHandler}
-        setSearchUnit={setSearchUnit}
-      />
       {isLoading ? <Loader /> : <Units units={units} baseUrl={baseUrl} />}
     </div>
   );

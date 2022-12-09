@@ -6,7 +6,7 @@ export const getLevels = async (params) => {
 };
 
 export const getUnitsByLevel = async (level) => {
-  const { data } = await API.get(`${API_URL}/api/questions//units`, { params: { level } });
+  const { data } = await API.get(`${API_URL}/api/questions/units`, { params: { level } });
   return data;
 };
 
@@ -19,11 +19,5 @@ export const getQuestionsByLevelAndUnit = async (searchUnit) => {
   const { data } = await API.get(`${API_URL}/api/questions/`, {
     params: { searchUnit },
   });
-  if (searchUnit === '') {
-    const allUnits = data.map((item) => {
-      return item.unit;
-    });
-    return allUnits;
-  }
   return data;
 };
