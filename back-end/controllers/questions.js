@@ -12,9 +12,8 @@ const {
 
 const getAllQuestions = async (req, res) => {
   try {
-    const { level, searchUnit } = req.query;
-    const questions =
-      level && searchUnit ? await filterQuestion(level, searchUnit) : await getQuestions();
+    const { searchUnit } = req.query;
+    const questions = searchUnit ? await filterQuestion(searchUnit) : await getQuestions();
     res.status(200).json(questions);
   } catch (error) {
     res.status(400).json(error);

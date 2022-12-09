@@ -21,12 +21,11 @@ const editQuestion = async (id, body) =>
 
 const removeQuestion = async (id) => await Question.findByIdAndDelete(id);
 
-const filterQuestion = async (level, searchUnit) => {
-  const questions = await Question.find({ level: level });
-  const filterUnitsQuestions = questions.filter((question) => {
-    return question.unit.toLowerCase().includes(searchUnit.toLowerCase());
+const filterQuestion = async (search) => {
+  const questions = await Question.find({
+    unit: { $regex: search, $options: 'i' },
   });
-  const mapUnitsQuestions = filterUnitsQuestions.map((unit) => {
+  const mapUnitsQuestions = questions.map((unit) => {
     return unit.unit;
   });
   const result = mapUnitsQuestions.reduce((acc, curr) => {

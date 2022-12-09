@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
@@ -13,7 +13,7 @@ const baseUrl = 'questions';
 
 const Questions = () => {
   const [levels, setLevels] = useState([]);
-  const [selectedLevel, setSelectedLevel] = useState('beginner');
+  const [selectedLevel, setSelectedLevel] = useState('');
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchUnit, setSearchUnit] = useState('');
@@ -42,10 +42,11 @@ const Questions = () => {
     setSelectedLevel(level);
   };
 
-  const fetchQuestionsByLevelAndUnit = async (selectedLevel, searchUnit) => {
+  const fetchQuestionsByLevelAndUnit = async (searchUnit) => {
     try {
-      const questionsFromInput = await getQuestionsByLevelAndUnit(selectedLevel, searchUnit);
+      const questionsFromInput = await getQuestionsByLevelAndUnit(searchUnit);
       setUnits(questionsFromInput);
+      setSelectedLevel('');
     } catch (error) {
       throw new Error(error.message);
     }
@@ -56,13 +57,13 @@ const Questions = () => {
   };
 
   useEffect(() => {
-    if (searchUnit.length > 3) {
+    if (searchUnit.length > 3 || selectedLevel === '') {
       const timer = setTimeout(() => {
-        return fetchQuestionsByLevelAndUnit(selectedLevel, searchUnit);
+        return fetchQuestionsByLevelAndUnit(searchUnit);
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [selectedLevel, searchUnit]);
+  }, [searchUnit]);
 
   useEffect(() => {
     fetchLevels();
