@@ -59,7 +59,7 @@ const LoginForm = () => {
       <div className={styles.blocksWrap}>
         <div className={styles.topWrap}>
           <h1>Let&apos;s Get Started</h1>
-          <p>Sign in to continue to edulearn</p>
+          <p>Sign in to continue to Edulearn</p>
         </div>
         <Box>
           <FormControl sx={{ width: '400px' }}>
