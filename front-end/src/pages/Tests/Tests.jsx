@@ -33,9 +33,6 @@ const Tests = () => {
   ]);
   const [postInfo, setPostInfo] = useState(false);
 
-  console.log('tests', tests);
-  console.log('postsInfo', postInfo);
-
   const addQuestion = () => {
     setQuestions([
       ...questions,

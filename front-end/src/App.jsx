@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 
+// Components
 // Router
 import AppRouter from 'routes/AppRouter';
 

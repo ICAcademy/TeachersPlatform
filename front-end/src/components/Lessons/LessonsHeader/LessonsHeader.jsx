@@ -7,6 +7,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
 const LessonsHeader = (props) => {
+  const lessonsCount = props.numberOfLessons ? (
+    <div className={`${styles.lessonInfoItem}`}>
+      <div className={`${styles.roundedCircle}  ${styles.yellow}`}>
+        <FontAwesomeIcon icon={faBook} />
+      </div>
+      <div className={styles.infoLabel}>
+        <h5>Lessons</h5>
+        <div className={styles.infoValue}>{props.numberOfLessons}</div>
+      </div>
+    </div>
+  ) : (
+    ''
+  );
+
   return (
     <div className={styles.lessonHeader}>
       <h1>{props.title}</h1>
@@ -20,15 +34,7 @@ const LessonsHeader = (props) => {
             <div className={styles.infoValue}>{props.level}</div>
           </div>
         </div>
-        <div className={`${styles.lessonInfoItem}`}>
-          <div className={`${styles.roundedCircle}  ${styles.yellow}`}>
-            <FontAwesomeIcon icon={faBook} />
-          </div>
-          <div className={styles.infoLabel}>
-            <h5>Lessons</h5>
-            <div className={styles.infoValue}>{props.numberOfLessons}</div>
-          </div>
-        </div>
+        {lessonsCount}
       </div>
     </div>
   );
