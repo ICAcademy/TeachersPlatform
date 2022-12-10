@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 //Services
 import { getLevels, getUnitsByLevel } from 'services/MaterialsService/MaterialsService';
@@ -7,6 +7,9 @@ import { getLevels, getUnitsByLevel } from 'services/MaterialsService/MaterialsS
 import Levels from 'components/common/Levels/Levels';
 import Units from 'components/Materials/Units/Units';
 import Loader from 'components/common/Loader/Loader';
+
+// Context
+import { CurrentUserContext } from 'context/AppProvider';
 
 //Styles
 import styles from './Materials.module.scss';
@@ -18,6 +21,8 @@ const Materials = () => {
   const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [unitsByLevel, setUnitsByLevel] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
 
   const fetchLevels = async () => {
     try {
@@ -44,6 +49,12 @@ const Materials = () => {
     unitsByLevelData(level);
   };
 
+  const saveMaterialBtn = isAuthenticated && currentUser.role === 'admin' && (
+    <Button href='/app/materials/edit/new' variant='contained' endIcon={<Add />}>
+      Create material
+    </Button>
+  );
+
   useEffect(() => {
     fetchLevels();
     unitsByLevelData(selectedLevel);
@@ -53,9 +64,7 @@ const Materials = () => {
     <div className={styles.materials}>
       <div className={styles.navigationRow}>
         <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
-        <Button href='/app/materials/edit/new' variant='contained' endIcon={<Add />}>
-          Create material
-        </Button>
+        {saveMaterialBtn}
       </div>
       {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
     </div>

@@ -24,7 +24,7 @@ const Topics = lazy(() => import('pages/Topics/Topics'));
 const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
 
 const RouterWrapper = () => {
-  const { isAuthenticated } = useContext(CurrentUserContext);
+  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
@@ -56,9 +56,12 @@ const RouterWrapper = () => {
           <Route
             path='/app/materials/edit/:url'
             element={
-              <PrivateRoute>
-                <AdminMaterials />
-              </PrivateRoute>
+              isAuthenticated &&
+              currentUser.role === 'admin' && (
+                <PrivateRoute>
+                  <AdminMaterials />
+                </PrivateRoute>
+              )
             }
           />
           <Route

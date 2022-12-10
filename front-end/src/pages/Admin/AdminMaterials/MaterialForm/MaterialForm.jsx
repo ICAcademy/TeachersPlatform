@@ -124,7 +124,7 @@ const CreateMaterial = ({ material, levels, create }) => {
   const deleteMaterialHandler = () => {
     try {
       deleteMaterial(material._id);
-      navigate('/materials');
+      navigate('/app/materials');
     } catch (error) {
       console.log(error);
     }
