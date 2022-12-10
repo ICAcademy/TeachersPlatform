@@ -25,7 +25,7 @@ const UnitDesc = (props) => {
       <div className={styles.unitInfo}>
         <FirstLetterIcon firstLetter={props.item.unit[0]} />
         <div className={styles.dFlex}>
-          <div className={styles.unitTitle}>{props.unit}</div>
+          <div className={styles.unitTitle}>{props.item.unit}</div>
           {lessonsCount}
         </div>
       </div>
@@ -37,9 +37,11 @@ const UnitDesc = (props) => {
 //propTypes
 UnitDesc.propTypes = {
   item: PropTypes.object,
+  numberOfLessons: PropTypes.number,
 };
 UnitDesc.defaultProps = {
   item: {},
+  numberOfLessons: 0,
 };
 
 export default UnitDesc;

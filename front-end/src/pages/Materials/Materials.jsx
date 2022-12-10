@@ -46,13 +46,8 @@ const Materials = () => {
 
   useEffect(() => {
     fetchLevels();
-  }, []);
-
-  useEffect(() => {
     unitsByLevelData(selectedLevel);
   }, [selectedLevel]);
-
-  console.log(unitsByLevel);
 
   return (
     <div className={styles.materials}>

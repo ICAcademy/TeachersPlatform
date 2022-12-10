@@ -14,7 +14,7 @@ const UnitCard = (props) => {
       <div className={styles.unitWrapper}>
         <div className={styles.unitBody}>
           <UnitImg item={props.item} />
-          <UnitDesc item={props.item} />
+          <UnitDesc item={props.item} numberOfLessons={props.numberOfLessons} />
         </div>
       </div>
     </div>
@@ -24,9 +24,11 @@ const UnitCard = (props) => {
 //propTypes
 UnitCard.propTypes = {
   item: PropTypes.object,
+  numberOfLessons: PropTypes.number,
 };
 UnitCard.defaultProps = {
   item: {},
+  numberOfLessons: 0,
 };
 
 export default UnitCard;
