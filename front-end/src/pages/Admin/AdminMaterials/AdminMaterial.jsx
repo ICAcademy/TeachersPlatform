@@ -19,6 +19,7 @@ const AdminMaterials = () => {
 
   const { url } = useParams();
 
+  //Understanding create or edit page by url
   const createAction = url === 'new' ? 'create' : '';
 
   const getData = async (url) => {

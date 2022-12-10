@@ -11,16 +11,16 @@ export const getUnitsByLevel = async (level) => {
 };
 
 export const createMaterial = async (material) => {
-  const { data } = await axios.post(`${baseUrl}/materials`, material);
+  const { data } = await API.post(`${API_URL}/api/materials`, material);
   return data;
 };
 
 export const updateMaterial = async (id, material) => {
-  const { data } = await axios.patch(`${baseUrl}/materials/${id}`, material);
+  const { data } = await API.patch(`${API_URL}/api/materials/${id}`, material);
   return data;
 };
 
 export const deleteMaterial = async (id) => {
-  const { data } = await axios.delete(`${baseUrl}/materials/${id}`);
+  const { data } = await API.delete(`${API_URL}/api/materials/${id}`);
   return data;
 };

@@ -38,11 +38,13 @@ const Materials = () => {
     unitsByLevelData(selectedLevel);
   }, [selectedLevel]);
 
+  console.log(unitsByLevel);
+
   return (
     <div className={styles.materials}>
       <div className={styles.navigationRow}>
         <Levels selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
-        <Button href='/materials/edit/new' variant='contained' endIcon={<Add />}>
+        <Button href='/app/materials/edit/new' variant='contained' endIcon={<Add />}>
           Create material
         </Button>
       </div>

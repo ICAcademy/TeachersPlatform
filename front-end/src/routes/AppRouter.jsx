@@ -15,6 +15,7 @@ import Registration from 'pages/Registration';
 import Main from 'pages/Main/Main';
 import Material from 'pages/Material/Material';
 import Materials from 'pages/Materials/Materials';
+import AdminMaterials from 'pages/Admin/AdminMaterials/AdminMaterial';
 
 import NotFound from 'pages/NotFound';
 import Tests from 'pages/Tests/Tests';
@@ -52,6 +53,14 @@ const RouterWrapper = () => (
         element={
           <PrivateRoute>
             <Material />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path='/app/materials/edit/:url'
+        element={
+          <PrivateRoute>
+            <AdminMaterials />
           </PrivateRoute>
         }
       />

@@ -10,14 +10,14 @@ import UnitDesc from './UnitDesc/UnitDesc';
 
 const UnitCard = (props) => {
   return (
-    <Link className={styles.unitItem} to={`/app/materials/${props.url}`}>
+    <div className={styles.unitItem}>
       <div className={styles.unitWrapper}>
         <div className={styles.unitBody}>
           <UnitImg item={props.item} />
           <UnitDesc item={props.item} />
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
