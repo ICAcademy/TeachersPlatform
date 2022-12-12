@@ -17,6 +17,7 @@ const Questions = () => {
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchUnit, setSearchUnit] = useState('');
+  const [prevLevel, setPrevLevel] = useState('beginner');
 
   const fetchLevels = async () => {
     try {
@@ -45,6 +46,8 @@ const Questions = () => {
   const fetchQuestionsByLevelAndUnit = async (searchUnit) => {
     try {
       const questionsFromInput = await getQuestionsByLevelAndUnit(searchUnit);
+      setPrevLevel(selectedLevel);
+      setSelectedLevel('');
       setUnits(questionsFromInput);
     } catch (error) {
       throw new Error(error.message);
@@ -56,6 +59,9 @@ const Questions = () => {
   };
 
   useEffect(() => {
+    if (searchUnit.length === 0) {
+      setSelectedLevel(prevLevel);
+    }
     if (searchUnit.length > 3) {
       const timer = setTimeout(() => {
         return fetchQuestionsByLevelAndUnit(searchUnit);
