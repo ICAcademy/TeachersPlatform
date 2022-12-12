@@ -10,6 +10,7 @@ import { CurrentUserContext } from 'context/AppProvider';
 // Components
 import { Sidebar } from 'components/Sidebar/Sidebar';
 import Loader from 'components/common/Loader/Loader';
+import StudentSubscriptions from 'pages/StudentSubscriptions/StudentSubscriptions';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
@@ -74,6 +75,14 @@ const RouterWrapper = () => {
           element={
             <PrivateRoute>
               <Tests />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/app/student-subscriptions'
+          element={
+            <PrivateRoute>
+              <StudentSubscriptions />
             </PrivateRoute>
           }
         />
