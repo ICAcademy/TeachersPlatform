@@ -7,3 +7,9 @@
     margin-bottom: 50px;
   }
 }
+
+.cardWrap {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}

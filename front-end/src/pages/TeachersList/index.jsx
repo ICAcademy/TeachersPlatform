@@ -10,7 +10,15 @@ const TeachersList = () => {
   return (
     <div className={styles.wrapper}>
       <h1>Teachers</h1>
-      <Card />
+      <div className={styles.cardWrap}>
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
     </div>
   );
 };
