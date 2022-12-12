@@ -1,5 +1,6 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,15 +17,9 @@ import teacher from 'assets/images/teacher.jpg';
 // Styles
 import styles from './Card.module.scss';
 
-const Card = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
-
-  const clickHandler = () => {
-    navigate(`/app/techers/${id}/overview`);
-  };
+const Card = ({ fullName, activity, link }) => {
   return (
-    <div className={styles.wrap} onClick={clickHandler}>
+    <div className={styles.wrap}>
       <div className={styles.test}>
         <img src={teacher} alt='teacher' />
         <div className={styles.test1}>
@@ -35,11 +30,17 @@ const Card = () => {
         </div>
       </div>
       <div className={styles.description}>
-        <h2>Kaily Parker</h2>
-        <span>English Teacher</span>
+        <Link to={link}>{fullName}</Link>
+        <span>{activity}</span>
       </div>
     </div>
   );
+};
+
+Card.propTypes = {
+  fullName: PropTypes.string.isRequired,
+  activity: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
 };
 
 export default Card;
