@@ -1,0 +1,155 @@
+button {
+  width: 175px;
+  height: 45px;
+  border: none;
+  background-color: #b074ff;
+  margin: 25px 0;
+  text-transform: uppercase;
+  color: #fff;
+  font-family: 'Poppins-Regular', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #8029ef;
+  }
+}
+
+.wrapper {
+  height: 100vh;
+  margin-left: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconsWrap {
+  display: flex;
+  justify-content: space-between;
+  width: 155px;
+
+  & svg {
+    width: 15px;
+    height: 15px;
+    border: 2px solid transparent;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+      padding: 5px;
+      border-radius: 50%;
+    }
+
+    & path {
+      fill: #969ca5;
+    }
+  }
+}
+
+.share {
+  display: flex;
+  justify-content: space-between;
+  width: 155px;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: rgba(135, 172, 183, 0.8) 0px 10px 10px -10px;
+  }
+
+  & span {
+    color: #87acb7;
+    font-size: 14px;
+    font-family: 'Poppins-Regular', sans-serif;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  & svg {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 5px;
+
+    & path {
+      fill: #87acb7;
+    }
+  }
+}
+
+.imageWrap {
+  height: 175px;
+  width: 175px;
+  padding: 15px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+
+  & img {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+.test {
+  width: 45%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 25px 0;
+  height: 60px;
+
+  & h1,
+  span {
+    font-family: 'Poppins-Regular', sans-serif;
+  }
+
+  & h1 {
+    font-size: 28px;
+  }
+
+  & span {
+    color: #8c949d;
+    font-size: 14px;
+  }
+}
+
+.blockWrap {
+  display: flex;
+  align-items: center;
+
+  & span {
+    font-family: 'Poppins-Regular', sans-serif;
+    margin-left: 10px;
+    color: #8c949d;
+    font-size: 14px;
+  }
+}
+
+.test1 {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  & img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.tabs {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
