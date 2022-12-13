@@ -1,7 +1,10 @@
 import API, { API_URL } from 'API';
 
-export const getAllSubscriptions = async () => {
-  const { data } = await API.get(`${API_URL}/api/subscriptions/`);
+export const getAllUserSubscriptions = async (id) => {
+  const { data } = await API.get(`${API_URL}/api/subscriptions/user/${id}`);
+  if (id === undefined) {
+    return [];
+  }
   return data;
 };
 
@@ -13,12 +16,11 @@ export const createSubscription = async (subscription) => {
       email: subscription.teacher.email,
     },
     student: {
-      _id: subscription.student._id,
+      _id: subscription.student.roleId,
       fullName: subscription.student.fullName,
       email: subscription.student.email,
     },
   };
-  console.log('user id', subscription.student._id === '638dd9d89bba73afdcd9f6f7');
   const { data } = await API.post(`${API_URL}/api/subscriptions/`, body);
   return data;
 };

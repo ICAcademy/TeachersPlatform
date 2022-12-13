@@ -7,6 +7,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    roleId: {
+      type: Schema.Types.ObjectId,
+    },
     fullName: {
       type: String,
       required: true,

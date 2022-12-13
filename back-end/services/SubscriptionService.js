@@ -4,6 +4,10 @@ exports.getAllSubscriptions = async () => {
   return await SubscriptionModel.find();
 };
 
+exports.getUserSubscriptions = async (id) => {
+  return await SubscriptionModel.find({ studentID: id });
+};
+
 exports.createSubscription = async (subscription) => {
   return await SubscriptionModel.create({
     teacherID: subscription.teacher._id,

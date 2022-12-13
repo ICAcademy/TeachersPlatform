@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import {
   createSubscription,
   deleteSubscription,
-  getAllSubscriptions,
+  getAllUserSubscriptions,
 } from 'services/subscriptionService';
 import { getTeachers } from 'services/teachersService';
 import { userService } from 'services/userService';
@@ -29,8 +29,8 @@ const StudentSubscriptions = () => {
   }, []);
 
   useEffect(() => {
-    fetchSubscriptions();
-  }, []);
+    fetchSubscriptions(user.roleId);
+  }, [user]);
 
   const fetchUser = async () => {
     try {
@@ -51,9 +51,9 @@ const StudentSubscriptions = () => {
     }
   };
 
-  const fetchSubscriptions = async () => {
+  const fetchSubscriptions = async (id) => {
     try {
-      const subscriptions = await getAllSubscriptions();
+      const subscriptions = await getAllUserSubscriptions(id);
       setSubscriptions(subscriptions);
     } catch (e) {
       console.log(e);
@@ -63,7 +63,7 @@ const StudentSubscriptions = () => {
   const subscription = async (teacher, student) => {
     try {
       const create = await createSubscription({ teacher, student });
-      fetchSubscriptions();
+      fetchSubscriptions(student.roleId);
       return create;
     } catch (e) {
       console.log('error', e);
@@ -85,7 +85,7 @@ const StudentSubscriptions = () => {
         }
       });
       const remove = await deleteSubscription(subId);
-      fetchSubscriptions();
+      fetchSubscriptions(user.roleId);
       return remove;
     } catch (e) {
       console.log(e);
