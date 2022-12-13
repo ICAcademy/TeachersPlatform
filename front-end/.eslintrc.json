@@ -14,21 +14,47 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "prettier"],
+  "plugins": [
+    "react",
+    "prettier"
+  ],
   "settings": {
     "react": {
       "version": "detect"
     }
   },
   "rules": {
-    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
     "linebreak-style": 0,
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"],
-    "prefer-arrow-callback": ["error"],
-    "func-style": ["error", "expression"],
-    "object-curly-spacing": ["error", "always"],
-    "eol-last": ["error", "always"],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "prefer-arrow-callback": [
+      "error"
+    ],
+    "func-style": [
+      "error",
+      "expression"
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "eol-last": [
+      "error",
+      "always"
+    ],
     "no-multiple-empty-lines": [
       "error",
       {
@@ -37,12 +63,21 @@
         "maxBOF": 0
       }
     ],
-    "no-unused-vars": ["warn"],
+    "no-unused-vars": [
+      "warn"
+    ],
+    "no-useless-escape": "off",
     "react/jsx-closing-bracket-location": "error",
     "react/jsx-equals-spacing": "error",
     "react/jsx-first-prop-new-line": "error",
-    "react/jsx-indent-props": ["error", 2],
-    "react/jsx-indent": ["error", 2],
+    "react/jsx-indent-props": [
+      "error",
+      2
+    ],
+    "react/jsx-indent": [
+      "error",
+      2
+    ],
     "react/jsx-key": "error",
     "react/jsx-one-expression-per-line": [
       "error",
