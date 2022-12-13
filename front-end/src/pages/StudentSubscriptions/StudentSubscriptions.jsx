@@ -19,9 +19,18 @@ const StudentSubscriptions = () => {
   const [teachers, setTeachers] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log('user', user);
-  console.log('teachers', teachers);
-  console.log('subscriptions', subscriptions);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    fetchTeachers();
+  }, []);
+
+  useEffect(() => {
+    fetchSubscriptions();
+  }, []);
 
   const fetchUser = async () => {
     try {
@@ -53,42 +62,38 @@ const StudentSubscriptions = () => {
 
   const subscription = async (teacher, student) => {
     try {
+      const create = await createSubscription({ teacher, student });
       fetchSubscriptions();
-      return await createSubscription({ teacher, student });
+      return create;
     } catch (e) {
       console.log('error', e);
     }
   };
 
-  const checkSubscribe = (name) => {
+  const checkSubscribe = (id) => {
     return subscriptions.some((subscription) => {
-      return subscription.teacherFullName === name;
+      return subscription.teacherID === id;
     });
   };
 
   const deleteSubscriptionById = async (id) => {
     try {
+      let subId = 0;
+      subscriptions.forEach((subscription) => {
+        if (subscription.teacherID === id) {
+          subId = subscription._id;
+        }
+      });
+      const remove = await deleteSubscription(subId);
       fetchSubscriptions();
-      return await deleteSubscription(id);
+      return remove;
     } catch (e) {
       console.log(e);
     }
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    fetchTeachers();
-  }, []);
-
-  useEffect(() => {
-    fetchSubscriptions();
-  }, []);
-
   return (
-    <div>
+    <div className={styles.container}>
       {isLoading ? (
         <Loader />
       ) : (
@@ -96,12 +101,34 @@ const StudentSubscriptions = () => {
           {teachers.map((teacher) => {
             return (
               <div className={styles.teacherContainer} key={teacher._id}>
-                <div>{teacher.fullName}</div>
-                {checkSubscribe(teacher.fullName) ? (
-                  <Button>Unsubscribe</Button>
-                ) : (
-                  <Button onClick={() => subscription(teacher, user)}>Subscribe</Button>
-                )}
+                <div className={styles.teacherInfo}>
+                  <div className={styles.teacherNameContainer}>{teacher.fullName}</div>
+                  <div className={styles.subscribeAndUnsubscribeContainer}>
+                    {checkSubscribe(teacher._id) ? (
+                      <Button
+                        variant='contained'
+                        size='small'
+                        onClick={() => deleteSubscriptionById(teacher._id)}
+                      >
+                        Unsubscribe
+                      </Button>
+                    ) : (
+                      <Button
+                        variant='contained'
+                        size='small'
+                        onClick={() => subscription(teacher, user)}
+                      >
+                        Subscribe
+                      </Button>
+                    )}
+                  </div>
+                </div>
+                <div className={styles.photoContainer}>
+                  <img
+                    className={styles.photo}
+                    src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample6.jpg'
+                  />
+                </div>
               </div>
             );
           })}

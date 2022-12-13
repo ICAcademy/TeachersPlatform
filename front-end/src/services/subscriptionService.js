@@ -13,16 +13,18 @@ export const createSubscription = async (subscription) => {
       email: subscription.teacher.email,
     },
     student: {
-      _id: '638dd9d89bba73afdcd9f6f5',
+      _id: subscription.student._id,
       fullName: subscription.student.fullName,
       email: subscription.student.email,
     },
   };
+  console.log('user id', subscription.student._id === '638dd9d89bba73afdcd9f6f7');
   const { data } = await API.post(`${API_URL}/api/subscriptions/`, body);
   return data;
 };
 
 export const deleteSubscription = async (id) => {
-  const { data } = await API.get(`${API_URL}/api/subscriptions/${id}`);
+  const { data } = await API.delete(`${API_URL}/api/subscriptions/${id}`);
+  console.log('delete id', id);
   return data;
 };
