@@ -19,7 +19,7 @@ import styles from './Card.module.scss';
 
 const Card = ({ fullName, activity, link }) => {
   return (
-    <div className={styles.wrap}>
+    <Link to={link} className={styles.wrap}>
       <div className={styles.test}>
         <img src={teacher} alt='teacher' />
         <div className={styles.test1}>
@@ -30,10 +30,10 @@ const Card = ({ fullName, activity, link }) => {
         </div>
       </div>
       <div className={styles.description}>
-        <Link to={link}>{fullName}</Link>
+        <h2>{fullName}</h2>
         <span>{activity}</span>
       </div>
-    </div>
+    </Link>
   );
 };
 
