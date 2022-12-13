@@ -66,7 +66,7 @@
     "no-unused-vars": [
       "warn"
     ],
-    "no-useless-escape": "off",
+    "no-useless-escape": "off", 
     "react/jsx-closing-bracket-location": "error",
     "react/jsx-equals-spacing": "error",
     "react/jsx-first-prop-new-line": "error",

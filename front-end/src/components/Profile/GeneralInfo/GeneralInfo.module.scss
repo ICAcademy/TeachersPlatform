@@ -1,7 +1,10 @@
 @import 'styles/colors.scss';
 
 .profile__img {
+  width: 125px;
+  height: 125px;
   margin: 0 auto;
+  object-fit: contain;
   border: 1px solid $softPurple;
   border-radius: 50%;
   cursor: pointer;

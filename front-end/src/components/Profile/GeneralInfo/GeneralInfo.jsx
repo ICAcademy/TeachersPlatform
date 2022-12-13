@@ -9,6 +9,8 @@ import { CurrentUserContext } from 'context/AppProvider';
 
 import useInput from 'hooks/useInput';
 
+import { uploadPhoto } from 'services/firebaseService';
+
 import { updateUserById } from 'services/userService';
 import { regexFullName, regexEmail, regexDateOfBirth } from 'helpers/regex';
 
@@ -59,7 +61,18 @@ const GeneralInfo = () => {
 
   const formIsValid = fullNameIsValid && emailIsValid && dateOfBirthIsValid;
 
-  const updateUser = async (id, data) => {
+  const changePhoto = async (e) => {
+    try {
+      const file = e.target.files[0];
+      const url = await uploadPhoto(file);
+      const updatedUser = await updateUserById(currentUser._id, { url });
+      setCurrentUser(updatedUser);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const saveChanges = async (id, data) => {
     try {
       const updatedUser = await updateUserById(id, data);
       setCurrentUser(updatedUser);
@@ -70,8 +83,16 @@ const GeneralInfo = () => {
 
   return (
     <>
-      <Box component='img' src={userImg} alt='User photo' className={styles.profile__img} />
-      <Button>Change profile photo</Button>
+      <Box
+        component='img'
+        src={currentUser.url || userImg}
+        alt='User photo'
+        className={styles.profile__img}
+      />
+      <Button component='label'>
+        Change profile photo
+        <input onChange={changePhoto} hidden accept='image/*' type='file' />
+      </Button>
       <Box className={styles.profile__content}>
         <TextField
           type='text'
@@ -119,7 +140,7 @@ const GeneralInfo = () => {
           disabled={!formIsValid}
           sx={sx.saveBtn}
           onClick={() =>
-            updateUser(currentUser._id, {
+            saveChanges(currentUser._id, {
               fullName: enteredFullName,
               email: enteredEmail,
               dateOfBirth: enteredDateOfBirth,

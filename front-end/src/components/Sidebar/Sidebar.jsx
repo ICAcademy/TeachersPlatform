@@ -31,7 +31,7 @@ export const Sidebar = () => {
         </div>
         <div className={styles.sidebarImgAvatar}>
           <Link to='profile/general-info' state={'general-info'}>
-            <img src={avatar} alt='logo' className={styles.sidebarAvatar} />
+            <img src={currentUser.url || avatar} alt='logo' className={styles.sidebarAvatar} />
           </Link>
           <Typography variant='h6'>{` Welcome back, ${currentUser.fullName}`}</Typography>
         </div>
