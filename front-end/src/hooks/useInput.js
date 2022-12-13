@@ -1,9 +1,6 @@
-/* eslint-disable indent */
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import isBetween from 'dayjs/plugin/isBetween';
-
-const error = 'Fix comment';
 
 dayjs.extend(isBetween);
 

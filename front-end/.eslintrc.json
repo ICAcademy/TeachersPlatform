@@ -28,7 +28,8 @@
       "error",
       2,
       {
-        "SwitchCase": 1
+        "SwitchCase": 1,
+        "offsetTernaryExpressions": true
       }
     ],
     "linebreak-style": 0,
@@ -66,7 +67,7 @@
     "no-unused-vars": [
       "warn"
     ],
-    "no-useless-escape": "off", 
+    "no-useless-escape": "off",
     "react/jsx-closing-bracket-location": "error",
     "react/jsx-equals-spacing": "error",
     "react/jsx-first-prop-new-line": "error",
