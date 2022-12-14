@@ -1,79 +1,31 @@
-import { Button } from '@mui/material';
 import Loader from 'components/common/Loader/Loader';
 import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import {
-  createSubscription,
-  deleteSubscription,
-  getAllUserSubscriptions,
-} from 'services/subscriptionService';
-import { getTeachers } from 'services/teachersService';
-import { userService } from 'services/userService';
+import { useState, useContext, useEffect } from 'react';
+import { CurrentUserContext } from 'context/AppProvider';
+import { deleteSubscription, getAllUserSubscriptions } from 'services/subscriptionService';
 
 // styles
 import styles from './StudentSubscriptions.module.scss';
+import StudentTable from 'components/StudentSubscriptions/StudentTable/StudentTable';
 
 const StudentSubscriptions = () => {
-  const [user, setUser] = useState({});
-  const [teachers, setTeachers] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { currentUser } = useContext(CurrentUserContext);
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    fetchSubscriptions(currentUser.roleId);
+  }, [currentUser]);
 
-  useEffect(() => {
-    fetchTeachers();
-  }, []);
-
-  useEffect(() => {
-    fetchSubscriptions(user.roleId);
-  }, [user]);
-
-  const fetchUser = async () => {
-    try {
-      const user = await userService.getUser();
-      setUser(user.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  const fetchTeachers = async () => {
+  const fetchSubscriptions = async (id) => {
     try {
       setIsLoading(true);
-      const teachers = await getTeachers();
-      setTeachers(teachers);
+      const subscriptions = await getAllUserSubscriptions(id);
+      setSubscriptions(subscriptions);
       setIsLoading(false);
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const fetchSubscriptions = async (id) => {
-    try {
-      const subscriptions = await getAllUserSubscriptions(id);
-      setSubscriptions(subscriptions);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const subscription = async (teacher, student) => {
-    try {
-      const create = await createSubscription({ teacher, student });
-      fetchSubscriptions(student.roleId);
-      return create;
-    } catch (e) {
-      console.log('error', e);
-    }
-  };
-
-  const checkSubscribe = (id) => {
-    return subscriptions.some((subscription) => {
-      return subscription.teacherID === id;
-    });
   };
 
   const deleteSubscriptionById = async (id) => {
@@ -85,7 +37,7 @@ const StudentSubscriptions = () => {
         }
       });
       const remove = await deleteSubscription(subId);
-      fetchSubscriptions(user.roleId);
+      fetchSubscriptions(currentUser.roleId);
       return remove;
     } catch (e) {
       console.log(e);
@@ -97,42 +49,10 @@ const StudentSubscriptions = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className={styles.teachersContainer}>
-          {teachers.map((teacher) => {
-            return (
-              <div className={styles.teacherContainer} key={teacher._id}>
-                <div className={styles.teacherInfo}>
-                  <div className={styles.teacherNameContainer}>{teacher.fullName}</div>
-                  <div className={styles.subscribeAndUnsubscribeContainer}>
-                    {checkSubscribe(teacher._id) ? (
-                      <Button
-                        variant='contained'
-                        size='small'
-                        onClick={() => deleteSubscriptionById(teacher._id)}
-                      >
-                        Unsubscribe
-                      </Button>
-                    ) : (
-                      <Button
-                        variant='contained'
-                        size='small'
-                        onClick={() => subscription(teacher, user)}
-                      >
-                        Subscribe
-                      </Button>
-                    )}
-                  </div>
-                </div>
-                <div className={styles.photoContainer}>
-                  <img
-                    className={styles.photo}
-                    src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample6.jpg'
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <StudentTable
+          subscriptions={subscriptions}
+          deleteSubscriptionById={deleteSubscriptionById}
+        />
       )}
     </div>
   );
