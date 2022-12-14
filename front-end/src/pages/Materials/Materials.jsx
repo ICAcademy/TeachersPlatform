@@ -8,9 +8,6 @@ import Levels from 'components/common/Levels/Levels';
 import Units from 'components/Materials/Units/Units';
 import Loader from 'components/common/Loader/Loader';
 
-//Styles
-import styles from './Materials.module.scss';
-
 const Materials = () => {
   const [levels, setLevels] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState('beginner');
@@ -51,7 +48,7 @@ const Materials = () => {
   }, [selectedLevel]);
 
   return (
-    <div className={styles.materials}>
+    <div>
       <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
       {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
     </div>

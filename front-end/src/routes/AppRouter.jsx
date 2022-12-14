@@ -8,8 +8,9 @@ import PrivateRoute from 'routes/PrivateRoute';
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Components
-import { Sidebar } from 'components/Sidebar/Sidebar';
+//import { Sidebar } from 'components/Sidebar/Sidebar';
 import Loader from 'components/common/Loader/Loader';
+import GeneralLayout from 'components/generalLayout/GeneralLayout';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
@@ -32,7 +33,7 @@ const RouterWrapper = () => {
           path='/app'
           element={
             <PrivateRoute>
-              <Sidebar />
+              <GeneralLayout />
             </PrivateRoute>
           }
         >
