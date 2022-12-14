@@ -32,16 +32,16 @@
   }
 
   & h2 {
-    font-size: 21px;
+    font-size: $f21;
   }
 
   & span {
-    color: #8c949d;
-    font-size: 14px;
+    color: $regentGrey;
+    font-size: $f14;
   }
 }
 
-.test {
+.block {
   position: relative;
   height: 70%;
 
@@ -50,15 +50,15 @@
     object-fit: cover;
   }
 
-  &:hover .test1 {
+  &:hover .iconsWrap {
     display: flex;
   }
 }
 
-.test1 {
+.iconsWrap {
   width: 200px;
   height: 100%;
-  background-color: #272443;
+  background-color: $balticSea;
   opacity: 0.7;
   display: none;
   align-items: flex-end;
@@ -81,7 +81,7 @@
     }
 
     & path {
-      fill: white;
+      fill: $white;
     }
   }
 }

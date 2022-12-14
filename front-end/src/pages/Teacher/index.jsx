@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { teacherService } from 'services/teacherService';
 
 // Components
-import Teacher1 from 'components/Teacher';
+import SelectedTeacher from 'components/Teacher';
 
 const Teacher = () => {
   const [teacher, setTeacher] = useState({});
@@ -14,7 +14,6 @@ const Teacher = () => {
   const fetchTeacher = async (teacherId) => {
     try {
       const data = await teacherService.getTeacherById(teacherId);
-      console.log(data);
       if (data) {
         setTeacher(data);
       }
@@ -28,7 +27,7 @@ const Teacher = () => {
   }, []);
 
   return (
-    <Teacher1
+    <SelectedTeacher
       id={teacher?._id}
       fullName={teacher?.fullName}
       activity='English teacher'

@@ -20,9 +20,9 @@ import styles from './Card.module.scss';
 const Card = ({ fullName, activity, link }) => {
   return (
     <Link to={link} className={styles.wrap}>
-      <div className={styles.test}>
+      <div className={styles.block}>
         <img src={teacher} alt='teacher' />
-        <div className={styles.test1}>
+        <div className={styles.iconsWrap}>
           <FontAwesomeIcon icon={faFacebookF} />
           <FontAwesomeIcon icon={faTwitter} />
           <FontAwesomeIcon icon={faInstagram} />

@@ -1,9 +1,11 @@
+@import 'styles/font.scss';
+
 .wrap {
   height: 150px;
 
   & p {
     font-family: 'Poppins-Regular', sans-serif;
-    font-size: 14px;
+    font-size: $f14;
     line-height: 1.5;
   }
 }

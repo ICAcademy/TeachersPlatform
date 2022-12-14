@@ -1,6 +1,5 @@
-/* eslint-disable indent */
-/* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-indent */
+/* eslint-disable indent */
 import React, { useEffect, useState } from 'react';
 
 // Service
