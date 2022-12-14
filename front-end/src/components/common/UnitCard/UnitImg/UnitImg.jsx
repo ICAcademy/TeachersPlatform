@@ -20,7 +20,7 @@ const UnitImg = (props) => {
       )}
       {props.item.image && (
         <Link to={`/app/materials/${props.item.url}`}>
-          <img src={`http://localhost:5000/uploads/${props.item.image}`} />
+          <img src={props.item.image} />
         </Link>
       )}
       {!props.item.image && (
