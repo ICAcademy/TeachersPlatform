@@ -15,6 +15,8 @@ import Loader from 'components/common/Loader/Loader';
 //Styles
 import styles from './Materials.module.scss';
 import { TextField } from '@mui/material';
+import { InputAdornment } from '@mui/material';
+import { SearchOutlined } from '@mui/icons-material';
 
 const Materials = () => {
   const [levels, setLevels] = useState([]);
@@ -22,6 +24,7 @@ const Materials = () => {
   const [unitsByLevel, setUnitsByLevel] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchByUnit, setSearchByUnit] = useState('');
+  const [prevLevel, setPrevLevel] = useState(selectedLevel);
 
   const fetchLevels = async () => {
     try {
@@ -47,12 +50,9 @@ const Materials = () => {
     try {
       setIsLoading(true);
       const data = await getMaterialsByUnit(searchByUnit);
+      setSelectedLevel('');
+      setPrevLevel(selectedLevel);
       setUnitsByLevel(data);
-      if (unitsByLevel) {
-        await data?.map((item) => {
-          setSelectedLevel(item?.level);
-        });
-      }
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -73,12 +73,15 @@ const Materials = () => {
   }, []);
 
   useEffect(() => {
-    if (!searchByUnit) {
+    if (selectedLevel !== '') {
       unitsByLevelData(selectedLevel);
     }
-  }, [selectedLevel, searchByUnit]);
+  }, [selectedLevel]);
 
   useEffect(() => {
+    if (searchByUnit.length === 0) {
+      setSelectedLevel(prevLevel);
+    }
     if (searchByUnit.length > 3) {
       const timer = setTimeout(() => {
         MaterialsByUnit(searchByUnit);
@@ -89,15 +92,26 @@ const Materials = () => {
 
   return (
     <div className={styles.materials}>
-      <TextField
-        className={styles.materialsSearch}
-        variant='outlined'
-        size='small'
-        label='Enter here to find a lesson'
-        defaultValue={searchByUnit}
-        onChange={handleInput}
-      />
-      <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
+      <div className={styles.materialsHeader}>
+        <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
+        <TextField
+          sx={{
+            width: '360px',
+          }}
+          variant='outlined'
+          size='small'
+          label='Enter here to find a lesson'
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='start'>
+                <SearchOutlined />
+              </InputAdornment>
+            ),
+          }}
+          defaultValue={searchByUnit}
+          onChange={handleInput}
+        />
+      </div>
       {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
     </div>
   );
