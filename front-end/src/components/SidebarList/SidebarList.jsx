@@ -53,7 +53,7 @@ export const SidebarList = () => {
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/app' className={styles.sidebarLink}>
+          <Link to='/app/students' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
             Students
           </Link>
