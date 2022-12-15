@@ -43,12 +43,14 @@ const Questions = () => {
     setSelectedLevel(level);
   };
 
-  const fetchQuestionsByLevelAndUnit = async (searchUnit) => {
+  const fetchQuestionsByUnit = async (searchUnit) => {
     try {
+      setIsLoading(true);
       const questionsFromInput = await getQuestionsByLevelAndUnit(searchUnit);
       setPrevLevel(selectedLevel);
       setSelectedLevel('');
       setUnits(questionsFromInput);
+      setIsLoading(false);
     } catch (error) {
       throw new Error(error.message);
     }
@@ -59,20 +61,20 @@ const Questions = () => {
   };
 
   useEffect(() => {
+    fetchLevels();
+  }, []);
+
+  useEffect(() => {
     if (searchUnit.length === 0) {
       setSelectedLevel(prevLevel);
     }
     if (searchUnit.length > 3) {
       const timer = setTimeout(() => {
-        return fetchQuestionsByLevelAndUnit(searchUnit);
+        return fetchQuestionsByUnit(searchUnit);
       }, 500);
       return () => clearTimeout(timer);
     }
   }, [searchUnit]);
-
-  useEffect(() => {
-    fetchLevels();
-  }, []);
 
   useEffect(() => {
     if (searchUnit.length < 3) {
