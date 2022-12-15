@@ -49,7 +49,7 @@ const Materials = () => {
   const MaterialsByUnit = async (searchByUnit) => {
     try {
       setIsLoading(true);
-      const data = await getMaterialsByUnit(searchByUnit);
+      const data = await getMaterialsByUnit({ unitName: searchByUnit });
       setSelectedLevel('');
       setPrevLevel(selectedLevel);
       setUnitsByLevel(data);

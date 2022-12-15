@@ -10,7 +10,7 @@ export const getUnitsByLevel = async (level) => {
   return response.data;
 };
 
-export const getMaterialsByUnit = async (unit) => {
-  const { data } = await API.get(`${API_URL}/api/materials`, { params: { unitName: unit } });
+export const getMaterialsByUnit = async (params) => {
+  const { data } = await API.get(`${API_URL}/api/materials`, { params });
   return data;
 };
