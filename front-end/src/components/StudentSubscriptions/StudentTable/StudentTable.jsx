@@ -14,6 +14,9 @@ import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import TablePaginationActions from '../TablePaginationActions/TablePaginationActions';
 
+// assets
+import avatar from '../../../assets/images/avatar.jpeg';
+
 // styles
 import styles from './StudentTable.module.scss';
 
@@ -37,7 +40,7 @@ const StudentTable = ({ subscriptions, deleteSubscriptionById }) => {
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
+            <TableCell>Avatar</TableCell>
             <TableCell align='left'>Full Name</TableCell>
             <TableCell align='left'>Email</TableCell>
             <TableCell align='left'>Following</TableCell>
@@ -53,7 +56,9 @@ const StudentTable = ({ subscriptions, deleteSubscriptionById }) => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component='th' scope='row'>
-                {subscription.teacherID}
+                <div className={styles.avatarContainer}>
+                  <img className={styles.img} src={avatar} />
+                </div>
               </TableCell>
               <TableCell align='left'>{subscription.teacherFullName}</TableCell>
               <TableCell align='left'>{subscription.teacherEmail}</TableCell>
