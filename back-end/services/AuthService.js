@@ -4,6 +4,8 @@ const Teacher = require('../models/Teacher');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const { findByEmail } = require('../services/UserService');
+
 const register = (data) => {
   bcrypt.hash(data.password, 10, (err, hashedPass) => {
     if (err) {
@@ -33,7 +35,7 @@ const login = async (data) => {
   if (!passwords) {
     throw new Error('Password do not match');
   }
-  return jwt.sign({ email: user.email }, 'secretValue', { expiresIn: '1h' });
+  return jwt.sign({ email: user.email }, 'secretValue', { expiresIn: '30d' });
 };
 
 const comparePasswords = (pass1, pass2) =>
@@ -44,7 +46,7 @@ const comparePasswords = (pass1, pass2) =>
     });
   });
 
-const findByEmail = async (email) => await User.findOne({ email });
+//const findByEmail = async (email) => await User.findOne({ email });
 
 const findRoleId = async (email) => {
   const student = await Student.findOne({ email });
@@ -57,4 +59,4 @@ const updateUser = async (id, user) => {
   return await User.findByIdAndUpdate(id, user);
 };
 
-module.exports = { register, login, findByEmail, findRoleId, updateUser };
+module.exports = { register, login, findRoleId, updateUser };
