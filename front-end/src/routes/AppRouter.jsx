@@ -12,6 +12,7 @@ import { Sidebar } from 'components/Sidebar/Sidebar';
 import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
+import TeacherSettingsPage from 'pages/TeacherSettingsPage/TeacherSettingsPage';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
@@ -82,6 +83,14 @@ const RouterWrapper = () => {
           element={
             <PrivateRoute>
               <Tests />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/app/teacher-settings'
+          element={
+            <PrivateRoute>
+              <TeacherSettingsPage />
             </PrivateRoute>
           }
         />
