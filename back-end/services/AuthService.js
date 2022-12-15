@@ -2,6 +2,8 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const { findByEmail } = require('../services/UserService');
+
 const register = (data) => {
   bcrypt.hash(data.password, 10, (err, hashedPass) => {
     if (err) {
@@ -31,7 +33,7 @@ const login = async (data) => {
   if (!passwords) {
     throw new Error('Password do not match');
   }
-  return jwt.sign({ email: user.email }, 'secretValue', { expiresIn: '1h' });
+  return jwt.sign({ email: user.email }, 'secretValue', { expiresIn: '30d' });
 };
 
 const comparePasswords = (pass1, pass2) =>
@@ -42,6 +44,4 @@ const comparePasswords = (pass1, pass2) =>
     });
   });
 
-const findByEmail = async (email) => await User.findOne({ email });
-
-module.exports = { register, login, findByEmail };
+module.exports = { register, login };
