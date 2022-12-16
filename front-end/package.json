@@ -2,7 +2,7 @@
   "name": "teacher-platform",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://incredible-torte-ac738e.netlify.app",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",

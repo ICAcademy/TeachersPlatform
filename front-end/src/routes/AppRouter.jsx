@@ -9,7 +9,9 @@ import { CurrentUserContext } from 'context/AppProvider';
 
 // Components
 import { Sidebar } from 'components/Sidebar/Sidebar';
+import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
+import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
@@ -37,6 +39,12 @@ const RouterWrapper = () => {
             </PrivateRoute>
           }
         >
+          <Route path='/app/profile' element={<Profile />}>
+            <Route path='general-info' element={<GeneralInfo />} />
+            <Route path='contact-info' element={<h1>This route is not created!!!</h1>} />
+            <Route path='subjects' element={<h1>This route is not created!!!</h1>} />
+            <Route path='languages' element={<h1>This route is not created!!!</h1>} />
+          </Route>
           <Route
             path='/app/materials'
             element={
