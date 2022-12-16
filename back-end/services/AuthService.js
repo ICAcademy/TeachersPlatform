@@ -46,8 +46,6 @@ const comparePasswords = (pass1, pass2) =>
     });
   });
 
-//const findByEmail = async (email) => await User.findOne({ email });
-
 const findRoleId = async (email) => {
   const student = await Student.findOne({ email });
   const teacher = await Teacher.findOne({ email });
