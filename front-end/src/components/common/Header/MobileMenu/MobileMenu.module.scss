@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.4);
+  margin: -27px 0 0 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.navigate {
+  display: flex;
+  align-self: center;
+}

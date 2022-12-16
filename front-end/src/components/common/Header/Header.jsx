@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-max-depth */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // styles
@@ -7,8 +7,29 @@ import styles from './Header.module.scss';
 
 // assets
 import logo from 'assets/images/logo.png';
+import Desktop from './Desktop/Desktop';
+import Mobile from './Mobile/Mobile';
+import MobileMenu from './MobileMenu/MobileMenu';
 
 const Header = () => {
+  const [showBurger, setShowBurger] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(max-width: 864px)').matches) {
+        setShowBurger(true);
+      } else {
+        setShowBurger(false);
+      }
+    });
+  }, []);
+
+  const handleShowMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+  console.log('showBurger', showBurger);
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -17,47 +38,8 @@ const Header = () => {
             <img className={styles.logo} src={logo} alt='logo' />
           </Link>
         </div>
-        <nav className={styles.menuContainer}>
-          <ul className={styles.menu}>
-            <li className={styles.itemMenu}>
-              <Link className={styles.sign} to='*'>
-                Home
-              </Link>
-            </li>
-            <li className={styles.itemMenu}>
-              <Link className={styles.sign} to='*'>
-                Course
-              </Link>
-            </li>
-            <li className={styles.itemMenu}>
-              <Link className={styles.sign} to='*'>
-                Pages
-              </Link>
-            </li>
-            <li className={styles.itemMenu}>
-              <Link className={styles.sign} to='*'>
-                Blog
-              </Link>
-            </li>
-            <li className={styles.itemMenu}>
-              <Link className={styles.sign} to='*'>
-                Contact Us
-              </Link>
-            </li>
-          </ul>
-        </nav>
-        <div className={styles.buttonsContainer}>
-          <div className={styles.logInContainer}>
-            <Link className={styles.logIn} to='/login'>
-              Log In
-            </Link>
-          </div>
-          <div className={styles.signUpContainer}>
-            <Link className={styles.signUp} to='/registration'>
-              Sign Up
-            </Link>
-          </div>
-        </div>
+        {showBurger ? <Mobile handleShowMenu={handleShowMenu} /> : <Desktop />}
+        {showMenu && <MobileMenu handleShowMenu={handleShowMenu} />}
       </div>
     </div>
   );

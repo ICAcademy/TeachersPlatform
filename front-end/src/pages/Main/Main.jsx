@@ -17,13 +17,13 @@ const Main = () => {
   return (
     <div className={styles.container}>
       <Header />
-      <Welcome />
+      {/* <Welcome />
       <GrandMaster />
       <AdditionalResources />
       <DegreeProgram />
       <Activity />
       <Teacher />
-      <Footer />
+      <Footer /> */}
     </div>
   );
 };
