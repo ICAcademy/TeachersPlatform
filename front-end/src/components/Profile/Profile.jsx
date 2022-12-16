@@ -8,11 +8,9 @@ import styles from './Profile.module.scss';
 
 const Profile = () => {
   return (
-    <Box>
-      <Box className={styles.container}>
-        <ProfileTabs />
-        <Outlet />
-      </Box>
+    <Box className={styles.container}>
+      <ProfileTabs />
+      <Outlet />
     </Box>
   );
 };
