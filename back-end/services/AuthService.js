@@ -12,6 +12,7 @@ const register = (data) => {
       role: data.role,
       fullName: data.fullName,
       dateOfBirth: data.dateOfBirth,
+      age: data.age,
       email: data.email,
       password: hashedPass,
     });
