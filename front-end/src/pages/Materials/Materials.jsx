@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 //Services
 import {
@@ -12,11 +13,16 @@ import Levels from 'components/common/Levels/Levels';
 import Units from 'components/Materials/Units/Units';
 import Loader from 'components/common/Loader/Loader';
 
+// Context
+import { CurrentUserContext } from 'context/AppProvider';
+
 //Styles
 import styles from './Materials.module.scss';
 import { TextField } from '@mui/material';
 import { InputAdornment } from '@mui/material';
 import { SearchOutlined } from '@mui/icons-material';
+import Button from '@mui/material/Button';
+import Add from '@mui/icons-material/Add';
 
 const Materials = () => {
   const [levels, setLevels] = useState([]);
@@ -25,6 +31,8 @@ const Materials = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchByUnitName, setSearchByUnitName] = useState('');
   const [prevLevel, setPrevLevel] = useState(selectedLevel);
+
+  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
 
   const fetchLevels = async () => {
     try {
@@ -68,6 +76,12 @@ const Materials = () => {
     setSearchByUnitName(e.target.value);
   };
 
+  const saveMaterialBtn = isAuthenticated && currentUser.role === 'admin' && (
+    <Button component={Link} to='/app/materials/edit/new' variant='contained' endIcon={<Add />}>
+      Create material
+    </Button>
+  );
+
   useEffect(() => {
     fetchLevels();
   }, []);
@@ -93,6 +107,7 @@ const Materials = () => {
   return (
     <div className={styles.materials}>
       <div className={styles.materialsHeader}>
+        <div className={styles.navigationRow}>
         <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
         <TextField
           sx={{
@@ -111,6 +126,8 @@ const Materials = () => {
           defaultValue={searchByUnitName}
           onChange={handleInput}
         />
+      </div>
+        {saveMaterialBtn}
       </div>
       {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
     </div>
