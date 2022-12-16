@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes, { bool } from 'prop-types';
 import {
   Modal,
@@ -27,12 +27,22 @@ const style = {
 };
 
 const ModalWindow = ({ open, handleClose }) => {
+  const [data, setData] = useState({
+    password: '',
+  });
+
   const [showPassword, setShowPassword] = useState(false);
   const handleMouseDownPassword = (e) => e.preventDefault();
+
+  const handlePasswordChange = (prop) => (e) => {
+    setData({ ...data, [prop]: e.target.value });
+  };
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const isDisabledBtn = useMemo(() => !data.password.trim().length, [data.password]);
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -45,6 +55,8 @@ const ModalWindow = ({ open, handleClose }) => {
             label='Current password'
             type={showPassword ? 'text' : 'password'}
             name='password'
+            value={data.password}
+            onChange={handlePasswordChange('password')}
             InputLabelProps={{ shrink: true }}
             InputProps={{
               startAdornment: <InputAdornment position='start'></InputAdornment>,
@@ -130,7 +142,7 @@ const ModalWindow = ({ open, handleClose }) => {
             }}
           >
             <Button onClick={handleClose}>Cancel</Button>
-            <Button>Confirm</Button>
+            <Button disabled={isDisabledBtn}>Confirm</Button>
           </Box>
         </FormControl>
       </Box>
