@@ -6,8 +6,6 @@ import Units from 'components/questions/Units/Units';
 
 import { getLevels, getUnitsByLevel } from 'services/questionService';
 
-import styles from './Questions.module.scss';
-
 const baseUrl = 'questions';
 
 const Questions = () => {
@@ -49,7 +47,7 @@ const Questions = () => {
   }, [selectedLevel]);
 
   return (
-    <div className={styles.materials}>
+    <div>
       <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={levelHandler} />
       {isLoading ? <Loader /> : <Units units={units} baseUrl={baseUrl} />}
     </div>
