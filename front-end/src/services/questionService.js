@@ -15,9 +15,7 @@ export const getTopicDataByUrl = async (params) => {
   return data;
 };
 
-export const getQuestionsByUnit = async (searchUnit) => {
-  const { data } = await API.get(`${API_URL}/api/questions/`, {
-    params: { searchUnit },
-  });
+export const getQuestionsByUnitName = async (params) => {
+  const { data } = await API.get(`${API_URL}/api/questions/`, { params });
   return data;
 };

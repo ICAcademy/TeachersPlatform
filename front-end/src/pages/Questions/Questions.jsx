@@ -4,7 +4,7 @@ import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
 import Units from 'components/questions/Units/Units';
 
-import { getLevels, getUnitsByLevel, getQuestionsByUnit } from 'services/questionService';
+import { getLevels, getUnitsByLevel, getQuestionsByUnitName } from 'services/questionService';
 
 import styles from './Questions.module.scss';
 import { TextField } from '@mui/material';
@@ -46,7 +46,7 @@ const Questions = () => {
   const fetchQuestionsByUnitName = async (searchUnit) => {
     try {
       setIsLoading(true);
-      const questionsFromInput = await getQuestionsByUnit(searchUnit);
+      const questionsFromInput = await getQuestionsByUnitName({ searchUnit });
       setPrevLevel(selectedLevel);
       setSelectedLevel('');
       setUnits(questionsFromInput);
