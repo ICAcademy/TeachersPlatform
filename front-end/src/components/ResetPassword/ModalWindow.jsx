@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes, { bool } from 'prop-types';
-
-//styles
-//import styles from './ModalWindow.module.scss';
-import { Modal, Box, TextField, Button } from '@mui/material';
+import { Modal, Box, TextField, Button, FormControl } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -27,38 +24,44 @@ const ModalWindow = ({ open, handleClose }) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
-        <TextField
-          sx={{
-            '& .MuiFormControl': { width: '100%' },
-          }}
-          variant='outlined'
-          size='small'
-          label='Current password'
-          defaultValue={password}
-          onChange={handlePassword}
-        />
-        <TextField
-          variant='outlined'
-          size='small'
-          label='New password'
-          defaultValue={password}
-          onChange={handlePassword}
-        />
-        <TextField
-          variant='outlined'
-          size='small'
-          label='New password again'
-          defaultValue={password}
-          onChange={handlePassword}
-        />
-        <Box
-          sx={{
-            display: 'flex',
-          }}
-        >
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button>Confirm</Button>
-        </Box>
+        <FormControl sx={{ width: '100%', marginBottom: '20px' }}>
+          <TextField
+            margin='dense'
+            variant='outlined'
+            size='small'
+            label='Current password'
+            defaultValue={password}
+            onChange={handlePassword}
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            margin='dense'
+            variant='outlined'
+            size='small'
+            label='New password'
+            defaultValue={password}
+            onChange={handlePassword}
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            margin='dense'
+            variant='outlined'
+            size='small'
+            label='New password again'
+            defaultValue={password}
+            onChange={handlePassword}
+            InputLabelProps={{ shrink: true }}
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button>Confirm</Button>
+          </Box>
+        </FormControl>
       </Box>
     </Modal>
   );

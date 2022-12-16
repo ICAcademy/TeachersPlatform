@@ -5,9 +5,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import ModalWindow from 'components/ResetPassword/ModalWindow';
 import dayjs from 'dayjs';
-import PropTypes, { bool } from 'prop-types';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import PropTypes from 'prop-types';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
@@ -39,7 +37,6 @@ const dateOfBirthHelperText = `Please enter a valid date in range between ${minD
 const GeneralInfo = () => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const {
