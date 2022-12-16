@@ -11,13 +11,7 @@ const Units = (props) => {
   return (
     <div className={styles.units}>
       {props.materials.map((item) => (
-        <UnitCard
-          key={item._id}
-          unit={item.unit}
-          image={item.image}
-          numberOfLessons={item.numberOfLessons}
-          url={item.url}
-        />
+        <UnitCard key={item._id} item={item} numberOfLessons={item.numberOfLessons} />
       ))}
     </div>
   );
