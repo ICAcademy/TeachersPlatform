@@ -7,7 +7,7 @@ const {
   findQuestionById,
   editQuestion,
   removeQuestion,
-} = require('../services/Questions');
+} = require('../services/QuestionService');
 
 const getAllQuestions = async (req, res) => {
   try {

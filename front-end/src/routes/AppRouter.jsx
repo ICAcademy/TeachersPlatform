@@ -23,9 +23,10 @@ const NotFound = lazy(() => import('pages/NotFound'));
 const Tests = lazy(() => import('pages/Tests/Tests'));
 const Questions = lazy(() => import('pages/Questions/Questions'));
 const Topics = lazy(() => import('pages/Topics/Topics'));
+const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
 
 const RouterWrapper = () => {
-  const { isAuthenticated } = useContext(CurrentUserContext);
+  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
@@ -58,6 +59,17 @@ const RouterWrapper = () => {
               <PrivateRoute>
                 <Material />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path='/app/materials/edit/:url'
+            element={
+              isAuthenticated &&
+              currentUser.role === 'admin' && (
+                <PrivateRoute>
+                  <AdminMaterials />
+                </PrivateRoute>
+              )
             }
           />
           <Route
