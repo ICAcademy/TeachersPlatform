@@ -23,7 +23,7 @@ const Materials = () => {
   const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [unitsByLevel, setUnitsByLevel] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchByUnit, setSearchByUnit] = useState('');
+  const [searchByUnitName, setSearchByUnitName] = useState('');
   const [prevLevel, setPrevLevel] = useState(selectedLevel);
 
   const fetchLevels = async () => {
@@ -46,7 +46,7 @@ const Materials = () => {
     }
   };
 
-  const MaterialsByUnit = async (searchByUnit) => {
+  const fetchMaterialsByUnitName = async (searchByUnit) => {
     try {
       setIsLoading(true);
       const data = await getMaterialsByUnit({ unitName: searchByUnit });
@@ -65,7 +65,7 @@ const Materials = () => {
   };
 
   const handleInput = (e) => {
-    setSearchByUnit(e.target.value);
+    setSearchByUnitName(e.target.value);
   };
 
   useEffect(() => {
@@ -79,16 +79,16 @@ const Materials = () => {
   }, [selectedLevel]);
 
   useEffect(() => {
-    if (searchByUnit.length === 0) {
+    if (searchByUnitName.length === 0) {
       setSelectedLevel(prevLevel);
     }
-    if (searchByUnit.length > 3) {
+    if (searchByUnitName.length > 3) {
       const timer = setTimeout(() => {
-        MaterialsByUnit(searchByUnit);
+        fetchMaterialsByUnitName(searchByUnitName);
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [searchByUnit]);
+  }, [searchByUnitName]);
 
   return (
     <div className={styles.materials}>
@@ -108,7 +108,7 @@ const Materials = () => {
               </InputAdornment>
             ),
           }}
-          defaultValue={searchByUnit}
+          defaultValue={searchByUnitName}
           onChange={handleInput}
         />
       </div>
