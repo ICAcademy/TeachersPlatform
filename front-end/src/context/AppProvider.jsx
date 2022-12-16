@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Services
@@ -12,12 +12,12 @@ const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const accessToken = localStorage.getItem('token');
-      const user = accessToken ? await userService.getUser(accessToken) : isAuthenticated;
-      if (user) {
-        setCurrentUser(user);
+      const { data } = accessToken ? await userService.getUser(accessToken) : isAuthenticated;
+      if (data) {
+        setCurrentUser(data);
         setIsLoading(false);
         setIsAuthenticated(true);
       }
@@ -27,10 +27,12 @@ const AppProvider = ({ children }) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [isAuthenticated]);
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, fetchUser, isLoading, isAuthenticated }}>
+    <CurrentUserContext.Provider
+      value={{ currentUser, setCurrentUser, fetchUser, isLoading, isAuthenticated }}
+    >
       {children}
     </CurrentUserContext.Provider>
   );

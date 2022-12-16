@@ -26,7 +26,7 @@ export const SidebarList = () => {
   };
 
   return (
-    <div className='sidebarMenu'>
+    <div className={styles.sidebarMenu}>
       <List className={styles.sidebarList}>
         <ListItem className={styles.sidebarItem}>
           <Link to='/app' className={styles.sidebarLink}>
@@ -47,7 +47,7 @@ export const SidebarList = () => {
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/app' className={styles.sidebarLink}>
+          <Link to='/app/questions' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />
             Grammar
           </Link>

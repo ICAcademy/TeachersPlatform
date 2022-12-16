@@ -1,0 +1,77 @@
+@import 'styles/colors.scss';
+
+.adminForm {
+  display: flex;
+}
+
+.formPart {
+  width: 60%;
+  box-sizing: border-box;
+  padding-right: 35px;
+  position: relative;
+
+  .deleteBtn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    .deleteIcon {
+      width: 20px;
+      margin-left: 5px;
+    }
+  }
+}
+
+.formPart:first-child {
+  width: 40%;
+  padding-right: 35px;
+  border-right: 1px solid #e2e2e2;
+}
+
+.formPart:last-child {
+  padding-left: 35px;
+}
+
+.imageUploader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.imageWrapper {
+  padding: 20px;
+  margin: 35px 0;
+  border: 2px dashed $softPurple;
+  border-radius: 5px;
+}
+
+.imageWrapper img {
+  display: block;
+  width: 100%;
+}
+
+.noImage {
+  background-color: #e2e2e2;
+  height: 300px;
+  color: #888888;
+  position: relative;
+  cursor: pointer;
+
+  .noImageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  svg {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+  }
+}

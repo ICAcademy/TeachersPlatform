@@ -8,6 +8,9 @@ const pallete = {
   purple: {
     main: '#7c08ff',
   },
+  success: {
+    main: '#58baab',
+  },
 };
 
 export default pallete;

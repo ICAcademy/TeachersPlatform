@@ -2,7 +2,10 @@ const materialService = require('../services/MaterialService');
 
 exports.getAllMaterials = async (req, res) => {
   try {
-    const materials = await materialService.getAllMaterials();
+    const { unitName } = req.query;
+    const materials = unitName
+      ? await materialService.getMaterialsByUnit(unitName)
+      : await materialService.getAllMaterials();
     res.json(materials);
   } catch (err) {
     res.status(400).json({ error: err.message });
