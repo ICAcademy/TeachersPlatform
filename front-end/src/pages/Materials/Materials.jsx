@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 //Services
 import { getLevels, getUnitsByLevel } from 'services/MaterialsService/MaterialsService';
@@ -50,7 +51,7 @@ const Materials = () => {
   };
 
   const saveMaterialBtn = isAuthenticated && currentUser.role === 'admin' && (
-    <Button href='/app/materials/edit/new' variant='contained' endIcon={<Add />}>
+    <Button component={Link} to='/app/materials/edit/new' variant='contained' endIcon={<Add />}>
       Create material
     </Button>
   );
