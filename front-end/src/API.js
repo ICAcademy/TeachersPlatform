@@ -43,10 +43,8 @@ API.interceptors.response.use(
   (error) => {
     const status = error.response.status;
     if (status === 401) {
-      if (localStorage.getItem('token')) {
-        localStorage.clear();
-        return Promise.reject(error);
-      }
+      localStorage.clear();
+      window.location.href = '/login';
       return Promise.reject(error);
     }
   },
