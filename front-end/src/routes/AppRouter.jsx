@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import React, { useContext, Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -24,7 +25,7 @@ const Topics = lazy(() => import('pages/Topics/Topics'));
 const Students = lazy(() => import('pages/Students'));
 
 const RouterWrapper = () => {
-  const { isAuthenticated } = useContext(CurrentUserContext);
+  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
@@ -72,9 +73,13 @@ const RouterWrapper = () => {
           <Route
             path='/app/students'
             element={
-              <PrivateRoute>
-                <Students />
-              </PrivateRoute>
+              currentUser?.role === 'student' ? (
+                <Navigate to='/app' />
+              ) : (
+                <PrivateRoute>
+                  <Students />
+                </PrivateRoute>
+              )
             }
           />
         </Route>

@@ -12,6 +12,15 @@ exports.getAllSubscriptions = async (req, res) => {
   }
 };
 
+exports.getTeachersSubscriptions = async (req, res) => {
+  try {
+    const subscriptions = await subscriptionService.getTeachersSubscriptions(req.params.id);
+    res.json(subscriptions);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 exports.createSubscription = async (req, res) => {
   try {
     const isSubscripted = await SubscriptionModel.findOne({
