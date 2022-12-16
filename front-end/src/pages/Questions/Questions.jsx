@@ -49,6 +49,7 @@ const Questions = () => {
       const questionsFromInput = await getQuestionsByLevelAndUnit(searchUnit);
       setPrevLevel(selectedLevel);
       setSelectedLevel('');
+      console.log('questionsFromInput', questionsFromInput);
       setUnits(questionsFromInput);
       setIsLoading(false);
     } catch (error) {
