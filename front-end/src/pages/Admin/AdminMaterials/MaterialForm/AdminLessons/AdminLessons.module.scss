@@ -1,0 +1,29 @@
+@import 'styles/colors.scss';
+.lessonsWrapper {
+  h3 {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.35rem;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    background-color: $softPurple;
+    border-radius: 5px;
+    padding: 10px 15px;
+
+    button {
+      background-color: #fff;
+      color: $softPurple;
+    }
+  }
+
+  .materialSubmit {
+    display: table;
+    margin: 50px auto 0;
+    color: #fff;
+  }
+}

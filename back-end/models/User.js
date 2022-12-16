@@ -23,6 +23,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    url: { type: String },
   },
   { timestamps: true },
 );

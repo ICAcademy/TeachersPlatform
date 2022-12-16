@@ -10,3 +10,12 @@ export const userService = {
     }
   },
 };
+
+export const updateUserById = async (id, body) => {
+  try {
+    const { data } = await API.patch(`${API_URL}/api/users/${id}`, { ...body });
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
