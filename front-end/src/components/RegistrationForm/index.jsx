@@ -1,10 +1,16 @@
 import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { nanoid } from 'nanoid';
 import dayjs from 'dayjs';
-import { FormControl, TextField, Box, InputAdornment, Button } from '@mui/material';
+
+// MUI library
+import { FormControl, TextField, Box, InputAdornment, Button, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+
+// FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUser,
@@ -15,7 +21,6 @@ import {
   faChalkboardUser,
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
-import { nanoid } from 'nanoid';
 
 // Regex
 import { regexEmail, regexFullName, regexPassword } from 'helpers/regex';
@@ -48,7 +53,19 @@ const RegistrationForm = () => {
 
   const [activeTab, setActiveTab] = useState(0);
 
+  const [showPassword, setShowPassword] = useState({ current: false, confirm: false });
+
   const history = useNavigate();
+
+  const handleMouseDownPassword = (e) => e.preventDefault();
+
+  const handlePasswordChange = (prop) => (e) => {
+    setData({ ...data, [prop]: e.target.value });
+  };
+
+  const handleClickShowPassword = ({ currentTarget }, value) => {
+    setShowPassword({ ...showPassword, [currentTarget.name]: value });
+  };
 
   const handleDateChange = (newValue) => {
     setData({ ...data, dateOfBirth: dayjs(newValue).format('MM/DD/YYYY') });
@@ -212,10 +229,10 @@ const RegistrationForm = () => {
                   : ''
               }
               id={`input-with-icon-textfield ${nanoid(5)}`}
-              type='password'
+              type={showPassword.current ? 'text' : 'password'}
               name='password'
               value={data.password}
-              onChange={(e) => handleChange(e)}
+              onChange={handlePasswordChange('password')}
               placeholder='Password'
               color='purple'
               size='small'
@@ -223,6 +240,23 @@ const RegistrationForm = () => {
                 startAdornment: (
                   <InputAdornment position='start'>
                     <FontAwesomeIcon icon={faLock} fill='#a1a4b5' width={12} height={12} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      name='current'
+                      aria-label='toggle password visibility'
+                      onClick={(e) => handleClickShowPassword(e, !showPassword.current)}
+                      onMouseDown={handleMouseDownPassword}
+                      edge='end'
+                    >
+                      {showPassword.current ? (
+                        <VisibilityOff sx={{ width: '20px', height: '20px' }} />
+                      ) : (
+                        <Visibility sx={{ width: '20px', height: '20px' }} />
+                      )}
+                    </IconButton>
                   </InputAdornment>
                 ),
               }}
@@ -233,10 +267,10 @@ const RegistrationForm = () => {
                 hasError.hasRepeatPasswordError ? 'Incorrect! Your passwords is not the same' : ''
               }
               id={`input-with-icon-textfield ${nanoid(5)}`}
-              type='password'
+              type={showPassword.confirm ? 'text' : 'password'}
               name='repeatPassword'
               value={data.repeatPassword}
-              onChange={(e) => handleChange(e)}
+              onChange={handlePasswordChange('repeatPassword')}
               placeholder='Repeat password'
               color='purple'
               size='small'
@@ -245,6 +279,23 @@ const RegistrationForm = () => {
                 startAdornment: (
                   <InputAdornment position='start'>
                     <FontAwesomeIcon icon={faLock} fill='#a1a4b5' width={12} height={12} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      name='confirm'
+                      aria-label='toggle password visibility'
+                      onClick={(e) => handleClickShowPassword(e, !showPassword.confirm)}
+                      onMouseDown={handleMouseDownPassword}
+                      edge='end'
+                    >
+                      {showPassword.confirm ? (
+                        <VisibilityOff sx={{ width: '20px', height: '20px' }} />
+                      ) : (
+                        <Visibility sx={{ width: '20px', height: '20px' }} />
+                      )}
+                    </IconButton>
                   </InputAdornment>
                 ),
               }}

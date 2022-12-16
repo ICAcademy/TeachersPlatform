@@ -1,27 +1,43 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+// Context
+import { CurrentUserContext } from 'context/AppProvider';
 
 //Styles
 import styles from './UnitImg.module.scss';
+import EditIcon from '@mui/icons-material/Edit';
 
 const UnitImg = (props) => {
+  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
   return (
     <div className={styles.unitImg}>
-      {/* {props.image && <img src={`http://localhost:5000/uploads/${props.image}`} />}
-      {!props.image && <p className={styles.noImage}>{props.unit}</p>} */}
-      <p className={styles.noImage}>{props.unit}</p>
+      {isAuthenticated && currentUser.role === 'admin' && (
+        <Link to={`/app/materials/edit/${props.item.url}`}>
+          <EditIcon className={styles.editIcon} fontSize='large' />
+        </Link>
+      )}
+      {props.item.image && (
+        <Link to={`/app/materials/${props.item.url}`}>
+          <img src={`http://localhost:5000/uploads/${props.item.image}`} />
+        </Link>
+      )}
+      {!props.item.image && (
+        <Link to={`/app/materials/${props.item.url}`}>
+          <p className={styles.noImage}>{props.item.unit}</p>
+        </Link>
+      )}
     </div>
   );
 };
 
 //propTypes
 UnitImg.propTypes = {
-  image: PropTypes.string,
-  unit: PropTypes.string,
+  item: PropTypes.object,
 };
 UnitImg.defaultProps = {
-  image: '',
-  init: '',
+  item: {},
 };
 
 export default UnitImg;

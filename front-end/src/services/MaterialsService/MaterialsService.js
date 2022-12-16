@@ -9,3 +9,18 @@ export const getUnitsByLevel = async (level) => {
   const response = await API.get(`/api/materials-levels/get-units-by-level/${level}`);
   return response.data;
 };
+
+export const createMaterial = async (material) => {
+  const { data } = await API.post('/api/materials', material);
+  return data;
+};
+
+export const updateMaterial = async (id, material) => {
+  const { data } = await API.patch(`api/materials/${id}`, material);
+  return data;
+};
+
+export const deleteMaterial = async (id) => {
+  const { data } = await API.delete(`/api/materials/${id}`);
+  return data;
+};

@@ -3,8 +3,15 @@ import axios from 'axios';
 // Services
 import { tokenService } from 'services/tokenService';
 
-// Base url
-export const API_URL = 'http://localhost:5000';
+let modeUrl;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  modeUrl = 'http://localhost:5000';
+} else {
+  modeUrl = 'https://teacher-platform.onrender.com';
+}
+
+export const API_URL = modeUrl;
+export const URL = 'http://localhost:3000';
 
 // Instance of axios
 const API = axios.create({
@@ -34,14 +41,14 @@ API.interceptors.response.use(
     return response;
   },
   (error) => {
-    const status = error.response.status || 0;
+    const status = error.response.status;
     if (status === 401) {
       if (localStorage.getItem('token')) {
         localStorage.clear();
         return Promise.reject(error);
       }
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
   },
 );
 

@@ -9,7 +9,7 @@ const {
   getQuestionById,
   updateQuestion,
   deleteQuestion,
-} = require('../controllers/Questions');
+} = require('../controllers/QuestionController');
 
 const router = express.Router();
 
