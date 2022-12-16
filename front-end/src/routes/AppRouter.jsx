@@ -9,8 +9,10 @@ import PrivateRoute from 'routes/PrivateRoute';
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Components
-import { Sidebar } from 'components/Sidebar/Sidebar';
+import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
+import GeneralLayout from 'components/generalLayout/GeneralLayout';
+import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
@@ -23,6 +25,7 @@ const Tests = lazy(() => import('pages/Tests/Tests'));
 const Questions = lazy(() => import('pages/Questions/Questions'));
 const Topics = lazy(() => import('pages/Topics/Topics'));
 const Students = lazy(() => import('pages/Students'));
+const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
 
 const RouterWrapper = () => {
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
@@ -34,10 +37,16 @@ const RouterWrapper = () => {
           path='/app'
           element={
             <PrivateRoute>
-              <Sidebar />
+              <GeneralLayout />
             </PrivateRoute>
           }
         >
+          <Route path='/app/profile' element={<Profile />}>
+            <Route path='general-info' element={<GeneralInfo />} />
+            <Route path='contact-info' element={<h1>This route is not created!!!</h1>} />
+            <Route path='subjects' element={<h1>This route is not created!!!</h1>} />
+            <Route path='languages' element={<h1>This route is not created!!!</h1>} />
+          </Route>
           <Route
             path='/app/materials'
             element={
@@ -52,6 +61,17 @@ const RouterWrapper = () => {
               <PrivateRoute>
                 <Material />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path='/app/materials/edit/:url'
+            element={
+              isAuthenticated &&
+              currentUser.role === 'admin' && (
+                <PrivateRoute>
+                  <AdminMaterials />
+                </PrivateRoute>
+              )
             }
           />
           <Route

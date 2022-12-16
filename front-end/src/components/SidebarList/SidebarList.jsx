@@ -37,7 +37,7 @@ export const SidebarList = () => {
   };
 
   return (
-    <div className='sidebarMenu'>
+    <div className={styles.sidebarMenu}>
       <List className={styles.sidebarList}>
         <ListItem className={styles.sidebarItem}>
           <Link to='/app' className={styles.sidebarLink}>

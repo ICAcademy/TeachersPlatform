@@ -17,7 +17,7 @@ module.exports = exports = {
     semi: ['error', 'always'],
     'eol-last': ['error', 'always'],
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1, maxBOF: 0 }],
-    'no-unused-vars': ['error', { vars: 'all', args: 'none', argsIgnorePattern: '^_' }],
+    'no-unused-vars': ['warn'],
     'prettier/prettier': [
       'error',
       {
