@@ -4,7 +4,7 @@ import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
 import Units from 'components/questions/Units/Units';
 
-import { getLevels, getUnitsByLevel, getQuestionsByLevelAndUnit } from 'services/questionService';
+import { getLevels, getUnitsByLevel, getQuestionsByUnit } from 'services/questionService';
 
 import styles from './Questions.module.scss';
 import { TextField } from '@mui/material';
@@ -16,7 +16,7 @@ const Questions = () => {
   const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchUnit, setSearchUnit] = useState('');
+  const [searchUnitName, setSearchUnitName] = useState('');
   const [prevLevel, setPrevLevel] = useState('beginner');
 
   const fetchLevels = async () => {
@@ -43,13 +43,12 @@ const Questions = () => {
     setSelectedLevel(level);
   };
 
-  const fetchQuestionsByUnit = async (searchUnit) => {
+  const fetchQuestionsByUnitName = async (searchUnit) => {
     try {
       setIsLoading(true);
-      const questionsFromInput = await getQuestionsByLevelAndUnit(searchUnit);
+      const questionsFromInput = await getQuestionsByUnit(searchUnit);
       setPrevLevel(selectedLevel);
       setSelectedLevel('');
-      console.log('questionsFromInput', questionsFromInput);
       setUnits(questionsFromInput);
       setIsLoading(false);
     } catch (error) {
@@ -58,7 +57,7 @@ const Questions = () => {
   };
 
   const handleCangeSearchUnit = (event) => {
-    setSearchUnit(event.target.value);
+    setSearchUnitName(event.target.value);
   };
 
   useEffect(() => {
@@ -66,25 +65,25 @@ const Questions = () => {
   }, []);
 
   useEffect(() => {
-    if (searchUnit.length === 0) {
+    if (searchUnitName.length === 0) {
       setSelectedLevel(prevLevel);
     }
-    if (searchUnit.length > 3) {
+    if (searchUnitName.length > 3) {
       const timer = setTimeout(() => {
-        return fetchQuestionsByUnit(searchUnit);
+        return fetchQuestionsByUnitName(searchUnitName);
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [searchUnit]);
+  }, [searchUnitName]);
 
   useEffect(() => {
-    if (searchUnit.length < 3) {
+    if (searchUnitName.length < 3) {
       const timer = setTimeout(() => {
         fetchUnits(selectedLevel);
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [selectedLevel, searchUnit]);
+  }, [selectedLevel, searchUnitName]);
 
   return (
     <div className={styles.materials}>
@@ -94,7 +93,7 @@ const Questions = () => {
             list={levels}
             selectedLevel={selectedLevel}
             onChangeLevel={levelHandler}
-            setSearchUnit={setSearchUnit}
+            setSearchUnitName={setSearchUnitName}
           />
         </div>
         <div className={styles.inputContainer}>
@@ -103,7 +102,7 @@ const Questions = () => {
             variant='outlined'
             label='search unit'
             size='small'
-            value={searchUnit}
+            value={searchUnitName}
             onChange={handleCangeSearchUnit}
           />
         </div>
