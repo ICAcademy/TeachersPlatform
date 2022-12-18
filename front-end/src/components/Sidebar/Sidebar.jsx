@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 
 import { SidebarList } from 'components/SidebarList/SidebarList';
@@ -15,29 +15,30 @@ export const Sidebar = () => {
   const { currentUser } = useContext(CurrentUserContext);
 
   return (
-    <>
-      <aside className={styles.sidebar}>
-        <div className={styles.sidebarImgHolder}>
-          <div className={styles.sidebarImgBlock}>
-            <Link to='/home'>
-              <img src={logo1} alt='logo' width='30px' />
-            </Link>
-          </div>
-          <div className={styles.sidebarImgBlock}>
-            <Link to='/home'>
-              <img src={logo} alt='logo' />
-            </Link>
-          </div>
-        </div>
-        <div className={styles.sidebarImgAvatar}>
-          <Link to='profile/general-info' state={'general-info'}>
-            <img src={currentUser.url || avatar} alt='logo' className={styles.sidebarAvatar} />
+    <aside className={styles.sidebar}>
+      <div className={styles.sidebarImgHolder}>
+        <div className={styles.sidebarImgBlock}>
+          <Link to='/home'>
+            <img src={logo1} alt='logo' width='30px' />
           </Link>
-          <Typography variant='h6'>{` Welcome back, ${currentUser.fullName}`}</Typography>
         </div>
-        <SidebarList />
-      </aside>
-      <Outlet />
-    </>
+        <div className={styles.sidebarImgBlock}>
+          <Link to='/home'>
+            <img src={logo} alt='logo' />
+          </Link>
+        </div>
+      </div>
+      <div className={styles.sidebarImgAvatar}>
+        <Link to='profile/general-info' state={'general-info'}>
+          <img src={currentUser.url || avatar} alt='logo' className={styles.sidebarAvatar} />
+        </Link>
+        <Typography variant='h6' align='center'>
+          {` Welcome back, ${currentUser.fullName}`}
+        </Typography>
+      </div>
+      <SidebarList />
+    </aside>
   );
 };
+
+export default Sidebar;

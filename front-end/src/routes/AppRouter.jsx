@@ -8,9 +8,9 @@ import PrivateRoute from 'routes/PrivateRoute';
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Components
-import { Sidebar } from 'components/Sidebar/Sidebar';
 import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
+import GeneralLayout from 'components/generalLayout/GeneralLayout';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
 
 // Pages
@@ -35,7 +35,7 @@ const RouterWrapper = () => {
           path='/app'
           element={
             <PrivateRoute>
-              <Sidebar />
+              <GeneralLayout />
             </PrivateRoute>
           }
         >
