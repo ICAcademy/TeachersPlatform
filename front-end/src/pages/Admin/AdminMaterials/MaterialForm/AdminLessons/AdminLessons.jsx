@@ -51,8 +51,6 @@ const AdminLessons = ({
     onDeleteLesson(index);
   };
 
-  console.log(showSaveBtn);
-
   return (
     <div className={styles.lessonsWrapper}>
       <div className={styles.row}>
