@@ -18,9 +18,9 @@ import TablePaginationActions from '../TablePaginationActions/TablePaginationAct
 import avatar from '../../../assets/images/avatar.jpeg';
 
 // styles
-import styles from './StudentTable.module.scss';
+import styles from './TeacherTable.module.scss';
 
-const StudentTable = ({ subscriptions, deleteSubscriptionById }) => {
+const TeacherTable = ({ subscriptions, deleteSubscriptionById }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -104,9 +104,9 @@ const StudentTable = ({ subscriptions, deleteSubscriptionById }) => {
   );
 };
 
-StudentTable.propTypes = {
+TeacherTable.propTypes = {
   subscriptions: PropTypes.array,
   deleteSubscriptionById: PropTypes.func,
 };
 
-export default StudentTable;
+export default TeacherTable;

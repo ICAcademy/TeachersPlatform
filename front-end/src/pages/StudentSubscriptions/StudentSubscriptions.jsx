@@ -6,7 +6,7 @@ import { deleteSubscription, getAllUserSubscriptions } from 'services/subscripti
 
 // styles
 import styles from './StudentSubscriptions.module.scss';
-import StudentTable from 'components/StudentSubscriptions/StudentTable/StudentTable';
+import TeacherTable from 'components/StudentSubscriptions/TeacherTable/TeacherTable';
 
 const StudentSubscriptions = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -30,6 +30,7 @@ const StudentSubscriptions = () => {
 
   const deleteSubscriptionById = async (id) => {
     try {
+      setIsLoading(true);
       let subId = 0;
       subscriptions.forEach((subscription) => {
         if (subscription.teacherID === id) {
@@ -38,6 +39,7 @@ const StudentSubscriptions = () => {
       });
       const remove = await deleteSubscription(subId);
       fetchSubscriptions(currentUser.roleId);
+      setIsLoading(true);
       return remove;
     } catch (e) {
       console.log(e);
@@ -49,7 +51,7 @@ const StudentSubscriptions = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <StudentTable
+        <TeacherTable
           subscriptions={subscriptions}
           deleteSubscriptionById={deleteSubscriptionById}
         />

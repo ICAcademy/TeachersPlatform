@@ -1,6 +1,4 @@
 const User = require('../models/User');
-const Student = require('../models/Student');
-const Teacher = require('../models/Teacher');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -46,15 +44,4 @@ const comparePasswords = (pass1, pass2) =>
     });
   });
 
-const findRoleId = async (email) => {
-  const student = await Student.findOne({ email });
-  const teacher = await Teacher.findOne({ email });
-
-  return student || teacher;
-};
-
-const updateUser = async (id, user) => {
-  return await User.findByIdAndUpdate(id, user);
-};
-
-module.exports = { register, login, findRoleId, updateUser };
+module.exports = { register, login };

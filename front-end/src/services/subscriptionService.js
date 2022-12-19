@@ -27,6 +27,5 @@ export const createSubscription = async (subscription) => {
 
 export const deleteSubscription = async (id) => {
   const { data } = await API.delete(`${API_URL}/api/subscriptions/${id}`);
-  console.log('id', id);
   return data;
 };
