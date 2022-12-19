@@ -8,9 +8,9 @@ import PrivateRoute from 'routes/PrivateRoute';
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Components
-import { Sidebar } from 'components/Sidebar/Sidebar';
 import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
+import GeneralLayout from 'components/generalLayout/GeneralLayout';
 import StudentSubscriptions from 'pages/StudentSubscriptions/StudentSubscriptions';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
 
@@ -24,9 +24,10 @@ const NotFound = lazy(() => import('pages/NotFound'));
 const Tests = lazy(() => import('pages/Tests/Tests'));
 const Questions = lazy(() => import('pages/Questions/Questions'));
 const Topics = lazy(() => import('pages/Topics/Topics'));
+const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
 
 const RouterWrapper = () => {
-  const { isAuthenticated } = useContext(CurrentUserContext);
+  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
@@ -35,7 +36,7 @@ const RouterWrapper = () => {
           path='/app'
           element={
             <PrivateRoute>
-              <Sidebar />
+              <GeneralLayout />
             </PrivateRoute>
           }
         >
@@ -59,6 +60,17 @@ const RouterWrapper = () => {
               <PrivateRoute>
                 <Material />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path='/app/materials/edit/:url'
+            element={
+              isAuthenticated &&
+              currentUser.role === 'admin' && (
+                <PrivateRoute>
+                  <AdminMaterials />
+                </PrivateRoute>
+              )
             }
           />
           <Route

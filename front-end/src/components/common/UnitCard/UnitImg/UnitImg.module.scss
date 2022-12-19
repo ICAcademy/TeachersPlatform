@@ -1,5 +1,6 @@
 .unitImg {
   height: 200px;
+  position: relative;
 }
 
 .unitImg img {
@@ -28,4 +29,15 @@
     0.025em 0.025em 0 mix(#fff, #b464a6, 68%), 0.03em 0.03em 0 mix(#fff, #b464a6, 70%),
     0.035em 0.035em 0 mix(#fff, #b464a6, 72%);
   box-sizing: border-box;
+}
+
+.editIcon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  padding: 5px;
+  top: 0;
+  right: 0;
+  background-color: #b464a6;
+  color: #fff;
 }
