@@ -17,13 +17,6 @@ import Tabs from 'components/common/Tabs';
 import Overview from 'components/Teacher/Overview';
 import Courses from 'components/Teacher/Courses';
 
-// Images
-import teacher from 'assets/images/teacher.jpg';
-import favourite from 'assets/images/favourite.png';
-import certificate from 'assets/images/certificate.png';
-import speechBubble from 'assets/images/speechBubble.png';
-import reward from 'assets/images/reward.png';
-
 // Styles
 import styles from './Teacher.module.scss';
 
@@ -44,7 +37,10 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
           <FontAwesomeIcon icon={faLinkedinIn} />
         </div>
         <div className={styles.imageWrap}>
-          <img src={teacher} alt='teacher' />
+          <img
+            src='https://storage.googleapis.com/teachers-platform-40cbe.appspot.com/f53bdc08d852eafe73d86a7c78847814.jpg'
+            alt='teacher'
+          />
         </div>
         <div className={styles.share}>
           <FontAwesomeIcon icon={faShareNodes} />
@@ -57,19 +53,19 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
       </div>
       <div className={styles.test1}>
         <div className={styles.blockWrap}>
-          <img src={speechBubble} />
+          <img src='https://storage.googleapis.com/teachers-platform-40cbe.appspot.com/e5b18e70845a38cb3232b3625f2f40f9.png' />
           <span>533 Reviews</span>
         </div>
         <div className={styles.blockWrap}>
-          <img src={favourite} />
+          <img src='https://storage.googleapis.com/teachers-platform-40cbe.appspot.com/6348cab9ae1731006830a3038b3d8307.png' />
           <span>4.87 Rating</span>
         </div>
         <div className={styles.blockWrap}>
-          <img src={reward} />
+          <img src='https://storage.googleapis.com/teachers-platform-40cbe.appspot.com/98b97666f6c95bd43254eafbbe7323d4.png' />
           <span>Top teacher</span>
         </div>
         <div className={styles.blockWrap}>
-          <img src={certificate} />
+          <img src='https://storage.googleapis.com/teachers-platform-40cbe.appspot.com/d6998e046da9e942befb99ecf88eaa74.png' />
           <span>29 courses</span>
         </div>
       </div>
