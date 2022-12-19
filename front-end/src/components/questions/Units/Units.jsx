@@ -13,8 +13,8 @@ const Units = ({ units }) => {
       ) : (
         <div className={styles.units}>
           {units.map((unit, i) => {
-            const url = unit.toLowerCase().match(/\w|\s/g).join('').replaceAll(' ', '-');
-            return <UnitCard key={i} unit={unit} image={url} url={url} />;
+            const url = unit.unit.toLowerCase().match(/\w|\s/g).join('').replaceAll(' ', '-');
+            return <UnitCard key={i} item={unit} image={url} url={url} />;
           })}
         </div>
       )}

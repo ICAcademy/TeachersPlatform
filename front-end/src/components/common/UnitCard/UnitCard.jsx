@@ -7,32 +7,29 @@ import styles from './UnitCard.module.scss';
 //Components
 import UnitImg from './UnitImg/UnitImg';
 import UnitDesc from './UnitDesc/UnitDesc';
-import { Link } from 'react-router-dom';
 
 const UnitCard = (props) => {
+  console.log('');
   return (
-    <Link className={styles.unitItem} to={`${props.url}`}>
+    <div className={styles.unitItem}>
       <div className={styles.unitWrapper}>
         <div className={styles.unitBody}>
-          <UnitImg image={props.image} unit={props.unit} />
-          <UnitDesc unit={props.unit} numberOfLessons={props.numberOfLessons} />
+          <UnitImg item={props.item} />
+          <UnitDesc item={props.item} numberOfLessons={props.numberOfLessons} />
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
 //propTypes
 UnitCard.propTypes = {
+  item: PropTypes.object,
   numberOfLessons: PropTypes.number,
-  image: PropTypes.string,
-  unit: PropTypes.string,
-  url: PropTypes.string,
 };
 UnitCard.defaultProps = {
-  image: '',
-  unit: '',
-  url: '',
+  item: {},
+  numberOfLessons: 0,
 };
 
 export default UnitCard;

@@ -5,9 +5,10 @@ import Levels from 'components/common/Levels/Levels';
 import Units from 'components/questions/Units/Units';
 
 import { getLevels, getUnitsByLevel, getQuestionsByUnitName } from 'services/questionService';
-
-import styles from './Questions.module.scss';
 import { TextField } from '@mui/material';
+
+// styles
+import styles from './Questions.module.scss';
 
 const baseUrl = 'questions';
 
@@ -18,6 +19,8 @@ const Questions = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchUnitName, setSearchUnitName] = useState('');
   const [prevLevel, setPrevLevel] = useState('beginner');
+
+  console.log('units', units);
 
   const fetchLevels = async () => {
     try {
