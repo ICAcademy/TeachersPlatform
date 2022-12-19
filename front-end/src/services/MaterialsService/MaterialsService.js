@@ -29,7 +29,9 @@ export const uploadImage = async (img) => {
   const { data } = await API.post(`${API_URL}/api/files/upload-photo`, img, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
-  
+  return data;
+};
+
 export const getMaterialsByUnit = async (params) => {
   const { data } = await API.get(`${API_URL}/api/materials`, { params });
   return data;
