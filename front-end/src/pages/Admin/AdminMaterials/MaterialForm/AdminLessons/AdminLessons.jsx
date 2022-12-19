@@ -16,13 +16,12 @@ const AdminLessons = ({
   onCreateLesson,
   onSaveMaterial,
   onLoading,
+  showSaveBtn,
 }) => {
   const [newLesson, setNewLesson] = useState({
     title: '',
     layout: '',
   });
-
-  const [saveBtn, setSaveBtn] = useState(false);
 
   const createLessonHandler = () => {
     onCreateLesson(newLesson);
@@ -42,7 +41,6 @@ const AdminLessons = ({
       title: '',
       layout: '',
     });
-    setSaveBtn(true);
   };
 
   const saveMaterialHandler = () => {
@@ -71,7 +69,7 @@ const AdminLessons = ({
         />
       ))}
 
-      {lessons.length > 0 && saveBtn && (
+      {showSaveBtn && (
         <Button
           className={styles.materialSubmit}
           variant='contained'
@@ -94,11 +92,13 @@ AdminLessons.propTypes = {
   onDeleteLesson: PropTypes.func,
   onSaveMaterial: PropTypes.func,
   onLoading: PropTypes.bool,
+  showSaveBtn: PropTypes.bool,
 };
 
 AdminLessons.defaultProps = {
   lessons: [],
   onLoading: false,
+  showSaveBtn: false,
 };
 
 export default AdminLessons;

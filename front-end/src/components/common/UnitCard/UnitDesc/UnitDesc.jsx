@@ -21,7 +21,7 @@ const UnitDesc = (props) => {
   );
 
   return (
-    <Link className={styles.unitDesc} to={`/materials/${props.item.url}`}>
+    <Link className={styles.unitDesc} to={`/app/materials/${props.item.url}`}>
       <div className={styles.unitInfo}>
         <FirstLetterIcon firstLetter={props.item.unit[0]} />
         <div className={styles.dFlex}>
