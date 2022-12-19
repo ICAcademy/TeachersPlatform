@@ -1,18 +1,8 @@
-const jwt = require('jsonwebtoken');
-
 const { findByEmail, updateByID } = require('../services/UserService');
 
 const getUser = async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) {
-      throw new Error('Authorization is failed!');
-    }
-
-    const decode = jwt.verify(token, process.env.SECRET_KEY);
-    const authorizedUser = decode.email;
-
-    const user = await findByEmail(authorizedUser);
+    const user = await findByEmail(req.user.email);
     if (!user) {
       res.status(401).json({ message: 'User was not found!' });
     }
