@@ -20,8 +20,6 @@ const Questions = () => {
   const [searchUnitName, setSearchUnitName] = useState('');
   const [prevLevel, setPrevLevel] = useState('beginner');
 
-  console.log('units', units);
-
   const fetchLevels = async () => {
     try {
       const levels = await getLevels();
