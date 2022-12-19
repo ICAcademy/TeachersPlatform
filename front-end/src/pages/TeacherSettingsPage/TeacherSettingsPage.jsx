@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 // services
 import { updateUserById } from '../../services/userService';
@@ -10,34 +10,55 @@ import { CurrentUserContext } from 'context/AppProvider';
 import styles from './TeacherSettingsPage.module.scss';
 import ItemSetting from 'components/TeachersSettingsPage/ItemSetting/ItemSetting';
 import { Button } from '@mui/material';
+import { getTeacher, updateTeacher } from 'services/teacherService';
 
 const TeacherSettingsPage = () => {
   const { currentUser } = useContext(CurrentUserContext);
-  const [fullName, setFullName] = useState(currentUser.fullName);
-  const [email, setEmail] = useState(currentUser.email);
+  const [teacher, setTeacher] = useState({});
+  const [language, setLanguage] = useState('');
 
   console.log('currentUser', currentUser);
-  console.log('email', email);
+  console.log('teacher', teacher);
+  console.log('language', teacher.language);
 
-  const updateUser = async () => {
+  const getTeacherFromUser = async () => {
     try {
-      const patchUser = { fullName, email };
-      await updateUserById(currentUser._id, patchUser);
+      const teacher = await getTeacher(currentUser.roleId);
+      setTeacher(teacher);
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log('fullName', fullName);
+  const patchTeacher = async () => {
+    try {
+      const patchUser = { language };
+      console.log('language', language);
+      await updateTeacher(teacher._id, patchUser);
+      const teacher = await getTeacher(currentUser.roleId);
+      setTeacher(teacher);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTeacherFromUser();
+  }, []);
+
+  useEffect(() => {
+    if (teacher.language !== undefined) {
+      setLanguage(teacher.language);
+    }
+  }, [teacher]);
 
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <ItemSetting itemName='Full Name' itemValue={fullName} handleItem={setFullName} />
-        <ItemSetting itemName='email' itemValue={email} handleItem={setEmail} />
+        <ItemSetting itemName='Language' itemValue={language} handleItem={setLanguage} />
       </div>
       <div>
-        <Button onClick={updateUser}>Change Profile</Button>
+        <Button onClick={patchTeacher}>Change Profile</Button>
       </div>
     </div>
   );
