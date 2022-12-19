@@ -12,6 +12,7 @@ const register = (data) => {
 
     User.create({
       role: data.role,
+      roleId: data.roleId,
       fullName: data.fullName,
       dateOfBirth: data.dateOfBirth,
       email: data.email,

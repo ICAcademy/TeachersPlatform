@@ -5,7 +5,7 @@ const registerValidation = require('../helpers/validation');
 const { createStudent } = require('../services/StudentService');
 const { createTeacher } = require('../services/TeacherService');
 const { register, login } = require('../services/AuthService');
-const { findByEmail, updateByID, findRoleId } = require('../services/UserService');
+const { findByEmail } = require('../services/UserService');
 
 // Constants
 const { TEACHER } = require('../constants/UserRoles');
@@ -30,11 +30,8 @@ exports.createUser = async (req, res) => {
       return res.status(400).send(error.details[0].message);
     }
 
-    register(req.body);
-    await createRoleForUser(req.body.role, req.body);
-    const { _id } = await findRoleId(req.body.email);
-    const createdUser = await findByEmail(req.body.email);
-    await updateByID(createdUser._id, { roleId: _id });
+    const { _id: roleId } = await createRoleForUser(req.body.role, req.body);
+    register({ ...req.body, roleId });
     res.status(201).json({ message: 'User was successfully created!' });
   } catch (err) {
     res.status(400).json({ error: err.message });
