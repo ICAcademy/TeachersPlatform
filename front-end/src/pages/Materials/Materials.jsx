@@ -2,7 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 //Services
-import { getLevels, getUnitsByLevel } from 'services/MaterialsService/MaterialsService';
+import {
+  getLevels,
+  getUnitsByLevel,
+  getMaterialsByUnit,
+} from 'services/MaterialsService/MaterialsService';
 
 //Components
 import Levels from 'components/common/Levels/Levels';
@@ -13,7 +17,10 @@ import Loader from 'components/common/Loader/Loader';
 import { CurrentUserContext } from 'context/AppProvider';
 
 //Styles
-//import styles from './Materials.module.scss';
+import styles from './Materials.module.scss';
+import { TextField } from '@mui/material';
+import { InputAdornment } from '@mui/material';
+import { SearchOutlined } from '@mui/icons-material';
 import Button from '@mui/material/Button';
 import Add from '@mui/icons-material/Add';
 
@@ -22,6 +29,8 @@ const Materials = () => {
   const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [unitsByLevel, setUnitsByLevel] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchByUnitName, setSearchByUnitName] = useState('');
+  const [prevLevel, setPrevLevel] = useState(selectedLevel);
 
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
 
@@ -45,9 +54,26 @@ const Materials = () => {
     }
   };
 
+  const fetchMaterialsByUnitName = async (searchByUnit) => {
+    try {
+      setIsLoading(true);
+      const data = await getMaterialsByUnit({ unitName: searchByUnit });
+      setSelectedLevel('');
+      setPrevLevel(selectedLevel);
+      setUnitsByLevel(data);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const changeLevelHandler = (level) => {
     setSelectedLevel(level);
     unitsByLevelData(level);
+  };
+
+  const handleInput = (e) => {
+    setSearchByUnitName(e.target.value);
   };
 
   const saveMaterialBtn = isAuthenticated && currentUser.role === 'admin' && (
@@ -58,17 +84,52 @@ const Materials = () => {
 
   useEffect(() => {
     fetchLevels();
-    unitsByLevelData(selectedLevel);
+  }, []);
+
+  useEffect(() => {
+    if (selectedLevel !== '') {
+      unitsByLevelData(selectedLevel);
+    }
   }, [selectedLevel]);
 
+  useEffect(() => {
+    if (searchByUnitName.length === 0) {
+      setSelectedLevel(prevLevel);
+    }
+    if (searchByUnitName.length > 3) {
+      const timer = setTimeout(() => {
+        fetchMaterialsByUnitName(searchByUnitName);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [searchByUnitName]);
+
   return (
-    <div>
-      {/* <div className={styles.navigationRow}>
-        <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
+    <div className={styles.materials}>
+      <div className={styles.materialsHeader}>
+        <div className={styles.navigationRow}>
+          <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
+          <TextField
+            sx={{
+              width: '360px',
+            }}
+            variant='outlined'
+            size='small'
+            label='Enter here to find a lesson'
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='start'>
+                  <SearchOutlined />
+                </InputAdornment>
+              ),
+            }}
+            defaultValue={searchByUnitName}
+            onChange={handleInput}
+          />
+        </div>
         {saveMaterialBtn}
       </div>
-      {isLoading ? <Loader /> : <Units materials={unitsByLevel} />} */}
-      materials
+      {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
     </div>
   );
 };

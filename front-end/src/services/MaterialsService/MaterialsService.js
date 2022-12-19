@@ -24,3 +24,8 @@ export const deleteMaterial = async (id) => {
   const { data } = await API.delete(`${API_URL}/api/materials/${id}`);
   return data;
 };
+
+export const getMaterialsByUnit = async (params) => {
+  const { data } = await API.get(`${API_URL}/api/materials`, { params });
+  return data;
+};
