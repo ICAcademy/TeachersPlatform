@@ -8,9 +8,6 @@ const teacherSchema = new Schema(
     dateOfBirth: {
       type: String,
     },
-    age: {
-      type: String,
-    },
     email: {
       type: String,
     },
@@ -20,11 +17,5 @@ const teacherSchema = new Schema(
   },
   { timestamps: true },
 );
-
-teacherSchema.pre('save', function (next) {
-  const birthYear = this.dateOfBirth.slice(6, this.dateOfBirth.length);
-  const currentYear = new Date().getFullYear();
-  (this.age = currentYear - birthYear), next();
-});
 
 module.exports = model('Teacher', teacherSchema);

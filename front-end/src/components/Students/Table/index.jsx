@@ -42,10 +42,8 @@ const Table = () => {
     }
   };
 
-  console.log(subscriptions);
-
   useEffect(() => {
-    fetchSubscriptions('639c4299f0293017e7253dc1');
+    fetchSubscriptions('63a07859b66cae3e282cb573');
   }, [currentUser]);
 
   return (
@@ -57,7 +55,7 @@ const Table = () => {
               <th>Photo</th>
               <th>Full name</th>
               <th>Email</th>
-              <th>Age</th>
+              <th>Date of birth</th>
               <th>Level</th>
               <th>Settings</th>
             </tr>
@@ -70,14 +68,14 @@ const Table = () => {
                 </td>
                 <td>{item?.studentID.fullName}</td>
                 <td>{item?.studentID.email}</td>
-                <td>{item?.studentID.age || '-'}</td>
+                <td>{item?.studentID.dateOfBirth || '-'}</td>
                 <td>{item?.studentID.level || '-'}</td>
                 <td>
                   <button
                     className={styles.settingsBtn}
                     onClick={async () => {
                       deleteSubscription(item._id);
-                      await fetchSubscriptions('639c4299f0293017e7253dc1');
+                      await fetchSubscriptions('63a07859b66cae3e282cb573');
                     }}
                   >
                     <FontAwesomeIcon icon={faBellSlash} />
