@@ -23,6 +23,7 @@ const NotFound = lazy(() => import('pages/NotFound'));
 const Tests = lazy(() => import('pages/Tests/Tests'));
 const Questions = lazy(() => import('pages/Questions/Questions'));
 const Topics = lazy(() => import('pages/Topics/Topics'));
+import Calendar from 'pages/Calendar/Calendar';
 
 const RouterWrapper = () => {
   const { isAuthenticated } = useContext(CurrentUserContext);
@@ -73,6 +74,14 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Topics />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/app/calendar'
+            element={
+              <PrivateRoute>
+                <Calendar />
               </PrivateRoute>
             }
           />
