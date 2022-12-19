@@ -10,6 +10,7 @@ import {
   createMaterial,
   deleteMaterial,
   updateMaterial,
+  uploadImage,
 } from 'services/MaterialsService/MaterialsService';
 
 //Styles
@@ -29,6 +30,8 @@ const CreateMaterial = ({ material, levels, create }) => {
   const [unitTitle, setUnitTitle] = useState(material.unit || '');
   const [selectedLevel, setSelectedLevel] = useState(material.level || '');
   const [lessons, setLessons] = useState(material.lessons);
+  const [imgUrl, setImgUrl] = useState(material.image || '');
+  const [saveBtn, setSaveBtn] = useState(false);
   const [error, setError] = useState({
     unitTitleError: false,
     selectedLevelError: false,
@@ -60,14 +63,17 @@ const CreateMaterial = ({ material, levels, create }) => {
     level: selectedLevel,
     lessons: lessons,
     url: url,
+    image: imgUrl,
   };
 
   const unitTitleHandler = (event) => {
     setUnitTitle(event.target.value);
+    setSaveBtn(true);
   };
 
   const selectChangeHandler = (event) => {
     setSelectedLevel(event.target.value);
+    setSaveBtn(true);
   };
 
   const createLessonHandler = (lesson) => {
@@ -77,6 +83,18 @@ const CreateMaterial = ({ material, levels, create }) => {
   const saveLessonHandler = (index, lesson) => {
     lessons[index].title = lesson.title;
     lessons[index].layout = lesson.layout;
+  };
+
+  const uploadImageHandler = async (event) => {
+    const data = new FormData();
+    data.append('file', event.target.files[0]);
+    try {
+      const imageUrl = await uploadImage(data);
+      setImgUrl(imageUrl);
+      setSaveBtn(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const validation = () => {
@@ -176,25 +194,27 @@ const CreateMaterial = ({ material, levels, create }) => {
           </FormControl>
         </Box>
         <Box className={styles.imageUploader}>
-          {material.image && (
-            <label htmlFor='upload-image' className={styles.imageWrapper}>
-              <img src={`http://localhost:5000/uploads/${material.image}`} />
-            </label>
-          )}
-          {!material.image && (
-            <label htmlFor='upload-image' className={styles.imageWrapper}>
+          <label htmlFor='upload-image' className={styles.imageWrapper}>
+            {material.image && <img src={imgUrl} />}
+            {!material.image && !imgUrl && (
               <div className={styles.noImage}>
                 <div className={styles.noImageWrapper}>
                   <ImageIcon />
                   <div className={styles.noImageText}>Upload an image to use it for material</div>
                 </div>
               </div>
-            </label>
-          )}
-          <Button variant='contained' component='label'>
-            Upload
-            <input id='upload-image' hidden accept='image/*' multiple type='file' />
-          </Button>
+            )}
+            {!material.image && imgUrl && <img src={imgUrl} />}
+          </label>
+
+          <input
+            id='upload-image'
+            hidden
+            accept='image/*'
+            multiple
+            type='file'
+            onChange={uploadImageHandler}
+          />
         </Box>
       </div>
       <div className={styles.formPart}>
@@ -205,6 +225,7 @@ const CreateMaterial = ({ material, levels, create }) => {
           onDeleteLesson={deleteLessonHandler}
           onSaveMaterial={submitValidate}
           onLoading={isLoading}
+          showSaveBtn={saveBtn}
         />
         {!create && (
           <Button
