@@ -9,7 +9,6 @@ import UnitImg from './UnitImg/UnitImg';
 import UnitDesc from './UnitDesc/UnitDesc';
 
 const UnitCard = (props) => {
-  console.log('');
   return (
     <div className={styles.unitItem}>
       <div className={styles.unitWrapper}>
