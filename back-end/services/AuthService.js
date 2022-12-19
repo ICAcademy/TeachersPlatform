@@ -2,7 +2,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { findByEmail } = require('../services/UserService');
+const { findByEmail, findUserWithPassword } = require('../services/UserService');
 
 const register = (data) => {
   bcrypt.hash(data.password, 10, (err, hashedPass) => {
@@ -24,10 +24,13 @@ const login = async (data) => {
   const email = data.email;
   const password = data.password;
 
-  const user = await findByEmail(email);
-  if (!user) {
+  const userWithoutPassword = await findByEmail(email);
+
+  if (!userWithoutPassword) {
     throw new Error('User was not found!');
   }
+
+  const user = await findUserWithPassword(email);
 
   const passwords = await comparePasswords(password, user.password);
   if (!passwords) {
