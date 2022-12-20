@@ -24,6 +24,8 @@ const NotFound = lazy(() => import('pages/NotFound'));
 const Tests = lazy(() => import('pages/Tests/Tests'));
 const Questions = lazy(() => import('pages/Questions/Questions'));
 const Topics = lazy(() => import('pages/Topics/Topics'));
+const TeachersList = lazy(() => import('pages/TeachersList'));
+const Teacher = lazy(() => import('pages/Teacher'));
 const Students = lazy(() => import('pages/Students'));
 const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
 
@@ -88,6 +90,42 @@ const RouterWrapper = () => {
               <PrivateRoute>
                 <Topics />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path='/app/teachers'
+            element={
+              currentUser?.role === 'teacher' ? (
+                <Navigate to='/app' />
+              ) : (
+                <PrivateRoute>
+                  <TeachersList />
+                </PrivateRoute>
+              )
+            }
+          />
+          <Route
+            path='/app/teachers/:id/overview'
+            element={
+              currentUser?.role === 'teacher' ? (
+                <Navigate to='/app' />
+              ) : (
+                <PrivateRoute>
+                  <Teacher />
+                </PrivateRoute>
+              )
+            }
+          />
+          <Route
+            path='/app/teachers/:id/courses'
+            element={
+              currentUser?.role === 'teacher' ? (
+                <Navigate to='/app' />
+              ) : (
+                <PrivateRoute>
+                  <Teacher />
+                </PrivateRoute>
+              )
             }
           />
           <Route
