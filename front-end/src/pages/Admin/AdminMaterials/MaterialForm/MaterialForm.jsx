@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+// HOC
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
+
 //Components
 import AdminLessons from './AdminLessons/AdminLessons';
 
@@ -26,7 +29,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import FormHelperText from '@mui/material/FormHelperText';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const CreateMaterial = ({ material, levels, create }) => {
+const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
   const [unitTitle, setUnitTitle] = useState(material.unit || '');
   const [selectedLevel, setSelectedLevel] = useState(material.level || '');
   const [lessons, setLessons] = useState(material.lessons);
@@ -83,6 +86,10 @@ const CreateMaterial = ({ material, levels, create }) => {
   const saveLessonHandler = (index, lesson) => {
     lessons[index].title = lesson.title;
     lessons[index].layout = lesson.layout;
+    snackbarShowMessage({
+      message: 'Lesson saved',
+      severity: 'success',
+    });
   };
 
   const uploadImageHandler = async (event) => {
@@ -123,8 +130,16 @@ const CreateMaterial = ({ material, levels, create }) => {
         setIsLoading(true);
         await createMaterial(materialData);
         setIsLoading(false);
+        snackbarShowMessage({
+          message: 'Material saved',
+          severity: 'success',
+        });
       } else {
         await updateMaterial(material._id, materialData);
+        snackbarShowMessage({
+          message: 'Material saved',
+          severity: 'success',
+        });
       }
     } catch (error) {
       console.log(error);
@@ -142,7 +157,7 @@ const CreateMaterial = ({ material, levels, create }) => {
   const deleteMaterialHandler = () => {
     try {
       deleteMaterial(material._id);
-      navigate('/app/materials');
+      navigate('/app/materials', { state: 'delete' });
     } catch (error) {
       console.log(error);
     }
@@ -248,6 +263,7 @@ CreateMaterial.propTypes = {
   material: PropTypes.object,
   levels: PropTypes.array,
   create: PropTypes.string,
+  snackbarShowMessage: PropTypes.func,
 };
 
 CreateMaterial.defaultProps = {
@@ -256,4 +272,4 @@ CreateMaterial.defaultProps = {
   create: '',
 };
 
-export default CreateMaterial;
+export default withSnackbar(CreateMaterial);
