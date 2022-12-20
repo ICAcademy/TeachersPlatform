@@ -12,7 +12,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 
 // Images
-import teacher from 'assets/images/teacher.jpg';
+import { teacher } from 'constants/photo';
 
 // Styles
 import styles from './Card.module.scss';
