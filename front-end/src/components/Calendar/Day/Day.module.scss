@@ -1,3 +1,28 @@
+@import 'styles/colors.scss';
+
 .day {
-  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  border-collapse: collapse;
+  cursor: pointer;
+  outline: 1px solid $grey400;
+}
+
+.dayOfMoth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  margin-top: 5px;
+  color: $grey400;
+}
+
+.currentMonth {
+  color: #000;
+}
+
+.today {
+  background-color: $softPurple;
+  border-radius: 50%;
 }

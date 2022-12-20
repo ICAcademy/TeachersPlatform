@@ -1,0 +1,17 @@
+.calendarActions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+
+  &__arrow {
+    margin-right: 5px;
+    cursor: pointer;
+  }
+}
+
+.weekDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+}

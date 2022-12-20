@@ -108,25 +108,25 @@ const Materials = () => {
     <div className={styles.materials}>
       <div className={styles.materialsHeader}>
         <div className={styles.navigationRow}>
-        <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
-        <TextField
-          sx={{
-            width: '360px',
-          }}
-          variant='outlined'
-          size='small'
-          label='Enter here to find a lesson'
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position='start'>
-                <SearchOutlined />
-              </InputAdornment>
-            ),
-          }}
-          defaultValue={searchByUnitName}
-          onChange={handleInput}
-        />
-      </div>
+          <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
+          <TextField
+            sx={{
+              width: '360px',
+            }}
+            variant='outlined'
+            size='small'
+            label='Enter here to find a lesson'
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='start'>
+                  <SearchOutlined />
+                </InputAdornment>
+              ),
+            }}
+            defaultValue={searchByUnitName}
+            onChange={handleInput}
+          />
+        </div>
         {saveMaterialBtn}
       </div>
       {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
