@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { snackbarShow: false, snackbarMessage: '', severity: '' };
+const initialState = { snackbarShow: false, snackbarMessage: '', severity: 'success' };
 
 const snackbarSlice = createSlice({
   name: 'snackbar',
