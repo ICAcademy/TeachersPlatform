@@ -37,7 +37,7 @@ const TeachersList = () => {
             ? teachers.map((teacher) => (
                 <Card
                   key={teacher?._id}
-                  link={`/app/teachers/${teacher?._id}/overview`}
+                  link={teacher?._id}
                   fullName={teacher?.fullName}
                   activity='English teacher'
                 />

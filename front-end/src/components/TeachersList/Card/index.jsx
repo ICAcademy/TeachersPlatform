@@ -19,7 +19,7 @@ import styles from './Card.module.scss';
 
 const Card = ({ fullName, activity, link }) => {
   return (
-    <Link to={link} className={styles.wrap}>
+    <Link to={`/app/teachers/${link}/overview`} className={styles.wrap}>
       <div className={styles.block}>
         <img src={teacher} alt='teacher' />
         <div className={styles.iconsWrap}>

@@ -95,25 +95,37 @@ const RouterWrapper = () => {
           <Route
             path='/app/teachers'
             element={
-              <PrivateRoute>
-                <TeachersList />
-              </PrivateRoute>
+              currentUser?.role === 'teacher' ? (
+                <Navigate to='/app' />
+              ) : (
+                <PrivateRoute>
+                  <TeachersList />
+                </PrivateRoute>
+              )
             }
           />
           <Route
             path='/app/teachers/:id/overview'
             element={
-              <PrivateRoute>
-                <Teacher />
-              </PrivateRoute>
+              currentUser?.role === 'teacher' ? (
+                <Navigate to='/app' />
+              ) : (
+                <PrivateRoute>
+                  <Teacher />
+                </PrivateRoute>
+              )
             }
           />
           <Route
             path='/app/teachers/:id/courses'
             element={
-              <PrivateRoute>
-                <Teacher />
-              </PrivateRoute>
+              currentUser?.role === 'teacher' ? (
+                <Navigate to='/app' />
+              ) : (
+                <PrivateRoute>
+                  <Teacher />
+                </PrivateRoute>
+              )
             }
           />
           <Route
