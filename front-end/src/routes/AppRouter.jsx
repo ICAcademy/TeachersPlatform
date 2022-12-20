@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import React, { useContext, Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -25,6 +26,7 @@ const Questions = lazy(() => import('pages/Questions/Questions'));
 const Topics = lazy(() => import('pages/Topics/Topics'));
 const TeachersList = lazy(() => import('pages/TeachersList'));
 const Teacher = lazy(() => import('pages/Teacher'));
+const Students = lazy(() => import('pages/Students'));
 const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
 
 const RouterWrapper = () => {
@@ -112,6 +114,18 @@ const RouterWrapper = () => {
               <PrivateRoute>
                 <Teacher />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path='/app/students'
+            element={
+              currentUser?.role === 'student' ? (
+                <Navigate to='/app' />
+              ) : (
+                <PrivateRoute>
+                  <Students />
+                </PrivateRoute>
+              )
             }
           />
         </Route>

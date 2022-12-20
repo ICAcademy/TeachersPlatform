@@ -7,13 +7,14 @@ const { findByEmail } = require('../services/UserService');
 const register = (data) => {
   bcrypt.hash(data.password, 10, (err, hashedPass) => {
     if (err) {
-      throw new Error('Something went wrong');
+      throw new Error(err);
     }
 
     User.create({
       role: data.role,
       fullName: data.fullName,
       dateOfBirth: data.dateOfBirth,
+      age: data.age,
       email: data.email,
       password: hashedPass,
     });
@@ -33,7 +34,7 @@ const login = async (data) => {
   if (!passwords) {
     throw new Error('Password do not match');
   }
-  return jwt.sign({ email: user.email }, 'secretValue', { expiresIn: '30d' });
+  return jwt.sign({ email: user.email }, process.env.SECRET_KEY, { expiresIn: '2h' });
 };
 
 const comparePasswords = (pass1, pass2) =>
