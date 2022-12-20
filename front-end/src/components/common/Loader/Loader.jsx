@@ -7,9 +7,13 @@ import styles from './Loader.module.scss';
 const Loader = () => {
   const { pathname } = useLocation();
   return (
-    <div
-      className={`${pathname === '/login' || pathname === '/registration' ? 'white' : 'purple'}`}
-    ></div>
+    <>
+      {pathname === '/login' || pathname === '/registration' ? (
+        <div className={styles.loaderWhite}></div>
+      ) : (
+        <div className={styles.loaderPurple}></div>
+      )}
+    </>
   );
 };
 
