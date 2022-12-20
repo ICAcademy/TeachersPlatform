@@ -19,7 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // Services
-import { authService } from 'services/authService';
+import { logout } from 'services/authService';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -31,8 +31,8 @@ export const SidebarList = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(CurrentUserContext);
 
-  const logout = () => {
-    authService.logout();
+  const handleLogout = () => {
+    logout();
     navigate('/login', { replace: true });
   };
 
@@ -83,7 +83,7 @@ export const SidebarList = () => {
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <NavLink onClick={logout} to='/login' className={styles.sidebarLink}>
+          <NavLink onClick={handleLogout} to='/login' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faRightFromBracket} />
             Logout
           </NavLink>

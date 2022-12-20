@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Services
-import { tokenService } from 'services/tokenService';
+import { getToken } from 'services/tokenService';
 
 let modeUrl;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
@@ -23,7 +23,7 @@ const API = axios.create({
 
 API.interceptors.request.use(
   async (config) => {
-    const token = tokenService.getToken();
+    const token = getToken();
     if (token) {
       if (config?.headers) {
         config.headers.Authorization = `Bearer ${token}`;

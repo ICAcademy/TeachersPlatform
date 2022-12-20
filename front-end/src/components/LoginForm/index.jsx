@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 // Services
-import { authService } from 'services/authService';
+import { login } from 'services/authService';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -56,7 +56,7 @@ const LoginForm = () => {
     try {
       const {
         data: { token },
-      } = await authService.login(userInfo);
+      } = await login(userInfo);
       if (token) {
         await fetchUser();
         history('/app');
