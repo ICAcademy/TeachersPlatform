@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Services
-import { userService } from 'services/userService';
+import { getUser } from 'services/userService';
 
 // Context
 export const CurrentUserContext = createContext();
@@ -15,7 +15,7 @@ const AppProvider = ({ children }) => {
   const fetchUser = useCallback(async () => {
     try {
       const accessToken = localStorage.getItem('token');
-      const { data } = accessToken ? await userService.getUser(accessToken) : isAuthenticated;
+      const { data } = accessToken ? await getUser(accessToken) : isAuthenticated;
       if (data) {
         setCurrentUser(data);
         setIsLoading(false);

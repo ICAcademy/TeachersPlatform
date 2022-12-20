@@ -10,7 +10,7 @@ import { faBellSlash } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Service
-import { subscriptionService } from 'services/subscriptionService';
+import { getTeachersSubscription, deleteSubscription } from 'services/subscriptionService';
 
 // Components
 import NoStudents from '../NoStudents';
@@ -27,16 +27,16 @@ const Table = () => {
 
   const fetchSubscriptions = async (teacherId) => {
     try {
-      const data = await subscriptionService.getTeachersSubscription(teacherId);
+      const data = await getTeachersSubscription(teacherId);
       setSubscriptions(data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const deleteSubscription = async (subscriptionId) => {
+  const handleDeleteSubscription = async (subscriptionId) => {
     try {
-      await subscriptionService.deleteSubscription(subscriptionId);
+      await deleteSubscription(subscriptionId);
     } catch (error) {
       console.log(error);
     }
@@ -74,7 +74,7 @@ const Table = () => {
                   <button
                     className={styles.settingsBtn}
                     onClick={async () => {
-                      deleteSubscription(item._id);
+                      handleDeleteSubscription(item._id);
                       await fetchSubscriptions('63a07859b66cae3e282cb573');
                     }}
                   >
