@@ -4,7 +4,20 @@ const getQuestions = async () => await Question.find({});
 
 const getLevels = async () => await Question.distinct('level');
 
-const getUnitsByLevel = async (level) => await Question.find(level).distinct('unit');
+const getUnitsByLevel = async (level) => {
+  const questions = await Question.find(level);
+  const result = questions.reduce((acc, curr) => {
+    if (
+      !acc.some((item) => {
+        return item.unit === curr.unit;
+      })
+    ) {
+      acc.push(curr);
+    }
+    return acc;
+  }, []);
+  return result;
+};
 
 const getDataByUrl = async (url) => {
   const unitInfo = await Question.findOne(url).select('unit level');
@@ -21,6 +34,21 @@ const editQuestion = async (id, body) =>
 
 const removeQuestion = async (id) => await Question.findByIdAndDelete(id);
 
+const getQuestionsByUnitName = async (search) => {
+  const questions = await Question.find({ unit: { $regex: search, $options: 'i' } });
+  const result = questions.reduce((acc, curr) => {
+    if (
+      !acc.some((item) => {
+        return item.unit === curr.unit;
+      })
+    ) {
+      acc.push(curr);
+    }
+    return acc;
+  }, []);
+  return result;
+};
+
 module.exports = {
   getQuestions,
   getLevels,
@@ -30,4 +58,5 @@ module.exports = {
   findQuestionById,
   editQuestion,
   removeQuestion,
+  getQuestionsByUnitName,
 };

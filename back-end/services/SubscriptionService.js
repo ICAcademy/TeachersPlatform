@@ -4,14 +4,18 @@ exports.getAllSubscriptions = async () => {
   return await SubscriptionModel.find();
 };
 
+exports.getTeacherSubscriptions = async (id) => {
+  return await SubscriptionModel.find({ teacherID: id }).populate('studentID');
+};
+
+exports.getStudentSubscriptions = async (id) => {
+  return await SubscriptionModel.find({ studentID: id }).populate('teacherID');
+};
+
 exports.createSubscription = async (subscription) => {
   return await SubscriptionModel.create({
     teacherID: subscription.teacher._id,
-    teacherFullName: subscription.teacher.fullName,
-    teacherEmail: subscription.teacher.email,
     studentID: subscription.student._id,
-    studentFullName: subscription.student.fullName,
-    studentEmail: subscription.student.email,
   });
 };
 

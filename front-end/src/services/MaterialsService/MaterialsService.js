@@ -1,38 +1,38 @@
-import API, { API_URL } from 'API';
+import API from 'API';
 
 export const getLevels = async () => {
-  const { data } = await API.get(`${API_URL}/api/materials-levels`);
-  return data;
+  const response = await API.get('/api/materials-levels');
+  return response.data;
 };
 
 export const getUnitsByLevel = async (level) => {
-  const { data } = await API.get(`${API_URL}/api/materials-levels/get-units-by-level/${level}`);
-  return data;
+  const response = await API.get(`/api/materials-levels/get-units-by-level/${level}`);
+  return response.data;
 };
 
 export const createMaterial = async (material) => {
-  const { data } = await API.post(`${API_URL}/api/materials`, material);
+  const { data } = await API.post('/api/materials', material);
   return data;
 };
 
 export const updateMaterial = async (id, material) => {
-  const { data } = await API.patch(`${API_URL}/api/materials/${id}`, material);
+  const { data } = await API.patch(`api/materials/${id}`, material);
   return data;
 };
 
 export const deleteMaterial = async (id) => {
-  const { data } = await API.delete(`${API_URL}/api/materials/${id}`);
+  const { data } = await API.delete(`/api/materials/${id}`);
   return data;
 };
 
 export const uploadImage = async (img) => {
-  const { data } = await API.post(`${API_URL}/api/files/upload-photo`, img, {
+  const { data } = await API.post('/api/files/upload-photo', img, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return data;
 };
 
 export const getMaterialsByUnit = async (params) => {
-  const { data } = await API.get(`${API_URL}/api/materials`, { params });
+  const { data } = await API.get('/api/materials', { params });
   return data;
 };

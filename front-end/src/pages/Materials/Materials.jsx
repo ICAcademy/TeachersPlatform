@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -61,18 +61,21 @@ const Materials = ({ snackbarShowMessage }) => {
     }
   };
 
-  const fetchMaterialsByUnitName = async (searchByUnit) => {
-    try {
-      setIsLoading(true);
-      const data = await getMaterialsByUnit({ unitName: searchByUnit });
-      setSelectedLevel('');
-      setPrevLevel(selectedLevel);
-      setUnitsByLevel(data);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const fetchMaterialsByUnitName = useCallback(
+    async (searchByUnit) => {
+      try {
+        setIsLoading(true);
+        const data = await getMaterialsByUnit({ unitName: searchByUnit });
+        setSelectedLevel('');
+        setPrevLevel(selectedLevel);
+        setUnitsByLevel(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [selectedLevel],
+  );
 
   const changeLevelHandler = (level) => {
     setSelectedLevel(level);
@@ -119,7 +122,7 @@ const Materials = ({ snackbarShowMessage }) => {
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [searchByUnitName]);
+  }, [searchByUnitName, prevLevel, fetchMaterialsByUnitName]);
 
   return (
     <div className={styles.materials}>

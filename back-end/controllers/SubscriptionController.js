@@ -12,6 +12,24 @@ exports.getAllSubscriptions = async (req, res) => {
   }
 };
 
+exports.getTeacherSubscriptions = async (req, res) => {
+  try {
+    const subscriptions = await subscriptionService.getTeacherSubscriptions(req.params.id);
+    res.json(subscriptions);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+exports.getStudentSubscriptions = async (req, res) => {
+  try {
+    const subscriptions = await subscriptionService.getStudentSubscriptions(req.params.id);
+    res.json(subscriptions);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 exports.createSubscription = async (req, res) => {
   try {
     const isSubscripted = await SubscriptionModel.findOne({
@@ -19,7 +37,7 @@ exports.createSubscription = async (req, res) => {
       studentID: req.body.student._id,
     });
     if (isSubscripted) {
-      return res.status(200).json('subscripted');
+      return res.status(400).json({ message: 'Failed to subscribe! Check your subscriptions!' });
     }
     const student = await studentService.getStudentById(req.body.student._id);
     const teacher = await teacherService.getTeacherById(req.body.teacher._id);
