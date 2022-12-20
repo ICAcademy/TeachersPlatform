@@ -5,15 +5,10 @@ const findByEmail = async (email) => {
   return user;
 };
 
-const findUserWithPassword = async (email) => {
-  const user = await User.findOne({ email });
-  return user;
-};
-
 const updateByID = async (id, body) => {
   return await User.findByIdAndUpdate(id, body, { new: true, runValidators: true }).select(
     '-password',
   );
 };
 
-module.exports = { findByEmail, findUserWithPassword, updateByID };
+module.exports = { findByEmail, updateByID };
