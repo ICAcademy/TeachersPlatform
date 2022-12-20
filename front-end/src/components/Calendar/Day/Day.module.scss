@@ -5,7 +5,7 @@
   justify-content: center;
   border-collapse: collapse;
   cursor: pointer;
-  outline: 1px solid $grey400;
+  outline: 1px solid #bbbbbb;
 }
 
 .dayOfMoth {
@@ -20,6 +20,7 @@
 
 .currentMonth {
   color: #000;
+  font-weight: 600;
 }
 
 .today {

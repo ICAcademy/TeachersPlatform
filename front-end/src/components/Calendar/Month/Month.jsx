@@ -1,8 +1,9 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import Day from '../Day/Day';
 
 import styles from './Month.module.scss';
-import Day from '../Day/Day';
 
 const Month = ({ monthMatrix, currentMonth }) => {
   return (
@@ -12,6 +13,11 @@ const Month = ({ monthMatrix, currentMonth }) => {
       )}
     </div>
   );
+};
+
+Month.propTypes = {
+  monthMatrix: PropTypes.array,
+  currentMonth: PropTypes.string,
 };
 
 export default Month;

@@ -1,0 +1,24 @@
+.modal {
+  position: relative;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 500px;
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__addBtn {
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    // &__
+  }
+}

@@ -1,10 +1,12 @@
-import React from 'react';
-
-import dayjs from 'dayjs';
+import React, { useState } from 'react';
+import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 
+import Lessons from 'components/Calendar/Lessons/Lessons';
+
+import dayjs from 'dayjs';
+
 import styles from './Day.module.scss';
-import { Box } from '@mui/material';
 
 const checkForToday = (day) => {
   const isToday = day.format('DD-MM-YY') === dayjs().format('DD-MM-YY') ? styles.today : '';
@@ -17,17 +19,25 @@ const checkForCurrentMonth = (day, month) => {
 };
 
 const Day = ({ day, monthIdx }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openHandler = () => setModalIsOpen(true);
+  const closeHandler = () => setModalIsOpen(false);
+
   return (
-    <Box className={styles.day}>
-      <Box
-        className={`${styles.dayOfMoth} ${checkForToday(day)} ${checkForCurrentMonth(
-          day,
-          monthIdx,
-        )}`}
-      >
-        {day.format('DD')}
+    <>
+      <Lessons isOpen={modalIsOpen} closeModal={closeHandler} />
+      <Box className={styles.day} onClick={openHandler}>
+        <Box
+          className={`${styles.dayOfMoth} ${checkForToday(day)} ${checkForCurrentMonth(
+            day,
+            monthIdx,
+          )}`}
+        >
+          {day.format('DD')}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

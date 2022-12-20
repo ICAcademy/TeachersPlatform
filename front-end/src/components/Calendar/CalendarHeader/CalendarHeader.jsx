@@ -1,9 +1,8 @@
 import React from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, IconButton } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import PropTypes from 'prop-types';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './CalendarHeader.module.scss';
 
@@ -22,16 +21,12 @@ const CalendarHeader = ({ toCurrentMonth, toPrevMonth, toNextMonth, dateTitle })
         >
           Today
         </Button>
-        <FontAwesomeIcon
-          icon={faChevronLeft}
-          onClick={toPrevMonth}
-          className={`${styles.calendarActions__arrow} ${styles.calendarActions__leftArrow}`}
-        />
-        <FontAwesomeIcon
-          icon={faChevronRight}
-          onClick={toNextMonth}
-          className={`${styles.calendarActions__arrow} ${styles.calendarActions__leftArrow}`}
-        />
+        <IconButton onClick={toPrevMonth}>
+          <ChevronLeftIcon />
+        </IconButton>
+        <IconButton onClick={toNextMonth}>
+          <ChevronRightIcon />
+        </IconButton>
         <Box component='span' sx={{ ml: '15px' }}>
           {dateTitle}
         </Box>
