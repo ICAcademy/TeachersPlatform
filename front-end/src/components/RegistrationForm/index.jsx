@@ -26,7 +26,7 @@ import {
 import { regexEmail, regexFullName, regexPassword } from 'helpers/regex';
 
 // Services
-import { authService } from 'services/authService';
+import { registration } from 'services/authService';
 
 // Styles
 import styles from './RegistrationForm.module.scss';
@@ -110,7 +110,7 @@ const RegistrationForm = () => {
 
   const registerUser = async (userInfo) => {
     try {
-      await authService.registration(userInfo);
+      await registration(userInfo);
       history('/login');
       setErrMessage('');
     } catch (err) {

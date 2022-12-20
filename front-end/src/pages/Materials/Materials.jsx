@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 //Services
@@ -54,18 +54,21 @@ const Materials = () => {
     }
   };
 
-  const fetchMaterialsByUnitName = async (searchByUnit) => {
-    try {
-      setIsLoading(true);
-      const data = await getMaterialsByUnit({ unitName: searchByUnit });
-      setSelectedLevel('');
-      setPrevLevel(selectedLevel);
-      setUnitsByLevel(data);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const fetchMaterialsByUnitName = useCallback(
+    async (searchByUnit) => {
+      try {
+        setIsLoading(true);
+        const data = await getMaterialsByUnit({ unitName: searchByUnit });
+        setSelectedLevel('');
+        setPrevLevel(selectedLevel);
+        setUnitsByLevel(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [selectedLevel],
+  );
 
   const changeLevelHandler = (level) => {
     setSelectedLevel(level);
@@ -102,7 +105,7 @@ const Materials = () => {
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [searchByUnitName]);
+  }, [searchByUnitName, prevLevel, fetchMaterialsByUnitName]);
 
   return (
     <div className={styles.materials}>
