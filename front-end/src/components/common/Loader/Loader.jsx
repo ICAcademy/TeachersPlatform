@@ -1,10 +1,16 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 //Styles
 import styles from './Loader.module.scss';
 
 const Loader = () => {
-  return <div className={styles.loader}></div>;
+  const { pathname } = useLocation();
+  return (
+    <div
+      className={`${pathname === '/login' || pathname === '/registration' ? 'white' : 'purple'}`}
+    ></div>
+  );
 };
 
 export default Loader;

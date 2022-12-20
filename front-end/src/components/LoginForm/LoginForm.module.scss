@@ -1,5 +1,5 @@
-@import '../../styles/colors.scss';
-@import '../../styles/font.scss';
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
 
 .wrap {
   display: flex;
@@ -12,6 +12,10 @@
     rgba(102, 16, 242, 0.8914916308320203) 0%,
     rgba(245, 222, 255, 1) 100%
   );
+}
+
+.white {
+  background-color: $white;
 }
 
 .blocksWrap {
