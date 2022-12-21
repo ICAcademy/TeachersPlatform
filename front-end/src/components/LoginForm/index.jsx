@@ -81,7 +81,7 @@ const LoginForm = () => {
   return (
     <div className={styles.wrap}>
       {isLoading ? (
-        <Loader className={styles.white} />
+        <Loader isAuthPage />
       ) : (
         <div className={styles.blocksWrap}>
           <div className={styles.topWrap}>

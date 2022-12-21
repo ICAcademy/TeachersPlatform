@@ -135,7 +135,7 @@ const RegistrationForm = () => {
   return (
     <div className={styles.contentWrap}>
       {isLoading ? (
-        <Loader />
+        <Loader isAuthPage />
       ) : (
         <div className={styles.blocksWrap}>
           <div className={styles.roles}>

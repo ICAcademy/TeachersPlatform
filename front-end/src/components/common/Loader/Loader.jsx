@@ -1,18 +1,19 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-//Styles
+// Styles
 import styles from './Loader.module.scss';
 
-const Loader = () => {
-  const { pathname } = useLocation();
-  return (
-    <div
-      className={`${styles.loader} ${
-        pathname === '/login' || pathname === '/registration' ? styles.white : styles.purple
-      }`}
-    />
-  );
+const Loader = ({ isAuthPage }) => {
+  return <div className={`${styles.loader} ${isAuthPage ? styles.white : styles.purple}`} />;
+};
+
+Loader.propTypes = {
+  isAuthPage: PropTypes.bool,
+};
+
+Loader.defaultProps = {
+  isAuthPage: false,
 };
 
 export default Loader;
