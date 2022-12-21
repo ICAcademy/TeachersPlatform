@@ -20,14 +20,11 @@ const teacherSchema = new Schema(
     phone: {
       type: String,
     },
-    age: {
-      type: Number,
-    },
     preferences: {
       type: String,
     },
     socialMedias: {
-      type: [String],
+      type: String,
     },
   },
   { timestamps: true },
