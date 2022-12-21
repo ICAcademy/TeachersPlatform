@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 //Services
 import {
@@ -7,6 +9,9 @@ import {
   getUnitsByLevel,
   getMaterialsByUnit,
 } from 'services/MaterialsService/MaterialsService';
+
+//HOC
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 //Components
 import Levels from 'components/common/Levels/Levels';
@@ -24,7 +29,7 @@ import { SearchOutlined } from '@mui/icons-material';
 import Button from '@mui/material/Button';
 import Add from '@mui/icons-material/Add';
 
-const Materials = () => {
+const Materials = ({ snackbarShowMessage }) => {
   const [levels, setLevels] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState('beginner');
   const [unitsByLevel, setUnitsByLevel] = useState([]);
@@ -33,6 +38,8 @@ const Materials = () => {
   const [prevLevel, setPrevLevel] = useState(selectedLevel);
 
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
+
+  const location = useLocation();
 
   const fetchLevels = async () => {
     try {
@@ -90,6 +97,16 @@ const Materials = () => {
   }, []);
 
   useEffect(() => {
+    if (location.state === 'delete') {
+      snackbarShowMessage({
+        message: 'Material successfully deleted',
+        severity: 'success',
+      });
+      window.history.replaceState({}, document.title);
+    }
+  }, [location, snackbarShowMessage]);
+
+  useEffect(() => {
     if (selectedLevel !== '') {
       unitsByLevelData(selectedLevel);
     }
@@ -137,4 +154,9 @@ const Materials = () => {
   );
 };
 
-export default Materials;
+//propTypes
+Materials.propTypes = {
+  snackbarShowMessage: PropTypes.func,
+};
+
+export default withSnackbar(Materials);
