@@ -121,6 +121,7 @@ const RegistrationForm = () => {
       history('/login');
       setErrMessage('');
     } catch (err) {
+      setIsLoading(false);
       setHasError((prev) => ({ ...prev, hasMessageError: true }));
       setErrMessage(err.response.data.message);
       console.log(err.response.data.message);
