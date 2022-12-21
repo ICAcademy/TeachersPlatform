@@ -1,37 +1,6 @@
 @import 'styles/colors.scss';
 
-.loaderWhite {
-  display: inline-block;
-  position: absolute;
-  width: 3em;
-  height: 3em;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  color: inherit;
-  vertical-align: middle;
-  pointer-events: none;
-  &:before,
-  &:after {
-    content: '';
-    width: inherit;
-    height: inherit;
-    border-radius: 50%;
-    opacity: 0.6;
-    position: absolute;
-    background-color: $white;
-    top: 0;
-    left: 0;
-    animation: loader 2s infinite ease-in-out;
-  }
-  &:after {
-    animation-delay: -1s;
-  }
-}
-
-.loaderPurple {
+.loader {
   display: inline-block;
   position: absolute;
   width: 3em;
@@ -59,6 +28,18 @@
   }
   &:after {
     animation-delay: -1s;
+  }
+}
+
+.white {
+  &::after {
+    background-color: $white;
+  }
+}
+
+.purple {
+  &::after {
+    background-color: $softPurple;
   }
 }
 
