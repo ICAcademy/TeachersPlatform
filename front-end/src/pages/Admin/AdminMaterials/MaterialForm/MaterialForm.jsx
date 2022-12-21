@@ -126,21 +126,17 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
 
   const saveMaterialHandler = async () => {
     try {
+      setIsLoading(true);
       if (create) {
-        setIsLoading(true);
         await createMaterial(materialData);
-        setIsLoading(false);
-        snackbarShowMessage({
-          message: 'Material saved',
-          severity: 'success',
-        });
       } else {
         await updateMaterial(material._id, materialData);
-        snackbarShowMessage({
-          message: 'Material saved',
-          severity: 'success',
-        });
       }
+      setIsLoading(false);
+      snackbarShowMessage({
+        message: 'Material saved',
+        severity: 'success',
+      });
     } catch (error) {
       console.log(error);
     }

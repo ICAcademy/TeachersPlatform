@@ -57,7 +57,6 @@ const AdminMaterials = () => {
           <MaterialForm material={material || newMaterial} levels={levels} create={createAction} />
         </div>
       )}
-      {/* {snackbarShow && <SnackBar show={snackbarShow} message={snackbarMessage}></SnackBar>} */}
     </div>
   );
 };

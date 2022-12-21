@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable indent */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = { snackbarShow: false, snackbarMessage: '', severity: 'success' };
