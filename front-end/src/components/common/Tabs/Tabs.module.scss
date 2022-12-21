@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.link {
+  color: purple;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: -3px;
+  padding: 8px 14px;
+  text-decoration: none;
+  color: #7f9799;
+
+  &:hover {
+    text-decoration: none;
+    color: #8029ef;
+  }
+
+  &.active {
+    color: #8029ef;
+    border-bottom: 2px solid #8029ef;
+  }
+}

@@ -47,10 +47,12 @@ const Header = () => {
           </ul>
         </nav>
         <div className={styles.buttonsContainer}>
-          <Link className={styles.logIn} to='/login'>
-            Log In
-          </Link>
-          <div>
+          <div className={styles.logInContainer}>
+            <Link className={styles.logIn} to='/login'>
+              Log In
+            </Link>
+          </div>
+          <div className={styles.signUpContainer}>
             <Link className={styles.signUp} to='/registration'>
               Sign Up
             </Link>
