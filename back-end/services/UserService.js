@@ -8,4 +8,6 @@ const updateByID = async (id, body) => {
   );
 };
 
-module.exports = { findByEmail, updateByID };
+const updatePassword = async (id) => await User.findById(id).select('password');
+
+module.exports = { findByEmail, updateByID, updatePassword };
