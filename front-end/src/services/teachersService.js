@@ -1,6 +1,6 @@
-import API, { API_URL } from 'API';
+import API from 'API';
 
 export const getTeachers = async () => {
-  const { data } = await API.get(`${API_URL}/api/teachers/`);
+  const { data } = await API.get('/api/teachers/');
   return data;
 };
