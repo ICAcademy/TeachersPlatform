@@ -130,10 +130,12 @@ const RouterWrapper = () => {
             }
           />
           <Route
-            path='/app/students'
+            path='/app/subscriptions'
             element={
               currentUser?.role === 'student' ? (
-                <Navigate to='/app' />
+                <PrivateRoute>
+                  <StudentSubscriptions />
+                </PrivateRoute>
               ) : (
                 <PrivateRoute>
                   <Students />
@@ -148,18 +150,6 @@ const RouterWrapper = () => {
             <PrivateRoute>
               <Tests />
             </PrivateRoute>
-          }
-        />
-        <Route
-          path='/app/subscriptions'
-          element={
-            currentUser?.role === 'student' ? (
-              <PrivateRoute>
-                <StudentSubscriptions />
-              </PrivateRoute>
-            ) : (
-              <div>Teacher Subscriptions</div>
-            )
           }
         />
         <Route path='/login' element={<Login />} />
