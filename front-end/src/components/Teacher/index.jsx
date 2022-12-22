@@ -23,7 +23,14 @@ import { CurrentUserContext } from 'context/AppProvider';
 // Styles
 import styles from './Teacher.module.scss';
 import { teacher, certificate, favourite, reward, speechBubble } from 'constants/photo';
-import { createSubscription } from 'services/subscriptionService';
+import {
+  createSubscription,
+  deleteSubscription,
+  getStudentSubscription,
+} from 'services/subscriptionService';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import Loader from 'components/common/Loader/Loader';
 
 const Teacher = ({ fullName, activity, id, overview, courses }) => {
   const { pathname } = useLocation();
@@ -32,67 +39,120 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
     { title: 'Courses', link: `/app/teachers/${id}/courses` },
   ];
   const { currentUser } = useContext(CurrentUserContext);
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [isSubscripted, setIsSubscripted] = useState(false);
+  const [isLoader, setIsLoader] = useState(false);
 
-  console.log('currentUser', currentUser);
+  console.log('isSubscripted', isSubscripted);
+  console.log('subscriptions', subscriptions);
 
-  const patchSubscription = () => {
+  useEffect(() => {
+    fetchStudentSubscriptions(currentUser.roleId);
+  }, [currentUser]);
+
+  const patchSubscription = async () => {
     try {
-      const subscribe = createSubscription(id);
+      setIsLoader(true);
+      const subscribe = await createSubscription(id, currentUser.roleId);
+      await fetchStudentSubscriptions(currentUser.roleId);
+      setIsLoader(false);
+      return subscribe;
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log('teacher', id);
+  const fetchStudentSubscriptions = async (userId) => {
+    try {
+      setIsLoader(true);
+      const fetchedSubscriptions = await getStudentSubscription(userId);
+      console.log('fetchedSubscriptions', fetchedSubscriptions);
+      setSubscriptions(fetchedSubscriptions);
+      const subscripted = fetchedSubscriptions.find((subscription) => {
+        return subscription.teacherID._id === id;
+      });
+      console.log('subscripted', subscripted);
+      setIsSubscripted(subscripted);
+      setIsLoader(false);
+      return fetchedSubscriptions;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteSubscriptionOfStudent = async () => {
+    try {
+      setIsLoader(true);
+      const neededSubscription = subscriptions.find((subscription) => {
+        return subscription.teacherID._id === id;
+      });
+      const remove = await deleteSubscription(neededSubscription._id);
+      setIsSubscripted(false);
+      setIsLoader(false);
+      return await remove;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.test}>
-        <div className={styles.iconsWrap}>
-          <FontAwesomeIcon icon={faFacebookF} />
-          <FontAwesomeIcon icon={faTwitter} />
-          <FontAwesomeIcon icon={faInstagram} />
-          <FontAwesomeIcon icon={faLinkedinIn} />
-        </div>
-        <div className={styles.imageWrap}>
-          <img src={teacher} alt='teacher' />
-        </div>
-        <div className={styles.share}>
-          <FontAwesomeIcon icon={faShareNodes} />
-          <span>Report This Author</span>
-        </div>
-      </div>
-      <div className={styles.description}>
-        <h1>{fullName}</h1>
-        <span>{activity}</span>
-      </div>
-      <div className={styles.test1}>
-        <div className={styles.blockWrap}>
-          <img src={speechBubble} alt='speechBubble' />
-          <span>533 Reviews</span>
-        </div>
-        <div className={styles.blockWrap}>
-          <img src={favourite} alt='favourite' />
-          <span>4.87 Rating</span>
-        </div>
-        <div className={styles.blockWrap}>
-          <img src={reward} alt='reward' />
-          <span>Top teacher</span>
-        </div>
-        <div className={styles.blockWrap}>
-          <img src={certificate} alt='certificate' />
-          <span>29 courses</span>
-        </div>
-      </div>
-      <button>subscribe</button>
-      <div className={styles.tabs}>
-        <Tabs list={tabs} />
-        {tabs?.find((tab) => tab.link === pathname)?.title === 'Overview' ? (
-          <Overview biography={overview} />
-        ) : (
-          <Courses information={courses} />
-        )}
-      </div>
+      {isLoader ? (
+        <Loader />
+      ) : (
+        <>
+          <div className={styles.test}>
+            <div className={styles.iconsWrap}>
+              <FontAwesomeIcon icon={faFacebookF} />
+              <FontAwesomeIcon icon={faTwitter} />
+              <FontAwesomeIcon icon={faInstagram} />
+              <FontAwesomeIcon icon={faLinkedinIn} />
+            </div>
+            <div className={styles.imageWrap}>
+              <img src={teacher} alt='teacher' />
+            </div>
+            <div className={styles.share}>
+              <FontAwesomeIcon icon={faShareNodes} />
+              <span>Report This Author</span>
+            </div>
+          </div>
+          <div className={styles.description}>
+            <h1>{fullName}</h1>
+            <span>{activity}</span>
+          </div>
+          <div className={styles.test1}>
+            <div className={styles.blockWrap}>
+              <img src={speechBubble} alt='speechBubble' />
+              <span>533 Reviews</span>
+            </div>
+            <div className={styles.blockWrap}>
+              <img src={favourite} alt='favourite' />
+              <span>4.87 Rating</span>
+            </div>
+            <div className={styles.blockWrap}>
+              <img src={reward} alt='reward' />
+              <span>Top teacher</span>
+            </div>
+            <div className={styles.blockWrap}>
+              <img src={certificate} alt='certificate' />
+              <span>29 courses</span>
+            </div>
+          </div>
+          {isSubscripted ? (
+            <button onClick={deleteSubscriptionOfStudent}>unsubscribe</button>
+          ) : (
+            <button onClick={patchSubscription}>subscribe</button>
+          )}
+          <div className={styles.tabs}>
+            <Tabs list={tabs} />
+            {tabs?.find((tab) => tab.link === pathname)?.title === 'Overview' ? (
+              <Overview biography={overview} />
+            ) : (
+              <Courses information={courses} />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
