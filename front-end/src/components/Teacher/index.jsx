@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -17,9 +17,13 @@ import Tabs from 'components/common/Tabs';
 import Overview from 'components/Teacher/Overview';
 import Courses from 'components/Teacher/Courses';
 
+// context
+import { CurrentUserContext } from 'context/AppProvider';
+
 // Styles
 import styles from './Teacher.module.scss';
 import { teacher, certificate, favourite, reward, speechBubble } from 'constants/photo';
+import { createSubscription } from 'services/subscriptionService';
 
 const Teacher = ({ fullName, activity, id, overview, courses }) => {
   const { pathname } = useLocation();
@@ -27,6 +31,19 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
     { title: 'Overview', link: `/app/teachers/${id}/overview` },
     { title: 'Courses', link: `/app/teachers/${id}/courses` },
   ];
+  const { currentUser } = useContext(CurrentUserContext);
+
+  console.log('currentUser', currentUser);
+
+  const patchSubscription = () => {
+    try {
+      const subscribe = createSubscription(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log('teacher', id);
 
   return (
     <div className={styles.wrapper}>
