@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes, { bool } from 'prop-types';
 import {
   Modal,
@@ -12,6 +12,8 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { CurrentUserContext } from 'context/AppProvider';
 import { changePassword } from 'services/userService';
+import { regexPassword } from 'helpers/regex';
+import useInput from 'hooks/useInput';
 
 const style = {
   position: 'absolute',
@@ -28,42 +30,59 @@ const style = {
   justifyContent: 'center',
 };
 
+const newPasswordHelperText = 'Enter min 8 and max 10 characters; example: Jerry77)';
+const newPasswordAgainHelperText = 'Entered new passwords do not match';
+
 const ModalWindow = ({ open, handleClose }) => {
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const [data, setData] = useState({
     currentPassword: '',
     newPassword: '',
     newPasswordAgain: '',
   });
-  console.log(data.password);
 
-  const [showPassword, setShowPassword] = useState(false);
+  const { value: enteredCurrentPassword, valueChangeHandler: currentPasswordChangeHandler } =
+    useInput('password', '', regexPassword);
+
+  const {
+    value: enteredNewPassword,
+    isValid: newPasswordIsValid,
+    hasError: newPasswordHasError,
+    valueChangeHandler: newPasswordChangeHandler,
+    valueOnBlurHandler: newPasswordBlurHandler,
+  } = useInput('newPassword', '', regexPassword);
+
+  const {
+    value: enteredNewPasswordAgain,
+    isValid: newPasswordAgainIsValid,
+    hasError: newPasswordAgainHasError,
+    valueChangeHandler: newPasswordAgainChangeHandler,
+    valueOnBlurHandler: newPasswordAgainBlurHandler,
+  } = useInput('newPasswordAgain', '', regexPassword);
+
+  const formIsValid = newPasswordIsValid && newPasswordAgainIsValid;
+
   const handleMouseDownPassword = (e) => e.preventDefault();
 
-  const handlePasswordChange = (prop) => (e) => {
-    setData({ ...data, [prop]: e.target.value });
+  const [showPassword, setShowPassword] = useState({
+    currentPassword: false,
+    newPassword: false,
+    newPasswordAgain: false,
+  });
+
+  const handleClickShowPassword = ({ currentTarget }, value) => {
+    setShowPassword({ ...showPassword, [currentTarget.name]: value });
   };
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleCurrentPassword = ({ target: { name, value } }) => {
-    setData({ ...data, [name]: value });
-  };
-
-  const handleChangePassword = async (id, data) => {
-    console.log(id, data);
+  const savePassword = async (id, data) => {
     try {
-      const updatePassword = await changePassword(id, data);
-      console.log(updatePassword);
+      await changePassword(id, data);
+      handleClose();
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
   };
-
-  // const isDisabledBtn = useMemo(() => !data.password.trim().length, [data.password]);
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -74,22 +93,22 @@ const ModalWindow = ({ open, handleClose }) => {
             variant='outlined'
             size='small'
             label='Current password'
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword.currentPassword ? 'text' : 'password'}
             name='currentPassword'
-            value={data.currentPassword}
-            onChange={handlePasswordChange('password')}
+            value={enteredCurrentPassword}
+            onChange={currentPasswordChangeHandler}
             InputLabelProps={{ shrink: true }}
             InputProps={{
-              startAdornment: <InputAdornment position='start'></InputAdornment>,
               endAdornment: (
                 <InputAdornment position='end'>
                   <IconButton
+                    name='currentPassword'
                     aria-label='toggle password visibility'
-                    onClick={handleClickShowPassword}
+                    onClick={(e) => handleClickShowPassword(e, !showPassword.currentPassword)}
                     onMouseDown={handleMouseDownPassword}
                     edge='end'
                   >
-                    {showPassword ? (
+                    {showPassword.currentPassword ? (
                       <VisibilityOff sx={{ width: '20px', height: '20px' }} />
                     ) : (
                       <Visibility sx={{ width: '20px', height: '20px' }} />
@@ -104,21 +123,25 @@ const ModalWindow = ({ open, handleClose }) => {
             variant='outlined'
             size='small'
             label='New password'
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword.newPassword ? 'text' : 'password'}
             name='New password'
-            value={newPassword}
+            value={enteredNewPassword}
+            onChange={newPasswordChangeHandler}
+            onBlur={newPasswordBlurHandler}
+            error={newPasswordHasError}
+            helperText={newPasswordHasError ? newPasswordHelperText : ''}
             InputLabelProps={{ shrink: true }}
             InputProps={{
-              startAdornment: <InputAdornment position='start'></InputAdornment>,
               endAdornment: (
                 <InputAdornment position='end'>
                   <IconButton
+                    name='newPassword'
                     aria-label='toggle password visibility'
-                    onClick={handleClickShowPassword}
+                    onClick={(e) => handleClickShowPassword(e, !showPassword.newPassword)}
                     onMouseDown={handleMouseDownPassword}
                     edge='end'
                   >
-                    {showPassword ? (
+                    {showPassword.newPassword ? (
                       <VisibilityOff sx={{ width: '20px', height: '20px' }} />
                     ) : (
                       <Visibility sx={{ width: '20px', height: '20px' }} />
@@ -134,21 +157,25 @@ const ModalWindow = ({ open, handleClose }) => {
             variant='outlined'
             size='small'
             label='New password again'
-            type={showPassword ? 'text' : 'password'}
+            error={newPasswordAgainHasError}
+            type={showPassword.newPasswordAgain ? 'text' : 'password'}
             name='newPasswordAgain'
-            value={newPasswordAgain}
+            value={enteredNewPasswordAgain}
+            onChange={newPasswordAgainChangeHandler}
+            onBlur={newPasswordAgainBlurHandler}
+            helperText={newPasswordAgainHasError ? newPasswordAgainHelperText : ''}
             InputLabelProps={{ shrink: true }}
             InputProps={{
-              startAdornment: <InputAdornment position='start'></InputAdornment>,
               endAdornment: (
                 <InputAdornment position='end'>
                   <IconButton
+                    name='newPasswordAgain'
                     aria-label='toggle password visibility'
-                    onClick={handleClickShowPassword}
+                    onClick={(e) => handleClickShowPassword(e, !showPassword.newPasswordAgain)}
                     onMouseDown={handleMouseDownPassword}
                     edge='end'
                   >
-                    {showPassword ? (
+                    {showPassword.newPasswordAgain ? (
                       <VisibilityOff sx={{ width: '20px', height: '20px' }} />
                     ) : (
                       <Visibility sx={{ width: '20px', height: '20px' }} />
@@ -166,10 +193,14 @@ const ModalWindow = ({ open, handleClose }) => {
           >
             <Button onClick={handleClose}>Cancel</Button>
             <Button
-              // disabled={isDisabledBtn}
-              onClick={() => {
-                handleChangePassword(currentUser._id, data);
-              }}
+              disabled={!formIsValid}
+              onClick={() =>
+                savePassword(currentUser._id, {
+                  currentPassword: enteredCurrentPassword,
+                  newPassword: enteredNewPassword,
+                  newPasswordAgain: enteredNewPasswordAgain,
+                })
+              }
             >
               Confirm
             </Button>
