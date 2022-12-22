@@ -2,7 +2,7 @@ import Loader from 'components/common/Loader/Loader';
 import React from 'react';
 import { useState, useContext, useEffect } from 'react';
 import { CurrentUserContext } from 'context/AppProvider';
-import { deleteSubscription, getAllUserSubscriptions } from 'services/subscriptionService';
+import { deleteSubscription, getStudentSubscription } from 'services/subscriptionService';
 
 // styles
 import styles from './StudentSubscriptions.module.scss';
@@ -13,6 +13,8 @@ const StudentSubscriptions = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { currentUser } = useContext(CurrentUserContext);
 
+  console.log('subscriptions', subscriptions);
+
   useEffect(() => {
     fetchSubscriptions(currentUser.roleId);
   }, [currentUser]);
@@ -20,7 +22,7 @@ const StudentSubscriptions = () => {
   const fetchSubscriptions = async (id) => {
     try {
       setIsLoading(true);
-      const subscriptions = await getAllUserSubscriptions(id);
+      const subscriptions = await getStudentSubscription(id);
       setSubscriptions(subscriptions);
       setIsLoading(false);
     } catch (e) {
@@ -33,7 +35,7 @@ const StudentSubscriptions = () => {
       setIsLoading(true);
       let subId = 0;
       subscriptions.forEach((subscription) => {
-        if (subscription.teacherID === id) {
+        if (subscription._id === id) {
           subId = subscription._id;
         }
       });

@@ -60,13 +60,13 @@ const TeacherTable = ({ subscriptions, deleteSubscriptionById }) => {
                   <img className={styles.img} src={avatar} />
                 </div>
               </TableCell>
-              <TableCell align='left'>{subscription.teacherFullName}</TableCell>
-              <TableCell align='left'>{subscription.teacherEmail}</TableCell>
+              <TableCell align='left'>{subscription.teacherID.fullName}</TableCell>
+              <TableCell align='left'>{subscription.teacherID.email}</TableCell>
               <TableCell align='left'>
                 <Button
                   variant='contained'
                   size='small'
-                  onClick={() => deleteSubscriptionById(subscription.teacherID)}
+                  onClick={() => deleteSubscriptionById(subscription._id)}
                 >
                   Unsubscribe
                 </Button>
