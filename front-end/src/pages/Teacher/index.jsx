@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Services
-import { teacherService } from 'services/teacherService';
+import { getTeacherById } from 'services/teacherService';
 
 // Components
 import SelectedTeacher from 'components/Teacher';
@@ -13,7 +13,7 @@ const Teacher = () => {
 
   const fetchTeacher = async (teacherId) => {
     try {
-      const data = await teacherService.getTeacherById(teacherId);
+      const data = await getTeacherById(teacherId);
       if (data) {
         setTeacher(data);
       }
