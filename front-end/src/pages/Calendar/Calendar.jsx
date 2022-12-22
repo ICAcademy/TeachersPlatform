@@ -12,7 +12,8 @@ const sx = {
   calendar: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    height: '100vh',
+    p: '20px 30px',
   },
 };
 
@@ -24,8 +25,6 @@ const Calendar = () => {
 
   const monthAndYear = dayjs(new Date(dayjs().year(), selectedMonthIdx)).format('MMMM YYYY');
   const monthName = dayjs(new Date(dayjs().year(), selectedMonthIdx)).format('MMM');
-
-  // console.log(selectedMonthIdx);
 
   const nextMonthHandler = () => {
     setSelectedMonthIdx((prev) => ++prev);

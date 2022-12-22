@@ -14,21 +14,34 @@ const useInput = (type, value, regex) => {
   const [enteredValue, setEnteredValue] = useState(value);
   const [isTouched, setIsTouched] = useState(false);
 
-  const valueIsValid =
-    type === 'date'
-      ? dayjs(enteredValue).isBetween(maxDate, minDate, 'day', '[]') && regex.test(enteredValue)
-      : regex.test(enteredValue);
+  let valueIsValid;
+  let valueChangeHandler;
 
+  switch (type) {
+    case 'date':
+      valueIsValid =
+        dayjs(enteredValue).isBetween(maxDate, minDate, 'day', '[]') && regex.test(enteredValue);
+      valueChangeHandler = (date) => {
+        setEnteredValue(dayjs(date).format('MM/DD/YYYY'));
+      };
+      break;
+    case 'time':
+      valueIsValid = regex.test(dayjs(enteredValue).format('HH:mm'));
+      valueChangeHandler = (time) => {
+        console.log(dayjs(time).format('MM/DD/YYYY HH:mm'));
+        setEnteredValue(dayjs(time).format('MM/DD/YYYY HH:mm'));
+      };
+      break;
+    default:
+      valueIsValid = regex.test(enteredValue);
+      valueChangeHandler = (e) => {
+        setEnteredValue(e.target.value);
+      };
+      break;
+  }
+
+  console.log(valueIsValid, isTouched);
   const hasError = !valueIsValid && isTouched;
-
-  const valueChangeHandler =
-    type === 'date'
-      ? (date) => {
-          setEnteredValue(dayjs(date).format('MM/DD/YYYY'));
-        }
-      : (e) => {
-          setEnteredValue(e.target.value);
-        };
 
   const valueOnBlurHandler = () => {
     setIsTouched(true);

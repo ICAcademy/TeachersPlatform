@@ -26,7 +26,7 @@ const Day = ({ day, monthIdx }) => {
 
   return (
     <>
-      <Lessons isOpen={modalIsOpen} closeModal={closeHandler} />
+      <Lessons isOpen={modalIsOpen} closeModal={closeHandler} date={day} />
       <Box className={styles.day} onClick={openHandler}>
         <Box
           className={`${styles.dayOfMoth} ${checkForToday(day)} ${checkForCurrentMonth(

@@ -1,6 +1,6 @@
 .modal {
   position: relative;
-  top: 25%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 500px;
@@ -15,10 +15,8 @@
     align-items: center;
   }
 
-  &__addBtn {
+  &__content {
     display: flex;
-    align-items: center;
-    text-transform: capitalize;
-    // &__
+    flex-direction: column;
   }
 }
