@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 // Service
-import { teacherService } from 'services/teacherService';
+import { getAllTeacher } from 'services/teacherService';
 
 // Components
 import Card from 'components/TeachersList/Card';
@@ -17,7 +17,7 @@ const TeachersList = () => {
 
   const fetchTeachers = async () => {
     try {
-      const data = await teacherService.getAllTeacher();
+      const data = await getAllTeacher();
       setTeachers(data);
     } catch (e) {
       console.log(e);
