@@ -19,13 +19,13 @@ const Topics = () => {
 
   const { url } = useParams();
 
-  const fetchTopicsData = async (url) => {
+  const fetchTopicsData = async (url1) => {
     try {
-      const { unitInfo, topicsInfo } = await getTopicDataByUrl(url);
+      const { unitInfo, topicsInfo } = await getTopicDataByUrl(url1);
       setUnitData(unitInfo);
       setTopicsData(topicsInfo);
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error);
     }
   };
 

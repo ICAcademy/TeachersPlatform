@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 //Styles
 import styles from './UnitCard.module.scss';
@@ -8,26 +9,31 @@ import styles from './UnitCard.module.scss';
 import UnitImg from './UnitImg/UnitImg';
 import UnitDesc from './UnitDesc/UnitDesc';
 
-const UnitCard = (props) => {
+const UnitCard = ({ image, url, numberOfLessons, unit }) => {
   return (
-    <div className={styles.unitItem}>
+    <Link className={styles.unitItem} to={`${url}`}>
       <div className={styles.unitWrapper}>
         <div className={styles.unitBody}>
-          <UnitImg item={props.item} />
-          <UnitDesc item={props.item} numberOfLessons={props.numberOfLessons} />
+          <UnitImg image={image} unit={unit} url={url} />
+          <UnitDesc unit={unit} numberOfLessons={numberOfLessons} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
 //propTypes
 UnitCard.propTypes = {
-  item: PropTypes.object,
+  image: PropTypes.string,
+  url: PropTypes.string,
+  unit: PropTypes.string,
   numberOfLessons: PropTypes.number,
 };
+
 UnitCard.defaultProps = {
-  item: {},
+  image: '',
+  url: '',
+  unit: '',
   numberOfLessons: 0,
 };
 

@@ -12,9 +12,17 @@ const Units = ({ units }) => {
         <div className={styles.notFoundData}>Not Found Units</div>
       ) : (
         <div className={styles.units}>
-          {units.map((unit, i) => {
-            const url = unit.unit.toLowerCase().match(/\w|\s/g).join('').replaceAll(' ', '-');
-            return <UnitCard key={i} item={unit} image={url} url={url} />;
+          {units.map((item, i) => {
+            const url = item.unit.toLowerCase().match(/\w|\s/g).join('').replaceAll(' ', '-');
+            return (
+              <UnitCard
+                key={i}
+                unit={item.unit}
+                image={item.image}
+                numberOfLessons={item.numberOfLessons}
+                url={url}
+              />
+            );
           })}
         </div>
       )}
