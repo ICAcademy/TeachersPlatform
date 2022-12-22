@@ -1,4 +1,4 @@
-import API, { API_URL } from 'API';
+import API from 'API';
 
 export const getTeachersSubscription = async (id) => {
   const { data } = await API.get(`/api/subscriptions/teacher-subscription/${id}`);
@@ -19,11 +19,11 @@ export const createSubscription = async (subscription) => {
       _id: subscription.student.roleId,
     },
   };
-  const { data } = await API.post(`${API_URL}/api/subscriptions/`, body);
+  const { data } = await API.post('/api/subscriptions/', body);
   return data;
 };
 
 export const deleteSubscription = async (id) => {
-  const { data } = await API.delete(`${API_URL}/api/subscriptions/delete-subscription/${id}`);
+  const { data } = await API.delete(`/api/subscriptions/delete-subscription/${id}`);
   return data;
 };

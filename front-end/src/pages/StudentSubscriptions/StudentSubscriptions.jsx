@@ -31,15 +31,12 @@ const StudentSubscriptions = () => {
   const deleteSubscriptionById = async (id) => {
     try {
       setIsLoading(true);
-      let subId = 0;
-      subscriptions.forEach((subscription) => {
-        if (subscription._id === id) {
-          subId = subscription._id;
-        }
+      const necessarySubscription = subscriptions.find((subscription) => {
+        return subscription._id === id;
       });
-      const remove = await deleteSubscription(subId);
-      fetchSubscriptions(currentUser.roleId);
-      setIsLoading(true);
+      const remove = await deleteSubscription(necessarySubscription._id);
+      await fetchSubscriptions(currentUser.roleId);
+      setIsLoading(false);
       return remove;
     } catch (e) {
       console.log(e);

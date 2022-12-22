@@ -151,11 +151,15 @@ const RouterWrapper = () => {
           }
         />
         <Route
-          path='/app/student-subscriptions'
+          path='/app/subscriptions'
           element={
-            <PrivateRoute>
-              <StudentSubscriptions />
-            </PrivateRoute>
+            currentUser?.role === 'student' ? (
+              <PrivateRoute>
+                <StudentSubscriptions />
+              </PrivateRoute>
+            ) : (
+              <div>Teacher Subscriptions</div>
+            )
           }
         />
         <Route path='/login' element={<Login />} />
