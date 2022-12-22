@@ -12,18 +12,18 @@ exports.getAllSubscriptions = async (req, res) => {
   }
 };
 
-exports.getStudentSubscriptions = async (req, res) => {
+exports.getTeacherSubscriptions = async (req, res) => {
   try {
-    const subscriptions = await subscriptionService.getStudentSubscriptions(req.params.id);
+    const subscriptions = await subscriptionService.getTeacherSubscriptions(req.params.id);
     res.json(subscriptions);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
 
-exports.getTeacherSubscriptions = async (req, res) => {
+exports.getStudentSubscriptions = async (req, res) => {
   try {
-    const subscriptions = await subscriptionService.getTeacherSubscriptions(req.params.id);
+    const subscriptions = await subscriptionService.getStudentSubscriptions(req.params.id);
     res.json(subscriptions);
   } catch (err) {
     res.status(400).json({ error: err.message });

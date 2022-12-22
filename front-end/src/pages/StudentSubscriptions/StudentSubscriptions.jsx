@@ -13,8 +13,6 @@ const StudentSubscriptions = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { currentUser } = useContext(CurrentUserContext);
 
-  console.log('subscriptions', subscriptions);
-
   useEffect(() => {
     fetchSubscriptions(currentUser.roleId);
   }, [currentUser]);

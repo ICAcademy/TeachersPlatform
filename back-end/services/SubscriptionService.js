@@ -4,12 +4,12 @@ exports.getAllSubscriptions = async () => {
   return await SubscriptionModel.find();
 };
 
-exports.getStudentSubscriptions = async (id) => {
-  return await SubscriptionModel.find({ studentID: id }).populate('teacherID');
-};
-
 exports.getTeacherSubscriptions = async (id) => {
   return await SubscriptionModel.find({ teacherID: id }).populate('studentID');
+};
+
+exports.getStudentSubscriptions = async (id) => {
+  return await SubscriptionModel.find({ studentID: id }).populate('teacherID');
 };
 
 exports.createSubscription = async (subscription) => {

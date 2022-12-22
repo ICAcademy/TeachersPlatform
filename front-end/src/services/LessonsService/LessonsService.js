@@ -1,6 +1,6 @@
-import API, { API_URL } from 'API';
+import API from 'API';
 
 export const getMaterialByUrl = async (url) => {
-  const response = await API.get(`${API_URL}/api/materials/get-material-by-url/${url}`);
+  const response = await API.get(`/api/materials/get-material-by-url/${url}`);
   return response.data;
 };
