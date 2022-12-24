@@ -40,7 +40,6 @@ const useInput = (type, value, regex) => {
       break;
   }
 
-  console.log(valueIsValid, isTouched);
   const hasError = !valueIsValid && isTouched;
 
   const valueOnBlurHandler = () => {
