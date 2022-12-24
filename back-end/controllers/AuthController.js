@@ -4,7 +4,8 @@ const registerValidation = require('../helpers/validation');
 // Services
 const { createStudent } = require('../services/StudentService');
 const { createTeacher } = require('../services/TeacherService');
-const { register, login, findByEmail } = require('../services/AuthService');
+const { register, login } = require('../services/AuthService');
+const { findByEmail } = require('../services/UserService');
 
 // Constants
 const { TEACHER } = require('../constants/UserRoles');
