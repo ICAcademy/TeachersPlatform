@@ -11,6 +11,8 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
+import dayjs from 'dayjs';
+
 import AddIcon from '@mui/icons-material/Add';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PersonIcon from '@mui/icons-material/Person';
@@ -19,7 +21,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import styles from './ScheduledLessons.module.scss';
 
-const ScheduledLessons = ({ lessons, openLesson }) => {
+const ScheduledLessons = ({ lessons, openForm, removeLesson }) => {
   return (
     <>
       <Box className={styles.lessons}>
@@ -33,17 +35,25 @@ const ScheduledLessons = ({ lessons, openLesson }) => {
               marginLeft: '20px',
             }}
           >
-            {lessons.map((lesson, i) => (
+            {lessons.map((lesson) => (
               <ListItem
-                key={i}
+                key={lesson.id}
                 sx={{ alignItems: 'flex-start' }}
                 className={styles.lesson}
                 secondaryAction={
                   <Box>
-                    <IconButton edge='end' aria-label='delete'>
+                    <IconButton
+                      edge='end'
+                      aria-label='delete'
+                      onClick={() => openForm('edit', lesson)}
+                    >
                       <EditIcon fontSize='small' sx={{ mr: '5px' }} />
                     </IconButton>
-                    <IconButton edge='end' aria-label='delete'>
+                    <IconButton
+                      edge='end'
+                      aria-label='delete'
+                      onClick={() => removeLesson(lesson.id)}
+                    >
                       <DeleteOutlineIcon />
                     </IconButton>
                   </Box>
@@ -53,7 +63,7 @@ const ScheduledLessons = ({ lessons, openLesson }) => {
                   <ListItemIcon>
                     <AccessTimeIcon />
                   </ListItemIcon>
-                  <ListItemText primary={lesson.time} />
+                  <ListItemText primary={dayjs(lesson.time).format('HH:mm')} />
                 </Box>
                 <Box className={styles.lesson__students}>
                   <ListItemIcon>
@@ -73,7 +83,7 @@ const ScheduledLessons = ({ lessons, openLesson }) => {
       <Button
         startIcon={<AddIcon />}
         variant='contained'
-        onClick={openLesson}
+        onClick={() => openForm('create', null)}
         sx={{ display: 'flex', margin: '0 auto' }}
       >
         Schedule lesson
@@ -84,7 +94,9 @@ const ScheduledLessons = ({ lessons, openLesson }) => {
 
 ScheduledLessons.propTypes = {
   lessons: PropTypes.array,
-  openLesson: PropTypes.func,
+  openForm: PropTypes.func,
+  editLesson: PropTypes.func,
+  removeLesson: PropTypes.func,
 };
 
 export default ScheduledLessons;
