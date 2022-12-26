@@ -17,10 +17,6 @@ const TeacherSettingsPage = () => {
   const [teacher, setTeacher] = useState({});
   const [language, setLanguage] = useState('');
 
-  console.log('currentUser', currentUser);
-  console.log('teacher', teacher);
-  console.log('language', teacher.language);
-
   const getTeacherFromUser = async () => {
     try {
       const teacher = await getTeacher(currentUser.roleId);
@@ -33,7 +29,6 @@ const TeacherSettingsPage = () => {
   const patchTeacher = async () => {
     try {
       const patchUser = { language };
-      console.log('language', language);
       await updateTeacher(teacher._id, patchUser);
       const teacher = await getTeacher(currentUser.roleId);
       setTeacher(teacher);
