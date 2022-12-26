@@ -10,7 +10,7 @@ const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 const CalendarHeader = ({ toCurrentMonth, toPrevMonth, toNextMonth, dateTitle }) => {
   return (
-    <>
+    <Box className={styles.container}>
       <Box className={styles.calendarActions}>
         <Button
           variant='contained'
@@ -33,12 +33,12 @@ const CalendarHeader = ({ toCurrentMonth, toPrevMonth, toNextMonth, dateTitle })
       </Box>
       <Box className={styles.weekDays}>
         {daysOfWeek.map((day, i) => (
-          <Box key={i} component='span'>
+          <Box key={i} className={styles.dayOfWeek}>
             {day}
           </Box>
         ))}
       </Box>
-    </>
+    </Box>
   );
 };
 

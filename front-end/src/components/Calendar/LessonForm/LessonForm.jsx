@@ -23,7 +23,7 @@ import { regexTime } from 'helpers/regex';
 
 const timeHelperText = 'Time is invalid';
 
-const LessonForm = ({ day, students, closeForm, addLesson }) => {
+const LessonForm = ({ day, students, scheduleLesson }) => {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   const {
@@ -35,21 +35,21 @@ const LessonForm = ({ day, students, closeForm, addLesson }) => {
   } = useInput('time', dayjs(day).format('YYYY-MM-DD HH:mm'), regexTime);
 
   const handleToggle = (value) => () => {
-    const currentIndex = selectedStudents.indexOf(value);
-    const newChecked = [...selectedStudents];
+    const currentIndex = selectedStudents.indexOf(value.studentID.fullName);
+    const newSelected = [...selectedStudents];
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newSelected.push(value.studentID.fullName);
     } else {
-      newChecked.splice(currentIndex, 1);
+      newSelected.splice(currentIndex, 1);
     }
 
-    setSelectedStudents(newChecked);
+    setSelectedStudents(newSelected);
   };
 
   const saveLesson = () => {
-    const lesson = { time: enteredTime, students: selectedStudents };
-    addLesson(lesson);
+    const lesson = { id: new Date(), time: enteredTime, students: selectedStudents };
+    scheduleLesson(lesson);
   };
 
   return (
@@ -73,17 +73,20 @@ const LessonForm = ({ day, students, closeForm, addLesson }) => {
         />
       </LocalizationProvider>
       <List sx={{ width: '100%', maxHeight: '350px', mt: '20px', mb: '10px', overflowY: 'auto' }}>
-        {students.map((student, i) => {
+        {students.map((student) => {
           return (
-            <ListItem key={i} disablePadding>
+            <ListItem key={student.studentID._id} disablePadding>
               <ListItemButton role={undefined} onClick={handleToggle(student)} dense>
                 <ListItemIcon>
-                  <Checkbox edge='start' checked={selectedStudents.indexOf(student) !== -1} />
+                  <Checkbox
+                    edge='start'
+                    checked={selectedStudents.indexOf(student.studentID.fullName) !== -1}
+                  />
                 </ListItemIcon>
                 <ListItemAvatar>
                   <Avatar />
                 </ListItemAvatar>
-                <ListItemText primary={student.fullName} />
+                <ListItemText primary={student.studentID.fullName} />
               </ListItemButton>
             </ListItem>
           );
@@ -105,10 +108,10 @@ const LessonForm = ({ day, students, closeForm, addLesson }) => {
 };
 
 LessonForm.propTypes = {
+  type: PropTypes.string,
   day: PropTypes.object,
   students: PropTypes.array,
-  closeForm: PropTypes.func,
-  addLesson: PropTypes.func,
+  scheduleLesson: PropTypes.func,
 };
 
 export default LessonForm;

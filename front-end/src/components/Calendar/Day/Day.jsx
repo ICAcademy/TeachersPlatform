@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-indent */
+/* eslint-disable indent */
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -18,24 +20,52 @@ const checkForCurrentMonth = (day, month) => {
   return isCurrentMonth;
 };
 
-const Day = ({ day, monthIdx }) => {
+const Day = ({ day, monthIdx, rowIdx }) => {
+  const [lessonsList, setLessonsList] = useState(JSON.parse(localStorage.getItem('lessons')) || []);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openHandler = () => setModalIsOpen(true);
   const closeHandler = () => setModalIsOpen(false);
 
+  const lessonsPreview =
+    lessonsList.length > 2 ? (
+      <>
+        {lessonsList.slice(0, 2).map((lesson) => (
+          <Box key={lesson.id} className={`${styles.preview__item} ${styles.preview__info}`}>
+            {`${dayjs(lesson.time).format('HH:mm')} ${lesson.students.join(', ')}`}
+          </Box>
+        ))}
+        <Box className={`${styles.preview__item} ${styles.preview__more}`}>
+          {`${lessonsList.length - 2} more`}
+        </Box>
+      </>
+    ) : (
+      lessonsList.map((lesson) => (
+        <Box key={lesson.id} className={styles.preview__item}>
+          {`${dayjs(lesson.time).format('HH:mm')} ${lesson.students.join(', ')}`}
+        </Box>
+      ))
+    );
+
   return (
     <>
-      <Lessons isOpen={modalIsOpen} closeModal={closeHandler} date={day} />
-      <Box className={styles.day} onClick={openHandler}>
+      <Lessons
+        isOpen={modalIsOpen}
+        closeModal={closeHandler}
+        date={day}
+        lessons={lessonsList}
+        setLessons={setLessonsList}
+      />
+      <Box className={`${styles.day} ${rowIdx === 0 && styles.firstRowDay}`} onClick={openHandler}>
         <Box
           className={`${styles.dayOfMoth} ${checkForToday(day)} ${checkForCurrentMonth(
             day,
             monthIdx,
           )}`}
         >
-          {day.format('DD')}
+          {day.format('D')}
         </Box>
+        <Box className={styles.preview}>{lessonsPreview}</Box>
       </Box>
     </>
   );
@@ -44,6 +74,7 @@ const Day = ({ day, monthIdx }) => {
 Day.propTypes = {
   day: PropTypes.object,
   monthIdx: PropTypes.string,
+  rowIdx: PropTypes.number,
 };
 
 export default Day;

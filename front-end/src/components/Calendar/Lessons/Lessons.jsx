@@ -13,40 +13,58 @@ import styles from './Lessons.module.scss';
 
 const students = [
   {
-    fullName: 'Sam McMillan',
+    _id: '63a97d92ad92909491745d43',
+    teacherID: '63a97c1fad92909491745d24',
+    studentID: {
+      _id: '638e22b018582825af142181',
+      fullName: 'Kaily Parker',
+      dateOfBirth: '10/10/1999',
+      email: 'kailyparker@gmail.com',
+      createdAt: '2022-12-05T16:56:16.519Z',
+      updatedAt: '2022-12-05T16:56:16.519Z',
+      __v: 0,
+    },
+    __v: 0,
   },
   {
-    fullName: 'Sam McMillan',
-  },
-  {
-    fullName: 'Sam McMillan',
-  },
-  {
-    fullName: 'Sam McMillan',
-  },
-  {
-    fullName: 'Sam McMillan',
+    _id: '63a97da4ad92909491745d48',
+    teacherID: '63a97c1fad92909491745d24',
+    studentID: {
+      _id: '638f4cacec500ab19fa3dd65',
+      fullName: 'Pavlo Parker',
+      dateOfBirth: '11/07/1997',
+      email: 'programmer@gmail.com',
+      createdAt: '2022-12-06T14:07:40.950Z',
+      updatedAt: '2022-12-06T14:07:40.950Z',
+      __v: 0,
+    },
+    __v: 0,
   },
 ];
 
-// const sortLessons = (list) => {
-//   const sortedList = list.sort((prev, curr) => {
-//     if
-//   })
-// }
+const sortLessons = (list) => {
+  const sortedList = list.sort((prev, curr) => dayjs(prev.time).diff(dayjs(curr.time)));
+  return sortedList;
+};
 
-const Lessons = ({ isOpen, closeModal, date }) => {
-  const [lessonsList, setLessonsList] = useState([]);
+const Lessons = ({ isOpen, closeModal, date, lessons, setLessons }) => {
   const [lessonFormIssOpen, setLessonFormIsOpen] = useState(false);
 
   const openHandler = () => {
     setLessonFormIsOpen(true);
   };
 
-  const addLessonHandler = (lesson) => {
-    // const newLessons = [...lessonsList, lesson];
-    setLessonsList((prev) => [...prev, lesson]);
+  const scheduleHandler = (lesson) => {
+    const lessonsCopy = sortLessons([...lessons, lesson]);
+    localStorage.setItem('lessons', JSON.stringify(lessonsCopy));
+    setLessons(lessonsCopy);
     setLessonFormIsOpen(false);
+  };
+
+  const removeHandler = (id) => {
+    const newLessons = lessons.filter((lesson) => lesson.id !== id);
+    localStorage.setItem('lessons', JSON.stringify(newLessons));
+    setLessons(newLessons);
   };
 
   return (
@@ -68,9 +86,13 @@ const Lessons = ({ isOpen, closeModal, date }) => {
             </IconButton>
           </Box>
           {!lessonFormIssOpen ? (
-            <ScheduledLessons lessons={lessonsList} openLesson={openHandler} />
+            <ScheduledLessons
+              lessons={lessons}
+              openForm={openHandler}
+              removeLesson={removeHandler}
+            />
           ) : (
-            <LessonForm day={date} students={students} addLesson={addLessonHandler} />
+            <LessonForm day={date} students={students} scheduleLesson={scheduleHandler} />
           )}
         </Box>
       </Fade>
@@ -82,6 +104,8 @@ Lessons.propTypes = {
   isOpen: PropTypes.bool,
   closeModal: PropTypes.func,
   date: PropTypes.object,
+  lessons: PropTypes.array,
+  setLessons: PropTypes.func,
 };
 
 export default Lessons;

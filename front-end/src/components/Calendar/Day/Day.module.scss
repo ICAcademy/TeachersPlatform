@@ -1,29 +1,71 @@
 @import 'styles/colors.scss';
+@import 'styles/font.scss';
 
 .day {
   display: flex;
-  justify-content: center;
-  border-collapse: collapse;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+  margin: -1px;
+  padding-top: 5px;
+  font-size: $f12;
+  border: 1px solid #bbbbbb;
   cursor: pointer;
-  outline: 1px solid #bbbbbb;
+}
+
+.firstRowDay {
+  padding-top: 0;
+  border-top: none;
 }
 
 .dayOfMoth {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25px;
-  height: 25px;
-  margin-top: 5px;
+  width: 22px;
+  height: 22px;
+  margin-bottom: 5px;
+  font-weight: 600;
   color: $grey400;
 }
 
 .currentMonth {
   color: #000;
-  font-weight: 600;
 }
 
 .today {
+  color: $white;
+  font-weight: 600;
   background-color: $softPurple;
   border-radius: 50%;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  width: 100%;
+  font-size: 12px;
+
+  &__item {
+    padding: 3px;
+    font-weight: 600;
+    border-radius: 3px;
+  }
+
+  &__info {
+    max-width: 150px;
+    width: 100%;
+    color: $white;
+    background-color: $softPurple;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__more {
+    margin: 0 auto;
+    text-align: center;
+    color: $softPurple;
+  }
 }
