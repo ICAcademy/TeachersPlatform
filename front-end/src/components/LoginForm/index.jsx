@@ -16,6 +16,9 @@ import { login } from 'services/authService';
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
 
+// Components
+import Loader from 'components/common/Loader/Loader';
+
 // Styles
 import styles from './LoginForm.module.scss';
 
@@ -26,6 +29,8 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -54,6 +59,7 @@ const LoginForm = () => {
 
   const loginUser = async (userInfo) => {
     try {
+      setIsLoading(true);
       const {
         data: { token },
       } = await login(userInfo);
@@ -61,7 +67,9 @@ const LoginForm = () => {
         await fetchUser();
         history('/app');
       }
+      setIsLoading(false);
     } catch (err) {
+      setIsLoading(false);
       setIsError(true);
       console.log(err);
     }
@@ -73,97 +81,101 @@ const LoginForm = () => {
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.blocksWrap}>
-        <div className={styles.topWrap}>
-          <h1>Let&apos;s Get Started</h1>
-          <p>Sign in to continue to Edulearn</p>
+      {isLoading ? (
+        <Loader isAuthPage />
+      ) : (
+        <div className={styles.blocksWrap}>
+          <div className={styles.topWrap}>
+            <h1>Let&apos;s Get Started</h1>
+            <p>Sign in to continue to Edulearn</p>
+          </div>
+          <Box>
+            <FormControl sx={{ width: '400px' }}>
+              <TextField
+                id={`input-with-icon-textfield ${nanoid(5)}`}
+                type='email'
+                name='email'
+                value={data.email}
+                onChange={(e) => handleEmailChange(e)}
+                error={isError}
+                placeholder='Email'
+                color='purple'
+                size='small'
+                sx={{ m: '10px 0' }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <FontAwesomeIcon icon={faEnvelope} fill='#a1a4b5' width={12} height={12} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                id={`standard-adornment-password ${nanoid(5)}`}
+                type={showPassword ? 'text' : 'password'}
+                name='password'
+                value={data.password}
+                onChange={handlePasswordChange('password')}
+                error={isError}
+                placeholder='Password'
+                color='purple'
+                size='small'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <FontAwesomeIcon icon={faLock} fill='#a1a4b5' width={12} height={12} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <IconButton
+                        aria-label='toggle password visibility'
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge='end'
+                      >
+                        {showPassword ? (
+                          <VisibilityOff sx={{ width: '20px', height: '20px' }} />
+                        ) : (
+                          <Visibility sx={{ width: '20px', height: '20px' }} />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <Button
+                disabled={isDisabledBtn}
+                onClick={handleSubmit}
+                type='submit'
+                variant='contained'
+                sx={{ margin: '15px 0', bgcolor: '#7c08ff' }}
+              >
+                Sign in
+              </Button>
+              {isError ? (
+                <div className={styles.error}>
+                  <FontAwesomeIcon
+                    icon={faTriangleExclamation}
+                    fill='#d57c77'
+                    width={12}
+                    height={12}
+                  />
+                  {' Wrong password or email address...'}
+                </div>
+              ) : (
+                ''
+              )}
+            </FormControl>
+          </Box>
+          <div className={styles.bottomWrap}>
+            <p>Don&apos;t have an account?</p>
+            <Link className={styles.link} to='/registration'>
+              <span>Sign Up</span>
+            </Link>
+          </div>
         </div>
-        <Box>
-          <FormControl sx={{ width: '400px' }}>
-            <TextField
-              id={`input-with-icon-textfield ${nanoid(5)}`}
-              type='email'
-              name='email'
-              value={data.email}
-              onChange={(e) => handleEmailChange(e)}
-              error={isError}
-              placeholder='Email'
-              color='purple'
-              size='small'
-              sx={{ m: '10px 0' }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <FontAwesomeIcon icon={faEnvelope} fill='#a1a4b5' width={12} height={12} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              id={`standard-adornment-password ${nanoid(5)}`}
-              type={showPassword ? 'text' : 'password'}
-              name='password'
-              value={data.password}
-              onChange={handlePasswordChange('password')}
-              error={isError}
-              placeholder='Password'
-              color='purple'
-              size='small'
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <FontAwesomeIcon icon={faLock} fill='#a1a4b5' width={12} height={12} />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton
-                      aria-label='toggle password visibility'
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge='end'
-                    >
-                      {showPassword ? (
-                        <VisibilityOff sx={{ width: '20px', height: '20px' }} />
-                      ) : (
-                        <Visibility sx={{ width: '20px', height: '20px' }} />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Button
-              disabled={isDisabledBtn}
-              onClick={handleSubmit}
-              type='submit'
-              variant='contained'
-              sx={{ margin: '15px 0', bgcolor: '#7c08ff' }}
-            >
-              Sign in
-            </Button>
-            {isError ? (
-              <div className={styles.error}>
-                <FontAwesomeIcon
-                  icon={faTriangleExclamation}
-                  fill='#d57c77'
-                  width={12}
-                  height={12}
-                />
-                {' Wrong password or email address...'}
-              </div>
-            ) : (
-              ''
-            )}
-          </FormControl>
-        </Box>
-        <div className={styles.bottomWrap}>
-          <p>Don&apos;t have an account?</p>
-          <Link className={styles.link} to='/registration'>
-            <span>Sign Up</span>
-          </Link>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
