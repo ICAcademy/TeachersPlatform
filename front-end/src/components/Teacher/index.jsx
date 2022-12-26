@@ -63,7 +63,6 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
       const fetchedSubscriptions = await getStudentSubscription(userId);
       setSubscriptions(fetchedSubscriptions);
       setIsLoader(false);
-      return fetchedSubscriptions;
     } catch (error) {
       console.log(error);
     }
@@ -74,7 +73,6 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
       return subscription.teacherID._id === id;
     });
     setIsSubscripted(subscripted);
-    return subscripted;
   };
 
   const deleteSubscriptionOfStudent = async () => {
@@ -83,10 +81,9 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
       const neededSubscription = subscriptions.find((subscription) => {
         return subscription.teacherID._id === id;
       });
-      const remove = await deleteSubscription(neededSubscription._id);
+      await deleteSubscription(neededSubscription._id);
       setIsSubscripted(false);
       setButtonLoader(false);
-      return remove;
     } catch (error) {
       console.log(error);
     }
