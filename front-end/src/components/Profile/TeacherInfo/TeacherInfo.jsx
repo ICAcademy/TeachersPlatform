@@ -14,7 +14,6 @@ import TeacherPhone from './TeacherPhone/TeacherPhone';
 import { Button } from '@mui/material';
 
 const languages = ['English', 'German', 'Italian'];
-const operators = ['+38', '+98'];
 const agePreferences = ['6 - 10', '11 - 15', '16 - 17', '18 - ...'];
 
 const TeacherInfo = () => {
@@ -22,18 +21,18 @@ const TeacherInfo = () => {
   console.log('user', currentUser);
   const [language, setLanguage] = useState('');
   const [biography, setBiography] = useState('');
-  const [phone, setPhone] = useState(0);
-  const [operator, setOperator] = useState('');
   const [agePreference, setAgePreference] = useState('');
   const [socialMedias, setSocialMedias] = useState('');
+  const [phoneInput, setPhoneInput] = useState('');
+
+  console.log('phoneInput', phoneInput);
 
   const changeProfile = async () => {
-    const mobile = `${operator}${phone}`;
     try {
       const patchTeacher = {
         language,
         biography,
-        phone: mobile,
+        phone: phoneInput,
         preferences: agePreference,
         socialMedias,
       };
@@ -48,8 +47,7 @@ const TeacherInfo = () => {
       const teacher = await getTeacher(currentUser.roleId);
       setLanguage(teacher.language);
       setBiography(teacher.biography);
-      setPhone(Number(teacher.phone.slice(3)));
-      setOperator(teacher.phone.slice(0, 3));
+      setPhoneInput(teacher.phone);
       setAgePreference(teacher.preferences);
       setSocialMedias(teacher.socialMedias);
     } catch (error) {
@@ -70,13 +68,7 @@ const TeacherInfo = () => {
         selectArray={languages}
       />
       <TextAreaInfo header='Biography' value={biography} setValue={setBiography} />
-      <TeacherPhone
-        operator={operator}
-        setOperator={setOperator}
-        phone={phone}
-        setPhone={setPhone}
-        operators={operators}
-      />
+      <TeacherPhone phoneInput={phoneInput} setPhoneInput={setPhoneInput} />
       <SelectItem
         nameSelect='Age Preferences'
         value={agePreference}
