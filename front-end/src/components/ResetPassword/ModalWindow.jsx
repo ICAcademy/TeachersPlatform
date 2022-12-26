@@ -30,17 +30,10 @@ const style = {
   justifyContent: 'center',
 };
 
-const newPasswordHelperText = 'Enter min 8 and max 10 characters; example: Jerry77)';
-const newPasswordAgainHelperText = 'Entered new passwords do not match';
+const newPasswordAgainHelperText = 'Passwords do not match';
 
 const ModalWindow = ({ open, handleClose }) => {
   const { currentUser } = useContext(CurrentUserContext);
-
-  const [data, setData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    newPasswordAgain: '',
-  });
 
   const { value: enteredCurrentPassword, valueChangeHandler: currentPasswordChangeHandler } =
     useInput('password', '', regexPassword);
@@ -63,6 +56,8 @@ const ModalWindow = ({ open, handleClose }) => {
 
   const formIsValid = newPasswordIsValid && newPasswordAgainIsValid;
 
+  const [isError, setIsError] = useState('');
+
   const handleMouseDownPassword = (e) => e.preventDefault();
 
   const [showPassword, setShowPassword] = useState({
@@ -78,14 +73,15 @@ const ModalWindow = ({ open, handleClose }) => {
   const savePassword = async (id, data) => {
     try {
       await changePassword(id, data);
+      setIsError('');
       handleClose();
     } catch (error) {
-      console.log(error.response.data.message);
+      setIsError(error.response.data.message);
     }
   };
 
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal open={open} onSubmit={handleClose}>
       <Box sx={style}>
         <FormControl sx={{ width: '100%' }}>
           <TextField
@@ -96,6 +92,8 @@ const ModalWindow = ({ open, handleClose }) => {
             type={showPassword.currentPassword ? 'text' : 'password'}
             name='currentPassword'
             value={enteredCurrentPassword}
+            error={!!isError}
+            helperText={isError}
             onChange={currentPasswordChangeHandler}
             InputLabelProps={{ shrink: true }}
             InputProps={{
@@ -129,7 +127,6 @@ const ModalWindow = ({ open, handleClose }) => {
             onChange={newPasswordChangeHandler}
             onBlur={newPasswordBlurHandler}
             error={newPasswordHasError}
-            helperText={newPasswordHasError ? newPasswordHelperText : ''}
             InputLabelProps={{ shrink: true }}
             InputProps={{
               endAdornment: (
@@ -157,12 +154,12 @@ const ModalWindow = ({ open, handleClose }) => {
             variant='outlined'
             size='small'
             label='New password again'
-            error={newPasswordAgainHasError}
             type={showPassword.newPasswordAgain ? 'text' : 'password'}
             name='newPasswordAgain'
             value={enteredNewPasswordAgain}
             onChange={newPasswordAgainChangeHandler}
             onBlur={newPasswordAgainBlurHandler}
+            error={newPasswordAgainHasError}
             helperText={newPasswordAgainHasError ? newPasswordAgainHelperText : ''}
             InputLabelProps={{ shrink: true }}
             InputProps={{

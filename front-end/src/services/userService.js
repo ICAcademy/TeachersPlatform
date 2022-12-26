@@ -21,11 +21,7 @@ export const updateUserById = async (id, body) => {
 };
 
 export const changePassword = async (id, body) => {
-  console.log(id, body);
-  try {
-    const { data } = await API.patch(`${API_URL}/api/users/change-password/${id}`, { ...body });
-    return data;
-  } catch (error) {
-    console.log(error.message);
-  }
+  // console.log(id, body);
+  const { data } = await API.patch(`${API_URL}/api/users/change-password/${id}`, { ...body });
+  return data;
 };
