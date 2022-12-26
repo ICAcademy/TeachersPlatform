@@ -31,8 +31,8 @@ const ProfileTabs = () => {
 
   useEffect(() => {
     if (currentUser.role === 'teacher') {
-      setTabs([
-        ...tabs,
+      setTabs((prev) => [
+        ...prev,
         {
           title: 'Teacher Info',
           link: 'teacher-info',
