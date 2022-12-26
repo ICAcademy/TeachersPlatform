@@ -1,19 +1,11 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const { findByEmail, updateByID, updatePassword } = require('../services/UserService');
+const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
 
 const getUser = async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) {
-      throw new Error('Authorization is failed!');
-    }
-
-    const decode = jwt.verify(token, 'secretValue');
-    const authorizedUser = decode.email;
-
-    const user = await findByEmail(authorizedUser);
+    const user = await findByEmail(req.user.email);
     if (!user) {
       res.status(401).json({ message: 'User was not found!' });
     }
@@ -38,10 +30,12 @@ const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
     const { id } = req.params;
-    const userPass = await updatePassword(id);
+    const userPass = await getCurrentPassword(id);
     const isValidPassword = await bcrypt.compare(currentPassword, userPass.password);
     if (!isValidPassword) {
-      return res.status(400).json({ message: 'Please enter correct old password' });
+      return res
+        .status(400)
+        .json({ status: 'error', message: 'Please enter correct old password' });
     }
     const hashedPass = await bcrypt.hash(newPassword, 10);
     userPass.password = hashedPass;

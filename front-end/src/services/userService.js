@@ -1,27 +1,15 @@
-import API, { API_URL } from 'API';
+import API from 'API';
 
-export const userService = {
-  getUser: async () => {
-    try {
-      const user = await API.get(`${API_URL}/auth/me`);
-      return user;
-    } catch (e) {
-      console.log(e);
-    }
-  },
+export const getUser = async () => {
+  const user = await API.get('/auth/me');
+  return user;
 };
 
 export const updateUserById = async (id, body) => {
-  try {
-    const { data } = await API.patch(`${API_URL}/api/users/${id}`, { ...body });
-    return data;
-  } catch (error) {
-    console.log(error.message);
-  }
+  const { data } = await API.patch(`/api/users/${id}`, { ...body });
+  return data;
 };
 
 export const changePassword = async (id, body) => {
-  // console.log(id, body);
-  const { data } = await API.patch(`${API_URL}/api/users/change-password/${id}`, { ...body });
-  return data;
+  return await API.patch(`/api/users/change-password/${id}`, { ...body });
 };

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+
+// MUI library
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import styles from './SidebarList.module.scss';
+
+// FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHouseUser,
@@ -12,21 +15,29 @@ import {
   faUserGraduate,
   faSackDollar,
   faRightFromBracket,
+  faChalkboardUser,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Services
-import { authService } from 'services/authService';
+import { logout } from 'services/authService';
+
+// Context
+import { CurrentUserContext } from 'context/AppProvider';
+
+// Styles
+import styles from './SidebarList.module.scss';
 
 export const SidebarList = () => {
   const navigate = useNavigate();
+  const { currentUser } = useContext(CurrentUserContext);
 
-  const logout = () => {
-    authService.logout();
+  const handleLogout = () => {
+    logout();
     navigate('/login', { replace: true });
   };
 
   return (
-    <div className='sidebarMenu'>
+    <div className={styles.sidebarMenu}>
       <List className={styles.sidebarList}>
         <ListItem className={styles.sidebarItem}>
           <Link to='/app' className={styles.sidebarLink}>
@@ -53,10 +64,17 @@ export const SidebarList = () => {
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/app' className={styles.sidebarLink}>
-            <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
-            Students
-          </Link>
+          {currentUser?.role === 'student' ? (
+            <Link to='/app/teachers' className={styles.sidebarLink}>
+              <FontAwesomeIcon className={styles.sidebarIcon} icon={faChalkboardUser} />
+              Teachers
+            </Link>
+          ) : (
+            <Link to='/app/students' className={styles.sidebarLink}>
+              <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
+              Students
+            </Link>
+          )}
         </ListItem>
         <ListItem className={styles.sidebarItem}>
           <Link to='/app' className={styles.sidebarLink}>
@@ -65,7 +83,7 @@ export const SidebarList = () => {
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <NavLink onClick={logout} to='/login' className={styles.sidebarLink}>
+          <NavLink onClick={handleLogout} to='/login' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faRightFromBracket} />
             Logout
           </NavLink>

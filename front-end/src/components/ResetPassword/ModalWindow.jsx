@@ -35,8 +35,12 @@ const newPasswordAgainHelperText = 'Passwords do not match';
 const ModalWindow = ({ open, handleClose }) => {
   const { currentUser } = useContext(CurrentUserContext);
 
-  const { value: enteredCurrentPassword, valueChangeHandler: currentPasswordChangeHandler } =
-    useInput('password', '', regexPassword);
+  const [enteredCurrentPassword, setEnteredCurrentPassword] = useState('');
+
+  const currentPasswordChangeHandler = (e) => {
+    setIsError({});
+    setEnteredCurrentPassword(e.target.value);
+  };
 
   const {
     value: enteredNewPassword,
@@ -56,7 +60,7 @@ const ModalWindow = ({ open, handleClose }) => {
 
   const formIsValid = newPasswordIsValid && newPasswordAgainIsValid;
 
-  const [isError, setIsError] = useState('');
+  const [isError, setIsError] = useState({});
 
   const handleMouseDownPassword = (e) => e.preventDefault();
 
@@ -76,12 +80,12 @@ const ModalWindow = ({ open, handleClose }) => {
       setIsError('');
       handleClose();
     } catch (error) {
-      setIsError(error.response.data.message);
+      setIsError(error.response.data);
     }
   };
 
   return (
-    <Modal open={open} onSubmit={handleClose}>
+    <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
         <FormControl sx={{ width: '100%' }}>
           <TextField
@@ -92,8 +96,8 @@ const ModalWindow = ({ open, handleClose }) => {
             type={showPassword.currentPassword ? 'text' : 'password'}
             name='currentPassword'
             value={enteredCurrentPassword}
-            error={!!isError}
-            helperText={isError}
+            error={isError.status === 'error'}
+            helperText={isError.status === 'error' ? isError.message : ''}
             onChange={currentPasswordChangeHandler}
             InputLabelProps={{ shrink: true }}
             InputProps={{
