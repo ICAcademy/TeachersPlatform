@@ -12,28 +12,27 @@ import SelectItem from './SelectItem/SelectItem';
 import TextAreaInfo from './TextAreaItem/TextAreaInfo';
 import TeacherPhone from './TeacherPhone/TeacherPhone';
 import { Button } from '@mui/material';
+import AgePreferences from './AgePreferences/AgePreferences';
 
 const languages = ['English', 'German', 'Italian'];
-const agePreferences = ['6 - 10', '11 - 15', '16 - 17', '18 - ...'];
 
 const TeacherInfo = () => {
   const { currentUser } = useContext(CurrentUserContext);
-  console.log('user', currentUser);
   const [language, setLanguage] = useState('');
   const [biography, setBiography] = useState('');
-  const [agePreference, setAgePreference] = useState('');
   const [socialMedias, setSocialMedias] = useState('');
   const [phoneInput, setPhoneInput] = useState('');
-
-  console.log('phoneInput', phoneInput);
+  const [minAge, setMinAge] = useState('');
+  const [maxAge, setMaxAge] = useState('');
 
   const changeProfile = async () => {
     try {
+      const agePreferences = `${minAge} - ${maxAge}`;
       const patchTeacher = {
         language,
         biography,
         phone: phoneInput,
-        preferences: agePreference,
+        preferences: agePreferences,
         socialMedias,
       };
       await updateTeacher(currentUser.roleId, patchTeacher);
@@ -45,10 +44,12 @@ const TeacherInfo = () => {
   const getTeacherFromUser = async () => {
     try {
       const teacher = await getTeacher(currentUser.roleId);
+      const preferences = teacher.preferences.split(' ');
       setLanguage(teacher.language);
       setBiography(teacher.biography);
       setPhoneInput(teacher.phone);
-      setAgePreference(teacher.preferences);
+      setMinAge(preferences[0]);
+      setMaxAge(preferences[2]);
       setSocialMedias(teacher.socialMedias);
     } catch (error) {
       console.log(error);
@@ -69,15 +70,12 @@ const TeacherInfo = () => {
       />
       <TextAreaInfo header='Biography' value={biography} setValue={setBiography} />
       <TeacherPhone phoneInput={phoneInput} setPhoneInput={setPhoneInput} />
-      <SelectItem
-        nameSelect='Age Preferences'
-        value={agePreference}
-        setValue={setAgePreference}
-        selectArray={agePreferences}
-      />
+      <AgePreferences minAge={minAge} setMinAge={setMinAge} maxAge={maxAge} setMaxAge={setMaxAge} />
       <TextAreaInfo header='Social Medias' value={socialMedias} setValue={setSocialMedias} />
       <div className={styles.buttonContainer}>
-        <Button onClick={changeProfile}>Change Profile</Button>
+        <Button onClick={changeProfile} variant='contained'>
+          Change Profile
+        </Button>
       </div>
     </div>
   );

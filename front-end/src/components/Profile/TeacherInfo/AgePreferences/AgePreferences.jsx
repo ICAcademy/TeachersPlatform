@@ -18,22 +18,26 @@ const AgePreferences = ({ minAge, setMinAge, maxAge, setMaxAge }) => {
 
   return (
     <div className={styles.container}>
-      <div>Age Preferences</div>
-      <div className={styles.minAgeContainer}>
-        <Input value={minAge} onChange={changeMinAge} type='number' />
+      <div className={styles.headerContainer}>
+        <span className={styles.header}>Age Preferences</span>
       </div>
-      <span>-</span>
-      <div>
-        <Input value={maxAge} onChange={changeMaxAge} type='number' />
+      <div className={styles.inputContainer}>
+        <div className={styles.minAgeContainer}>
+          <Input value={minAge} onChange={changeMinAge} type='number' />
+        </div>
+        <span className={styles.range}>-</span>
+        <div className={styles.maxAgeContainer}>
+          <Input value={maxAge} onChange={changeMaxAge} type='number' />
+        </div>
       </div>
     </div>
   );
 };
 
 AgePreferences.propTypes = {
-  minAge: PropTypes.number,
+  minAge: PropTypes.string,
   setMinAge: PropTypes.func,
-  maxAge: PropTypes.number,
+  maxAge: PropTypes.string,
   setMaxAge: PropTypes.func,
 };
 
