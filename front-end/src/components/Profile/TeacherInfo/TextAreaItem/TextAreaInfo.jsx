@@ -16,7 +16,12 @@ const TextAreaInfo = ({ header, value, setValue }) => {
       <div className={styles.headerContainer}>
         <span className={styles.header}>{header}</span>
       </div>
-      <TextareaAutosize className={styles.input} value={value} onChange={handleChange} />
+      <TextareaAutosize
+        className={styles.input}
+        minRows={2}
+        value={value}
+        onChange={handleChange}
+      />
     </div>
   );
 };

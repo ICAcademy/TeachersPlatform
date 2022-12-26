@@ -4,7 +4,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { CurrentUserContext } from 'context/AppProvider';
 
 // services
-import { getTeacher, updateTeacher } from '../../../services/teacherService';
+import { getTeacher, updateTeacher } from 'services/teacherService';
 
 // styles
 import styles from './TeacherInfo.module.scss';
