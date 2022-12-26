@@ -28,7 +28,6 @@ const useInput = (type, value, regex) => {
     case 'time':
       valueIsValid = regex.test(dayjs(enteredValue).format('HH:mm'));
       valueChangeHandler = (time) => {
-        console.log(dayjs(time).format('MM/DD/YYYY HH:mm'));
         setEnteredValue(dayjs(time).format('MM/DD/YYYY HH:mm'));
       };
       break;

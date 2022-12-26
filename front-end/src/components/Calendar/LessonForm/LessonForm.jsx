@@ -23,8 +23,8 @@ import { regexTime } from 'helpers/regex';
 
 const timeHelperText = 'Time is invalid';
 
-const LessonForm = ({ day, students, closeForm }) => {
-  const [checked, setChecked] = useState([]);
+const LessonForm = ({ day, students, closeForm, addLesson }) => {
+  const [selectedStudents, setSelectedStudents] = useState([]);
 
   const {
     value: enteredTime,
@@ -35,8 +35,8 @@ const LessonForm = ({ day, students, closeForm }) => {
   } = useInput('time', dayjs(day).format('YYYY-MM-DD HH:mm'), regexTime);
 
   const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+    const currentIndex = selectedStudents.indexOf(value);
+    const newChecked = [...selectedStudents];
 
     if (currentIndex === -1) {
       newChecked.push(value);
@@ -44,8 +44,14 @@ const LessonForm = ({ day, students, closeForm }) => {
       newChecked.splice(currentIndex, 1);
     }
 
-    setChecked(newChecked);
+    setSelectedStudents(newChecked);
   };
+
+  const saveLesson = () => {
+    const lesson = { time: enteredTime, students: selectedStudents };
+    addLesson(lesson);
+  };
+
   return (
     <Box sx={{ pt: '20px', px: '20px' }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -72,7 +78,7 @@ const LessonForm = ({ day, students, closeForm }) => {
             <ListItem key={i} disablePadding>
               <ListItemButton role={undefined} onClick={handleToggle(student)} dense>
                 <ListItemIcon>
-                  <Checkbox edge='start' checked={checked.indexOf(student) !== -1} />
+                  <Checkbox edge='start' checked={selectedStudents.indexOf(student) !== -1} />
                 </ListItemIcon>
                 <ListItemAvatar>
                   <Avatar />
@@ -85,7 +91,7 @@ const LessonForm = ({ day, students, closeForm }) => {
       </List>
       <Button
         variant='contained'
-        onClick={closeForm}
+        onClick={saveLesson}
         sx={{
           display: 'flex',
           marginRight: 0,
@@ -102,6 +108,7 @@ LessonForm.propTypes = {
   day: PropTypes.object,
   students: PropTypes.array,
   closeForm: PropTypes.func,
+  addLesson: PropTypes.func,
 };
 
 export default LessonForm;

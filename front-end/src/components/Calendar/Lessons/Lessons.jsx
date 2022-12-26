@@ -11,34 +11,6 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import styles from './Lessons.module.scss';
 
-const lessons = [
-  // {
-  //   id: 1,
-  //   time: '16:00',
-  //   students: ['Sam McMillan, John Connor, Tim Drake'],
-  // },
-  // {
-  //   id: 2,
-  //   time: '12:50',
-  //   students: ['Sam McMillan, John Connor, Tim Drake'],
-  // },
-  // {
-  //   id: 3,
-  //   time: '17:30',
-  //   students: ['Sam McMillan, John Connor, Tim Drake'],
-  // },
-  // {
-  //   id: 4,
-  //   time: '11:25',
-  //   students: ['Sam McMillan, John Connor, Tim Drake'],
-  // },
-  // {
-  //   id: 5,
-  //   time: '15:55',
-  //   students: ['Sam McMillan, John Connor, Tim Drake'],
-  // },
-];
-
 const students = [
   {
     fullName: 'Sam McMillan',
@@ -57,13 +29,23 @@ const students = [
   },
 ];
 
+// const sortLessons = (list) => {
+//   const sortedList = list.sort((prev, curr) => {
+//     if
+//   })
+// }
+
 const Lessons = ({ isOpen, closeModal, date }) => {
+  const [lessonsList, setLessonsList] = useState([]);
   const [lessonFormIssOpen, setLessonFormIsOpen] = useState(false);
 
   const openHandler = () => {
     setLessonFormIsOpen(true);
   };
-  const closeHandler = () => {
+
+  const addLessonHandler = (lesson) => {
+    // const newLessons = [...lessonsList, lesson];
+    setLessonsList((prev) => [...prev, lesson]);
     setLessonFormIsOpen(false);
   };
 
@@ -86,16 +68,10 @@ const Lessons = ({ isOpen, closeModal, date }) => {
             </IconButton>
           </Box>
           {!lessonFormIssOpen ? (
-            <ScheduledLessons lessons={lessons} openLesson={openHandler} />
+            <ScheduledLessons lessons={lessonsList} openLesson={openHandler} />
           ) : (
-            <LessonForm day={date} students={students} closeForm={closeHandler} />
+            <LessonForm day={date} students={students} addLesson={addLessonHandler} />
           )}
-          {/* {!addLessonIssOpen && (
-              <Button startIcon={<AddIcon />} variant='text' onClick={openHandler}>
-                Schedule lesson
-              </Button>
-            )}
-            {addLessonIssOpen && <LessonForm day={date} closeForm={closeHandler} />} */}
         </Box>
       </Fade>
     </Modal>
