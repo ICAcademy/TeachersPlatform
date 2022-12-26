@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -16,6 +16,15 @@ import { faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import Tabs from 'components/common/Tabs';
 import Overview from 'components/Teacher/Overview';
 import Courses from 'components/Teacher/Courses';
+import Loader from 'components/common/Loader/Loader';
+import { LoadingButton } from '@mui/lab';
+
+// services
+import {
+  createSubscription,
+  deleteSubscription,
+  getStudentSubscription,
+} from 'services/subscriptionService';
 
 // context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -23,14 +32,6 @@ import { CurrentUserContext } from 'context/AppProvider';
 // Styles
 import styles from './Teacher.module.scss';
 import { teacher, certificate, favourite, reward, speechBubble } from 'constants/photo';
-import {
-  createSubscription,
-  deleteSubscription,
-  getStudentSubscription,
-} from 'services/subscriptionService';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import Loader from 'components/common/Loader/Loader';
 
 const Teacher = ({ fullName, activity, id, overview, courses }) => {
   const { pathname } = useLocation();
@@ -42,20 +43,14 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [isSubscripted, setIsSubscripted] = useState(false);
   const [isLoader, setIsLoader] = useState(false);
-
-  console.log('isSubscripted', isSubscripted);
-  console.log('subscriptions', subscriptions);
-
-  useEffect(() => {
-    fetchStudentSubscriptions(currentUser.roleId);
-  }, [currentUser]);
+  const [buttonLoader, setButtonLoader] = useState(false);
 
   const patchSubscription = async () => {
     try {
-      setIsLoader(true);
+      setButtonLoader(true);
       const subscribe = await createSubscription(id, currentUser.roleId);
       await fetchStudentSubscriptions(currentUser.roleId);
-      setIsLoader(false);
+      setButtonLoader(false);
       return subscribe;
     } catch (error) {
       console.log(error);
@@ -66,13 +61,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
     try {
       setIsLoader(true);
       const fetchedSubscriptions = await getStudentSubscription(userId);
-      console.log('fetchedSubscriptions', fetchedSubscriptions);
       setSubscriptions(fetchedSubscriptions);
-      const subscripted = fetchedSubscriptions.find((subscription) => {
-        return subscription.teacherID._id === id;
-      });
-      console.log('subscripted', subscripted);
-      setIsSubscripted(subscripted);
       setIsLoader(false);
       return fetchedSubscriptions;
     } catch (error) {
@@ -80,20 +69,36 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
     }
   };
 
+  const teacherSubscription = (fetchedSubscriptions) => {
+    const subscripted = fetchedSubscriptions.find((subscription) => {
+      return subscription.teacherID._id === id;
+    });
+    setIsSubscripted(subscripted);
+    return subscripted;
+  };
+
   const deleteSubscriptionOfStudent = async () => {
     try {
-      setIsLoader(true);
+      setButtonLoader(true);
       const neededSubscription = subscriptions.find((subscription) => {
         return subscription.teacherID._id === id;
       });
       const remove = await deleteSubscription(neededSubscription._id);
       setIsSubscripted(false);
-      setIsLoader(false);
-      return await remove;
+      setButtonLoader(false);
+      return remove;
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    fetchStudentSubscriptions(currentUser.roleId);
+  }, [currentUser]);
+
+  useEffect(() => {
+    teacherSubscription(subscriptions);
+  }, [subscriptions]);
 
   return (
     <div className={styles.wrapper}>
@@ -139,9 +144,17 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
             </div>
           </div>
           {isSubscripted ? (
-            <button onClick={deleteSubscriptionOfStudent}>unsubscribe</button>
+            <LoadingButton
+              loading={buttonLoader}
+              variant='contained'
+              onClick={deleteSubscriptionOfStudent}
+            >
+              unsubscribe
+            </LoadingButton>
           ) : (
-            <button onClick={patchSubscription}>subscribe</button>
+            <LoadingButton loading={buttonLoader} variant='contained' onClick={patchSubscription}>
+              subscribe
+            </LoadingButton>
           )}
           <div className={styles.tabs}>
             <Tabs list={tabs} />
