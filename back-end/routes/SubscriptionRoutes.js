@@ -2,12 +2,12 @@ const express = require('express');
 
 const {
   getAllSubscriptions,
-  getTeacherSubscriptions,
   createSubscription,
   getSubscriptionById,
   updateSubscription,
   deleteSubscription,
   getStudentSubscriptions,
+  getTeacherSubscriptions,
 } = require('../controllers/SubscriptionController');
 
 const router = express.Router();
