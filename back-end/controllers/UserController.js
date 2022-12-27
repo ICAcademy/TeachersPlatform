@@ -1,7 +1,5 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-
 const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
+const { comparePasswords, hashPasswords } = require('../services/AuthService');
 
 const getUser = async (req, res) => {
   try {
@@ -31,13 +29,14 @@ const changePassword = async (req, res) => {
     const { currentPassword, newPassword } = req.body;
     const { id } = req.params;
     const userPass = await getCurrentPassword(id);
-    const isValidPassword = await bcrypt.compare(currentPassword, userPass.password);
+    const isValidPassword = await comparePasswords(currentPassword, userPass.password);
     if (!isValidPassword) {
       return res
         .status(400)
         .json({ status: 'error', message: 'Please enter correct old password' });
     }
-    const hashedPass = await bcrypt.hash(newPassword, 10);
+    const hashedPass = await hashPasswords(newPassword, 10);
+    console.log(hashedPass);
     userPass.password = hashedPass;
     await userPass.save();
     res.json({ message: 'password updated' });
