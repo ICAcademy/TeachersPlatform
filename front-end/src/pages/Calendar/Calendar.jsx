@@ -12,9 +12,8 @@ const sx = {
   calendar: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    height: 'calc(100vh - 50px)',
     p: '1px',
-    pt: '5px',
   },
 };
 
