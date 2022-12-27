@@ -23,7 +23,7 @@ const TextAreaInfo = ({ header, value, setValue, error }) => {
         value={value}
         onChange={handleChange}
       />
-      {error && header === 'Biography' && (
+      {error && header === 'Biography' && value.length < 10 && (
         <div className={styles.errorContainer}>
           Empty Field! Number of letters must be more than 10.
         </div>

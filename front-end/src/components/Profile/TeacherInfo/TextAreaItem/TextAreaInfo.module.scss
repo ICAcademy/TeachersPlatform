@@ -24,10 +24,11 @@
   padding: 15px 10px;
   font-weight: $fw400;
   font-size: 15px;
+  font-family: Arial, sans-serif;
 }
 
 .errorContainer {
-  color: #dd4124;
+  color: $red;
   font-size: 12px;
   font-weight: 600;
 }
