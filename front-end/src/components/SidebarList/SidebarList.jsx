@@ -77,7 +77,7 @@ export const SidebarList = () => {
           )}
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/app' className={styles.sidebarLink}>
+          <Link to='/app/finances' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSackDollar} />
             Finances
           </Link>

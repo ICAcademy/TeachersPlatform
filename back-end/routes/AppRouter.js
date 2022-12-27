@@ -7,6 +7,7 @@ const questionsRouter = require('./QuestionRoutes');
 const userRouter = require('./UserRoutes');
 const files = require('./FirebaseRoutes');
 const subscriptionsRouter = require('./SubscriptionRoutes');
+const paymentRouter = require('./PaymentRouter');
 
 router.use('/materials', materialRouter);
 router.use('/materials-levels', materialLevelsRouter);
@@ -16,5 +17,6 @@ router.use('/questions', questionsRouter);
 router.use('/users', userRouter);
 router.use('/files', files);
 router.use('/subscriptions', subscriptionsRouter);
+router.use('/liqpay', paymentRouter);
 
 module.exports = router;
