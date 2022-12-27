@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const register = async (data) => {
-  await hashPasswords(data.password, 10, (err, hashedPass) => {
+  await hashPassword(data.password, 10, (err, hashedPass) => {
     if (err) {
       throw new Error(err);
     }
@@ -45,7 +45,7 @@ const comparePasswords = (pass1, pass2) =>
     });
   });
 
-const hashPasswords = (pass) =>
+const hashPassword = (pass) =>
   new Promise((resolve, reject) => {
     bcrypt.hash(pass, 10, (err, result) => {
       if (err) return reject(err);
@@ -53,4 +53,4 @@ const hashPasswords = (pass) =>
     });
   });
 
-module.exports = { register, login, comparePasswords, hashPasswords };
+module.exports = { register, login, comparePasswords, hashPassword };

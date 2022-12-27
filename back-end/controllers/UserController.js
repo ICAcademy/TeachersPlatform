@@ -1,5 +1,5 @@
 const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
-const { comparePasswords, hashPasswords } = require('../services/AuthService');
+const { comparePasswords, hashPassword } = require('../services/AuthService');
 
 const getUser = async (req, res) => {
   try {
@@ -35,8 +35,7 @@ const changePassword = async (req, res) => {
         .status(400)
         .json({ status: 'error', message: 'Please enter correct old password' });
     }
-    const hashedPass = await hashPasswords(newPassword, 10);
-    console.log(hashedPass);
+    const hashedPass = await hashPassword(newPassword);
     userPass.password = hashedPass;
     await userPass.save();
     res.json({ message: 'password updated' });
