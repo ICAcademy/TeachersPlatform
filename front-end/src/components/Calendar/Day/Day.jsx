@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-indent */
-/* eslint-disable indent */
 import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -41,7 +39,7 @@ const Day = ({ day, monthIdx, rowIdx }) => {
       </>
     ) : (
       lessonsList.map((lesson) => (
-        <Box key={lesson.id} className={styles.preview__item}>
+        <Box key={lesson.id} className={`${styles.preview__item} ${styles.preview__info}`}>
           {`${dayjs(lesson.time).format('HH:mm')} ${lesson.students.join(', ')}`}
         </Box>
       ))

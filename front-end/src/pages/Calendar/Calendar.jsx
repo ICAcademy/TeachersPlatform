@@ -13,7 +13,8 @@ const sx = {
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
-    p: '5px',
+    p: '1px',
+    pt: '5px',
   },
 };
 
