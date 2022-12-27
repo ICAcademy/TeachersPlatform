@@ -9,6 +9,7 @@ import { TextField } from '@mui/material';
 
 // styles
 import styles from './Questions.module.scss';
+import { useCallback } from 'react';
 
 const baseUrl = 'questions';
 
@@ -44,18 +45,21 @@ const Questions = () => {
     setSelectedLevel(level);
   };
 
-  const fetchQuestionsByUnitName = async (searchUnit) => {
-    try {
-      setIsLoading(true);
-      const questionsFromInput = await getQuestionsByUnitName({ searchUnit });
-      setPrevLevel(selectedLevel);
-      setSelectedLevel('');
-      setUnits(questionsFromInput);
-      setIsLoading(false);
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
+  const fetchQuestionsByUnitName = useCallback(
+    async (searchUnit) => {
+      try {
+        setIsLoading(true);
+        const questionsFromInput = await getQuestionsByUnitName({ searchUnit });
+        setPrevLevel(selectedLevel);
+        setSelectedLevel('');
+        setUnits(questionsFromInput);
+        setIsLoading(false);
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
+    [selectedLevel],
+  );
 
   const handleCangeSearchUnit = (event) => {
     setSearchUnitName(event.target.value);
@@ -75,7 +79,7 @@ const Questions = () => {
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [searchUnitName]);
+  }, [fetchQuestionsByUnitName, prevLevel, searchUnitName]);
 
   useEffect(() => {
     if (searchUnitName.length < 3) {
