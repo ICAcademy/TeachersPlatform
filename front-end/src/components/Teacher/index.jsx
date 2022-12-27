@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -68,12 +68,15 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
     }
   };
 
-  const teacherSubscription = (fetchedSubscriptions) => {
-    const subscripted = fetchedSubscriptions.find((subscription) => {
-      return subscription.teacherID._id === id;
-    });
-    setIsSubscripted(subscripted);
-  };
+  const teacherSubscription = useCallback(
+    (fetchedSubscriptions) => {
+      const subscripted = fetchedSubscriptions.find((subscription) => {
+        return subscription.teacherID._id === id;
+      });
+      setIsSubscripted(subscripted);
+    },
+    [id],
+  );
 
   const deleteSubscriptionOfStudent = async () => {
     try {
@@ -95,7 +98,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
 
   useEffect(() => {
     teacherSubscription(subscriptions);
-  }, [subscriptions]);
+  }, [subscriptions, teacherSubscription]);
 
   return (
     <div className={styles.wrapper}>
