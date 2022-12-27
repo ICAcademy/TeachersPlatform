@@ -30,8 +30,8 @@ exports.createUser = async (req, res) => {
       return res.status(400).send(error.details[0].message);
     }
 
-    register(req.body);
-    await createRoleForUser(req.body.role, req.body);
+    const { _id: roleId } = await createRoleForUser(req.body.role, req.body);
+    register({ ...req.body, roleId });
     res.status(201).json({ message: 'User was successfully created!' });
   } catch (err) {
     res.status(400).json({ error: err.message });
