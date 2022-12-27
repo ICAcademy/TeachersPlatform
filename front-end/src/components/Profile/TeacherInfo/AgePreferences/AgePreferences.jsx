@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // components
-import { Input } from '@mui/material';
+import { TextField } from '@mui/material';
 
 // styles
 import styles from './AgePreferences.module.scss';
 
-const AgePreferences = ({ minAge, setMinAge, maxAge, setMaxAge }) => {
+const AgePreferences = ({ minAge, setMinAge, maxAge, setMaxAge, error }) => {
   const changeMinAge = (event) => {
     setMinAge(event.target.value);
   };
@@ -23,11 +23,29 @@ const AgePreferences = ({ minAge, setMinAge, maxAge, setMaxAge }) => {
       </div>
       <div className={styles.inputContainer}>
         <div className={styles.minAgeContainer}>
-          <Input value={minAge} onChange={changeMinAge} type='number' />
+          <TextField
+            className={styles.input}
+            inputProps={{ min: 0, max: 90 }}
+            value={minAge}
+            onChange={changeMinAge}
+            type='number'
+            label='Min Age'
+            error={error && minAge === ''}
+            helperText={error && minAge === '' ? 'Empty field!' : ' '}
+          />
         </div>
         <span className={styles.range}>-</span>
         <div className={styles.maxAgeContainer}>
-          <Input value={maxAge} onChange={changeMaxAge} type='number' />
+          <TextField
+            className={styles.input}
+            inputProps={{ min: 0, max: 90 }}
+            value={maxAge}
+            onChange={changeMaxAge}
+            type='number'
+            label='Max Age'
+            error={error && maxAge === ''}
+            helperText={error && maxAge === '' ? 'Empty field!' : ' '}
+          />
         </div>
       </div>
     </div>
@@ -39,6 +57,7 @@ AgePreferences.propTypes = {
   setMinAge: PropTypes.func,
   maxAge: PropTypes.string,
   setMaxAge: PropTypes.func,
+  error: PropTypes.bool,
 };
 
 export default AgePreferences;

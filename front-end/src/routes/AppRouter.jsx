@@ -13,7 +13,6 @@ import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
-import TeacherSettingsPage from 'pages/TeacherSettingsPage/TeacherSettingsPage';
 import TeacherInfo from 'components/Profile/TeacherInfo/TeacherInfo';
 import { ADMIN, TEACHER } from 'constants/UserRoles';
 
@@ -152,14 +151,6 @@ const RouterWrapper = () => {
           element={
             <PrivateRoute>
               <Tests />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path='/app/teacher-settings'
-          element={
-            <PrivateRoute>
-              <TeacherSettingsPage />
             </PrivateRoute>
           }
         />

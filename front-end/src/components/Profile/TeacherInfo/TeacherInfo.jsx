@@ -1,5 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 
+// components
+import SelectItem from './SelectItem/SelectItem';
+import TextAreaInfo from './TextAreaItem/TextAreaInfo';
+import TeacherPhone from './TeacherPhone/TeacherPhone';
+import { Button } from '@mui/material';
+import AgePreferences from './AgePreferences/AgePreferences';
+
 // context
 import { CurrentUserContext } from 'context/AppProvider';
 
@@ -8,11 +15,6 @@ import { getTeacher, updateTeacher } from 'services/teacherService';
 
 // styles
 import styles from './TeacherInfo.module.scss';
-import SelectItem from './SelectItem/SelectItem';
-import TextAreaInfo from './TextAreaItem/TextAreaInfo';
-import TeacherPhone from './TeacherPhone/TeacherPhone';
-import { Button } from '@mui/material';
-import AgePreferences from './AgePreferences/AgePreferences';
 
 const languages = ['English', 'German', 'Italian'];
 
@@ -24,6 +26,7 @@ const TeacherInfo = () => {
   const [phoneInput, setPhoneInput] = useState('');
   const [minAge, setMinAge] = useState('');
   const [maxAge, setMaxAge] = useState('');
+  const [error, setError] = useState(false);
 
   const changeProfile = async () => {
     try {
@@ -35,7 +38,11 @@ const TeacherInfo = () => {
         preferences: agePreferences,
         socialMedias,
       };
-      await updateTeacher(currentUser.roleId, patchTeacher);
+      if (language === '' || biography.length < 10 || minAge === '' || maxAge === '') {
+        setError(true);
+      } else {
+        await updateTeacher(currentUser.roleId, patchTeacher);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -68,10 +75,20 @@ const TeacherInfo = () => {
         setValue={setLanguage}
         selectArray={languages}
       />
-      <TextAreaInfo header='Biography' value={biography} setValue={setBiography} />
-      <TeacherPhone phoneInput={phoneInput} setPhoneInput={setPhoneInput} />
-      <AgePreferences minAge={minAge} setMinAge={setMinAge} maxAge={maxAge} setMaxAge={setMaxAge} />
-      <TextAreaInfo header='Social Medias' value={socialMedias} setValue={setSocialMedias} />
+      <div className={styles.infoContainer}>
+        <TeacherPhone phoneInput={phoneInput} setPhoneInput={setPhoneInput} />
+        <AgePreferences
+          minAge={minAge}
+          setMinAge={setMinAge}
+          maxAge={maxAge}
+          setMaxAge={setMaxAge}
+          error={error}
+        />
+      </div>
+      <div className={styles.infoContainer}>
+        <TextAreaInfo header='Biography' value={biography} setValue={setBiography} error={error} />
+        <TextAreaInfo header='Social Medias' value={socialMedias} setValue={setSocialMedias} />
+      </div>
       <div className={styles.buttonContainer}>
         <Button onClick={changeProfile} variant='contained'>
           Change Profile
