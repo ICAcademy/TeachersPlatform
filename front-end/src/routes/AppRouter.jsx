@@ -12,6 +12,7 @@ import { CurrentUserContext } from 'context/AppProvider';
 import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
+import StudentSubscriptions from 'pages/StudentSubscriptions/StudentSubscriptions';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
 
 // Pages
@@ -129,10 +130,12 @@ const RouterWrapper = () => {
             }
           />
           <Route
-            path='/app/students'
+            path='/app/subscriptions'
             element={
               currentUser?.role === 'student' ? (
-                <Navigate to='/app' />
+                <PrivateRoute>
+                  <StudentSubscriptions />
+                </PrivateRoute>
               ) : (
                 <PrivateRoute>
                   <Students />

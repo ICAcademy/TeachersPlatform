@@ -70,12 +70,19 @@ export const SidebarList = () => {
               Teachers
             </Link>
           ) : (
-            <Link to='/app/students' className={styles.sidebarLink}>
+            <Link to='/app/subscriptions' className={styles.sidebarLink}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
               Students
             </Link>
           )}
         </ListItem>
+        {currentUser?.role === 'student' && (
+          <ListItem>
+            <Link to='/app/subscriptions' className={styles.sidebarLink}>
+              Subscriptions
+            </Link>
+          </ListItem>
+        )}
         <ListItem className={styles.sidebarItem}>
           <Link to='/app' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSackDollar} />
