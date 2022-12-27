@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Services
-// import { teacherService } from 'services/teacherService';
 import { getTeacherById } from 'services/teacherService';
 
 // Components
