@@ -51,8 +51,8 @@ const Questions = () => {
         setIsLoading(true);
         const questionsFromInput = await getQuestionsByUnitName({ searchUnit });
         setPrevLevel(selectedLevel);
-        setSelectedLevel('');
         setUnits(questionsFromInput);
+        setSelectedLevel('');
         setIsLoading(false);
       } catch (error) {
         throw new Error(error.message);
@@ -67,28 +67,24 @@ const Questions = () => {
 
   useEffect(() => {
     fetchLevels();
+    fetchUnits('beginner');
   }, []);
 
   useEffect(() => {
     if (searchUnitName.length === 0) {
-      setSelectedLevel(prevLevel);
+      return setSelectedLevel(prevLevel);
     }
-    if (searchUnitName.length > 3) {
-      const timer = setTimeout(() => {
-        return fetchQuestionsByUnitName(searchUnitName);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [fetchQuestionsByUnitName, prevLevel, searchUnitName]);
+    const timer = setTimeout(() => {
+      return fetchQuestionsByUnitName(searchUnitName);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchUnitName, prevLevel, fetchQuestionsByUnitName]);
 
   useEffect(() => {
-    if (searchUnitName.length < 3) {
-      const timer = setTimeout(() => {
-        fetchUnits(selectedLevel);
-      }, 500);
-      return () => clearTimeout(timer);
+    if (searchUnitName.length === 0) {
+      fetchUnits(selectedLevel);
     }
-  }, [selectedLevel, searchUnitName]);
+  }, [searchUnitName, selectedLevel]);
 
   return (
     <div className={styles.materials}>
