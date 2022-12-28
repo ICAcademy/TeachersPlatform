@@ -1,0 +1,41 @@
+@import 'styles/colors.scss';
+
+.financesCard {
+  border-radius: 5px;
+  box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
+  border: 1px solid #f0f3f6;
+  background-color: #fff;
+  flex: 0 0 auto;
+  width: 33.3333333333%;
+
+  .cardBody {
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  h4 {
+    font-size: 1.35rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 35px;
+  }
+
+  .cardPricing {
+    font-size: 1.75rem;
+    font-weight: 400;
+    margin-bottom: 35px;
+
+    span {
+      font-size: 40%;
+      color: #7f839a;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+  }
+
+  form {
+    input[type='submit'] {
+      background-color: $softPurple;
+    }
+  }
+}

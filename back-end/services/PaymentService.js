@@ -16,6 +16,7 @@ const getPaymentData = async (data) => {
     description: data.description,
     order_id: data.order_id,
     result_url: 'http://localhost:3000/app/finances',
+    server_url: 'https://c5b7-188-191-234-7.eu.ngrok.io/transactions',
   };
 
   const jsonString = JSON.stringify(dataObject);
