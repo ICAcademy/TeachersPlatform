@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
@@ -9,7 +9,6 @@ import { TextField } from '@mui/material';
 
 // styles
 import styles from './Questions.module.scss';
-import { useCallback } from 'react';
 
 const baseUrl = 'questions';
 
@@ -19,7 +18,7 @@ const Questions = () => {
   const [units, setUnits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchUnitName, setSearchUnitName] = useState('');
-  const [prevLevel, setPrevLevel] = useState('beginner');
+  const [isEdit, setIsEdit] = useState(false);
 
   const fetchLevels = async () => {
     try {
@@ -43,48 +42,46 @@ const Questions = () => {
 
   const levelHandler = (level) => {
     setSelectedLevel(level);
+    setIsEdit(false);
+    setSelectedLevel(level);
+    setSearchUnitName('');
   };
 
-  const fetchQuestionsByUnitName = useCallback(
-    async (searchUnit) => {
-      try {
-        setIsLoading(true);
-        const questionsFromInput = await getQuestionsByUnitName({ searchUnit });
-        setPrevLevel(selectedLevel);
-        setUnits(questionsFromInput);
-        setSelectedLevel('');
-        setIsLoading(false);
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    },
-    [selectedLevel],
-  );
+  const fetchQuestionsByUnitName = useCallback(async (searchUnit) => {
+    try {
+      setIsLoading(true);
+      const questionsFromInput = await getQuestionsByUnitName({ searchUnit });
+      setUnits(questionsFromInput);
+      setIsLoading(false);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }, []);
 
   const handleCangeSearchUnit = (event) => {
     setSearchUnitName(event.target.value);
+    if (event.target.value) {
+      setIsEdit(true);
+    } else {
+      setIsEdit(false);
+    }
   };
 
   useEffect(() => {
     fetchLevels();
-    fetchUnits('beginner');
   }, []);
 
   useEffect(() => {
-    if (searchUnitName.length === 0) {
-      return setSelectedLevel(prevLevel);
-    }
-    const timer = setTimeout(() => {
-      return fetchQuestionsByUnitName(searchUnitName);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [searchUnitName, prevLevel, fetchQuestionsByUnitName]);
-
-  useEffect(() => {
-    if (searchUnitName.length === 0) {
+    if (!isEdit) {
       fetchUnits(selectedLevel);
     }
-  }, [searchUnitName, selectedLevel]);
+    if (isEdit) {
+      const timer = setTimeout(() => {
+        fetchQuestionsByUnitName(searchUnitName);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [searchUnitName, fetchQuestionsByUnitName, isEdit, selectedLevel]);
 
   return (
     <div className={styles.materials}>
@@ -92,7 +89,7 @@ const Questions = () => {
         <div className={styles.levelsContainer}>
           <Levels
             list={levels}
-            selectedLevel={selectedLevel}
+            selectedLevel={isEdit ? '' : selectedLevel}
             onChangeLevel={levelHandler}
             setSearchUnitName={setSearchUnitName}
           />
