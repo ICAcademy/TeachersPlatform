@@ -35,7 +35,7 @@ const Materials = ({ snackbarShowMessage }) => {
   const [unitsByLevel, setUnitsByLevel] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchByUnitName, setSearchByUnitName] = useState('');
-  const [prevLevel, setPrevLevel] = useState(selectedLevel);
+  const [isEdit, setIsEdit] = useState(false);
 
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
 
@@ -61,29 +61,30 @@ const Materials = ({ snackbarShowMessage }) => {
     }
   };
 
-  const fetchMaterialsByUnitName = useCallback(
-    async (searchByUnit) => {
-      try {
-        setIsLoading(true);
-        const data = await getMaterialsByUnit({ unitName: searchByUnit });
-        setSelectedLevel('');
-        setPrevLevel(selectedLevel);
-        setUnitsByLevel(data);
-        setIsLoading(false);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [selectedLevel],
-  );
+  const fetchMaterialsByUnitName = useCallback(async (searchByUnit) => {
+    try {
+      setIsLoading(true);
+      const data = await getMaterialsByUnit({ unitName: searchByUnit });
+      setUnitsByLevel(data);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   const changeLevelHandler = (level) => {
+    setIsEdit(false);
     setSelectedLevel(level);
-    unitsByLevelData(level);
+    setSearchByUnitName('');
   };
 
   const handleInput = (e) => {
     setSearchByUnitName(e.target.value);
+    if (e.target.value) {
+      setIsEdit(true);
+    } else {
+      setIsEdit(false);
+    }
   };
 
   const saveMaterialBtn = isAuthenticated && currentUser.role === 'admin' && (
@@ -107,28 +108,26 @@ const Materials = ({ snackbarShowMessage }) => {
   }, [location, snackbarShowMessage]);
 
   useEffect(() => {
-    if (selectedLevel !== '') {
+    if (!isEdit) {
       unitsByLevelData(selectedLevel);
     }
-  }, [selectedLevel]);
-
-  useEffect(() => {
-    if (searchByUnitName.length === 0) {
-      setSelectedLevel(prevLevel);
-    }
-    if (searchByUnitName.length > 3) {
+    if (isEdit) {
       const timer = setTimeout(() => {
         fetchMaterialsByUnitName(searchByUnitName);
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [searchByUnitName, prevLevel, fetchMaterialsByUnitName]);
+  }, [fetchMaterialsByUnitName, isEdit, searchByUnitName, selectedLevel]);
 
   return (
     <div className={styles.materials}>
       <div className={styles.materialsHeader}>
         <div className={styles.navigationRow}>
-          <Levels list={levels} selectedLevel={selectedLevel} onChangeLevel={changeLevelHandler} />
+          <Levels
+            list={levels}
+            selectedLevel={isEdit ? '' : selectedLevel}
+            onChangeLevel={changeLevelHandler}
+          />
           <TextField
             sx={{
               width: '360px',
@@ -143,8 +142,8 @@ const Materials = ({ snackbarShowMessage }) => {
                 </InputAdornment>
               ),
             }}
-            defaultValue={searchByUnitName}
             onChange={handleInput}
+            value={searchByUnitName}
           />
         </div>
         {saveMaterialBtn}
