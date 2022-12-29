@@ -6,13 +6,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 // Context
 import AppProvider from 'context/AppProvider';
+import CalendarProvider from 'context/CalendarProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <Router>
     <AppProvider>
-      <App />
+      <CalendarProvider>
+        <App />
+      </CalendarProvider>
     </AppProvider>
   </Router>,
 );

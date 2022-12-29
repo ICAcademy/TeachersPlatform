@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
-  Avatar,
   Box,
   Button,
-  Checkbox,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
   TextField,
 } from '@mui/material';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
@@ -18,13 +14,49 @@ import PropTypes from 'prop-types';
 
 import dayjs from 'dayjs';
 
+import { CurrentUserContext } from 'context/AppProvider';
+import { CalendarContext } from 'context/CalendarProvider';
+
 import useInput from 'hooks/useInput';
-import { regexTime } from 'helpers/regex';
+import { regexLabel, regexTime } from 'helpers/regex';
+import { getTeachersSubscription } from 'services/subscriptionService';
 
 const timeHelperText = 'Time is invalid';
+const labelHelperText = 'Label is invalid';
 
-const LessonForm = ({ day, students, scheduleLesson }) => {
-  const [selectedStudents, setSelectedStudents] = useState([]);
+const sx = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: '20px',
+    pt: '20px',
+    px: '20px',
+  },
+  input: {
+    width: '65%',
+  },
+};
+
+const LessonForm = ({ day }) => {
+  const { createLesson, updateLesson, selectedLesson, isEditing } = useContext(CalendarContext);
+  const {
+    currentUser: { roleId: teacherId },
+  } = useContext(CurrentUserContext);
+
+  const label = isEditing ? selectedLesson.label : '';
+  const date = isEditing ? selectedLesson.date : dayjs(day).format('YYYY/MM/DD HH:mm');
+  const student = isEditing ? selectedLesson.studentId : '';
+
+  const [studentsList, setStudentsList] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(student);
+
+  const {
+    value: enteredLabel,
+    isValid: labelIsValid,
+    hasError: labelHasError,
+    valueChangeHandler: labelChangeHandler,
+    valueOnBlurHandler: labelBlurHandler,
+  } = useInput('label', label, regexLabel);
 
   const {
     value: enteredTime,
@@ -32,28 +64,52 @@ const LessonForm = ({ day, students, scheduleLesson }) => {
     hasError: timeHasError,
     valueChangeHandler: timeChangeHandler,
     valueOnBlurHandler: timeBlurHandler,
-  } = useInput('time', dayjs(day).format('YYYY-MM-DD HH:mm'), regexTime);
+  } = useInput('time', date, regexTime);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = selectedStudents.indexOf(value.studentID.fullName);
-    const newSelected = [...selectedStudents];
+  const handleToggle = (e) => {
+    return setSelectedStudent(e.target.value);
+  };
 
-    if (currentIndex === -1) {
-      newSelected.push(value.studentID.fullName);
-    } else {
-      newSelected.splice(currentIndex, 1);
+  const submitHandler = () => {
+    const data = {
+      label: enteredLabel,
+      date: enteredTime,
+      teacherId,
+      studentId: selectedStudent,
+    };
+    return isEditing ? updateLesson(selectedLesson._id, data) : createLesson(data);
+  };
+
+  const fetchStudents = async (id) => {
+    try {
+      const list = await getTeachersSubscription(id);
+      const studentsList = list.map((item) => ({
+        id: item.studentID._id,
+        fullName: item.studentID.fullName,
+      }));
+      setStudentsList(studentsList);
+    } catch (error) {
+      console.log(error);
     }
-
-    setSelectedStudents(newSelected);
   };
 
-  const saveLesson = () => {
-    const lesson = { id: new Date(), time: enteredTime, students: selectedStudents };
-    scheduleLesson(lesson);
-  };
+  useEffect(() => {
+    fetchStudents(teacherId);
+  }, [teacherId]);
 
   return (
-    <Box sx={{ pt: '20px', px: '20px' }}>
+    <Box sx={sx.container}>
+      <TextField
+        type='text'
+        label='Label:'
+        value={enteredLabel}
+        onChange={labelChangeHandler}
+        onBlur={labelBlurHandler}
+        error={labelHasError}
+        sx={sx.input}
+        helperText={labelHasError ? labelHelperText : ''}
+      />
+
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <TimePicker
           inputFormat='HH:mm'
@@ -68,33 +124,32 @@ const LessonForm = ({ day, students, scheduleLesson }) => {
               onBlur={timeBlurHandler}
               error={timeHasError}
               helperText={timeHasError ? timeHelperText : ''}
+              sx={sx.input}
             />
           )}
         />
       </LocalizationProvider>
-      <List sx={{ width: '100%', maxHeight: '350px', mt: '20px', mb: '10px', overflowY: 'auto' }}>
-        {students.map((student) => {
-          return (
-            <ListItem key={student.studentID._id} disablePadding>
-              <ListItemButton role={undefined} onClick={handleToggle(student)} dense>
-                <ListItemIcon>
-                  <Checkbox
-                    edge='start'
-                    checked={selectedStudents.indexOf(student.studentID.fullName) !== -1}
-                  />
-                </ListItemIcon>
-                <ListItemAvatar>
-                  <Avatar />
-                </ListItemAvatar>
-                <ListItemText primary={student.studentID.fullName} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
-      </List>
+
+      <FormControl sx={{ width: '100%', maxHeight: '350px', overflowY: 'auto' }}>
+        <RadioGroup
+          name='controlled-radio-buttons-group'
+          value={selectedStudent}
+          onChange={handleToggle}
+        >
+          {studentsList.map((student) => (
+            <FormControlLabel
+              key={student.id}
+              value={student.id}
+              control={<Radio />}
+              label={student.fullName}
+            />
+          ))}
+        </RadioGroup>
+      </FormControl>
+
       <Button
         variant='contained'
-        onClick={saveLesson}
+        onClick={submitHandler}
         sx={{
           display: 'flex',
           marginRight: 0,
@@ -108,10 +163,7 @@ const LessonForm = ({ day, students, scheduleLesson }) => {
 };
 
 LessonForm.propTypes = {
-  type: PropTypes.string,
   day: PropTypes.object,
-  students: PropTypes.array,
-  scheduleLesson: PropTypes.func,
 };
 
 export default LessonForm;

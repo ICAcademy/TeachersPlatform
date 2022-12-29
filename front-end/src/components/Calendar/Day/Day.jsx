@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 
+import dayjs from 'dayjs';
+
 import Lessons from 'components/Calendar/Lessons/Lessons';
 
-import dayjs from 'dayjs';
+import { CalendarContext } from 'context/CalendarProvider';
 
 import styles from './Day.module.scss';
 
 const checkForToday = (day) => {
-  const isToday = day.format('DD-MM-YY') === dayjs().format('DD-MM-YY') ? styles.today : '';
+  const isToday = day.format('DD-MM-YYYY') === dayjs().format('DD-MM-YYYY') ? styles.today : '';
   return isToday;
 };
 
@@ -18,47 +20,47 @@ const checkForCurrentMonth = (day, month) => {
   return isCurrentMonth;
 };
 
-const Day = ({ day, monthIdx, rowIdx }) => {
-  const [lessonsList, setLessonsList] = useState(JSON.parse(localStorage.getItem('lessons')) || []);
+const Day = ({ day, rowIdx }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  const { monthName, getLessonsForDay, closeLessonForm } = useContext(CalendarContext);
+
+  const lessons = getLessonsForDay(day);
+
   const openHandler = () => setModalIsOpen(true);
-  const closeHandler = () => setModalIsOpen(false);
+  const closeHandler = () => {
+    setModalIsOpen(false);
+    closeLessonForm();
+  };
 
   const lessonsPreview =
-    lessonsList.length > 2 ? (
+    lessons.length > 2 ? (
       <>
-        {lessonsList.slice(0, 2).map((lesson) => (
-          <Box key={lesson.id} className={`${styles.preview__item} ${styles.preview__info}`}>
-            {`${dayjs(lesson.time).format('HH:mm')} ${lesson.students.join(', ')}`}
+        {lessons.slice(0, 2).map((lesson) => (
+          <Box key={lesson._id} className={`${styles.preview__item} ${styles.preview__info}`}>
+            {lesson.label}
           </Box>
         ))}
         <Box className={`${styles.preview__item} ${styles.preview__more}`}>
-          {`${lessonsList.length - 2} more`}
+          {`${lessons.length - 2} more`}
         </Box>
       </>
     ) : (
-      lessonsList.map((lesson) => (
-        <Box key={lesson.id} className={`${styles.preview__item} ${styles.preview__info}`}>
-          {`${dayjs(lesson.time).format('HH:mm')} ${lesson.students.join(', ')}`}
+      lessons.map((lesson) => (
+        <Box key={lesson._id} className={`${styles.preview__item} ${styles.preview__info}`}>
+          {lesson.label}
         </Box>
       ))
     );
 
   return (
     <>
-      <Lessons
-        isOpen={modalIsOpen}
-        closeModal={closeHandler}
-        date={day}
-        lessons={lessonsList}
-        setLessons={setLessonsList}
-      />
+      <Lessons isOpen={modalIsOpen} closeModal={closeHandler} date={day} lessonsList={lessons} />
       <Box className={`${styles.day} ${rowIdx === 0 && styles.firstRowDay}`} onClick={openHandler}>
         <Box
           className={`${styles.dayOfMoth} ${checkForToday(day)} ${checkForCurrentMonth(
             day,
-            monthIdx,
+            monthName,
           )}`}
         >
           {day.format('D')}
@@ -71,7 +73,6 @@ const Day = ({ day, monthIdx, rowIdx }) => {
 
 Day.propTypes = {
   day: PropTypes.object,
-  monthIdx: PropTypes.string,
   rowIdx: PropTypes.number,
 };
 

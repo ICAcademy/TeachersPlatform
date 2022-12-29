@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Box,
   IconButton,
@@ -13,7 +13,10 @@ import PropTypes from 'prop-types';
 
 import dayjs from 'dayjs';
 
+import { CalendarContext } from 'context/CalendarProvider';
+
 import AddIcon from '@mui/icons-material/Add';
+import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from '@mui/icons-material/Edit';
@@ -21,11 +24,23 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import styles from './ScheduledLessons.module.scss';
 
-const ScheduledLessons = ({ lessons, openForm, removeLesson }) => {
+const sx = {
+  item: {
+    alignItems: 'flex-start',
+    '& .MuiListItemSecondaryAction-root': {
+      height: '100%',
+    },
+  },
+  icon: { minWidth: 'auto', mr: '10px' },
+};
+
+const ScheduledLessons = ({ list }) => {
+  const { deleteLesson, openLessonForm, openFormForEdit } = useContext(CalendarContext);
+
   return (
     <>
       <Box className={styles.lessons}>
-        {lessons.length ? (
+        {list.length ? (
           <List
             dense
             sx={{
@@ -35,24 +50,24 @@ const ScheduledLessons = ({ lessons, openForm, removeLesson }) => {
               marginLeft: '20px',
             }}
           >
-            {lessons.map((lesson) => (
+            {list.map((lesson) => (
               <ListItem
-                key={lesson.id}
-                sx={{ alignItems: 'flex-start' }}
+                key={lesson._id}
+                sx={sx.item}
                 className={styles.lesson}
                 secondaryAction={
-                  <Box>
+                  <Box sx={sx.actions}>
                     <IconButton
                       edge='end'
                       aria-label='delete'
-                      onClick={() => openForm('edit', lesson)}
+                      onClick={() => openFormForEdit(lesson._id)}
                     >
                       <EditIcon fontSize='small' sx={{ mr: '5px' }} />
                     </IconButton>
                     <IconButton
                       edge='end'
                       aria-label='delete'
-                      onClick={() => removeLesson(lesson.id)}
+                      onClick={() => deleteLesson(lesson._id)}
                     >
                       <DeleteOutlineIcon />
                     </IconButton>
@@ -60,16 +75,22 @@ const ScheduledLessons = ({ lessons, openForm, removeLesson }) => {
                 }
               >
                 <Box className={styles.lesson__time}>
-                  <ListItemIcon>
+                  <ListItemIcon sx={sx.icon}>
                     <AccessTimeIcon />
                   </ListItemIcon>
-                  <ListItemText primary={dayjs(lesson.time).format('HH:mm')} />
+                  <ListItemText primary={dayjs(lesson.date).format('HH:mm')} />
+                </Box>
+                <Box className={styles.lesson__label}>
+                  <ListItemIcon sx={sx.icon}>
+                    <LabelImportantIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={lesson.label} />
                 </Box>
                 <Box className={styles.lesson__students}>
-                  <ListItemIcon>
+                  <ListItemIcon sx={sx.icon}>
                     <PersonIcon />
                   </ListItemIcon>
-                  <ListItemText primary={lesson.students.join(', ')} />
+                  <ListItemText primary={lesson.studentId} />
                 </Box>
               </ListItem>
             ))}
@@ -83,7 +104,7 @@ const ScheduledLessons = ({ lessons, openForm, removeLesson }) => {
       <Button
         startIcon={<AddIcon />}
         variant='contained'
-        onClick={() => openForm('create', null)}
+        onClick={openLessonForm}
         sx={{ display: 'flex', margin: '0 auto' }}
       >
         Schedule lesson
@@ -93,10 +114,7 @@ const ScheduledLessons = ({ lessons, openForm, removeLesson }) => {
 };
 
 ScheduledLessons.propTypes = {
-  lessons: PropTypes.array,
-  openForm: PropTypes.func,
-  editLesson: PropTypes.func,
-  removeLesson: PropTypes.func,
+  list: PropTypes.array,
 };
 
 export default ScheduledLessons;

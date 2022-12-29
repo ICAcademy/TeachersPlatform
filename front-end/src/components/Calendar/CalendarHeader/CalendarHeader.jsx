@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Button, IconButton } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import PropTypes from 'prop-types';
+
+import { CalendarContext } from 'context/CalendarProvider';
 
 import styles from './CalendarHeader.module.scss';
 
 const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-const CalendarHeader = ({ toCurrentMonth, toPrevMonth, toNextMonth, dateTitle }) => {
+const CalendarHeader = () => {
+  const { monthAndYear, nextMonthHandler, prevMonthHandler, currentMonthHandler } =
+    useContext(CalendarContext);
+
   return (
     <Box className={styles.container}>
       <Box className={styles.calendarActions}>
@@ -17,18 +21,18 @@ const CalendarHeader = ({ toCurrentMonth, toPrevMonth, toNextMonth, dateTitle })
           sx={{
             marginRight: '20px',
           }}
-          onClick={toCurrentMonth}
+          onClick={currentMonthHandler}
         >
           Today
         </Button>
-        <IconButton onClick={toPrevMonth}>
+        <IconButton onClick={prevMonthHandler}>
           <ChevronLeftIcon />
         </IconButton>
-        <IconButton onClick={toNextMonth}>
+        <IconButton onClick={nextMonthHandler}>
           <ChevronRightIcon />
         </IconButton>
         <Box component='span' sx={{ ml: '15px' }}>
-          {dateTitle}
+          {monthAndYear}
         </Box>
       </Box>
       <Box className={styles.weekDays}>
@@ -40,13 +44,6 @@ const CalendarHeader = ({ toCurrentMonth, toPrevMonth, toNextMonth, dateTitle })
       </Box>
     </Box>
   );
-};
-
-CalendarHeader.propTypes = {
-  toCurrentMonth: PropTypes.func,
-  toNextMonth: PropTypes.func,
-  toPrevMonth: PropTypes.func,
-  dateTitle: PropTypes.string,
 };
 
 export default CalendarHeader;

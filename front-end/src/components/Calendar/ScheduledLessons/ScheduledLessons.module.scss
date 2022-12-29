@@ -13,6 +13,7 @@
   border-left: 5px solid $softPurple;
   cursor: pointer;
 
+  &__label,
   &__time,
   &__students {
     display: flex;
