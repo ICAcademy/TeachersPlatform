@@ -11,4 +11,6 @@ const updateByID = async (id, body) => {
   );
 };
 
-module.exports = { findByEmail, updateByID };
+const getCurrentPassword = async (id) => await User.findById(id).select('password');
+
+module.exports = { findByEmail, updateByID, getCurrentPassword };
