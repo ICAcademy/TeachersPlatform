@@ -1,4 +1,5 @@
-const { findByEmail, updateByID } = require('../services/UserService');
+const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
+const { comparePasswords, hashPassword } = require('../services/AuthService');
 
 const getUser = async (req, res) => {
   try {
@@ -23,4 +24,24 @@ const updateUserById = async (req, res) => {
   }
 };
 
-module.exports = { getUser, updateUserById };
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const { id } = req.params;
+    const userPass = await getCurrentPassword(id);
+    const isValidPassword = await comparePasswords(currentPassword, userPass.password);
+    if (!isValidPassword) {
+      return res
+        .status(400)
+        .json({ status: 'error', message: 'Please enter correct old password' });
+    }
+    const hashedPass = await hashPassword(newPassword);
+    userPass.password = hashedPass;
+    await userPass.save();
+    res.json({ message: 'password updated' });
+  } catch (err) {
+    res.status(400).json(err.message);
+  }
+};
+
+module.exports = { getUser, updateUserById, changePassword };

@@ -2,8 +2,8 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const register = (data) => {
-  bcrypt.hash(data.password, 10, (err, hashedPass) => {
+const register = async (data) => {
+  await hashPassword(data.password, 10, (err, hashedPass) => {
     if (err) {
       throw new Error(err);
     }
@@ -45,4 +45,12 @@ const comparePasswords = (pass1, pass2) =>
     });
   });
 
-module.exports = { register, login };
+const hashPassword = (pass) =>
+  new Promise((resolve, reject) => {
+    bcrypt.hash(pass, 10, (err, result) => {
+      if (err) return reject(err);
+      return resolve(result);
+    });
+  });
+
+module.exports = { register, login, comparePasswords, hashPassword };
