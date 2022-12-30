@@ -57,6 +57,7 @@ const Day = ({ day, rowIdx }) => {
     <>
       <Lessons isOpen={modalIsOpen} closeModal={closeHandler} date={day} lessonsList={lessons} />
       <Box className={`${styles.day} ${rowIdx === 0 && styles.firstRowDay}`} onClick={openHandler}>
+        {rowIdx === 0 && <Box className={styles.dayOfWeek}>{day.format('ddd')}</Box>}
         <Box
           className={`${styles.dayOfMoth} ${checkForToday(day)} ${checkForCurrentMonth(
             day,
@@ -65,6 +66,7 @@ const Day = ({ day, rowIdx }) => {
         >
           {day.format('D')}
         </Box>
+
         <Box className={styles.preview}>{lessonsPreview}</Box>
       </Box>
     </>

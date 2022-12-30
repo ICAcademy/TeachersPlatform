@@ -28,9 +28,10 @@ const CalendarProvider = ({ children }) => {
   const [selectedMonthIdx, setSelectedMonthIdx] = useState(monthIdx);
   const [monthMatrix, setMonthMatrix] = useState([]);
   const [lessonsList, setLessonsList] = useState([]);
+  const [selectedLesson, setSelectedLesson] = useState({});
   const [lessonFormIsOpen, setLessonFormIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [selectedLesson, setSelectedLesson] = useState({});
+  const [formError, setFormError] = useState(null);
 
   const monthAndYear = dayjs(new Date(dayjs().year(), selectedMonthIdx)).format('MMMM YYYY');
   const monthName = dayjs(new Date(dayjs().year(), selectedMonthIdx)).format('MMM');
@@ -50,26 +51,40 @@ const CalendarProvider = ({ children }) => {
   };
 
   const createLesson = async (data) => {
-    const newLesson = await scheduleLesson(data);
-    const updatedLessons = sortLessonsByDate([...lessonsList, newLesson]);
-    setLessonsList(updatedLessons);
-    closeLessonForm();
+    try {
+      const newLesson = await scheduleLesson(data);
+      const updatedLessons = sortLessonsByDate([...lessonsList, newLesson]);
+      setLessonsList(updatedLessons);
+      closeLessonForm();
+      setFormError(null);
+    } catch (error) {
+      setFormError(error.response.data);
+    }
   };
 
   const updateLesson = async (id, data) => {
-    const updatedLesson = await updateScheduledLesson(id, data);
-    const updatedLessons = lessonsList.map((lesson) =>
-      lesson._id === id ? updatedLesson : lesson,
-    );
-    setLessonsList(sortLessonsByDate(updatedLessons));
-    setIsEditing(false);
-    closeLessonForm();
+    try {
+      const updatedLesson = await updateScheduledLesson(id, data);
+      const updatedLessons = lessonsList.map((lesson) =>
+        lesson._id === id ? updatedLesson : lesson,
+      );
+      setLessonsList(sortLessonsByDate(updatedLessons));
+      setIsEditing(false);
+      closeLessonForm();
+      setFormError(null);
+    } catch (error) {
+      setFormError(error.response.data);
+    }
   };
 
   const deleteLesson = async (id) => {
-    await deleteScheduledLesson(id);
-    const updatedLessons = lessonsList.filter((lesson) => lesson._id !== id);
-    setLessonsList(updatedLessons);
+    try {
+      await deleteScheduledLesson(id);
+      const updatedLessons = lessonsList.filter((lesson) => lesson._id !== id);
+      setLessonsList(updatedLessons);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const openLessonForm = () => {
@@ -85,6 +100,8 @@ const CalendarProvider = ({ children }) => {
 
   const closeLessonForm = () => {
     setLessonFormIsOpen(false);
+    setFormError(null);
+    setIsEditing(false);
   };
 
   const nextMonthHandler = () => {
@@ -117,6 +134,7 @@ const CalendarProvider = ({ children }) => {
         openLessonForm,
         openFormForEdit,
         closeLessonForm,
+        formError,
         monthMatrix,
         selectedMonthIdx,
         monthAndYear,

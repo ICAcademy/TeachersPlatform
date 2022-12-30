@@ -4,6 +4,8 @@ import {
   Button,
   FormControl,
   FormControlLabel,
+  FormHelperText,
+  FormLabel,
   Radio,
   RadioGroup,
   TextField,
@@ -21,8 +23,9 @@ import useInput from 'hooks/useInput';
 import { regexLabel, regexTime } from 'helpers/regex';
 import { getTeachersSubscription } from 'services/subscriptionService';
 
-const timeHelperText = 'Time is invalid';
-const labelHelperText = 'Label is invalid';
+const timeHelperText = 'Provide valid time (hh:mm)';
+const labelHelperText = 'Label is required and should be less than 30 symbols';
+const radioHelperText = 'Select student from the list';
 
 const sx = {
   container: {
@@ -35,10 +38,22 @@ const sx = {
   input: {
     width: '65%',
   },
+  radio: {
+    width: '100%',
+    maxHeight: '350px',
+    overflowY: 'auto',
+  },
+  formActions: {
+    display: 'flex',
+    columnGap: '10px',
+    marginRight: 0,
+    marginLeft: 'auto',
+  },
 };
 
 const LessonForm = ({ day }) => {
-  const { createLesson, updateLesson, selectedLesson, isEditing } = useContext(CalendarContext);
+  const { createLesson, updateLesson, selectedLesson, isEditing, formError, closeLessonForm } =
+    useContext(CalendarContext);
   const {
     currentUser: { roleId: teacherId },
   } = useContext(CurrentUserContext);
@@ -46,9 +61,11 @@ const LessonForm = ({ day }) => {
   const label = isEditing ? selectedLesson.label : '';
   const date = isEditing ? selectedLesson.date : dayjs(day).format('YYYY/MM/DD HH:mm');
   const student = isEditing ? selectedLesson.studentId : '';
+  const isSelected = isEditing;
 
   const [studentsList, setStudentsList] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(student);
+  const [studentIsSelected, setStudentIsSelected] = useState(isSelected);
 
   const {
     value: enteredLabel,
@@ -66,8 +83,11 @@ const LessonForm = ({ day }) => {
     valueOnBlurHandler: timeBlurHandler,
   } = useInput('time', date, regexTime);
 
-  const handleToggle = (e) => {
-    return setSelectedStudent(e.target.value);
+  const formIsValid = labelIsValid && timeIsValid && studentIsSelected;
+
+  const handleRadioChange = (e) => {
+    setStudentIsSelected(true);
+    setSelectedStudent(e.target.value);
   };
 
   const submitHandler = () => {
@@ -122,19 +142,23 @@ const LessonForm = ({ day }) => {
             <TextField
               {...params}
               onBlur={timeBlurHandler}
-              error={timeHasError}
-              helperText={timeHasError ? timeHelperText : ''}
+              error={formError?.field === 'time' ? true : timeHasError}
+              helperText={
+                formError?.field === 'time' ? formError?.msg : timeHasError ? timeHelperText : ''
+              }
               sx={sx.input}
             />
           )}
         />
       </LocalizationProvider>
 
-      <FormControl sx={{ width: '100%', maxHeight: '350px', overflowY: 'auto' }}>
+      <FormControl sx={sx.radio}>
+        <FormLabel id='students'>Students:</FormLabel>
         <RadioGroup
+          id='students'
           name='controlled-radio-buttons-group'
           value={selectedStudent}
-          onChange={handleToggle}
+          onChange={handleRadioChange}
         >
           {studentsList.map((student) => (
             <FormControlLabel
@@ -144,20 +168,18 @@ const LessonForm = ({ day }) => {
               label={student.fullName}
             />
           ))}
+          <FormHelperText>{studentIsSelected ? '' : radioHelperText}</FormHelperText>
         </RadioGroup>
       </FormControl>
 
-      <Button
-        variant='contained'
-        onClick={submitHandler}
-        sx={{
-          display: 'flex',
-          marginRight: 0,
-          marginLeft: 'auto',
-        }}
-      >
-        Save
-      </Button>
+      <Box sx={sx.formActions}>
+        <Button variant='outlined' onClick={closeLessonForm}>
+          Cancel
+        </Button>
+        <Button variant='contained' onClick={submitHandler} disabled={!formIsValid}>
+          Save
+        </Button>
+      </Box>
     </Box>
   );
 };

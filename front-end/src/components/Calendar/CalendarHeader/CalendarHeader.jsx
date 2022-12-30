@@ -7,8 +7,6 @@ import { CalendarContext } from 'context/CalendarProvider';
 
 import styles from './CalendarHeader.module.scss';
 
-const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
 const CalendarHeader = () => {
   const { monthAndYear, nextMonthHandler, prevMonthHandler, currentMonthHandler } =
     useContext(CalendarContext);
@@ -34,13 +32,6 @@ const CalendarHeader = () => {
         <Box component='span' sx={{ ml: '15px' }}>
           {monthAndYear}
         </Box>
-      </Box>
-      <Box className={styles.weekDays}>
-        {daysOfWeek.map((day, i) => (
-          <Box key={i} className={styles.dayOfWeek}>
-            {day}
-          </Box>
-        ))}
       </Box>
     </Box>
   );

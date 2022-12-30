@@ -1,5 +1,3 @@
-@import 'styles/font.scss';
-
 .calendarActions {
   display: flex;
   align-items: center;
@@ -10,21 +8,4 @@
     margin-right: 5px;
     cursor: pointer;
   }
-}
-
-.weekDays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-gap: 1px;
-  font-size: 11px;
-  font-weight: $fw600;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.dayOfWeek {
-  margin: -1px;
-  padding-top: 5px;
-  border: 1px solid #bbbbbb;
-  border-bottom: none;
 }

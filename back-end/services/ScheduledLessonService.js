@@ -16,8 +16,12 @@ const updateLesson = async (id, body) =>
 
 const deleteLesson = async (id) => await ScheduledLesson.findByIdAndDelete(id);
 
-const checkTime = async (time) => {
-  return Boolean(await ScheduledLesson.findOne({ date: time }));
+const alreadySelectedTime = async (time, id) => {
+  const lesson = await ScheduledLesson.findOne({ date: time });
+  if (lesson && String(lesson._id) === id) {
+    return false;
+  }
+  return Boolean(lesson);
 };
 
 module.exports = {
@@ -26,5 +30,5 @@ module.exports = {
   scheduleLesson,
   updateLesson,
   deleteLesson,
-  checkTime,
+  alreadySelectedTime,
 };
