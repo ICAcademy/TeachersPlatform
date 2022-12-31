@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 //Components
-import FinancesCard from './FinancesCard/FinancesCard';
+import FinancesCard from 'components/Finances/FinancesCard/FinancesCard';
 import Transactions from 'components/Transactions/Transactions';
 
 // Context

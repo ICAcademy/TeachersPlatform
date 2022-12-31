@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { sendPaymentData } from 'services/paymentService';
 import { nanoid } from 'nanoid';
+
+//Services
+import { sendPaymentData } from 'services/paymentService';
 
 //Styles
 import styles from './FinancesCard.module.scss';
@@ -36,7 +38,7 @@ const FinancesCard = ({ pricing, user }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [currency, user.fullName, user.userId, price]);
+  }, [currency, price, dae]);
 
   useEffect(() => {
     getPaymentData();

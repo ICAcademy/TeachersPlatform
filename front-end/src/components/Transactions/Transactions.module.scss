@@ -1,3 +1,5 @@
+@import 'styles/colors.scss';
+
 .transactionsTable {
   position: relative;
   margin-bottom: 1.5rem;
@@ -67,6 +69,7 @@
     td,
     th {
       padding: 1rem 0;
+      border-bottom: 1px solid #c1c1c1;
     }
 
     th {
@@ -81,4 +84,35 @@
 
 .noTransactions {
   text-align: center;
+}
+
+.paginationList {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  margin-top: 30px;
+}
+
+.paginationList li {
+  padding: 0.5em 1em;
+  margin: 0 2px;
+  border-radius: 2px;
+  border: 0;
+  min-width: 1.5em;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+
+  &.active {
+    background-color: $softPurple;
+    color: #fff;
+  }
+
+  &:hover {
+    background-color: #ecc9e6;
+    color: $softPurple;
+  }
 }

@@ -1,36 +1,63 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+
+// Libraries for export table in different formats
 import { CSVLink } from 'react-csv';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
-//Components
+// Components
 import Transaction from './Transaction/Transaction';
 
-//Styles
+// Styles
 import styles from './Transactions.module.scss';
 
-//Services
+// Services
 import { getAllTransactions } from 'services/transactionService';
 
 const Transactions = () => {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState('');
+
+  const [page, setPage] = useState(1);
+
+  const [pageCount, setPageCount] = useState(0);
+
   const tableRef = useRef(null);
 
-  const getTransactions = async () => {
+  const getTransactions = useCallback(async () => {
     try {
-      const transactions = await getAllTransactions();
+      const transactions = await getAllTransactions(page);
       setTransactions(transactions);
+      if (transactions) {
+        setPageCount(transactions.pagination.pageCount);
+      }
     } catch (error) {
       console.log(error);
     }
+  }, [page]);
+
+  const handlePrev = () => {
+    setPage((prev) => {
+      if (prev === 1) return prev;
+      return prev - 1;
+    });
+  };
+
+  const handleNext = () => {
+    setPage((prev) => {
+      console.log(prev);
+      if (prev === pageCount) return prev;
+      return prev + 1;
+    });
+  };
+
+  const changePageHandle = (event) => {
+    setPage(+event.target.textContent);
   };
 
   useEffect(() => {
     getTransactions();
-  }, []);
-
-  console.log(transactions);
+  }, [getTransactions]);
 
   const exportPDF = () => {
     const unit = 'pt';
@@ -65,8 +92,9 @@ const Transactions = () => {
   };
 
   const transactionsList =
-    transactions.length > 0 &&
-    transactions.map((transaction) => (
+    transactions &&
+    transactions.items.length > 0 &&
+    transactions.items.map((transaction) => (
       <Transaction key={transaction._id} transaction={transaction} />
     ));
 
@@ -83,7 +111,7 @@ const Transactions = () => {
         <p className={styles.subtitle}>Export Invoice List to Copy, CSV, Excel, PDF & Print</p>
       </div>
       <div className={styles.buttonGroup}>
-        <CSVLink data={transactions} className={styles.buttonItem}>
+        <CSVLink data={transactions && transactions.items} className={styles.buttonItem}>
           CSV
         </CSVLink>
         <DownloadTableExcel
@@ -114,6 +142,30 @@ const Transactions = () => {
             {noTransactions}
           </tbody>
         </table>
+        <div className={styles.pagination}>
+          <ul className={styles.paginationList}>
+            <li className={page === 1 ? styles.disabled : ''} onClick={handlePrev}>
+              Previous
+            </li>
+            {Array(pageCount)
+              .fill()
+              .map((_, index) => {
+                return (
+                  <li
+                    key={index}
+                    className={page == index + 1 ? styles.active : ''}
+                    data-index={index + 1}
+                    onClick={changePageHandle}
+                  >
+                    {index + 1}
+                  </li>
+                );
+              })}
+            <li className={page === pageCount ? styles.disabled : ''} onClick={handleNext}>
+              Next
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );
