@@ -15,7 +15,7 @@ const cors = require('./middlewares/cors');
 // Routers
 const appRouter = require('./routes/AppRouter');
 const authRouter = require('./routes/AuthRouter');
-const transactionRouter = require('./routes/TransactionRouter');
+const transactionRouter = require('./routes/TransactionRoutes');
 
 app.use(cors);
 app.use(express.json());

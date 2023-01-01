@@ -8,6 +8,7 @@ const transactionSchema = new Schema({
   status: { type: String, required: true },
   description: { type: String },
   end_date: { type: String, required: true },
+  dae: { type: JSON, required: true },
 });
 
 module.exports = mongoose.model('Transaction', transactionSchema);
