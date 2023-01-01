@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, TextField, Button } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import ModalWindow from 'components/ResetPassword/ModalWindow';
 import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
@@ -34,6 +36,8 @@ const dateOfBirthHelperText = `Please enter a valid date in range between ${minD
 
 const GeneralInfo = () => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
 
   const {
     value: enteredFullName,
@@ -150,11 +154,22 @@ const GeneralInfo = () => {
           Save
         </Button>
       </Box>
-      <Button variant='outlined' color='primary'>
+      <Button variant='outlined' color='primary' onClick={() => setOpen(true)}>
         Change password
       </Button>
+      <ModalWindow open={open} handleClose={handleClose} />
     </>
   );
+};
+
+GeneralInfo.propTypes = {
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
+};
+
+GeneralInfo.defaultProps = {
+  open: true,
+  setOpen: () => {},
 };
 
 export default GeneralInfo;

@@ -24,7 +24,7 @@ const Teacher = () => {
 
   useEffect(() => {
     fetchTeacher(id);
-  }, []);
+  }, [id]);
 
   return (
     <SelectedTeacher

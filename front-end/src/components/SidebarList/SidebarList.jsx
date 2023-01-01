@@ -16,6 +16,7 @@ import {
   faSackDollar,
   faRightFromBracket,
   faChalkboardUser,
+  faBell,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Services
@@ -70,12 +71,20 @@ export const SidebarList = () => {
               Teachers
             </Link>
           ) : (
-            <Link to='/app/students' className={styles.sidebarLink}>
+            <Link to='/app/subscriptions' className={styles.sidebarLink}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
               Students
             </Link>
           )}
         </ListItem>
+        {currentUser?.role === 'student' && (
+          <ListItem className={styles.sidebarItem}>
+            <Link to='/app/subscriptions' className={styles.sidebarLink}>
+              <FontAwesomeIcon className={styles.sidebarIcon} icon={faBell} />
+              Subscriptions
+            </Link>
+          </ListItem>
+        )}
         <ListItem className={styles.sidebarItem}>
           <Link to='/app/finances' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSackDollar} />

@@ -9,3 +9,7 @@ export const updateUserById = async (id, body) => {
   const { data } = await API.patch(`/api/users/${id}`, { ...body });
   return data;
 };
+
+export const changePassword = async (id, body) => {
+  return await API.patch(`/api/users/change-password/${id}`, { ...body });
+};
