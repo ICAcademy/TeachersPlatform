@@ -91,7 +91,7 @@ const Questions = () => {
   }, [selectedLevel, searchUnitName]);
 
   return (
-    <div className={styles.materials}>
+    <div>
       <div className={styles.filtersContainer}>
         <div className={styles.levelsContainer}>
           <Levels

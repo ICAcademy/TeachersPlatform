@@ -37,7 +37,7 @@ const TopicsBody = ({ topics, selectHandler, fullscreen }) => {
 TopicsBody.propTypes = {
   topics: PropTypes.array,
   selectHandler: PropTypes.func,
-  fullscreen: PropTypes.boolean,
+  fullscreen: PropTypes.bool,
 };
 
 TopicsBody.defaultProps = {
