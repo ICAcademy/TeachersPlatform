@@ -16,6 +16,7 @@ const Units = (props) => {
           unit={item.unit}
           image={item.image}
           numberOfLessons={item.numberOfLessons}
+          editLink={`/app/materials/edit/${item.url}`}
           url={item.url}
         />
       ))}

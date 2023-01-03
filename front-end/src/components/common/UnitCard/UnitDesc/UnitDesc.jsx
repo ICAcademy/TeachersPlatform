@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 //Styles
 import styles from './UnitDesc.module.scss';
@@ -9,7 +10,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 //Components
 import FirstLetterIcon from 'components/common/FirstLetterIcon/FirstLetterIcon';
 
-const UnitDesc = ({ unit, numberOfLessons }) => {
+const UnitDesc = ({ unit, numberOfLessons, url }) => {
   const lessonsCount = numberOfLessons ? (
     <div className={styles.lessonsCount}>
       <span>Lessons:</span>
@@ -20,7 +21,7 @@ const UnitDesc = ({ unit, numberOfLessons }) => {
   );
 
   return (
-    <div className={styles.unitDesc}>
+    <Link className={styles.unitDesc} to={url}>
       <div className={styles.unitInfo}>
         <FirstLetterIcon firstLetter={unit[0]} />
         <div className={styles.dFlex}>
@@ -29,17 +30,19 @@ const UnitDesc = ({ unit, numberOfLessons }) => {
         </div>
       </div>
       <FontAwesomeIcon icon={faArrowRight} />
-    </div>
+    </Link>
   );
 };
 
 //propTypes
 UnitDesc.propTypes = {
+  url: PropTypes.string,
   unit: PropTypes.string,
   numberOfLessons: PropTypes.number,
 };
 
 UnitDesc.defaultProps = {
+  url: '',
   unit: '',
   numberOfLessons: 0,
 };

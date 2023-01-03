@@ -19,6 +19,7 @@ const Units = ({ units }) => {
                 key={i}
                 unit={item.unit}
                 image={item.image}
+                editLink='/app/tests'
                 numberOfLessons={item.numberOfLessons}
                 url={url}
               />

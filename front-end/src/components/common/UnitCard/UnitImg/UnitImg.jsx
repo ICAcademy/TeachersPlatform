@@ -9,22 +9,22 @@ import { CurrentUserContext } from 'context/AppProvider';
 import styles from './UnitImg.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 
-const UnitImg = ({ url, unit, image }) => {
+const UnitImg = ({ url, unit, image, editLink }) => {
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
   return (
     <div className={styles.unitImg}>
       {isAuthenticated && currentUser.role === 'admin' && (
-        <Link to={`/app/materials/edit/${url}`}>
+        <Link to={editLink}>
           <EditIcon className={styles.editIcon} fontSize='large' />
         </Link>
       )}
       {image && (
-        <Link to={`/app/materials/${url}`}>
+        <Link to={url}>
           <img src={image} />
         </Link>
       )}
       {!image && (
-        <Link to={`/app/materials/${url}`}>
+        <Link to={url}>
           <p className={styles.noImage}>{unit}</p>
         </Link>
       )}
@@ -35,11 +35,13 @@ const UnitImg = ({ url, unit, image }) => {
 //propTypes
 UnitImg.propTypes = {
   url: PropTypes.string,
+  editLink: PropTypes.string,
   unit: PropTypes.string,
   image: PropTypes.string,
 };
 UnitImg.defaultProps = {
   url: '',
+  editLink: '',
   unit: '',
   image: '',
 };
