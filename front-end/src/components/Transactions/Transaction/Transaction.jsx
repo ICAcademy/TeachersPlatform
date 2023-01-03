@@ -22,6 +22,7 @@ const Transaction = ({ transaction }) => {
       <td>{amount + ' ' + currency}</td>
       <td>{userData.fullName}</td>
       <td>{userData.userId}</td>
+      <td>{userData.teacher}</td>
       <td>
         <Chip className={styles.statusLabel} label={status} color='success' />
       </td>

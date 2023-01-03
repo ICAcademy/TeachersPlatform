@@ -70,15 +70,22 @@ const Transactions = () => {
     doc.setFontSize(15);
 
     const title = 'Transactions';
-    const headers = [['Transaction ID', 'Transaction Date', 'Amount', 'User', 'User ID', 'Status']];
+    const headers = [
+      ['Transaction ID', 'Transaction Date', 'Amount', 'User', 'User ID', 'Teacher', 'Status'],
+    ];
 
-    const data = transactions.map((item) => [
-      item.transaction_id,
-      item.end_date,
-      item.amount + item.currency,
-      item.description,
-      item.status,
-    ]);
+    const data = transactions.items.map((item) => {
+      const userData = JSON.parse(item.dae);
+      return [
+        item.transaction_id,
+        item.end_date,
+        item.amount + item.currency,
+        userData.fullName,
+        userData.userId,
+        userData.teacher,
+        item.status,
+      ];
+    });
 
     let content = {
       startY: 50,
@@ -88,7 +95,7 @@ const Transactions = () => {
 
     doc.text(title, marginLeft, 40);
     doc.autoTable(content);
-    doc.save('report.pdf');
+    doc.save('transactions.pdf');
   };
 
   const transactionsList =
@@ -134,6 +141,7 @@ const Transactions = () => {
               <th>Ammount</th>
               <th>User</th>
               <th>User ID</th>
+              <th>Teacher</th>
               <th>Status</th>
             </tr>
           </thead>

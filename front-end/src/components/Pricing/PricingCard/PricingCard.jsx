@@ -6,12 +6,12 @@ import { nanoid } from 'nanoid';
 import { sendPaymentData } from 'services/paymentService';
 
 //Styles
-import styles from './FinancesCard.module.scss';
+import styles from './PricingCard.module.scss';
 import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-const FinancesCard = ({ pricing, user }) => {
+const PricingCard = ({ pricing, user, teacher }) => {
   const { name, price, currency, description } = pricing;
 
   const [payment, setPayment] = useState({
@@ -22,6 +22,7 @@ const FinancesCard = ({ pricing, user }) => {
   const dae = JSON.stringify({
     fullName: user.fullName,
     userId: user.userId,
+    teacher: teacher,
   });
 
   const getPaymentData = useCallback(async () => {
@@ -55,11 +56,20 @@ const FinancesCard = ({ pricing, user }) => {
           {price + ' ' + currency}
           <span>{`/ ${name}`}</span>
         </h2>
+        <div className={styles.teacherRow}>
+          Teacher:
+          <span className={styles.bage}>{teacher}</span>
+        </div>
         <p>{description}</p>
         <form method='POST' action='https://www.liqpay.ua/api/3/checkout' acceptCharset='utf-8'>
           <input type='hidden' name='data' value={payment.data} />
           <input type='hidden' name='signature' value={payment.signature} />
-          <Button className={styles.deleteBtn} variant='contained' type='submit'>
+          <Button
+            disabled={teacher === ''}
+            className={styles.deleteBtn}
+            variant='contained'
+            type='submit'
+          >
             Pay
           </Button>
         </form>
@@ -69,13 +79,15 @@ const FinancesCard = ({ pricing, user }) => {
 };
 
 //propTypes
-FinancesCard.propTypes = {
+PricingCard.propTypes = {
   pricing: PropTypes.object,
   user: PropTypes.object,
+  teacher: PropTypes.string,
 };
-FinancesCard.defaultProps = {
+PricingCard.defaultProps = {
   pricing: {},
   user: {},
+  teacher: '',
 };
 
-export default FinancesCard;
+export default PricingCard;

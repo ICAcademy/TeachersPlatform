@@ -5,7 +5,10 @@ exports.getAllTransactions = async (req) => {
   const page = req.query.page || 1;
   const skip = (page - 1) * ITEMS_PER_PAGE;
   const count = await TransactionModel.count();
-  const items = await TransactionModel.find().limit(ITEMS_PER_PAGE).skip(skip);
+  const items = await TransactionModel.find()
+    .sort({ end_date: -1 })
+    .limit(ITEMS_PER_PAGE)
+    .skip(skip);
   const pageCount = Math.ceil(count / ITEMS_PER_PAGE);
 
   return {
