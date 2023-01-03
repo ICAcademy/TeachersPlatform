@@ -18,6 +18,7 @@ import { regexFullName, regexEmail, regexDateOfBirth } from 'helpers/regex';
 
 import styles from './GeneralInfo.module.scss';
 import userImg from 'assets/sidebar/avatar.png';
+import { getToken, updateToken } from 'services/tokenService';
 
 const sx = {
   saveBtn: { maxWidth: '100px', ml: 'auto' },
@@ -37,6 +38,7 @@ const dateOfBirthHelperText = `Please enter a valid date in range between ${minD
 const GeneralInfo = () => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [open, setOpen] = useState(false);
+  const [existEmail, setExistEmail] = useState(false);
   const handleClose = () => setOpen(false);
 
   const {
@@ -79,11 +81,22 @@ const GeneralInfo = () => {
   const saveChanges = async (id, data) => {
     try {
       const updatedUser = await updateUserById(id, data);
-      setCurrentUser(updatedUser);
+      if (updatedUser !== 'exist email') {
+        setCurrentUser(updatedUser);
+        console.log('updatedUser', updatedUser);
+        updateToken(updatedUser);
+      } else {
+        setExistEmail(true);
+        console.log('updatedUser', updatedUser);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const token = getToken();
+
+  console.log('get token', token);
 
   return (
     <>
@@ -118,6 +131,7 @@ const GeneralInfo = () => {
           helperText={emailHasError ? emailHelperText : ''}
           sx={sx.profileItem}
         />
+        {existEmail && currentUser.email !== enteredEmail && <div>Exist user with this email</div>}
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DesktopDatePicker
             inputFormat='DD/MM/YYYY'
