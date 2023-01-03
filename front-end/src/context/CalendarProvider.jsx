@@ -29,7 +29,7 @@ const sortLessonsByDate = (list) =>
 
 const CalendarProvider = ({ children, snackbarShowMessage }) => {
   const {
-    currentUser: { roleId },
+    currentUser: { role, roleId },
   } = useContext(CurrentUserContext);
 
   const [selectedMonthIdx, setSelectedMonthIdx] = useState(monthIdx);

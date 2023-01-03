@@ -2,11 +2,14 @@ const ScheduledLesson = require('../models/ScheduledLesson');
 
 const getAllLessons = async (id, minDate, maxDate) => {
   if (minDate && maxDate) {
-    return await ScheduledLesson.find({ id, date: { $gte: minDate, $lte: maxDate } }).sort({
+    return await ScheduledLesson.find({
+      $or: [{ teacherId: id }, { studentId: id }],
+      date: { $gte: minDate, $lte: maxDate },
+    }).sort({
       date: 1,
     });
   }
-  return await ScheduledLesson.find({ id });
+  return await ScheduledLesson.find({ id }).sort({ date: 1 });
 };
 
 const getLessonById = async (id) => await ScheduledLesson.findById(id);

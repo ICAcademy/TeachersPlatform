@@ -1,24 +1,6 @@
 @import 'styles/colors.scss';
 @import 'styles/font.scss';
 
-button {
-  width: 175px;
-  height: 45px;
-  border: none;
-  background-color: $purple400;
-  margin: 25px 0;
-  text-transform: uppercase;
-  color: $white;
-  font-family: 'Poppins-Regular', sans-serif;
-  font-size: $f14;
-  cursor: pointer;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: $purple500;
-  }
-}
-
 .wrapper {
   height: 100vh;
   display: flex;
@@ -139,7 +121,7 @@ button {
   }
 }
 
-.test1 {
+.additionalInfo {
   width: 50%;
   display: flex;
   justify-content: space-between;
@@ -154,4 +136,22 @@ button {
   width: 50%;
   display: flex;
   flex-direction: column;
+}
+
+.subscribeBtn {
+  width: 175px;
+  height: 45px;
+  border: none;
+  background-color: $purple400;
+  margin: 25px 0;
+  text-transform: uppercase;
+  color: $white;
+  font-family: 'Poppins-Regular', sans-serif;
+  font-size: $f14;
+  cursor: pointer;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: $purple500;
+  }
 }

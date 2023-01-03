@@ -41,7 +41,7 @@ API.interceptors.response.use(
     return response;
   },
   (error) => {
-    const status = error.response.status;
+    const status = error?.response?.status;
     if (status === 401) {
       localStorage.clear();
       window.location.href = '/login';

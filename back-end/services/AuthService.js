@@ -3,20 +3,15 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const register = async (data) => {
-  await hashPassword(data.password, 10, (err, hashedPass) => {
-    if (err) {
-      throw new Error(err);
-    }
-
-    User.create({
-      role: data.role,
-      roleId: data.roleId,
-      fullName: data.fullName,
-      dateOfBirth: data.dateOfBirth,
-      age: data.age,
-      email: data.email,
-      password: hashedPass,
-    });
+  const password = await hashPassword(data.password);
+  User.create({
+    role: data.role,
+    roleId: data.roleId,
+    fullName: data.fullName,
+    dateOfBirth: data.dateOfBirth,
+    age: data.age,
+    email: data.email,
+    password,
   });
 };
 

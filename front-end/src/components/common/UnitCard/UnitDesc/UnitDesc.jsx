@@ -10,22 +10,22 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 //Components
 import FirstLetterIcon from 'components/common/FirstLetterIcon/FirstLetterIcon';
 
-const UnitDesc = (props) => {
-  const lessonsCount = props.numberOfLessons ? (
+const UnitDesc = ({ unit, numberOfLessons, url }) => {
+  const lessonsCount = numberOfLessons ? (
     <div className={styles.lessonsCount}>
       <span>Lessons:</span>
-      <span>{props.numberOfLessons}</span>
+      <span>{numberOfLessons}</span>
     </div>
   ) : (
     ''
   );
 
   return (
-    <Link className={styles.unitDesc} to={`/app/materials/${props.item.url}`}>
+    <Link className={styles.unitDesc} to={url}>
       <div className={styles.unitInfo}>
-        <FirstLetterIcon firstLetter={props.item.unit[0]} />
+        <FirstLetterIcon firstLetter={unit[0]} />
         <div className={styles.dFlex}>
-          <div className={styles.unitTitle}>{props.item.unit}</div>
+          <div className={styles.unitTitle}>{unit}</div>
           {lessonsCount}
         </div>
       </div>
@@ -36,11 +36,14 @@ const UnitDesc = (props) => {
 
 //propTypes
 UnitDesc.propTypes = {
-  item: PropTypes.object,
+  url: PropTypes.string,
+  unit: PropTypes.string,
   numberOfLessons: PropTypes.number,
 };
+
 UnitDesc.defaultProps = {
-  item: {},
+  url: '',
+  unit: '',
   numberOfLessons: 0,
 };
 
