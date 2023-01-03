@@ -17,11 +17,11 @@ const Topics = () => {
   const [selectedTopic, setSelectedTopic] = useState({});
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const { url } = useParams();
+  const params = useParams();
 
-  const fetchTopicsData = async (url1) => {
+  const fetchTopicsData = async (url) => {
     try {
-      const { unitInfo, topicsInfo } = await getTopicDataByUrl(url1);
+      const { unitInfo, topicsInfo } = await getTopicDataByUrl(url);
       setUnitData(unitInfo);
       setTopicsData(topicsInfo);
     } catch (error) {
@@ -50,8 +50,8 @@ const Topics = () => {
   );
 
   useEffect(() => {
-    fetchTopicsData(url);
-  }, [url]);
+    fetchTopicsData(params.url);
+  }, [params.url]);
 
   return (
     <div className={styles.wrapper}>
