@@ -1,7 +1,10 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import dayjs from 'dayjs';
+
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
+import { CurrentUserContext } from './AppProvider';
 
 import { getMonth } from 'helpers/getDate';
 import {
@@ -24,7 +27,11 @@ const maxDate = dayjs(new Date(year, monthIdx, lastDay)).format('YYYY/MM/D');
 const sortLessonsByDate = (list) =>
   list.sort((prev, curr) => dayjs(prev.date).diff(dayjs(curr.date)));
 
-const CalendarProvider = ({ children }) => {
+const CalendarProvider = ({ children, snackbarShowMessage }) => {
+  const {
+    currentUser: { roleId },
+  } = useContext(CurrentUserContext);
+
   const [selectedMonthIdx, setSelectedMonthIdx] = useState(monthIdx);
   const [monthMatrix, setMonthMatrix] = useState([]);
   const [lessonsList, setLessonsList] = useState([]);
@@ -41,9 +48,9 @@ const CalendarProvider = ({ children }) => {
       (lesson) => dayjs(lesson.date).format('YYYY/MM/DD') === date.format('YYYY/MM/DD'),
     );
 
-  const fetchLessons = async () => {
+  const fetchLessons = async (id) => {
     try {
-      const lessons = await getAllScheduledLessons(minDate, maxDate);
+      const lessons = await getAllScheduledLessons(id, minDate, maxDate);
       setLessonsList(lessons);
     } catch (error) {
       console.error(error);
@@ -57,8 +64,16 @@ const CalendarProvider = ({ children }) => {
       setLessonsList(updatedLessons);
       closeLessonForm();
       setFormError(null);
+      snackbarShowMessage({
+        message: 'Lesson scheduled',
+        severity: 'success',
+      });
     } catch (error) {
       setFormError(error.response.data);
+      snackbarShowMessage({
+        message: 'Smth went wrong',
+        severity: 'error',
+      });
     }
   };
 
@@ -72,8 +87,16 @@ const CalendarProvider = ({ children }) => {
       setIsEditing(false);
       closeLessonForm();
       setFormError(null);
+      snackbarShowMessage({
+        message: 'Lesson updated',
+        severity: 'success',
+      });
     } catch (error) {
       setFormError(error.response.data);
+      snackbarShowMessage({
+        message: 'Smth went wrong',
+        severity: 'error',
+      });
     }
   };
 
@@ -82,8 +105,16 @@ const CalendarProvider = ({ children }) => {
       await deleteScheduledLesson(id);
       const updatedLessons = lessonsList.filter((lesson) => lesson._id !== id);
       setLessonsList(updatedLessons);
+      snackbarShowMessage({
+        message: 'Lesson deleted',
+        severity: 'success',
+      });
     } catch (error) {
       console.log(error);
+      snackbarShowMessage({
+        message: 'Smth went wrong',
+        severity: 'error',
+      });
     }
   };
 
@@ -118,8 +149,8 @@ const CalendarProvider = ({ children }) => {
 
   useEffect(() => {
     setMonthMatrix(getMonth(selectedMonthIdx));
-    fetchLessons();
-  }, [selectedMonthIdx]);
+    fetchLessons(roleId);
+  }, [selectedMonthIdx, roleId]);
 
   return (
     <CalendarContext.Provider
@@ -153,6 +184,7 @@ const CalendarProvider = ({ children }) => {
 
 CalendarProvider.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  snackbarShowMessage: PropTypes.func,
 };
 
-export default CalendarProvider;
+export default withSnackbar(CalendarProvider);

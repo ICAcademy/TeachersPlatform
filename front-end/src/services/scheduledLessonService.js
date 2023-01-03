@@ -1,7 +1,7 @@
 import API from 'API';
 
-export const getAllScheduledLessons = async (minDate, maxDate) => {
-  const { data } = await API.get('api/scheduled-lessons', { params: { minDate, maxDate } });
+export const getAllScheduledLessons = async (id, minDate, maxDate) => {
+  const { data } = await API.get('api/scheduled-lessons', { params: { id, minDate, maxDate } });
   return data;
 };
 

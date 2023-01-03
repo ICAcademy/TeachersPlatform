@@ -9,8 +9,8 @@ const {
 
 const getAllScheduledLessons = async (req, res) => {
   try {
-    const { minDate, maxDate } = req.query;
-    const lessons = await getAllLessons(minDate, maxDate);
+    const { id, minDate, maxDate } = req.query;
+    const lessons = await getAllLessons(id, minDate, maxDate);
     res.status(200).json(lessons);
   } catch (error) {
     res.status(400).json(error);
