@@ -1,5 +1,11 @@
-const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
+const {
+  getUserById,
+  findByEmail,
+  updateByID,
+  getCurrentPassword,
+} = require('../services/UserService');
 const { comparePasswords, hashPassword } = require('../services/AuthService');
+const jwt = require('jsonwebtoken');
 
 const getUser = async (req, res) => {
   try {
@@ -17,8 +23,10 @@ const getUser = async (req, res) => {
 const updateUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await updateByID(id, req.body);
-    res.status(200).json(user);
+    await updateByID(id, req.body);
+    const user = await findByEmail(req.body.email);
+    const token = jwt.sign({ email: user.email }, process.env.SECRET_KEY, { expiresIn: '2h' });
+    res.status(200).json(token);
   } catch (error) {
     res.status(400).json(error.message);
   }

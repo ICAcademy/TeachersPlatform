@@ -7,6 +7,7 @@ export const getUser = async () => {
 
 export const updateUserById = async (id, body) => {
   const { data } = await API.patch(`/api/users/${id}`, { ...body });
+  console.log('data', data);
   return data;
 };
 
