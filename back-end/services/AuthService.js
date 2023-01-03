@@ -7,15 +7,15 @@ const register = async (data) => {
     if (err) {
       throw new Error(err);
     }
-    User.create({
-      role: data.role,
-      roleId: data.roleId,
-      fullName: data.fullName,
-      dateOfBirth: data.dateOfBirth,
-      age: data.age,
-      email: data.email,
-      password: hashedPass,
-    });
+  });
+  User.create({
+    role: data.role,
+    roleId: data.roleId,
+    fullName: data.fullName,
+    dateOfBirth: data.dateOfBirth,
+    age: data.age,
+    email: data.email,
+    password: hashedPass,
   });
 };
 
