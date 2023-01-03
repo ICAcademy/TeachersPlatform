@@ -125,7 +125,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
             <h1>{fullName}</h1>
             <span>{activity}</span>
           </div>
-          <div className={styles.test1}>
+          <div className={styles.additionalInfo}>
             <div className={styles.blockWrap}>
               <img src={speechBubble} alt='speechBubble' />
               <span>533 Reviews</span>
@@ -145,6 +145,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
           </div>
           {isSubscripted ? (
             <LoadingButton
+              className={styles.subscribeBtn}
               loading={buttonLoader}
               variant='contained'
               onClick={deleteSubscriptionOfStudent}
@@ -152,7 +153,12 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
               unsubscribe
             </LoadingButton>
           ) : (
-            <LoadingButton loading={buttonLoader} variant='contained' onClick={patchSubscription}>
+            <LoadingButton
+              className={styles.subscribeBtn}
+              loading={buttonLoader}
+              variant='contained'
+              onClick={patchSubscription}
+            >
               subscribe
             </LoadingButton>
           )}
