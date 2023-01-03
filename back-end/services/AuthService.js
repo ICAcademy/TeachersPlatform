@@ -7,7 +7,6 @@ const register = async (data) => {
     if (err) {
       throw new Error(err);
     }
-
     User.create({
       role: data.role,
       roleId: data.roleId,

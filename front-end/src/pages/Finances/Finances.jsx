@@ -35,7 +35,7 @@ const Finances = () => {
     getPricing();
   }, []);
 
-  const pricingCards = isAuthenticated && currentUser.role === 'admin' && (
+  const pricingCards = isAuthenticated && currentUser.role === 'student' && (
     <div className={styles.finances}>
       {pricing.map((item) => (
         <FinancesCard key={item._id} pricing={item} user={userData} />
