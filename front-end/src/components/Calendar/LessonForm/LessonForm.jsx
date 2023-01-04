@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Box,
   Button,
@@ -16,12 +16,10 @@ import PropTypes from 'prop-types';
 
 import dayjs from 'dayjs';
 
-import { CurrentUserContext } from 'context/AppProvider';
 import { CalendarContext } from 'context/CalendarProvider';
 
 import useInput from 'hooks/useInput';
 import { regexLabel, regexTime } from 'helpers/regex';
-import { getTeachersSubscription } from 'services/subscriptionService';
 
 const timeHelperText = 'Provide valid time (hh:mm)';
 const labelHelperText = 'Label is required and should be less than 30 symbols';
@@ -52,18 +50,22 @@ const sx = {
 };
 
 const LessonForm = ({ day }) => {
-  const { createLesson, updateLesson, selectedLesson, isEditing, formError, closeLessonForm } =
-    useContext(CalendarContext);
   const {
-    currentUser: { roleId: teacherId },
-  } = useContext(CurrentUserContext);
+    roleId,
+    studentsList,
+    createLesson,
+    updateLesson,
+    selectedLesson,
+    isEditing,
+    formError,
+    closeLessonForm,
+  } = useContext(CalendarContext);
 
   const label = isEditing ? selectedLesson.label : '';
   const date = isEditing ? selectedLesson.date : dayjs(day).format('YYYY/MM/DD HH:mm');
   const student = isEditing ? selectedLesson.studentId : '';
   const isSelected = isEditing;
 
-  const [studentsList, setStudentsList] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(student);
   const [studentIsSelected, setStudentIsSelected] = useState(isSelected);
 
@@ -94,28 +96,11 @@ const LessonForm = ({ day }) => {
     const data = {
       label: enteredLabel,
       date: enteredTime,
-      teacherId,
+      teacherId: roleId,
       studentId: selectedStudent,
     };
     return isEditing ? updateLesson(selectedLesson._id, data) : createLesson(data);
   };
-
-  const fetchStudents = async (id) => {
-    try {
-      const list = await getTeachersSubscription(id);
-      const studentsList = list.map((item) => ({
-        id: item.studentID._id,
-        fullName: item.studentID.fullName,
-      }));
-      setStudentsList(studentsList);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchStudents(teacherId);
-  }, [teacherId]);
 
   return (
     <Box sx={sx.container}>

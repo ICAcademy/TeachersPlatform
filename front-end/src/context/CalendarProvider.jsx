@@ -13,6 +13,7 @@ import {
   scheduleLesson,
   updateScheduledLesson,
 } from 'services/scheduledLessonService';
+import { getTeachersSubscription } from 'services/subscriptionService';
 
 export const CalendarContext = createContext();
 
@@ -32,6 +33,7 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
     currentUser: { role, roleId },
   } = useContext(CurrentUserContext);
 
+  const [studentsList, setStudentsList] = useState([]);
   const [selectedMonthIdx, setSelectedMonthIdx] = useState(monthIdx);
   const [monthMatrix, setMonthMatrix] = useState([]);
   const [lessonsList, setLessonsList] = useState([]);
@@ -42,6 +44,19 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
 
   const monthAndYear = dayjs(new Date(dayjs().year(), selectedMonthIdx)).format('MMMM YYYY');
   const monthName = dayjs(new Date(dayjs().year(), selectedMonthIdx)).format('MMM');
+
+  const fetchStudents = async (id) => {
+    try {
+      const list = await getTeachersSubscription(id);
+      const studentsList = list.map((item) => ({
+        id: item.studentID._id,
+        fullName: item.studentID.fullName,
+      }));
+      setStudentsList(studentsList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getLessonsForDay = (date) =>
     lessonsList.filter(
@@ -148,13 +163,19 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
   };
 
   useEffect(() => {
-    setMonthMatrix(getMonth(selectedMonthIdx));
-    fetchLessons(roleId);
+    if (roleId) {
+      setMonthMatrix(getMonth(selectedMonthIdx));
+      fetchLessons(roleId);
+      fetchStudents(roleId);
+    }
   }, [selectedMonthIdx, roleId]);
 
   return (
     <CalendarContext.Provider
       value={{
+        role,
+        roleId,
+        studentsList,
         isEditing,
         selectedLesson,
         getLessonsForDay,

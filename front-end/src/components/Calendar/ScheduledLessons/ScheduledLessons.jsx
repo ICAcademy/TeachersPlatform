@@ -35,7 +35,7 @@ const sx = {
 };
 
 const ScheduledLessons = ({ list }) => {
-  const { deleteLesson, openLessonForm, openFormForEdit } = useContext(CalendarContext);
+  const { role, deleteLesson, openLessonForm, openFormForEdit } = useContext(CalendarContext);
 
   return (
     <>
@@ -56,22 +56,24 @@ const ScheduledLessons = ({ list }) => {
                 sx={sx.item}
                 className={styles.lesson}
                 secondaryAction={
-                  <Box sx={sx.actions}>
-                    <IconButton
-                      edge='end'
-                      aria-label='delete'
-                      onClick={() => openFormForEdit(lesson._id)}
-                    >
-                      <EditIcon fontSize='small' sx={{ mr: '5px' }} />
-                    </IconButton>
-                    <IconButton
-                      edge='end'
-                      aria-label='delete'
-                      onClick={() => deleteLesson(lesson._id)}
-                    >
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </Box>
+                  role === 'teacher' && (
+                    <Box sx={sx.actions}>
+                      <IconButton
+                        edge='end'
+                        aria-label='delete'
+                        onClick={() => openFormForEdit(lesson._id)}
+                      >
+                        <EditIcon fontSize='small' sx={{ mr: '5px' }} />
+                      </IconButton>
+                      <IconButton
+                        edge='end'
+                        aria-label='delete'
+                        onClick={() => deleteLesson(lesson._id)}
+                      >
+                        <DeleteOutlineIcon />
+                      </IconButton>
+                    </Box>
+                  )
                 }
               >
                 <Box className={styles.lesson__time}>
@@ -101,14 +103,16 @@ const ScheduledLessons = ({ list }) => {
           </Typography>
         )}
       </Box>
-      <Button
-        startIcon={<AddIcon />}
-        variant='contained'
-        onClick={openLessonForm}
-        sx={{ display: 'flex', margin: '0 auto' }}
-      >
-        Schedule lesson
-      </Button>
+      {role === 'teacher' && (
+        <Button
+          startIcon={<AddIcon />}
+          variant='contained'
+          onClick={openLessonForm}
+          sx={{ display: 'flex', margin: '0 auto' }}
+        >
+          Schedule lesson
+        </Button>
+      )}
     </>
   );
 };
