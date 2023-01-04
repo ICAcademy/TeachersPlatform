@@ -47,17 +47,15 @@ const StudentSubscriptions = () => {
     }
   };
 
-  if (isLoading) {
-    <Loader />;
-  }
-
   useEffect(() => {
     fetchSubscriptions(currentUser.roleId);
   }, [currentUser]);
 
   return (
     <div className={styles.container}>
-      {subscriptions.length ? (
+      {isLoading ? (
+        <Loader />
+      ) : subscriptions.length ? (
         <SubscriptionsTable
           subscriptions={subscriptions}
           role={currentUser?.role}
