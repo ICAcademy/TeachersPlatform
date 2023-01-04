@@ -7,8 +7,8 @@ export const getAllScheduledLessons = async (id, minDate, maxDate) => {
   return data;
 };
 
-export const scheduleLesson = async (lesson) => {
-  const { data } = await API.post('api/scheduled-lessons', lesson);
+export const scheduleLesson = async (body, params) => {
+  const { data } = await API.post('api/scheduled-lessons', body, { params });
   return data;
 };
 

@@ -2,8 +2,10 @@ import React, { useContext, useState } from 'react';
 import {
   Box,
   Button,
+  Checkbox,
   FormControl,
   FormControlLabel,
+  FormGroup,
   FormHelperText,
   FormLabel,
   Radio,
@@ -68,6 +70,7 @@ const LessonForm = ({ day }) => {
 
   const [selectedStudent, setSelectedStudent] = useState(student);
   const [studentIsSelected, setStudentIsSelected] = useState(isSelected);
+  const [isRepeated, setIsRepeated] = useState(false);
 
   const {
     value: enteredLabel,
@@ -87,19 +90,24 @@ const LessonForm = ({ day }) => {
 
   const formIsValid = labelIsValid && timeIsValid && studentIsSelected;
 
+  const toggleCheckbox = () => {
+    setIsRepeated((prev) => !prev);
+  };
+
   const handleRadioChange = (e) => {
     setStudentIsSelected(true);
     setSelectedStudent(e.target.value);
   };
 
   const submitHandler = () => {
+    const params = { repeat: isRepeated };
     const data = {
       label: enteredLabel,
       date: enteredTime,
       teacherId: roleId,
       studentId: selectedStudent,
     };
-    return isEditing ? updateLesson(selectedLesson._id, data) : createLesson(data);
+    return isEditing ? updateLesson(selectedLesson._id, data) : createLesson(data, params);
   };
 
   return (
@@ -114,7 +122,6 @@ const LessonForm = ({ day }) => {
         sx={sx.input}
         helperText={labelHasError ? labelHelperText : ''}
       />
-
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <TimePicker
           inputFormat='HH:mm'
@@ -137,6 +144,15 @@ const LessonForm = ({ day }) => {
         />
       </LocalizationProvider>
 
+      {!isEditing && (
+        <FormGroup>
+          <FormControlLabel
+            control={<Checkbox checked={isRepeated} onChange={toggleCheckbox} />}
+            label='Repeat every week'
+          />
+        </FormGroup>
+      )}
+
       <FormControl sx={sx.radio}>
         <FormLabel id='students'>Students:</FormLabel>
         <RadioGroup
@@ -156,7 +172,6 @@ const LessonForm = ({ day }) => {
           <FormHelperText>{studentIsSelected ? '' : radioHelperText}</FormHelperText>
         </RadioGroup>
       </FormControl>
-
       <Box sx={sx.formActions}>
         <Button variant='outlined' onClick={closeLessonForm}>
           Cancel

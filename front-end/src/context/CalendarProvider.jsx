@@ -72,15 +72,24 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
     }
   };
 
-  const createLesson = async (data) => {
+  const createLesson = async (data, params) => {
     try {
-      const newLesson = await scheduleLesson(data);
-      const updatedLessons = sortLessonsByDate([...lessonsList, newLesson]);
-      setLessonsList(updatedLessons);
+      let message;
+      if (params.repeat) {
+        message = 'Lessons scheduled';
+        const newLessons = await scheduleLesson(data, params);
+        const updatedLessons = sortLessonsByDate([...lessonsList, ...newLessons]);
+        setLessonsList(updatedLessons);
+      } else {
+        message = 'Lesson scheduled';
+        const newLesson = await scheduleLesson(data, params);
+        const updatedLessons = sortLessonsByDate([...lessonsList, newLesson]);
+        setLessonsList(updatedLessons);
+      }
       closeLessonForm();
       setFormError(null);
       snackbarShowMessage({
-        message: 'Lesson scheduled',
+        message: message,
         severity: 'success',
       });
     } catch (error) {
@@ -163,12 +172,15 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
   };
 
   useEffect(() => {
+    setMonthMatrix(getMonth(selectedMonthIdx));
+  }, [selectedMonthIdx]);
+
+  useEffect(() => {
     if (roleId) {
-      setMonthMatrix(getMonth(selectedMonthIdx));
       fetchLessons(roleId);
       fetchStudents(roleId);
     }
-  }, [selectedMonthIdx, roleId]);
+  }, [roleId]);
 
   return (
     <CalendarContext.Provider

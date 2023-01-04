@@ -92,7 +92,7 @@ const ScheduledLessons = ({ list }) => {
                   <ListItemIcon sx={sx.icon}>
                     <PersonIcon />
                   </ListItemIcon>
-                  <ListItemText primary={lesson.studentId} />
+                  <ListItemText primary={lesson.studentId.fullName} />
                 </Box>
               </ListItem>
             ))}

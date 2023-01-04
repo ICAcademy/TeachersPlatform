@@ -1,7 +1,8 @@
 const {
   getAllLessons,
   getLessonById,
-  scheduleLesson,
+  scheduleSingleLesson,
+  scheduleMultipleLessons,
   updateLesson,
   deleteLesson,
   alreadySelectedTime,
@@ -29,15 +30,29 @@ const getScheduledLesson = async (req, res) => {
 
 const createScheduledLesson = async (req, res) => {
   try {
-    const isTimeAlreadyTaken = await alreadySelectedTime(req.body.date, '');
-    if (isTimeAlreadyTaken) {
-      return res
-        .status(400)
-        .json({ field: 'time', msg: 'There is another lesson scheduled for this time' });
-    }
+    const { repeat } = req.query;
+    const body = req.body;
 
-    const lesson = await scheduleLesson(req.body);
-    res.status(200).json(lesson);
+    if (repeat == 'true') {
+      const lessons = await scheduleMultipleLessons(req.body);
+
+      if (!lessons) {
+        return res
+          .status(400)
+          .json({ field: 'time', msg: 'There is another lesson scheduled for this time' });
+      }
+      res.status(200).json(lessons);
+    } else {
+      const isTimeAlreadyTaken = await alreadySelectedTime(body.date, '', body.teacherId);
+      if (isTimeAlreadyTaken) {
+        return res
+          .status(400)
+          .json({ field: 'time', msg: 'There is another lesson scheduled for this time' });
+      }
+
+      const lesson = await scheduleSingleLesson(body);
+      res.status(200).json(lesson);
+    }
   } catch (error) {
     res.status(400).json(error);
   }
@@ -47,7 +62,7 @@ const updateScheduledLesson = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const isTimeAlreadyTaken = await alreadySelectedTime(req.body.date, id);
+    const isTimeAlreadyTaken = await alreadySelectedTime(req.body.date, id, req.body.teacherId);
 
     if (isTimeAlreadyTaken) {
       return res

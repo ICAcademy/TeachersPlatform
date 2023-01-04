@@ -13,10 +13,12 @@ const scheduledLessonSchema = new mongoose.Schema(
     teacherId: {
       type: mongoose.ObjectId,
       required: true,
+      ref: 'Teacher',
     },
     studentId: {
       type: mongoose.ObjectId,
       required: true,
+      ref: 'Student',
     },
   },
   { timestamps: true },
