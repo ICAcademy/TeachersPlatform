@@ -11,6 +11,8 @@ import { CurrentUserContext } from 'context/AppProvider';
 
 import useInput from 'hooks/useInput';
 
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
+
 import { uploadPhoto } from 'services/firebaseService';
 
 import { updateUserById } from 'services/userService';
@@ -18,7 +20,7 @@ import { regexFullName, regexEmail, regexDateOfBirth } from 'helpers/regex';
 
 import styles from './GeneralInfo.module.scss';
 import userImg from 'assets/sidebar/avatar.png';
-import { getToken, updateToken } from 'services/tokenService';
+import { updateToken } from 'services/tokenService';
 
 const sx = {
   saveBtn: { maxWidth: '100px', ml: 'auto' },
@@ -35,7 +37,7 @@ const fullNameHelperText =
 const emailHelperText = 'Please enter a valid email address; examples: cockroaches@gmail.com';
 const dateOfBirthHelperText = `Please enter a valid date in range between ${minDate} and ${maxDate}`;
 
-const GeneralInfo = () => {
+const GeneralInfo = ({ snackbarShowMessage }) => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [open, setOpen] = useState(false);
   const [existEmail, setExistEmail] = useState(false);
@@ -81,22 +83,30 @@ const GeneralInfo = () => {
   const saveChanges = async (id, data) => {
     try {
       const updatedUser = await updateUserById(id, data);
-      if (updatedUser !== 'exist email') {
-        setCurrentUser(updatedUser);
-        console.log('updatedUser', updatedUser);
-        updateToken(updatedUser);
+      if (updatedUser.message !== 'exist email') {
+        setCurrentUser(updatedUser.user);
+        console.log('first updatedUser', updatedUser);
+        updateToken(updatedUser.token);
+        snackbarShowMessage({
+          message: 'Changes saved',
+          severity: 'success',
+        });
       } else {
         setExistEmail(true);
-        console.log('updatedUser', updatedUser);
+        console.log('second updatedUser', updatedUser);
+        snackbarShowMessage({
+          message: 'Changes saved',
+          severity: 'success',
+        });
       }
     } catch (error) {
       console.log(error);
+      snackbarShowMessage({
+        message: 'Error',
+        severity: 'success',
+      });
     }
   };
-
-  const token = getToken();
-
-  console.log('get token', token);
 
   return (
     <>
@@ -131,7 +141,9 @@ const GeneralInfo = () => {
           helperText={emailHasError ? emailHelperText : ''}
           sx={sx.profileItem}
         />
-        {existEmail && currentUser.email !== enteredEmail && <div>Exist user with this email</div>}
+        {existEmail && currentUser.email !== enteredEmail && (
+          <div className={styles.existEmail}>Exist user with this email</div>
+        )}
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DesktopDatePicker
             inputFormat='DD/MM/YYYY'
@@ -179,6 +191,7 @@ const GeneralInfo = () => {
 GeneralInfo.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  snackbarShowMessage: PropTypes.func,
 };
 
 GeneralInfo.defaultProps = {
@@ -186,4 +199,4 @@ GeneralInfo.defaultProps = {
   setOpen: () => {},
 };
 
-export default GeneralInfo;
+export default withSnackbar(GeneralInfo);
