@@ -3,12 +3,7 @@
 
 .wrapper {
   height: 650px;
-  background: $vividViolet;
-  background: linear-gradient(
-    70deg,
-    rgba(102, 16, 242, 0.8914916308320203) 0%,
-    rgba(245, 222, 255, 1) 100%
-  );
+  background: $bouquet;
   border-radius: 25px;
   display: flex;
   flex-direction: column;
@@ -28,7 +23,7 @@
 
   & img {
     display: flex;
-    height: 550px;
+    height: 400px;
     width: 600px;
   }
 }

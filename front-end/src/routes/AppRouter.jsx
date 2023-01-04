@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-indent */
 import React, { useContext, Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -12,7 +11,6 @@ import { CurrentUserContext } from 'context/AppProvider';
 import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
-import StudentSubscriptions from 'pages/StudentSubscriptions/StudentSubscriptions';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
 
 // Pages
@@ -27,8 +25,9 @@ const Questions = lazy(() => import('pages/Questions/Questions'));
 const Topics = lazy(() => import('pages/Topics/Topics'));
 const TeachersList = lazy(() => import('pages/TeachersList'));
 const Teacher = lazy(() => import('pages/Teacher'));
-const Students = lazy(() => import('pages/Students'));
+const TeacherSubscriptions = lazy(() => import('pages/TeacherSubscriptions'));
 const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
+const StudentSubscriptions = lazy(() => import('pages/StudentSubscriptions'));
 
 const RouterWrapper = () => {
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
@@ -138,7 +137,7 @@ const RouterWrapper = () => {
                 </PrivateRoute>
               ) : (
                 <PrivateRoute>
-                  <Students />
+                  <TeacherSubscriptions />
                 </PrivateRoute>
               )
             }

@@ -1,21 +1,23 @@
-import Loader from 'components/common/Loader/Loader';
-import React from 'react';
-import { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+
+// Context
 import { CurrentUserContext } from 'context/AppProvider';
+
+// Services
 import { deleteSubscription, getStudentSubscription } from 'services/subscriptionService';
 
-// styles
+// Components
+import SubscriptionsTable from 'components/common/SubscriptionsTable';
+import Loader from 'components/common/Loader/Loader';
+import NoSubscriptions from 'components/common/NoSubscriptions';
+
+// Styles
 import styles from './StudentSubscriptions.module.scss';
-import TeacherTable from 'components/StudentSubscriptions/TeacherTable/TeacherTable';
 
 const StudentSubscriptions = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { currentUser } = useContext(CurrentUserContext);
-
-  useEffect(() => {
-    fetchSubscriptions(currentUser.roleId);
-  }, [currentUser]);
 
   const fetchSubscriptions = async (id) => {
     try {
@@ -25,6 +27,7 @@ const StudentSubscriptions = () => {
       setIsLoading(false);
     } catch (e) {
       console.log(e);
+      setIsLoading(false);
     }
   };
 
@@ -40,18 +43,28 @@ const StudentSubscriptions = () => {
       return remove;
     } catch (e) {
       console.log(e);
+      setIsLoading(false);
     }
   };
 
+  if (isLoading) {
+    <Loader />;
+  }
+
+  useEffect(() => {
+    fetchSubscriptions(currentUser.roleId);
+  }, [currentUser]);
+
   return (
     <div className={styles.container}>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <TeacherTable
+      {subscriptions.length ? (
+        <SubscriptionsTable
           subscriptions={subscriptions}
+          role={currentUser?.role}
           deleteSubscriptionById={deleteSubscriptionById}
         />
+      ) : (
+        <NoSubscriptions subscribeTo='teacher' />
       )}
     </div>
   );
