@@ -82,31 +82,28 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
 
   const saveChanges = async (id, data) => {
     try {
-      const updatedUser = await updateUserById(id, data);
-      if (updatedUser.message !== 'exist email') {
-        setCurrentUser(updatedUser.user);
-        console.log('first updatedUser', updatedUser);
-        updateToken(updatedUser.token);
-        snackbarShowMessage({
-          message: 'Changes saved',
-          severity: 'success',
-        });
-      } else {
-        setExistEmail(true);
-        console.log('second updatedUser', updatedUser);
-        snackbarShowMessage({
-          message: 'Changes saved',
-          severity: 'success',
-        });
-      }
+      const updatedUser =
+        data.email !== currentUser.email
+          ? await updateUserById(id, data)
+          : await updateUserById(id, { fullName: data.fullName, dateOfBirth: data.dateOfBirth });
+      setCurrentUser(updatedUser.user);
+      console.log('updatedUser', updatedUser);
+      updateToken(updatedUser.token);
+      snackbarShowMessage({
+        message: 'Changes saved',
+        severity: 'success',
+      });
     } catch (error) {
       console.log(error);
+      setExistEmail(true);
       snackbarShowMessage({
         message: 'Error',
-        severity: 'success',
+        severity: 'error',
       });
     }
   };
+
+  console.log('existEmail', existEmail);
 
   return (
     <>
