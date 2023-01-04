@@ -7,6 +7,7 @@ export const getTeachersSubscription = async (id) => {
 
 export const getStudentSubscription = async (id) => {
   const { data } = await API.get(`/api/subscriptions/student-subscription/${id}`);
+  console.log(data);
   return data;
 };
 

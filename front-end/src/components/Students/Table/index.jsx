@@ -1,6 +1,9 @@
 /* eslint-disable react/jsx-indent */
 /* eslint-disable indent */
 import React, { useEffect, useState, useContext } from 'react';
+import { useDispatch } from 'react-redux';
+import { approvedActions } from 'store/approve-student-slice';
+import { useSelector } from 'react-redux';
 
 // FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,10 +23,17 @@ import teacher from 'assets/images/teacher1.jpg';
 
 // Styles
 import styles from './Table.module.scss';
+import IconButton from '@mui/material/IconButton';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const Table = () => {
   const { currentUser } = useContext(CurrentUserContext);
   const [subscriptions, setSubscriptions] = useState([]);
+
+  const approved = useSelector((state) => state.approveStudent.approved);
+
+  const dispatchFunction = useDispatch();
 
   const fetchSubscriptions = async (teacherId) => {
     try {
@@ -42,8 +52,12 @@ const Table = () => {
     }
   };
 
+  const handleApproved = () => {
+    dispatchFunction(approvedActions.approve(approved));
+  };
+
   useEffect(() => {
-    fetchSubscriptions('63a07859b66cae3e282cb573');
+    fetchSubscriptions(currentUser.roleId);
   }, [currentUser]);
 
   return (
@@ -57,6 +71,7 @@ const Table = () => {
               <th>Email</th>
               <th>Date of birth</th>
               <th>Level</th>
+              <th>Status</th>
               <th>Settings</th>
             </tr>
           </thead>
@@ -70,6 +85,18 @@ const Table = () => {
                 <td>{item?.studentID.email}</td>
                 <td>{item?.studentID.dateOfBirth || '-'}</td>
                 <td>{item?.studentID.level || '-'}</td>
+                <td>
+                  <IconButton
+                    aria-label='approve'
+                    color={approved ? 'success' : ''}
+                    onClick={handleApproved}
+                  >
+                    <CheckCircleIcon />
+                  </IconButton>
+                  <IconButton aria-label='reject'>
+                    <CancelIcon />
+                  </IconButton>
+                </td>
                 <td>
                   <button
                     className={styles.settingsBtn}
