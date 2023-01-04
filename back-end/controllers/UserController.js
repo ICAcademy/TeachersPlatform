@@ -25,7 +25,7 @@ const updateUserById = async (req, res) => {
         dateOfBirth: req.body.dateOfBirth,
       };
       await updateByID(id, body);
-      return res.status(200).json({ message: 'exist email' });
+      return res.status(400).json({ message: 'exist email' });
     }
     const user = await updateByID(id, req.body);
     const token = jwt.sign({ email: user.email }, process.env.SECRET_KEY, { expiresIn: '2h' });
