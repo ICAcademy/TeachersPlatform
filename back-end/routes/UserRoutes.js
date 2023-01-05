@@ -1,7 +1,9 @@
 const express = require('express');
-const { updateUserById } = require('../controllers/UserController');
+const { updateUserById, changePassword } = require('../controllers/UserController');
 
 const router = express.Router();
+
+router.patch('/change-password/:id', changePassword);
 
 router.patch('/:id', updateUserById);
 

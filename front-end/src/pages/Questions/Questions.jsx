@@ -4,21 +4,21 @@ import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
 import Units from 'components/questions/Units/Units';
 
-import { getLevels, getUnitsByLevel, getQuestionsByUnitName } from 'services/questionService';
+import { getLevels } from 'services/questionService';
 import { TextField } from '@mui/material';
 
 // styles
 import styles from './Questions.module.scss';
+import useFetchUnits from 'hooks/useFetchUnits';
 
 const baseUrl = 'questions';
 
 const Questions = () => {
   const [levels, setLevels] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState('beginner');
-  const [units, setUnits] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [searchUnitName, setSearchUnitName] = useState('');
-  const [prevLevel, setPrevLevel] = useState('beginner');
+  const [searchUnit, setSearchUnit] = useState('');
+  const [isEdit, setIsEdit] = useState(false);
 
   const fetchLevels = async () => {
     try {
@@ -29,36 +29,20 @@ const Questions = () => {
     }
   };
 
-  const fetchUnits = async (level) => {
-    try {
-      setIsLoading(true);
-      const units = await getUnitsByLevel(level);
-      setUnits(units);
-      setIsLoading(false);
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
-
   const levelHandler = (level) => {
     setSelectedLevel(level);
-  };
-
-  const fetchQuestionsByUnitName = async (searchUnit) => {
-    try {
-      setIsLoading(true);
-      const questionsFromInput = await getQuestionsByUnitName({ searchUnit });
-      setPrevLevel(selectedLevel);
-      setSelectedLevel('');
-      setUnits(questionsFromInput);
-      setIsLoading(false);
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    setIsEdit(false);
+    setSelectedLevel(level);
+    setSearchUnitName('');
   };
 
   const handleCangeSearchUnit = (event) => {
     setSearchUnitName(event.target.value);
+    if (event.target.value) {
+      setIsEdit(true);
+    } else {
+      setIsEdit(false);
+    }
   };
 
   useEffect(() => {
@@ -66,25 +50,15 @@ const Questions = () => {
   }, []);
 
   useEffect(() => {
-    if (searchUnitName.length === 0) {
-      setSelectedLevel(prevLevel);
-    }
-    if (searchUnitName.length > 3) {
-      const timer = setTimeout(() => {
-        return fetchQuestionsByUnitName(searchUnitName);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      setSearchUnit(searchUnitName);
+    }, 500);
+    return () => clearTimeout(timer);
   }, [searchUnitName]);
 
-  useEffect(() => {
-    if (searchUnitName.length < 3) {
-      const timer = setTimeout(() => {
-        fetchUnits(selectedLevel);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [selectedLevel, searchUnitName]);
+  const searching = searchUnitName === '' ? searchUnitName : searchUnit;
+
+  const { data, loading } = useFetchUnits(isEdit, searching, selectedLevel);
 
   return (
     <div className={styles.materials}>
@@ -92,7 +66,7 @@ const Questions = () => {
         <div className={styles.levelsContainer}>
           <Levels
             list={levels}
-            selectedLevel={selectedLevel}
+            selectedLevel={isEdit ? '' : selectedLevel}
             onChangeLevel={levelHandler}
             setSearchUnitName={setSearchUnitName}
           />
@@ -108,7 +82,7 @@ const Questions = () => {
           />
         </div>
       </div>
-      {isLoading ? <Loader /> : <Units units={units} baseUrl={baseUrl} />}
+      {loading ? <Loader /> : <Units units={data} baseUrl={baseUrl} />}
     </div>
   );
 };

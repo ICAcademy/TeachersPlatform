@@ -2,20 +2,16 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const register = (data) => {
-  bcrypt.hash(data.password, 10, (err, hashedPass) => {
-    if (err) {
-      throw new Error(err);
-    }
-
-    User.create({
-      role: data.role,
-      fullName: data.fullName,
-      dateOfBirth: data.dateOfBirth,
-      age: data.age,
-      email: data.email,
-      password: hashedPass,
-    });
+const register = async (data) => {
+  const password = await hashPassword(data.password);
+  User.create({
+    role: data.role,
+    roleId: data.roleId,
+    fullName: data.fullName,
+    dateOfBirth: data.dateOfBirth,
+    age: data.age,
+    email: data.email,
+    password,
   });
 };
 
@@ -44,4 +40,12 @@ const comparePasswords = (pass1, pass2) =>
     });
   });
 
-module.exports = { register, login };
+const hashPassword = (pass) =>
+  new Promise((resolve, reject) => {
+    bcrypt.hash(pass, 10, (err, result) => {
+      if (err) return reject(err);
+      return resolve(result);
+    });
+  });
+
+module.exports = { register, login, comparePasswords, hashPassword };

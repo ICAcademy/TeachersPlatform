@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 // components
 import SelectItem from './SelectItem/SelectItem';
@@ -6,6 +7,9 @@ import TextAreaInfo from './TextAreaItem/TextAreaInfo';
 import TeacherPhone from './TeacherPhone/TeacherPhone';
 import { Button } from '@mui/material';
 import AgePreferences from './AgePreferences/AgePreferences';
+
+// hoc
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -18,7 +22,7 @@ import styles from './TeacherInfo.module.scss';
 
 const languages = ['English', 'German', 'Italian'];
 
-const TeacherInfo = () => {
+const TeacherInfo = ({ snackbarShowMessage }) => {
   const { currentUser } = useContext(CurrentUserContext);
   const [language, setLanguage] = useState('');
   const [biography, setBiography] = useState('');
@@ -43,12 +47,20 @@ const TeacherInfo = () => {
       } else {
         await updateTeacher(currentUser.roleId, patchTeacher);
       }
+      snackbarShowMessage({
+        message: 'Changes saved',
+        severity: 'success',
+      });
     } catch (error) {
+      snackbarShowMessage({
+        message: 'Error',
+        severity: 'error',
+      });
       console.log(error);
     }
   };
 
-  const getTeacherFromUser = async () => {
+  const getTeacherFromUser = useCallback(async () => {
     try {
       const teacher = await getTeacher(currentUser.roleId);
       const preferences = teacher.preferences.split(' ');
@@ -61,11 +73,11 @@ const TeacherInfo = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [currentUser.roleId]);
 
   useEffect(() => {
     getTeacherFromUser();
-  }, []);
+  }, [getTeacherFromUser]);
 
   return (
     <div className={styles.content}>
@@ -98,4 +110,10 @@ const TeacherInfo = () => {
   );
 };
 
-export default TeacherInfo;
+TeacherInfo.propTypes = {
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
+  snackbarShowMessage: PropTypes.func,
+};
+
+export default withSnackbar(TeacherInfo);

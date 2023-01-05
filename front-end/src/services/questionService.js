@@ -11,7 +11,7 @@ export const getUnitsByLevel = async (level) => {
 };
 
 export const getTopicDataByUrl = async (params) => {
-  const { data } = await API.get('/api/questions/url', { params });
+  const { data } = await API.get('/api/questions/url', params);
   return data;
 };
 
