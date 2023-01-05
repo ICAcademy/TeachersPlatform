@@ -26,8 +26,9 @@ const StudentSubscriptions = () => {
       setSubscriptions(subscriptions);
       setIsLoading(false);
     } catch (e) {
+      return e;
+    } finally {
       setIsLoading(false);
-      console.log(e);
     }
   };
 
@@ -42,8 +43,9 @@ const StudentSubscriptions = () => {
       setIsLoading(false);
       return deletedSubscription;
     } catch (e) {
+      return e;
+    } finally {
       setIsLoading(false);
-      console.log(e);
     }
   };
 
