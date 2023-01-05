@@ -2,7 +2,7 @@
 const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
 const { comparePasswords, hashPassword } = require('../services/AuthService');
 const { updateTeacher } = require('../services/TeacherService');
-const { updateStudent } = require('../services/StudentService');
+const { updateStudent, addAvatarToStudent } = require('../services/StudentService');
 
 // Constants
 const { STUDENT, TEACHER } = require('../constants/UserRoles');
@@ -26,7 +26,7 @@ const updateUserById = async (req, res) => {
     const user = await updateByID(id, req.body);
     if (req.body.url) {
       if (user.role === STUDENT) {
-        await updateStudent(user.roleId, req.body);
+        await addAvatarToStudent(user.roleId, req.body);
       }
       if (user.role === TEACHER) {
         await updateTeacher(user.roleId, req.body);
