@@ -32,7 +32,7 @@ const Transactions = () => {
         setPageCount(transactions.pagination.pageCount);
       }
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }, [page]);
 

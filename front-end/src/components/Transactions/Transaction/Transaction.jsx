@@ -15,17 +15,24 @@ const Transaction = ({ transaction }) => {
   const date = new Date(cutDate * 1000);
   const formattedDate = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
 
+  const amountWithCurrency = amount + ' ' + currency;
+  const statusLabel = <Chip className={styles.statusLabel} label={status} color='success' />;
+
+  const transactionData = [
+    transaction_id,
+    formattedDate,
+    amountWithCurrency,
+    userData.fullName,
+    userData.userId,
+    userData.teacher,
+    statusLabel,
+  ];
+
   return (
     <tr>
-      <td>{transaction_id}</td>
-      <td>{formattedDate}</td>
-      <td>{amount + ' ' + currency}</td>
-      <td>{userData.fullName}</td>
-      <td>{userData.userId}</td>
-      <td>{userData.teacher}</td>
-      <td>
-        <Chip className={styles.statusLabel} label={status} color='success' />
-      </td>
+      {transactionData.map((item, index) => (
+        <td key={index}>{item}</td>
+      ))}
     </tr>
   );
 };

@@ -23,7 +23,7 @@ const Pricing = () => {
       const pricing = await getAllPricing();
       setPricing(pricing);
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -41,14 +41,14 @@ const Pricing = () => {
   }, []);
 
   const pricingCards = isAuthenticated && currentUser.role === 'student' && (
-    <React.Fragment>
+    <>
       <TeacherSelect user={currentUser} chooseTeacher={handleTeacher} teacher={teacher} />
       <div className={styles.pricing}>
         {pricing.map((item) => (
           <PricingCard key={item._id} pricing={item} user={userData} teacher={teacher} />
         ))}
       </div>
-    </React.Fragment>
+    </>
   );
 
   return pricingCards;

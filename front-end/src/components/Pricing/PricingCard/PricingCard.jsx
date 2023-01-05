@@ -19,7 +19,7 @@ const PricingCard = ({ pricing, user, teacher }) => {
     signature: '',
   });
 
-  const dae = JSON.stringify({
+  const userInfo = JSON.stringify({
     fullName: user.fullName,
     userId: user.userId,
     teacher: teacher,
@@ -33,13 +33,13 @@ const PricingCard = ({ pricing, user, teacher }) => {
         currency: currency,
         description: 'Teacher Platform Subscription',
         order_id: nanoid(),
-        dae: dae,
+        dae: userInfo,
       });
       setPayment(paymentData);
     } catch (error) {
       console.log(error);
     }
-  }, [currency, price, dae]);
+  }, [currency, price, userInfo]);
 
   useEffect(() => {
     getPaymentData();

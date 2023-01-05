@@ -16,8 +16,8 @@ const getPaymentData = async (data) => {
     description: data.description,
     dae: data.dae,
     order_id: data.order_id,
-    result_url: 'http://localhost:3000/app/finances',
-    server_url: 'https://f951-188-191-234-7.eu.ngrok.io/transactions',
+    result_url: 'https://incredible-torte-ac738e.netlify.app/app/finances',
+    server_url: 'https://teacher-platform.onrender.com/transactions',
   };
 
   const jsonString = JSON.stringify(dataObject);
