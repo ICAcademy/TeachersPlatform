@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-// components
+// MUI library
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,15 +13,17 @@ import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
-import TablePaginationActions from '../TablePaginationActions/TablePaginationActions';
 
-// assets
-import avatar from '../../../assets/images/avatar.jpeg';
+// Assets
+import avatar from 'assets/images/avatar.jpeg';
 
-// styles
-import styles from './TeacherTable.module.scss';
+// Components
+import TablePaginationActions from 'components/common/SubscriptionsTable/TablePaginationActions';
 
-const TeacherTable = ({ subscriptions, deleteSubscriptionById }) => {
+// Styles
+import styles from './SubscriptionsTable.module.scss';
+
+const SubscriptionsTable = ({ subscriptions, role, deleteSubscriptionById }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -35,15 +38,27 @@ const TeacherTable = ({ subscriptions, deleteSubscriptionById }) => {
     setPage(0);
   };
 
+  const tableHeaderCells = ['Avatar', 'Full name', 'Email', 'Day of birth', 'Level', 'Following'];
+
   return (
     <TableContainer component={Paper} className={styles.container}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-        <TableHead>
+        <TableHead
+          sx={{
+            '& th': {
+              color: 'white',
+              backgroundColor: '#a968a3',
+              fontSize: 16,
+              fontWeight: 500,
+            },
+          }}
+        >
           <TableRow>
-            <TableCell>Avatar</TableCell>
-            <TableCell align='left'>Full Name</TableCell>
-            <TableCell align='left'>Email</TableCell>
-            <TableCell align='left'>Following</TableCell>
+            {tableHeaderCells?.map((item, i) => (
+              <TableCell key={i} align='center'>
+                {item}
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -60,9 +75,25 @@ const TeacherTable = ({ subscriptions, deleteSubscriptionById }) => {
                   <img className={styles.img} src={avatar} />
                 </div>
               </TableCell>
-              <TableCell align='left'>{subscription.teacherID.fullName}</TableCell>
-              <TableCell align='left'>{subscription.teacherID.email}</TableCell>
-              <TableCell align='left'>
+              <TableCell align='center'>
+                {role === 'student'
+                  ? subscription.teacherID.fullName
+                  : subscription.studentID.fullName}
+              </TableCell>
+              <TableCell align='center'>
+                {role === 'student' ? subscription.teacherID.email : subscription.studentID.email}
+              </TableCell>
+              <TableCell align='center'>
+                {role === 'student'
+                  ? subscription.teacherID.dateOfBirth
+                  : subscription.studentID.dateOfBirth}
+              </TableCell>
+              <TableCell align='center'>
+                {role === 'student'
+                  ? subscription.teacherID.level || '-'
+                  : subscription.studentID.level || '-'}
+              </TableCell>
+              <TableCell justify='center' align='center'>
                 <Button
                   variant='contained'
                   size='small'
@@ -104,9 +135,9 @@ const TeacherTable = ({ subscriptions, deleteSubscriptionById }) => {
   );
 };
 
-TeacherTable.propTypes = {
+SubscriptionsTable.propTypes = {
   subscriptions: PropTypes.array,
   deleteSubscriptionById: PropTypes.func,
 };
 
-export default TeacherTable;
+export default SubscriptionsTable;
