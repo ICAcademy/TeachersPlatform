@@ -49,6 +49,7 @@ const scheduleMultipleLessons = async (lesson) => {
     select: 'fullName',
   });
 };
+
 const updateLesson = async (id, body) =>
   await ScheduledLesson.findByIdAndUpdate(id, body, { new: true, runValidators: true }).populate({
     path: 'studentId',

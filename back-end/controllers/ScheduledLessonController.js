@@ -41,18 +41,19 @@ const createScheduledLesson = async (req, res) => {
           .status(400)
           .json({ field: 'time', msg: 'There is another lesson scheduled for this time' });
       }
-      res.status(200).json(lessons);
-    } else {
-      const isTimeAlreadyTaken = await alreadySelectedTime(body.date, '', body.teacherId);
-      if (isTimeAlreadyTaken) {
-        return res
-          .status(400)
-          .json({ field: 'time', msg: 'There is another lesson scheduled for this time' });
-      }
-
-      const lesson = await scheduleSingleLesson(body);
-      res.status(200).json(lesson);
+      return res.status(200).json(lessons);
     }
+
+    const isTimeAlreadyTaken = await alreadySelectedTime(body.date, '', body.teacherId);
+
+    if (isTimeAlreadyTaken) {
+      return res
+        .status(400)
+        .json({ field: 'time', msg: 'There is another lesson scheduled for this time' });
+    }
+
+    const lesson = await scheduleSingleLesson(body);
+    res.status(200).json(lesson);
   } catch (error) {
     res.status(400).json(error);
   }

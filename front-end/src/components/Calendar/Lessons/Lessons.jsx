@@ -13,6 +13,8 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import styles from './Lessons.module.scss';
 
+const dateFormat = 'dddd, D MMMM';
+
 const Lessons = ({ isOpen, closeModal, date, lessonsList }) => {
   const { lessonFormIsOpen } = useContext(CalendarContext);
 
@@ -29,7 +31,7 @@ const Lessons = ({ isOpen, closeModal, date, lessonsList }) => {
       <Fade in={isOpen}>
         <Box className={styles.modal}>
           <Box className={styles.modal__header}>
-            <Typography sx={{ fontWeight: '600' }}>{dayjs(date).format('dddd, D MMMM')}</Typography>
+            <Typography sx={{ fontWeight: '600' }}>{dayjs(date).format(dateFormat)}</Typography>
             <IconButton className={styles.modal__closeBtn} onClick={closeModal}>
               <CloseIcon color='white' />
             </IconButton>

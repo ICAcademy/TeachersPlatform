@@ -148,7 +148,7 @@ const LessonForm = ({ day }) => {
         <FormGroup>
           <FormControlLabel
             control={<Checkbox checked={isRepeated} onChange={toggleCheckbox} />}
-            label='Repeat every week'
+            label='Repeat every week for current month'
           />
         </FormGroup>
       )}

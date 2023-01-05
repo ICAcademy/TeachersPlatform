@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 import { CurrentUserContext } from './AppProvider';
 
-import { getMonth } from 'helpers/getDate';
+import { getMonthMatrix } from 'helpers/getDate';
 import {
   deleteScheduledLesson,
   getAllScheduledLessons,
@@ -17,13 +17,15 @@ import { getTeachersSubscription } from 'services/subscriptionService';
 
 export const CalendarContext = createContext();
 
+const dateFormat = 'YYYY/MM/D';
+
 const year = dayjs().year();
 const monthIdx = dayjs().month();
 const firstDay = dayjs().startOf('M').format('D');
 const lastDay = dayjs().endOf('M').format('D');
 
-const minDate = dayjs(new Date(year, monthIdx, firstDay)).format('YYYY/MM/D');
-const maxDate = dayjs(new Date(year, monthIdx, lastDay)).format('YYYY/MM/D');
+const minDate = dayjs(new Date(year, monthIdx, firstDay)).format(dateFormat);
+const maxDate = dayjs(new Date(year, monthIdx, lastDay)).format(dateFormat);
 
 const sortLessonsByDate = (list) =>
   list.sort((prev, curr) => dayjs(prev.date).diff(dayjs(curr.date)));
@@ -65,7 +67,8 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
 
   const fetchLessons = async (id) => {
     try {
-      const lessons = await getAllScheduledLessons(id, minDate, maxDate);
+      const params = { id, minDate, maxDate };
+      const lessons = await getAllScheduledLessons(params);
       setLessonsList(lessons);
     } catch (error) {
       console.error(error);
@@ -172,7 +175,7 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
   };
 
   useEffect(() => {
-    setMonthMatrix(getMonth(selectedMonthIdx));
+    setMonthMatrix(getMonthMatrix(selectedMonthIdx));
   }, [selectedMonthIdx]);
 
   useEffect(() => {
