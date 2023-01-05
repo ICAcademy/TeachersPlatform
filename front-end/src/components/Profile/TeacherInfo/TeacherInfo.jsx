@@ -56,7 +56,6 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
         message: 'Error',
         severity: 'error',
       });
-      console.log(error);
     }
   };
 
