@@ -48,7 +48,7 @@ const RouterWrapper = () => {
         >
           <Route path='/app/profile' element={<Profile />}>
             <Route path='general-info' element={<GeneralInfo />} />
-            <Route path='contact-info' element={<h1>This route is not created!!!</h1>} />
+            <Route path='teacher-info' element={<TeacherInfo />} />
             <Route path='subjects' element={<h1>This route is not created!!!</h1>} />
             <Route path='languages' element={<h1>This route is not created!!!</h1>} />
           </Route>
