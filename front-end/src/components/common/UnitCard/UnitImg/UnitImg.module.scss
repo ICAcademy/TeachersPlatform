@@ -1,0 +1,43 @@
+.unitImg {
+  height: 200px;
+  position: relative;
+}
+
+.unitImg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noImage {
+  display: flex;
+  padding: 0 1.5rem;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: mix(#fff, #b464a6, 82%);
+  color: mix(#fff, #b464a6, 85%);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: -0.0075em 0.0075em 0 mix(#fff, #b464a6, 94%),
+    0.005em 0.005em 0 mix(#fff, #b464a6, 60%), 0.01em 0.01em 0 mix(#fff, #b464a6, 62%),
+    0.015em 0.015em mix(#fff, #b464a6, 64%), 0.02em 0.02em 0 mix(#fff, #b464a6, 66%),
+    0.025em 0.025em 0 mix(#fff, #b464a6, 68%), 0.03em 0.03em 0 mix(#fff, #b464a6, 70%),
+    0.035em 0.035em 0 mix(#fff, #b464a6, 72%);
+  box-sizing: border-box;
+}
+
+.editIcon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  padding: 5px;
+  top: 0;
+  right: 0;
+  background-color: #b464a6;
+  color: #fff;
+}

@@ -1,5 +1,5 @@
-@import '../../styles/colors.scss';
-@import '../../styles/font.scss';
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
 
 .contentWrap {
   display: flex;
@@ -12,6 +12,17 @@
     rgba(102, 16, 242, 0.8914916308320203) 0%,
     rgba(245, 222, 255, 1) 100%
   );
+}
+
+.error {
+  color: $dirtyPink;
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: $fw600;
+
+  & svg {
+    margin-right: 5px;
+  }
 }
 
 .blocksWrap {
@@ -28,8 +39,8 @@
 
 .bottomWrap {
   display: flex;
-  justify-content: space-evenly;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   height: 75px;
   width: 55%;
 
@@ -42,6 +53,7 @@
     font-size: $f14;
     color: $vividViolet;
     font-weight: $fw600;
+    margin-left: 5px;
 
     &:hover {
       color: $softPurple;
@@ -63,6 +75,7 @@
   & h1 {
     font-size: $f24;
     color: $vividViolet;
+    margin-bottom: 5px;
   }
 
   & p {

@@ -1,32 +1,35 @@
 @import '../../styles/colors.scss';
 
-.sidebarList {
-  margin-bottom: 20px;
+.sidebarMenu {
+  display: flex;
+  justify-content: center;
 
-  .sidebarItem {
-    font-size: 1.143rem;
-    padding: 0 15px;
+  .sidebarList {
+    margin-bottom: 20px;
 
-    .sidebarLink {
-      color: #7f839a;
-      font-weight: 400;
-      line-height: 25px;
-      padding: 10px 10px;
-      display: flex;
-      align-items: center;
-      width: 100%;
-      text-decoration: none;
+    .sidebarItem {
+      font-size: 1.143rem;
+      padding: 10px 15px;
 
-      &:hover {
-        color: $lightBlue;
+      .sidebarLink {
+        color: #7f839a;
+        font-weight: 400;
+        line-height: 25px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        text-decoration: none;
+
+        &:hover {
+          color: $purple500;
+        }
       }
-    }
 
-    .sidebarIcon {
-      width: 18px;
-      display: inline-block;
-      margin-right: 10px;
+      .sidebarIcon {
+        width: 18px;
+        display: inline-block;
+        margin-right: 10px;
+      }
     }
   }
 }
-

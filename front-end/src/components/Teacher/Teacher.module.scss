@@ -1,0 +1,157 @@
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconsWrap {
+  display: flex;
+  justify-content: space-between;
+  width: 155px;
+
+  & svg {
+    width: 15px;
+    height: 15px;
+    border: 2px solid transparent;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+      padding: 5px;
+      border-radius: 50%;
+    }
+
+    & path {
+      fill: $coolGrey;
+    }
+  }
+}
+
+.share {
+  display: flex;
+  justify-content: space-between;
+  width: 155px;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: rgba(135, 172, 183, 0.8) 0px 10px 10px -10px;
+  }
+
+  & span {
+    color: $gulfStream;
+    font-size: $f14;
+    font-family: 'Poppins-Regular', sans-serif;
+    font-weight: $fw600;
+    margin-bottom: 5px;
+  }
+
+  & svg {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 5px;
+
+    & path {
+      fill: $gulfStream;
+    }
+  }
+}
+
+.imageWrap {
+  height: 175px;
+  width: 175px;
+  padding: 15px;
+  border-radius: 50%;
+  background-color: $white;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+
+  & img {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+.test {
+  width: 45%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 25px 0;
+  height: 60px;
+
+  & h1,
+  span {
+    font-family: 'Poppins-Regular', sans-serif;
+  }
+
+  & h1 {
+    font-size: $f28;
+  }
+
+  & span {
+    color: $regentGrey;
+    font-size: $f14;
+  }
+}
+
+.blockWrap {
+  display: flex;
+  align-items: center;
+
+  & span {
+    font-family: 'Poppins-Regular', sans-serif;
+    margin-left: 10px;
+    color: $regentGrey;
+    font-size: $f14;
+  }
+}
+
+.additionalInfo {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  & img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.tabs {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.subscribeBtn {
+  width: 175px;
+  height: 45px;
+  border: none;
+  background-color: $purple400;
+  margin: 25px 0;
+  text-transform: uppercase;
+  color: $white;
+  font-family: 'Poppins-Regular', sans-serif;
+  font-size: $f14;
+  cursor: pointer;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: $purple500;
+  }
+}

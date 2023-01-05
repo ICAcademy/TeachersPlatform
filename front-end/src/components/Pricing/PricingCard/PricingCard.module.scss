@@ -1,0 +1,79 @@
+@import 'styles/colors.scss';
+
+.financesCard {
+  flex: 0 0 auto;
+  width: 33.3333333333%;
+  margin-bottom: 50px;
+
+  .cardBody {
+    padding: 1.5rem;
+    text-align: center;
+    margin: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
+    border: 1px solid #f0f3f6;
+    background-color: #fff;
+  }
+
+  h4 {
+    font-size: 1.35rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 35px;
+  }
+
+  .cardIcon {
+    font-size: 22px;
+    box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
+    height: 60px;
+    display: inline-block;
+    width: 60px;
+    line-height: 56px;
+    border-radius: 50%;
+    background-color: #ecc9e6;
+    color: $softPurple;
+    margin-bottom: 35px;
+  }
+
+  .cardPricing {
+    font-size: 1.75rem;
+    font-weight: 400;
+    margin-bottom: 15px;
+
+    span {
+      font-size: 40%;
+      color: #7f839a;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+  }
+
+  p {
+    color: #7f839a;
+    margin-bottom: 35px;
+  }
+
+  form {
+    input[type='submit'] {
+      background-color: $softPurple;
+    }
+  }
+
+  .teacherRow {
+    font-size: 1.25rem;
+    margin-bottom: 25px;
+    font-weight: 300;
+
+    .bage {
+      display: inline-block;
+      background-color: #ecc9e6;
+      min-width: 100px;
+      height: 30px;
+      vertical-align: middle;
+      border-radius: 5px;
+      margin-left: 10px;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+  }
+}

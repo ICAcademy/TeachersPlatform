@@ -1,28 +1,36 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
+import { Provider } from 'react-redux';
 
-// Components
-import PublicRoutes from 'routes/PublicRoutes';
-import { Sidebar } from 'components/Sidebar/Sidebar';
-import Header from 'components/common/Header/Header';
-import Footer from 'components/common/Footer/Footer';
+// Router
+import AppRouter from 'routes/AppRouter';
 
-// theme style
-import theme from './styles/customTheme';
+// Context
+import { CurrentUserContext } from 'context/AppProvider';
+
+// Store
+import store from 'store';
+
+// Theme style
+import theme from 'styles/customTheme';
 import 'App.scss';
 
 const App = () => {
+  const { fetchUser } = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
   return (
-    <ThemeProvider theme={theme}>
-      <div className='wrap'>
-        <Header />
-        <Sidebar />
-        <PublicRoutes />
-      </div>
-      <Footer />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <div className='wrap'>
+          <AppRouter />
+        </div>
+      </ThemeProvider>
+    </Provider>
   );
 };
 
 export default App;
-

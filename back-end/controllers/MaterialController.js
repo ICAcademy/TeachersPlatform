@@ -2,7 +2,10 @@ const materialService = require('../services/MaterialService');
 
 exports.getAllMaterials = async (req, res) => {
   try {
-    const materials = await materialService.getAllMaterials();
+    const { unitName } = req.query;
+    const materials = unitName
+      ? await materialService.getMaterialsByUnit(unitName)
+      : await materialService.getAllMaterials();
     res.json(materials);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -39,6 +42,33 @@ exports.updateMaterial = async (req, res) => {
 exports.deleteMaterial = async (req, res) => {
   try {
     const material = await materialService.deleteMaterial(req.params.id);
+    res.json(material);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+exports.getLevels = async (req, res) => {
+  try {
+    const levels = await materialService.getLevels();
+    res.json(levels);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+exports.getUnitsByLevel = async (req, res) => {
+  try {
+    const units = await materialService.getUnitsByLevel(req.params.level);
+    res.json(units);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+exports.getMaterialByUrl = async (req, res) => {
+  try {
+    const material = await materialService.getMaterialByUrl(req.params.url);
     res.json(material);
   } catch (err) {
     res.status(400).json({ error: err.message });

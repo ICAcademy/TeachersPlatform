@@ -21,7 +21,14 @@
     }
   },
   "rules": {
-    "indent": ["error", 2],
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "offsetTernaryExpressions": true
+      }
+    ],
     "linebreak-style": 0,
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
@@ -37,6 +44,8 @@
         "maxBOF": 0
       }
     ],
+    "no-unused-vars": ["warn"],
+    "no-useless-escape": "off",
     "react/jsx-closing-bracket-location": "error",
     "react/jsx-equals-spacing": "error",
     "react/jsx-first-prop-new-line": "error",
@@ -46,7 +55,7 @@
     "react/jsx-one-expression-per-line": [
       "error",
       {
-        "allow": "literal"
+        "allow": "single-child"
       }
     ],
     "react/jsx-no-useless-fragment": [
@@ -55,12 +64,6 @@
         "allowExpressions": true
       }
     ],
-    // "react/jsx-max-depth": [
-    //   "error",
-    //   {
-    //     "max": 4
-    //   }
-    // ],
     "react/jsx-wrap-multilines": [
       "error",
       {
@@ -74,6 +77,12 @@
       }
     ],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
