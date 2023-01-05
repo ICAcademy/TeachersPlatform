@@ -87,7 +87,6 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
           ? await updateUserById(id, data)
           : await updateUserById(id, { fullName: data.fullName, dateOfBirth: data.dateOfBirth });
       setCurrentUser(updatedUser.user);
-      console.log('updatedUser', updatedUser);
       updateToken(updatedUser.token);
       snackbarShowMessage({
         message: 'Changes saved',
@@ -102,8 +101,6 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
       });
     }
   };
-
-  console.log('existEmail', existEmail);
 
   return (
     <>
