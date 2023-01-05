@@ -44,7 +44,10 @@ const TeacherInfo = () => {
         await updateTeacher(currentUser.roleId, patchTeacher);
       }
     } catch (error) {
-      console.log(error);
+      snackbarShowMessage({
+        message: 'Error',
+        severity: 'error',
+      });
     }
   };
 
