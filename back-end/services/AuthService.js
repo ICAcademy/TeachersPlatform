@@ -29,7 +29,7 @@ const login = async (data) => {
   if (!passwords) {
     throw new Error('Password do not match');
   }
-  return jwt.sign({ email: user.email }, process.env.SECRET_KEY, { expiresIn: '2h' });
+  return jwt.sign({ email: user.email }, process.env.SECRET_KEY, { expiresIn: '30d' });
 };
 
 const comparePasswords = (pass1, pass2) =>

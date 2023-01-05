@@ -1,0 +1,22 @@
+@import 'styles/colors.scss';
+
+.lessons {
+  display: flex;
+  flex-direction: column;
+}
+
+.lesson {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  border-left: 5px solid $softPurple;
+  cursor: pointer;
+
+  &__label,
+  &__time,
+  &__students {
+    display: flex;
+    align-items: center;
+  }
+}
