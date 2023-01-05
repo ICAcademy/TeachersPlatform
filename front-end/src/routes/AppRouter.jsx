@@ -12,6 +12,8 @@ import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
+import TeacherInfo from 'components/Profile/TeacherInfo/TeacherInfo';
+import { ADMIN, TEACHER } from 'constants/UserRoles';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
