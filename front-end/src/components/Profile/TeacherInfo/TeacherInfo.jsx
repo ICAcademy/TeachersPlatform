@@ -28,6 +28,8 @@ const TeacherInfo = () => {
   const [maxAge, setMaxAge] = useState('');
   const [error, setError] = useState(false);
 
+  console.log('phoneInput', phoneInput);
+
   const changeProfile = async () => {
     try {
       const agePreferences = `${minAge} - ${maxAge}`;
