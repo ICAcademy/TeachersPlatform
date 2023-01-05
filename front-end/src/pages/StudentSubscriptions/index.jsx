@@ -26,8 +26,8 @@ const StudentSubscriptions = () => {
       setSubscriptions(subscriptions);
       setIsLoading(false);
     } catch (e) {
-      console.log(e);
       setIsLoading(false);
+      console.log(e);
     }
   };
 
@@ -37,18 +37,18 @@ const StudentSubscriptions = () => {
       const necessarySubscription = subscriptions.find((subscription) => {
         return subscription._id === id;
       });
-      const remove = await deleteSubscription(necessarySubscription._id);
+      const deletedSubscription = await deleteSubscription(necessarySubscription._id);
       await fetchSubscriptions(currentUser.roleId);
       setIsLoading(false);
-      return remove;
+      return deletedSubscription;
     } catch (e) {
-      console.log(e);
       setIsLoading(false);
+      console.log(e);
     }
   };
 
   useEffect(() => {
-    fetchSubscriptions(currentUser.roleId);
+    fetchSubscriptions(currentUser?.roleId);
   }, [currentUser]);
 
   return (

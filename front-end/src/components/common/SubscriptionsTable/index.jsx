@@ -38,6 +38,8 @@ const SubscriptionsTable = ({ subscriptions, role, deleteSubscriptionById }) => 
     setPage(0);
   };
 
+  const tableHeaderCells = ['Avatar', 'Full name', 'Email', 'Day of birth', 'Level', 'Following'];
+
   return (
     <TableContainer component={Paper} className={styles.container}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -52,14 +54,11 @@ const SubscriptionsTable = ({ subscriptions, role, deleteSubscriptionById }) => 
           }}
         >
           <TableRow>
-            <TableCell sx={{ maxWidth: 65 }} align='center'>
-              Avatar
-            </TableCell>
-            <TableCell align='center'>Full Name</TableCell>
-            <TableCell align='center'>Email</TableCell>
-            <TableCell align='center'>Day of birth</TableCell>
-            <TableCell align='center'>Level</TableCell>
-            <TableCell align='center'>Following</TableCell>
+            {tableHeaderCells?.map((item, i) => (
+              <TableCell key={i} align='center'>
+                {item}
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
