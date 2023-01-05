@@ -10,8 +10,6 @@ export const updateTeacher = async (id, body) => {
   return data;
 };
 
-import API from 'API';
-
 export const getAllTeacher = async () => {
   const { data } = await API.get('/api/teachers');
   return data;

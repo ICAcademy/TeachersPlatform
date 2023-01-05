@@ -27,7 +27,7 @@ const teacherSchema = new Schema(
       type: String,
     },
     socialMedias: {
-      type: [String],
+      type: String,
     },
   },
   { timestamps: true },
