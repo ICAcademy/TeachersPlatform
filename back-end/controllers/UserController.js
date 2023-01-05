@@ -1,6 +1,5 @@
 const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
-const { comparePasswords, hashPassword } = require('../services/AuthService');
-const jwt = require('jsonwebtoken');
+const { comparePasswords, hashPassword, createToken } = require('../services/AuthService');
 
 const getUser = async (req, res) => {
   try {
@@ -28,7 +27,7 @@ const updateUserById = async (req, res) => {
       return res.status(400).json({ message: 'exist email' });
     }
     const user = await updateByID(id, req.body);
-    const token = jwt.sign({ email: user.email }, process.env.SECRET_KEY, { expiresIn: '2h' });
+    const token = createToken(user.email);
     return res.status(200).json({ token, user });
   } catch (error) {
     res.status(400).json(error.message);
