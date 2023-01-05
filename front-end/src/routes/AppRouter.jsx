@@ -28,6 +28,7 @@ const Teacher = lazy(() => import('pages/Teacher'));
 const TeacherSubscriptions = lazy(() => import('pages/TeacherSubscriptions'));
 const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
 const StudentSubscriptions = lazy(() => import('pages/StudentSubscriptions'));
+const Finances = lazy(() => import('pages/Finances/Finances'));
 
 const RouterWrapper = () => {
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
@@ -142,6 +143,14 @@ const RouterWrapper = () => {
               )
             }
           />
+          <Route
+            path='/app/finances'
+            element={
+              <PrivateRoute>
+                <Finances />
+              </PrivateRoute>
+            }
+          />
         </Route>
         <Route
           path='/app/tests'
@@ -151,6 +160,7 @@ const RouterWrapper = () => {
             </PrivateRoute>
           }
         />
+
         <Route path='/login' element={<Login />} />
         <Route path='/registration' element={<Registration />} />
         <Route path='*' element={<NotFound />} />
