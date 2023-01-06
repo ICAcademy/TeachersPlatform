@@ -8,13 +8,13 @@ import styles from './UnitCard.module.scss';
 import UnitImg from './UnitImg/UnitImg';
 import UnitDesc from './UnitDesc/UnitDesc';
 
-const UnitCard = (props) => {
+const UnitCard = ({ image, url, numberOfLessons, unit, editLink }) => {
   return (
     <div className={styles.unitItem}>
       <div className={styles.unitWrapper}>
         <div className={styles.unitBody}>
-          <UnitImg item={props.item} />
-          <UnitDesc item={props.item} numberOfLessons={props.numberOfLessons} />
+          <UnitImg editLink={editLink} image={image} unit={unit} url={url} />
+          <UnitDesc unit={unit} numberOfLessons={numberOfLessons} url={url} />
         </div>
       </div>
     </div>
@@ -23,11 +23,18 @@ const UnitCard = (props) => {
 
 //propTypes
 UnitCard.propTypes = {
-  item: PropTypes.object,
+  image: PropTypes.string,
+  editLink: PropTypes.string,
+  url: PropTypes.string,
+  unit: PropTypes.string,
   numberOfLessons: PropTypes.number,
 };
+
 UnitCard.defaultProps = {
-  item: {},
+  image: '',
+  editLink: '',
+  url: '',
+  unit: '',
   numberOfLessons: 0,
 };
 

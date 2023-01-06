@@ -1,0 +1,25 @@
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.settingsBtn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  & svg {
+    font-size: $f18;
+    & path {
+      fill: $purpleHeart;
+
+      &:hover {
+        fill: $purpleHaze;
+      }
+    }
+  }
+}

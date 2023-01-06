@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-indent */
 import React, { useContext, Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -12,7 +11,6 @@ import { CurrentUserContext } from 'context/AppProvider';
 import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
-import StudentSubscriptions from 'pages/StudentSubscriptions/StudentSubscriptions';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
 
 // Pages
@@ -25,10 +23,13 @@ const NotFound = lazy(() => import('pages/NotFound'));
 const Tests = lazy(() => import('pages/Tests/Tests'));
 const Questions = lazy(() => import('pages/Questions/Questions'));
 const Topics = lazy(() => import('pages/Topics/Topics'));
+const Calendar = lazy(() => import('pages/Calendar/Calendar'));
 const TeachersList = lazy(() => import('pages/TeachersList'));
 const Teacher = lazy(() => import('pages/Teacher'));
-const Students = lazy(() => import('pages/Students'));
+const TeacherSubscriptions = lazy(() => import('pages/TeacherSubscriptions'));
 const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
+const StudentSubscriptions = lazy(() => import('pages/StudentSubscriptions'));
+const Finances = lazy(() => import('pages/Finances/Finances'));
 
 const RouterWrapper = () => {
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
@@ -94,6 +95,14 @@ const RouterWrapper = () => {
             }
           />
           <Route
+            path='/app/calendar'
+            element={
+              <PrivateRoute>
+                <Calendar />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path='/app/teachers'
             element={
               currentUser?.role === 'teacher' ? (
@@ -138,9 +147,17 @@ const RouterWrapper = () => {
                 </PrivateRoute>
               ) : (
                 <PrivateRoute>
-                  <Students />
+                  <TeacherSubscriptions />
                 </PrivateRoute>
               )
+            }
+          />
+          <Route
+            path='/app/finances'
+            element={
+              <PrivateRoute>
+                <Finances />
+              </PrivateRoute>
             }
           />
         </Route>
@@ -152,6 +169,7 @@ const RouterWrapper = () => {
             </PrivateRoute>
           }
         />
+
         <Route path='/login' element={<Login />} />
         <Route path='/registration' element={<Registration />} />
         <Route path='*' element={<NotFound />} />
