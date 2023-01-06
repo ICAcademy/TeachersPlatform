@@ -1,27 +1,38 @@
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
+
+// MUI library
 import { Box, TextField, Button } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import ModalWindow from 'components/ResetPassword/ModalWindow';
-import dayjs from 'dayjs';
-import PropTypes from 'prop-types';
 
+// Components
+import ModalWindow from 'components/ResetPassword/ModalWindow';
+
+// Context
+import Loader from 'components/common/Loader/Loader';
 import { CurrentUserContext } from 'context/AppProvider';
 
+// Hooks
 import useInput from 'hooks/useInput';
 
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
+// Services
 import { uploadPhoto } from 'services/firebaseService';
-
 import { updateUserById } from 'services/userService';
+
+// Helpers
 import { regexFullName, regexEmail, regexDateOfBirth } from 'helpers/regex';
 
-import styles from './GeneralInfo.module.scss';
+// Assets
 import userImg from 'assets/sidebar/avatar.png';
 import { updateToken } from 'services/tokenService';
 
+// Styles
+import styles from './GeneralInfo.module.scss';
 const sx = {
   saveBtn: { maxWidth: '100px', ml: 'auto' },
 };
@@ -42,6 +53,7 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
   const [open, setOpen] = useState(false);
   const [existEmail, setExistEmail] = useState(false);
   const handleClose = () => setOpen(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     value: enteredFullName,
@@ -71,17 +83,22 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
 
   const changePhoto = async (e) => {
     try {
+      setIsLoading(true);
       const file = e.target.files[0];
       const url = await uploadPhoto(file);
       const updatedUser = await updateUserById(currentUser._id, { url });
       setCurrentUser(updatedUser);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const saveChanges = async (id, data) => {
     try {
+      setIsLoading(true);
       const updatedUser =
         data.email !== currentUser.email
           ? await updateUserById(id, data)
@@ -92,6 +109,7 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
         message: 'Changes saved',
         severity: 'success',
       });
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       setExistEmail(true);
@@ -104,80 +122,86 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
 
   return (
     <>
-      <Box
-        component='img'
-        src={currentUser.url || userImg}
-        alt='User photo'
-        className={styles.profile__img}
-      />
-      <Button component='label'>
-        Change profile photo
-        <input onChange={changePhoto} hidden accept='image/*' type='file' />
-      </Button>
-      <Box className={styles.profile__content}>
-        <TextField
-          type='text'
-          label='Full name:'
-          value={enteredFullName}
-          onChange={fullNameChangeHandler}
-          onBlur={fullNameBlurHandler}
-          error={fullNameHasError}
-          helperText={fullNameHasError ? fullNameHelperText : ''}
-          sx={sx.profileItem}
-        />
-        <TextField
-          type='email'
-          label='Email:'
-          value={enteredEmail}
-          onChange={emailChangeHandler}
-          onBlur={emailBlurHandler}
-          error={emailHasError}
-          helperText={emailHasError ? emailHelperText : ''}
-          sx={sx.profileItem}
-        />
-        {existEmail && currentUser.email !== enteredEmail && (
-          <div className={styles.existEmail}>Exist user with this email</div>
-        )}
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DesktopDatePicker
-            inputFormat='DD/MM/YYYY'
-            disableFuture
-            minDate={minDate}
-            maxDate={maxDate}
-            className={styles.profile__item}
-            value={enteredDateOfBirth}
-            onChange={dateOfBirthChangeHandler}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label='Birth date:'
-                onBlur={dateOfBirthBlurHandler}
-                error={dateOfBirthHasError}
-                helperText={dateOfBirthHasError ? dateOfBirthHelperText : ''}
-              />
-            )}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Box
+            component='img'
+            src={currentUser.url || userImg}
+            alt='User photo'
+            className={styles.profile__img}
           />
-        </LocalizationProvider>
-        <Button
-          variant='contained'
-          color='primary'
-          disabled={!formIsValid}
-          sx={sx.saveBtn}
-          onClick={() =>
-            saveChanges(currentUser._id, {
-              fullName: enteredFullName,
-              email: enteredEmail,
-              dateOfBirth: enteredDateOfBirth,
-            })
-          }
-        >
-          Save
-        </Button>
-      </Box>
-      <Button variant='outlined' color='primary' onClick={() => setOpen(true)}>
-        Change password
-      </Button>
-      <ModalWindow open={open} handleClose={handleClose} />
+          <Button component='label'>
+            Change profile photo
+            <input onChange={changePhoto} hidden accept='image/*' type='file' />
+          </Button>
+          <Box className={styles.profile__content}>
+            <TextField
+              type='text'
+              label='Full name:'
+              value={enteredFullName}
+              onChange={fullNameChangeHandler}
+              onBlur={fullNameBlurHandler}
+              error={fullNameHasError}
+              helperText={fullNameHasError ? fullNameHelperText : ''}
+              sx={sx.profileItem}
+            />
+            <TextField
+              type='email'
+              label='Email:'
+              value={enteredEmail}
+              onChange={emailChangeHandler}
+              onBlur={emailBlurHandler}
+              error={emailHasError}
+              helperText={emailHasError ? emailHelperText : ''}
+              sx={sx.profileItem}
+            />
+            {existEmail && currentUser.email !== enteredEmail && (
+              <div className={styles.existEmail}>Exist user with this email</div>
+            )}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DesktopDatePicker
+                inputFormat='DD/MM/YYYY'
+                disableFuture
+                minDate={minDate}
+                maxDate={maxDate}
+                className={styles.profile__item}
+                value={enteredDateOfBirth}
+                onChange={dateOfBirthChangeHandler}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label='Birth date:'
+                    onBlur={dateOfBirthBlurHandler}
+                    error={dateOfBirthHasError}
+                    helperText={dateOfBirthHasError ? dateOfBirthHelperText : ''}
+                  />
+                )}
+              />
+            </LocalizationProvider>
+            <Button
+              variant='contained'
+              color='primary'
+              disabled={!formIsValid}
+              sx={sx.saveBtn}
+              onClick={() =>
+                saveChanges(currentUser._id, {
+                  fullName: enteredFullName,
+                  email: enteredEmail,
+                  dateOfBirth: enteredDateOfBirth,
+                })
+              }
+            >
+              Save
+            </Button>
+          </Box>
+          <Button variant='outlined' color='primary' onClick={() => setOpen(true)}>
+            Change password
+          </Button>
+          <ModalWindow open={open} handleClose={handleClose} />
+        </>
+      )}
     </>
   );
 };

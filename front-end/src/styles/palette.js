@@ -11,6 +11,9 @@ const pallete = {
   success: {
     main: '#58baab',
   },
+  white: {
+    main: '#fff',
+  },
 };
 
 export default pallete;
