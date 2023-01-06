@@ -49,7 +49,7 @@ const hashPassword = (pass) =>
   });
 
 const createToken = (email) => {
-  return jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '2h' });
+  return jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '30d' });
 };
 
 module.exports = { register, login, comparePasswords, hashPassword, createToken };
