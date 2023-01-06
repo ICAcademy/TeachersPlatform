@@ -20,6 +20,9 @@ const teacherSchema = new Schema(
     phone: {
       type: String,
     },
+    url: {
+      type: String,
+    },
     age: {
       type: Number,
     },

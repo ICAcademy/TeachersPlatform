@@ -1,0 +1,23 @@
+@import 'styles/colors.scss';
+
+.modal {
+  position: relative;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -25%);
+  max-width: 500px;
+  padding-bottom: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    padding-left: 20px;
+    color: $white;
+    background: $softPurple;
+    border-radius: 10px 10px 0 0;
+  }
+}

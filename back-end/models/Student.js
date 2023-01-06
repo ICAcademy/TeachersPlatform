@@ -15,6 +15,9 @@ const studentSchema = new Schema(
     number: {
       type: String,
     },
+    url: {
+      type: String,
+    },
   },
   { timestamps: true },
 );
