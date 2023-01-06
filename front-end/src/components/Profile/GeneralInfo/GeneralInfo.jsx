@@ -111,7 +111,7 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
       });
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      setIsLoading(false);
       setExistEmail(true);
       snackbarShowMessage({
         message: 'Error',

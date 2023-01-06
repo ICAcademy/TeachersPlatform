@@ -25,11 +25,6 @@ const updateUserById = async (req, res) => {
     const { id } = req.params;
     const existEmail = await findByEmail(req.body.email);
     if (existEmail) {
-      const body = {
-        fullName: req.body.fullName,
-        dateOfBirth: req.body.dateOfBirth,
-      };
-      await updateByID(id, body);
       return res.status(400).json({ message: 'exist email' });
     }
     const user = await updateByID(id, req.body);
