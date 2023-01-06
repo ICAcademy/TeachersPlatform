@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Box, Typography, FormControl, Select, MenuItem, Button } from '@mui/material';
 import { updateStudentData } from 'services/studentService';
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 const style = {
   position: 'absolute',
@@ -18,23 +19,28 @@ const style = {
   justifyContent: 'center',
 };
 
-const ChangeLevel = ({ isOpen, handleIsClose, selectedIdx }) => {
+const ChangeLevel = ({
+  isOpen,
+  handleIsClose,
+  selectedIdx,
+  updateHandler,
+  snackbarShowMessage,
+}) => {
   const [level, setLevel] = useState('');
 
   const addStudentLevel = useCallback(async () => {
     try {
-      await updateStudentData(selectedIdx, { level });
+      const updatedSubscription = await updateStudentData(selectedIdx, { level });
+      updateHandler(updatedSubscription);
+      snackbarShowMessage({
+        message: 'Level updated',
+        severity: 'success',
+      });
       handleIsClose();
     } catch (error) {
       console.log(error);
     }
-  }, [selectedIdx, level, handleIsClose]);
-
-  useEffect(() => {
-    if (level !== '') {
-      addStudentLevel();
-    }
-  }, [addStudentLevel, level]);
+  }, [selectedIdx, level, updateHandler, handleIsClose, snackbarShowMessage]);
 
   const handleChange = (e) => {
     setLevel(e.target.value);
@@ -61,6 +67,9 @@ const ChangeLevel = ({ isOpen, handleIsClose, selectedIdx }) => {
             <Button variant='contained' onClick={handleIsClose}>
               Close
             </Button>
+            <Button variant='contained' onClick={addStudentLevel}>
+              Confirm
+            </Button>
           </Box>
         </FormControl>
       </Box>
@@ -73,6 +82,8 @@ ChangeLevel.propTypes = {
   handleIsClose: PropTypes.func,
   selectedIdx: PropTypes.string,
   getSubscriptions: PropTypes.func,
+  updateHandler: PropTypes.func,
+  snackbarShowMessage: PropTypes.func,
 };
 
-export default ChangeLevel;
+export default withSnackbar(ChangeLevel);

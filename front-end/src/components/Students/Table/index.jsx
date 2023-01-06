@@ -62,6 +62,13 @@ const Table = () => {
 
   const handleIsClose = useCallback(() => setIsOpen(false), []);
 
+  const updateSubscriptions = (subscription) => {
+    const updatedList = subscriptions.map((item) => {
+      return item.studentID._id === subscription._id ? { ...item, studentID: subscription } : item;
+    });
+    setSubscriptions(updatedList);
+  };
+
   return (
     <div className={styles.wrapper}>
       {subscriptions.length ? (
@@ -125,6 +132,7 @@ const Table = () => {
                         isOpen={isOpen}
                         handleIsClose={handleIsClose}
                         selectedIdx={selectedItemIdx}
+                        updateHandler={updateSubscriptions}
                       />
                     </Menu>
                   </td>
