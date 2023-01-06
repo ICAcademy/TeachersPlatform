@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & h1 {
+    font-family: 'Poppins-Regular', sans-serif;
+    font-size: 28px;
+    margin-bottom: 50px;
+    font-weight: 500;
+  }
+}

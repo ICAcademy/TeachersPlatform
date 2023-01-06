@@ -30,6 +30,7 @@ const TeacherSubscriptions = lazy(() => import('pages/TeacherSubscriptions'));
 const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
 const StudentSubscriptions = lazy(() => import('pages/StudentSubscriptions'));
 const Finances = lazy(() => import('pages/Finances/Finances'));
+const Dictionary = lazy(() => import('pages/Dictionary'));
 
 const RouterWrapper = () => {
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
@@ -160,6 +161,14 @@ const RouterWrapper = () => {
               </PrivateRoute>
             }
           />
+          <Route
+            path='/app/dictionary'
+            element={
+              <PrivateRoute>
+                <Dictionary />
+              </PrivateRoute>
+            }
+          />
         </Route>
         <Route
           path='/app/tests'
@@ -169,7 +178,6 @@ const RouterWrapper = () => {
             </PrivateRoute>
           }
         />
-
         <Route path='/login' element={<Login />} />
         <Route path='/registration' element={<Registration />} />
         <Route path='*' element={<NotFound />} />
