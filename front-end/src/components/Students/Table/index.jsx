@@ -1,10 +1,9 @@
-/* eslint-disable react/jsx-indent */
-/* eslint-disable indent */
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 // FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBellSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -14,16 +13,22 @@ import { getTeachersSubscription, deleteSubscription } from 'services/subscripti
 
 // Components
 import NoStudents from '../NoStudents';
+import ChangeLevel from 'components/ChangeLevel/ChangeLevel';
 
 // Images
 import teacher from 'assets/images/teacher1.jpg';
 
 // Styles
 import styles from './Table.module.scss';
+import { Menu, MenuItem } from '@mui/material';
 
 const Table = () => {
   const { currentUser } = useContext(CurrentUserContext);
   const [subscriptions, setSubscriptions] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItemIdx, setSelectedItemIdx] = useState('');
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   const fetchSubscriptions = async (teacherId) => {
     try {
@@ -43,8 +48,19 @@ const Table = () => {
   };
 
   useEffect(() => {
-    fetchSubscriptions('63a07859b66cae3e282cb573');
+    fetchSubscriptions(currentUser.roleId);
   }, [currentUser]);
+
+  const handleClick = (event, index) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedItemIdx(index);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleIsClose = useCallback(() => setIsOpen(false), []);
 
   return (
     <div className={styles.wrapper}>
@@ -61,28 +77,60 @@ const Table = () => {
             </tr>
           </thead>
           <tbody>
-            {subscriptions.map((item) => (
-              <tr key={item?.studentID._id}>
-                <td>
-                  <img src={teacher} alt='teacher' />
-                </td>
-                <td>{item?.studentID.fullName}</td>
-                <td>{item?.studentID.email}</td>
-                <td>{item?.studentID.dateOfBirth || '-'}</td>
-                <td>{item?.studentID.level || '-'}</td>
-                <td>
-                  <button
-                    className={styles.settingsBtn}
-                    onClick={async () => {
-                      handleDeleteSubscription(item._id);
-                      await fetchSubscriptions('63a07859b66cae3e282cb573');
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faBellSlash} />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {subscriptions.map((item) => {
+              return (
+                <tr key={item?.studentID._id}>
+                  <td>
+                    <img src={teacher} alt='teacher' />
+                  </td>
+                  <td>{item?.studentID.fullName}</td>
+                  <td>{item?.studentID.email}</td>
+                  <td>{item?.studentID.dateOfBirth || '-'}</td>
+                  <td>{item?.studentID.level || '-'}</td>
+                  <td>
+                    <button
+                      className={styles.settingsBtn}
+                      aria-controls={open ? 'basic-menu' : undefined}
+                      aria-haspopup='true'
+                      aria-expanded={open ? 'true' : undefined}
+                      onClick={(event) => handleClick(event, item.studentID._id)}
+                    >
+                      <FontAwesomeIcon icon={faEllipsisVertical} />
+                    </button>
+                    <Menu
+                      id='basic-menu'
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                      }}
+                    >
+                      <MenuItem
+                        onClick={async () => {
+                          handleDeleteSubscription(item._id);
+                          await fetchSubscriptions(currentUser.roleId);
+                        }}
+                      >
+                        Delete subscription
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          setIsOpen(true);
+                        }}
+                      >
+                        Change Level
+                      </MenuItem>
+                      <ChangeLevel
+                        isOpen={isOpen}
+                        handleIsClose={handleIsClose}
+                        selectedIdx={selectedItemIdx}
+                      />
+                    </Menu>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       ) : (
@@ -90,6 +138,11 @@ const Table = () => {
       )}
     </div>
   );
+};
+
+Table.propTypes = {
+  isOpen: PropTypes.bool,
+  handleIsClose: PropTypes.func,
 };
 
 export default Table;

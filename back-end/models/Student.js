@@ -15,6 +15,9 @@ const studentSchema = new Schema(
     number: {
       type: String,
     },
+    level: {
+      type: String,
+    },
   },
   { timestamps: true },
 );
