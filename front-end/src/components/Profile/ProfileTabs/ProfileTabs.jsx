@@ -7,8 +7,9 @@ import ProfileTab from '../ProfileTab/ProfileTab';
 import { CurrentUserContext } from 'context/AppProvider';
 
 import styles from './ProfileTabs.module.scss';
+import { TEACHER } from 'constants/UserRoles';
 
-const defaultTabs = [
+let defaultTabs = [
   {
     title: 'General Info',
     link: 'general-info',
@@ -29,18 +30,6 @@ const ProfileTabs = () => {
   const [tabs, setTabs] = useState(defaultTabs);
   const { currentUser } = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    if (currentUser.role === 'teacher') {
-      setTabs([
-        ...tabs,
-        {
-          title: 'Teacher Info',
-          link: 'teacher-info',
-        },
-      ]);
-    }
-  }, []);
-
   const setRouteState = (state) => {
     setSelectedTab(state);
   };
@@ -48,6 +37,20 @@ const ProfileTabs = () => {
   const selectHandler = (tab) => {
     setSelectedTab(tab);
   };
+
+  useEffect(() => {
+    if (currentUser.role === TEACHER) {
+      setTabs((prevState) => {
+        return [
+          ...prevState,
+          {
+            title: 'Teacher Info',
+            link: 'teacher-info',
+          },
+        ];
+      });
+    }
+  }, [currentUser.role]);
 
   useEffect(() => {
     setRouteState(state);

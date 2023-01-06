@@ -32,8 +32,6 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
   const [maxAge, setMaxAge] = useState('');
   const [error, setError] = useState(false);
 
-  console.log('socialMedias', socialMedias);
-
   const changeProfile = async () => {
     try {
       const agePreferences = `${minAge} - ${maxAge}`;
@@ -46,6 +44,10 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
       };
       if (language === '' || biography.length < 10 || minAge === '' || maxAge === '') {
         setError(true);
+        snackbarShowMessage({
+          message: 'Error',
+          severity: 'error',
+        });
       } else {
         await updateTeacher(currentUser.roleId, patchTeacher);
         snackbarShowMessage({
@@ -64,12 +66,12 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
   const getTeacherFromUser = useCallback(async () => {
     try {
       const teacher = await getTeacher(currentUser.roleId);
-      const preferences = teacher.preferences.split(' ');
+      const agePreferences = teacher.preferences.split(' ');
       setLanguage(teacher.language);
       setBiography(teacher.biography);
       setPhoneInput(teacher.phone);
-      setMinAge(preferences[0]);
-      setMaxAge(preferences[2]);
+      setMinAge(agePreferences[0]);
+      setMaxAge(agePreferences[2]);
       setSocialMedias(teacher.socialMedias);
     } catch (error) {
       console.log(error);
