@@ -24,9 +24,19 @@ exports.getSubscriptionById = async (id) => {
 };
 
 exports.updateSubscription = async (id, subscription) => {
-  return await SubscriptionModel.findByIdAndUpdate(id, subscription);
+  return await SubscriptionModel.findByIdAndUpdate(id, subscription, {
+    new: true,
+    runValidators: true,
+  });
 };
 
 exports.deleteSubscription = async (id) => {
   return await SubscriptionModel.findByIdAndDelete(id);
+};
+
+exports.getSubscriptionsByStatus = async (statusName, id) => {
+  return await SubscriptionModel.countDocuments({
+    status: { $regex: statusName, $options: 'i' },
+    teacherID: id,
+  });
 };

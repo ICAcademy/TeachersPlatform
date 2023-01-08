@@ -67,38 +67,28 @@
   align-items: center;
 }
 
-.logInContainer {
-  padding: 0 45px;
-  line-height: 55px;
-  min-height: 55px;
+.logIn {
+  padding: 18px 45px;
   cursor: pointer;
   background: $lightPurple;
-  height: 42px;
   border-radius: 6px;
   color: $purple;
   transition: all 0.5s ease-out;
   font-size: 16px;
   font-weight: 500;
+  text-decoration: none;
+  color: $purple;
+  transition: all 0.5s ease-out;
   &:hover {
     background: $darkPurple;
     color: $white;
     transition: all 0.5s ease-out;
-    .logIn {
-      color: $white;
-    }
+    color: $white;
   }
 }
 
-.logIn {
-  text-decoration: none;
-  color: $purple;
-  transition: all 0.5s ease-out;
-}
-
-.signUpContainer {
-  padding: 0 45px;
-  line-height: 55px;
-  min-height: 55px;
+.signUp {
+  padding: 18px 45px;
   cursor: pointer;
   background: $darkPurple;
   height: 42px;
@@ -109,13 +99,10 @@
   font-weight: $fw500;
   margin-left: 5px;
   transition: all 0.5s ease-out;
+  text-decoration: none;
+  color: $white;
   &:hover {
     box-shadow: 0 0 1px 0 $purple400 inset, 0 0 1px 2px $purple400;
     transition: all 0.5s ease-out;
   }
-}
-
-.signUp {
-  text-decoration: none;
-  color: $white;
 }

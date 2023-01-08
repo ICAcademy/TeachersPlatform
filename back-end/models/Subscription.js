@@ -12,6 +12,7 @@ const subscriptionSchema = new Schema({
   status: {
     type: String,
     enum: ['pending', 'approved', 'reject'],
+    default: 'pending',
   },
 });
 

@@ -5,7 +5,10 @@ const SubscriptionModel = require('../models/Subscription');
 
 exports.getAllSubscriptions = async (req, res) => {
   try {
-    const subscriptions = await subscriptionService.getAllSubscriptions();
+    const { statusName, id } = req.query;
+    const subscriptions = statusName
+      ? await subscriptionService.getSubscriptionsByStatus(statusName, id)
+      : await subscriptionService.getAllSubscriptions();
     res.json(subscriptions);
   } catch (err) {
     res.status(400).json({ error: err.message });
