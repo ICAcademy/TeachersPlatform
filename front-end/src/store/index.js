@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import approveStudentSlice from './approve-student-slice';
+import approveStudentSlice from './pending-subscriptions-slice';
 import snackbarSlice from './snackbar-slice';
 
 const store = configureStore({

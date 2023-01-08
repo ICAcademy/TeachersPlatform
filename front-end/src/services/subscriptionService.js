@@ -7,7 +7,6 @@ export const getTeachersSubscription = async (id) => {
 
 export const getStudentSubscription = async (id) => {
   const { data } = await API.get(`/api/subscriptions/student-subscription/${id}`);
-  console.log(data);
   return data;
 };
 
@@ -26,5 +25,15 @@ export const createSubscription = async (teacherId, studentId) => {
 
 export const deleteSubscription = async (id) => {
   const { data } = await API.delete(`/api/subscriptions/delete-subscription/${id}`);
+  return data;
+};
+
+export const updateSubscription = async (id, subscription) => {
+  const { data } = await API.patch(`/api/subscriptions/update-subscription/${id}`, subscription);
+  return data;
+};
+
+export const getSubcriptionsCountByStatus = async (params) => {
+  const { data } = await API.get('/api/subscriptions', { params });
   return data;
 };
