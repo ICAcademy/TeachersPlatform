@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 //Services
 import { getAllPricing } from 'services/pricingService';
+import { getStudentSubscription } from 'services/subscriptionService';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -9,6 +10,7 @@ import { CurrentUserContext } from 'context/AppProvider';
 // Components
 import TeacherSelect from './TeacherSelect/TeacherSelect';
 import PricingCard from './PricingCard/PricingCard';
+import NoTeachers from './NoTeachers/NoTeachers';
 
 // Styles
 import styles from './Pricing.module.scss';
@@ -16,7 +18,20 @@ import styles from './Pricing.module.scss';
 const Pricing = () => {
   const [pricing, setPricing] = useState([]);
   const [teacher, setTeacher] = useState('');
+  const [teachers, setTeachers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
+
+  const fetchSubscriptions = async (id) => {
+    try {
+      setIsLoading(true);
+      const subscriptions = await getStudentSubscription(id);
+      setTeachers(subscriptions);
+      setIsLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const getPricing = async () => {
     try {
@@ -38,20 +53,35 @@ const Pricing = () => {
 
   useEffect(() => {
     getPricing();
-  }, []);
+    fetchSubscriptions(currentUser.roleId);
+  }, [currentUser]);
 
-  const pricingCards = isAuthenticated && currentUser.role === 'student' && (
-    <>
-      <TeacherSelect user={currentUser} chooseTeacher={handleTeacher} teacher={teacher} />
-      <div className={styles.pricing}>
-        {pricing.map((item) => (
-          <PricingCard key={item._id} pricing={item} user={userData} teacher={teacher} />
-        ))}
-      </div>
-    </>
+  return (
+    isAuthenticated &&
+    currentUser.role === 'student' &&
+    !isLoading && (
+      <>
+        {teachers.length > 0 ? (
+          <TeacherSelect
+            user={currentUser}
+            chooseTeacher={handleTeacher}
+            teacher={teacher}
+            teachers={teachers}
+          />
+        ) : (
+          <NoTeachers />
+        )}
+
+        <div className={styles.pricing}>
+          {pricing.map((item) => (
+            <PricingCard key={item._id} pricing={item} user={userData} teacher={teacher} />
+          ))}
+        </div>
+      </>
+    )
   );
 
-  return pricingCards;
+  //return pricingCards;
 };
 
 export default Pricing;
