@@ -60,7 +60,7 @@ export const SidebarList = () => {
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/app' className={styles.sidebarLink}>
+          <Link to='/app/calendar' className={styles.sidebarLink}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faCalendarDays} />
             Calendar
           </Link>

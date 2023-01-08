@@ -32,7 +32,7 @@ img {
   .sidebarAvatar {
     width: 125px;
     height: 125px;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 50%;
     border: 1px solid $lightBlue;
     background-color: $sideBackground;

@@ -26,7 +26,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    url: { type: String },
+    url: {
+      type: String,
+    },
   },
   { timestamps: true },
 );
