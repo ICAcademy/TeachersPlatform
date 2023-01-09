@@ -125,7 +125,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
             <h1>{fullName}</h1>
             <span>{activity}</span>
           </div>
-          <div className={styles.test1}>
+          <div className={styles.additionalInfo}>
             <div className={styles.blockWrap}>
               <img src={speechBubble} alt='speechBubble' />
               <span>533 Reviews</span>
