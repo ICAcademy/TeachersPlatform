@@ -16,6 +16,7 @@ const getUnitsByLevel = async (level) => {
     }
     return acc;
   }, []);
+
   return result;
 };
 

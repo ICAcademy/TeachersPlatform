@@ -9,11 +9,14 @@ import { CurrentUserContext } from 'context/AppProvider';
 import styles from './UnitImg.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 
+// Constants
+import { ADMIN_ROLE } from 'constants/userRoles';
+
 const UnitImg = ({ url, unit, image, editLink }) => {
-  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
   return (
     <div className={styles.unitImg}>
-      {isAuthenticated && currentUser.role === 'admin' && (
+      {currentUser.role === ADMIN_ROLE && (
         <Link to={editLink}>
           <EditIcon className={styles.editIcon} fontSize='large' />
         </Link>

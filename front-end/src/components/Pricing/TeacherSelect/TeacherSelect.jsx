@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-
-// Services
-import { getStudentSubscription } from 'services/subscriptionService';
 
 // Styles
 import styles from './TeacherSelect.module.scss';
@@ -11,22 +8,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 
-const TeacherSelect = ({ user, chooseTeacher, teacher }) => {
-  const [teachers, setTeachers] = useState([]);
-
-  const fetchSubscriptions = async (id) => {
-    try {
-      const subscriptions = await getStudentSubscription(id);
-      setTeachers(subscriptions);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchSubscriptions(user.roleId);
-  }, [user]);
-
+const TeacherSelect = ({ chooseTeacher, teacher, teachers }) => {
   const handleChange = (event) => {
     chooseTeacher(event.target.value);
   };
@@ -58,13 +40,13 @@ const TeacherSelect = ({ user, chooseTeacher, teacher }) => {
 
 //propTypes
 TeacherSelect.propTypes = {
-  user: PropTypes.object,
   teacher: PropTypes.string,
+  teachers: PropTypes.array,
   chooseTeacher: PropTypes.func,
 };
 TeacherSelect.defaultProps = {
-  user: {},
   teacher: '',
+  teachers: [],
 };
 
 export default TeacherSelect;
