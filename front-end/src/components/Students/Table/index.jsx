@@ -69,6 +69,13 @@ const Table = () => {
     setSubscriptions(updatedList);
   };
 
+  const handleClickDeleteSubscriptions = (id) => {
+    async () => {
+      handleDeleteSubscription(id);
+      await fetchSubscriptions(currentUser.roleId);
+    };
+  };
+
   return (
     <div className={styles.wrapper}>
       {subscriptions.length ? (
@@ -113,12 +120,7 @@ const Table = () => {
                         'aria-labelledby': 'basic-button',
                       }}
                     >
-                      <MenuItem
-                        onClick={async () => {
-                          handleDeleteSubscription(item._id);
-                          await fetchSubscriptions(currentUser.roleId);
-                        }}
-                      >
+                      <MenuItem onClick={handleClickDeleteSubscriptions(item._id)}>
                         Delete subscription
                       </MenuItem>
                       <MenuItem
