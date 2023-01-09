@@ -2,7 +2,7 @@
 const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
 const { comparePasswords, hashPassword, createToken } = require('../services/AuthService');
 const { updateTeacher } = require('../services/TeacherService');
-const { updateStudent, addAvatarToStudent } = require('../services/StudentService');
+const { addAvatarToStudent } = require('../services/StudentService');
 
 // Constants
 const { STUDENT, TEACHER } = require('../constants/UserRoles');
@@ -25,7 +25,7 @@ const updateUserById = async (req, res) => {
     const { id } = req.params;
     const existEmail = await findByEmail(req.body.email);
     if (existEmail) {
-      return res.status(400).json({ message: 'exist email' });
+      return res.status(400).json({ message: 'this email is already exist' });
     }
     const user = await updateByID(id, req.body);
     if (req.body.url) {

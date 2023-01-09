@@ -1,9 +1,5 @@
 const User = require('../models/User');
 
-const getUserById = async (id) => {
-  return User.findById(id);
-};
-
 const findByEmail = async (email) => {
   const user = await User.findOne({ email }).select(['-password']);
   return user;
@@ -17,4 +13,4 @@ const updateByID = async (id, body) => {
 
 const getCurrentPassword = async (id) => await User.findById(id).select('password');
 
-module.exports = { getUserById, findByEmail, updateByID, getCurrentPassword };
+module.exports = { findByEmail, updateByID, getCurrentPassword };
