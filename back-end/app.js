@@ -7,6 +7,11 @@ const compression = require('compression');
 
 const app = express();
 const port = process.env.PORT;
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+
+const io = new Server(server, {});
 
 // Middlewares
 const authentication = require('./middlewares/authentication');
@@ -39,7 +44,7 @@ async function main() {
       useUnifiedTopology: true,
     });
 
-    app.listen(port, () => {
+    server.listen(port, () => {
       console.log(`Server has been started on port ${port}`);
     });
   } catch (err) {
