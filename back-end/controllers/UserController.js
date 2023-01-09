@@ -2,7 +2,7 @@
 const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
 const { comparePasswords, hashPassword, createToken } = require('../services/AuthService');
 const { updateTeacher } = require('../services/TeacherService');
-const { addAvatarToStudent } = require('../services/StudentService');
+const { updateStudent } = require('../services/StudentService');
 
 // Constants
 const { STUDENT, TEACHER } = require('../constants/UserRoles');
@@ -27,13 +27,14 @@ const updateUserById = async (req, res) => {
     if (existEmail) {
       return res.status(400).json({ message: 'this email is already exist' });
     }
+    const { url } = req.body;
     const user = await updateByID(id, req.body);
-    if (req.body.url) {
+    if (url) {
       if (user.role === STUDENT) {
-        await addAvatarToStudent(user.roleId, req.body);
+        await updateStudent(user.roleId, { url });
       }
       if (user.role === TEACHER) {
-        await updateTeacher(user.roleId, req.body);
+        await updateTeacher(user.roleId, { url });
       }
     }
     const token = createToken(user.email);

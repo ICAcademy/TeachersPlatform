@@ -12,13 +12,8 @@ exports.getTeacherById = async (id) => {
   return await TeacherModel.findById(id);
 };
 
-exports.updateTeacher = async (id, teacher) => {
-  return await TeacherModel.findByIdAndUpdate(id, teacher);
-};
-
-exports.addAvatarToTeacher = async (id, url) => {
-  const teacher = await TeacherModel.findByIdAndUpdate(id, url);
-  return teacher?.url;
+exports.updateTeacher = async (id, data) => {
+  return await TeacherModel.findByIdAndUpdate(id, data, { new: true });
 };
 
 exports.deleteTeacher = async (id) => {

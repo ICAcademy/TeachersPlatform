@@ -145,7 +145,6 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
           </div>
           {isSubscripted ? (
             <LoadingButton
-              className={styles.subscribeBtn}
               loading={buttonLoader}
               variant='contained'
               onClick={deleteSubscriptionOfStudent}
@@ -153,12 +152,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
               unsubscribe
             </LoadingButton>
           ) : (
-            <LoadingButton
-              className={styles.subscribeBtn}
-              loading={buttonLoader}
-              variant='contained'
-              onClick={patchSubscription}
-            >
+            <LoadingButton loading={buttonLoader} variant='contained' onClick={patchSubscription}>
               subscribe
             </LoadingButton>
           )}

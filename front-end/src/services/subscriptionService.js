@@ -27,3 +27,13 @@ export const deleteSubscription = async (id) => {
   const { data } = await API.delete(`/api/subscriptions/delete-subscription/${id}`);
   return data;
 };
+
+export const updateSubscription = async (id, subscription) => {
+  const { data } = await API.patch(`/api/subscriptions/update-subscription/${id}`, subscription);
+  return data;
+};
+
+export const getSubcriptionsCountByStatus = async (params) => {
+  const { data } = await API.get('/api/subscriptions', { params });
+  return data;
+};
