@@ -23,6 +23,9 @@ import TablePaginationActions from 'components/common/SubscriptionsTable/TablePa
 // Styles
 import styles from './SubscriptionsTable.module.scss';
 
+// Constants
+import { STUDENT_ROLE } from 'constants/userRoles';
+
 const SubscriptionsTable = ({ subscriptions, role, deleteSubscriptionById }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -76,20 +79,22 @@ const SubscriptionsTable = ({ subscriptions, role, deleteSubscriptionById }) => 
                 </div>
               </TableCell>
               <TableCell align='center'>
-                {role === 'student'
+                {role === STUDENT_ROLE
                   ? subscription.teacherID.fullName
                   : subscription.studentID.fullName}
               </TableCell>
               <TableCell align='center'>
-                {role === 'student' ? subscription.teacherID.email : subscription.studentID.email}
+                {role === STUDENT_ROLE
+                  ? subscription.teacherID.email
+                  : subscription.studentID.email}
               </TableCell>
               <TableCell align='center'>
-                {role === 'student'
+                {role === STUDENT_ROLE
                   ? subscription.teacherID.dateOfBirth
                   : subscription.studentID.dateOfBirth}
               </TableCell>
               <TableCell align='center'>
-                {role === 'student'
+                {role === STUDENT_ROLE
                   ? subscription.teacherID.level || '-'
                   : subscription.studentID.level || '-'}
               </TableCell>

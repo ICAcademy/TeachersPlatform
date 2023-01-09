@@ -15,12 +15,15 @@ import NoTeachers from './NoTeachers/NoTeachers';
 // Styles
 import styles from './Pricing.module.scss';
 
+// Constants
+import { STUDENT_ROLE } from 'constants/userRoles';
+
 const Pricing = () => {
   const [pricing, setPricing] = useState([]);
   const [teacher, setTeacher] = useState('');
   const [teachers, setTeachers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const fetchSubscriptions = async (id) => {
     try {
@@ -54,12 +57,10 @@ const Pricing = () => {
   useEffect(() => {
     getPricing();
     fetchSubscriptions(currentUser.roleId);
-  }, [currentUser]);
-
-  const studentRole = isAuthenticated && currentUser.role === 'student';
+  }, [currentUser.roleId]);
 
   return (
-    studentRole &&
+    currentUser.role === STUDENT_ROLE &&
     !isLoading && (
       <>
         {teachers.length > 0 ? (
