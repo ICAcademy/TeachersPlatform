@@ -30,6 +30,41 @@
         display: inline-block;
         margin-right: 10px;
       }
+
+      .sidebarBadge {
+        position: relative;
+
+        .pulseWave {
+          position: absolute;
+          height: 30px;
+          width: 30px;
+          right: -15px;
+          top: -15px;
+          opacity: 0;
+          border: 3px solid #b464a6;
+          border-radius: 40px;
+          animation: pulsate 3.5s ease-out;
+          animation-iteration-count: infinite;
+        }
+      }
     }
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    -webkit-transform: scale(0.1, 0.1);
+    opacity: 0;
+  }
+  60% {
+    -webkit-transform: scale(0.1, 0.1);
+    opacity: 0;
+  }
+  65% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.2, 1.2);
+    opacity: 0;
   }
 }

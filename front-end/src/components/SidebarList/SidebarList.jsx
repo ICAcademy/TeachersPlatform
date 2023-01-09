@@ -1,9 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 // MUI library
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+
+// Redux
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { pendingSubscriptionsCount } from 'store/pending-subscriptions-slice';
 
 // FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,6 +32,7 @@ import { CurrentUserContext } from 'context/AppProvider';
 
 // Styles
 import styles from './SidebarList.module.scss';
+import Badge from '@mui/material/Badge';
 
 // Constants
 import { STUDENT_ROLE } from 'constants/userRoles';
@@ -34,11 +40,18 @@ import { STUDENT_ROLE } from 'constants/userRoles';
 export const SidebarList = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(CurrentUserContext);
+  const { subscriptions } = useSelector((state) => state.approveStudent);
+
+  const dispatchFunction = useDispatch();
 
   const handleLogout = () => {
     logout();
     navigate('/login', { replace: true });
   };
+
+  useEffect(() => {
+    dispatchFunction(pendingSubscriptionsCount());
+  });
 
   return (
     <div className={styles.sidebarMenu}>
@@ -74,10 +87,13 @@ export const SidebarList = () => {
               Teachers
             </Link>
           ) : (
-            <Link to='/app/subscriptions' className={styles.sidebarLink}>
-              <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
-              Students
-            </Link>
+            <Badge badgeContent={subscriptions} color='primary' className={styles.sidebarBadge}>
+              <Link to='/app/subscriptions' className={styles.sidebarLink}>
+                <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
+                Students
+              </Link>
+              {subscriptions > 0 && <div className={styles.pulseWave}></div>}
+            </Badge>
           )}
         </ListItem>
         {currentUser?.role === STUDENT_ROLE && (

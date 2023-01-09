@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
+
+// HOC
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // Service
 import { getTeachersSubscription, deleteSubscription } from 'services/subscriptionService';
@@ -14,7 +18,7 @@ import NoSubscriptions from 'components/common/NoSubscriptions';
 // Styles
 import styles from './TeacherSubscriptions.module.scss';
 
-const TeacherSubscriptions = () => {
+const TeacherSubscriptions = ({ snackbarShowMessage }) => {
   const { currentUser } = useContext(CurrentUserContext);
   const [subscriptions, setSubscriptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +44,10 @@ const TeacherSubscriptions = () => {
       const remove = await deleteSubscription(necessarySubscription._id);
       await fetchSubscriptions(currentUser.roleId);
       setIsLoading(false);
+      snackbarShowMessage({
+        message: 'Subscription removed',
+        severity: 'success',
+      });
       return remove;
     } catch (e) {
       console.log(e);
@@ -68,4 +76,8 @@ const TeacherSubscriptions = () => {
   );
 };
 
-export default TeacherSubscriptions;
+TeacherSubscriptions.propTypes = {
+  snackbarShowMessage: PropTypes.func,
+};
+
+export default withSnackbar(TeacherSubscriptions);
