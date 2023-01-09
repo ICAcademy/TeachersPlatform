@@ -6,9 +6,11 @@ const { createStudent } = require('../services/StudentService');
 const { createTeacher } = require('../services/TeacherService');
 const { register, login } = require('../services/AuthService');
 const { findByEmail } = require('../services/UserService');
+const sendMail = require('../services/nodemailer');
 
 // Constants
 const { TEACHER } = require('../constants/UserRoles');
+const { REGISTRATION } = require('../constants/emailSend');
 
 const createRoleForUser = async (role, data) => {
   if (role === TEACHER) {
@@ -32,6 +34,7 @@ exports.createUser = async (req, res) => {
 
     const { _id: roleId } = await createRoleForUser(req.body.role, req.body);
     register({ ...req.body, roleId });
+    await sendMail(req.body.email, req.body.fullName, REGISTRATION);
     res.status(201).json({ message: 'User was successfully created!' });
   } catch (err) {
     res.status(400).json({ error: err.message });

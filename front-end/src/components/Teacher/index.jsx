@@ -29,6 +29,9 @@ import {
 // context
 import { CurrentUserContext } from 'context/AppProvider';
 
+// constants
+import { SUBSCRIPTION } from 'constants/emailSend';
+
 // Styles
 import styles from './Teacher.module.scss';
 import { teacher, certificate, favourite, reward, speechBubble } from 'constants/photo';
@@ -48,7 +51,14 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
   const patchSubscription = async () => {
     try {
       setButtonLoader(true);
-      const subscribe = await createSubscription(id, currentUser.roleId);
+      const subscribe = await createSubscription(
+        id,
+        currentUser.roleId,
+        currentUser.email,
+        currentUser.fullName,
+        SUBSCRIPTION,
+        fullName,
+      );
       await fetchStudentSubscriptions(currentUser.roleId);
       setButtonLoader(false);
       return subscribe;
