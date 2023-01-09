@@ -34,6 +34,9 @@ import { CurrentUserContext } from 'context/AppProvider';
 import styles from './SidebarList.module.scss';
 import Badge from '@mui/material/Badge';
 
+// Constants
+import { STUDENT_ROLE } from 'constants/userRoles';
+
 export const SidebarList = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(CurrentUserContext);
@@ -78,7 +81,7 @@ export const SidebarList = () => {
           </Link>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          {currentUser?.role === 'student' ? (
+          {currentUser?.role === STUDENT_ROLE ? (
             <Link to='/app/teachers' className={styles.sidebarLink}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faChalkboardUser} />
               Teachers
@@ -93,7 +96,7 @@ export const SidebarList = () => {
             </Badge>
           )}
         </ListItem>
-        {currentUser?.role === 'student' && (
+        {currentUser?.role === STUDENT_ROLE && (
           <ListItem className={styles.sidebarItem}>
             <Link to='/app/subscriptions' className={styles.sidebarLink}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faBell} />

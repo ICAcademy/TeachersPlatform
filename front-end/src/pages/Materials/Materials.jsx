@@ -29,6 +29,9 @@ import { SearchOutlined } from '@mui/icons-material';
 import Button from '@mui/material/Button';
 import Add from '@mui/icons-material/Add';
 
+// Constants
+import { ADMIN_ROLE } from 'constants/userRoles';
+
 const Materials = ({ snackbarShowMessage }) => {
   const [levels, setLevels] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState('beginner');
@@ -37,7 +40,7 @@ const Materials = ({ snackbarShowMessage }) => {
   const [searchByUnitName, setSearchByUnitName] = useState('');
   const [prevLevel, setPrevLevel] = useState(selectedLevel);
 
-  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const location = useLocation();
 
@@ -86,7 +89,7 @@ const Materials = ({ snackbarShowMessage }) => {
     setSearchByUnitName(e.target.value);
   };
 
-  const saveMaterialBtn = isAuthenticated && currentUser.role === 'admin' && (
+  const saveMaterialBtn = currentUser.role === ADMIN_ROLE && (
     <Button component={Link} to='/app/materials/edit/new' variant='contained' endIcon={<Add />}>
       Create material
     </Button>

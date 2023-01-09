@@ -1,0 +1,35 @@
+.noTeachers {
+  background-color: #fcecf1;
+  position: relative;
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+  padding: 0px;
+  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
+
+  .header {
+    color: #191d33;
+    display: block;
+    padding: 1.5rem;
+    position: relative;
+    border-bottom: 1px solid #f0f3f6;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    h4 {
+      display: inline-block;
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.35rem;
+      color: #f2426d;
+    }
+  }
+
+  .body {
+    padding: 1.5rem;
+    flex: 1 1 auto;
+    border-radius: 5px;
+  }
+}
