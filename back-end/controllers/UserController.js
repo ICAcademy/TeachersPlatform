@@ -1,6 +1,6 @@
 // Services
 const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
-const { comparePasswords, hashPassword } = require('../services/AuthService');
+const { comparePasswords, hashPassword, createToken } = require('../services/AuthService');
 const { updateTeacher } = require('../services/TeacherService');
 const { updateStudent } = require('../services/StudentService');
 
@@ -23,6 +23,10 @@ const getUser = async (req, res) => {
 const updateUserById = async (req, res) => {
   try {
     const { id } = req.params;
+    const existEmail = await findByEmail(req.body.email);
+    if (existEmail) {
+      return res.status(400).json({ message: 'this email is already exist' });
+    }
     const { url } = req.body;
     const user = await updateByID(id, req.body);
     if (url) {
@@ -33,7 +37,8 @@ const updateUserById = async (req, res) => {
         await updateTeacher(user.roleId, { url });
       }
     }
-    res.status(200).json(user);
+    const token = createToken(user.email);
+    return res.status(200).json({ token, user });
   } catch (error) {
     res.status(400).json(error.message);
   }

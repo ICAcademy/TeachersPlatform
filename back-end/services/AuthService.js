@@ -29,7 +29,7 @@ const login = async (data) => {
   if (!passwords) {
     throw new Error('Password do not match');
   }
-  return jwt.sign({ email: user.email }, process.env.SECRET_KEY, { expiresIn: '30d' });
+  return createToken(user.email);
 };
 
 const comparePasswords = (pass1, pass2) =>
@@ -48,4 +48,8 @@ const hashPassword = (pass) =>
     });
   });
 
-module.exports = { register, login, comparePasswords, hashPassword };
+const createToken = (email) => {
+  return jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '30d' });
+};
+
+module.exports = { register, login, comparePasswords, hashPassword, createToken };
