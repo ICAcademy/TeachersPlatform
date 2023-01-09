@@ -56,9 +56,10 @@ const Pricing = () => {
     fetchSubscriptions(currentUser.roleId);
   }, [currentUser]);
 
+  const studentRole = isAuthenticated && currentUser.role === 'student';
+
   return (
-    isAuthenticated &&
-    currentUser.role === 'student' &&
+    studentRole &&
     !isLoading && (
       <>
         {teachers.length > 0 ? (
@@ -80,8 +81,6 @@ const Pricing = () => {
       </>
     )
   );
-
-  //return pricingCards;
 };
 
 export default Pricing;
