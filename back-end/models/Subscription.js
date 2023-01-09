@@ -9,6 +9,11 @@ const subscriptionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Student',
   },
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'reject'],
+    default: 'pending',
+  },
 });
 
 module.exports = model('Subscription', subscriptionSchema);
