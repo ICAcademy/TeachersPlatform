@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 //Services
 import {
   getLevels,
-  getUnitsByLevel,
+  getUnitsOnLevel,
   getMaterialsByUnit,
 } from 'services/MaterialsService/MaterialsService';
 
@@ -53,7 +53,7 @@ const Materials = ({ snackbarShowMessage }) => {
   const unitsByLevelData = async (level) => {
     try {
       setIsLoading(true);
-      const units = await getUnitsByLevel(level);
+      const units = await getUnitsOnLevel(level);
       setUnitsByLevel(units);
       setIsLoading(false);
     } catch (error) {
