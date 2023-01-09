@@ -14,6 +14,9 @@ const teacherSchema = new Schema(
     phone: {
       type: String,
     },
+    url: {
+      type: String,
+    },
   },
   { timestamps: true },
 );

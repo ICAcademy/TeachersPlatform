@@ -1,0 +1,29 @@
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
+
+.wrapper {
+  height: 650px;
+  background: $bouquet;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  & h1 {
+    color: $white;
+    font-size: $f26;
+    font-weight: normal;
+
+    & svg {
+      font-size: $f20;
+      margin-left: 10px;
+    }
+  }
+
+  & img {
+    display: flex;
+    height: 400px;
+    width: 600px;
+  }
+}

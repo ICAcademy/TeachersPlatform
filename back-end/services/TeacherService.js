@@ -12,8 +12,8 @@ exports.getTeacherById = async (id) => {
   return await TeacherModel.findById(id);
 };
 
-exports.updateTeacher = async (id, teacher) => {
-  return await TeacherModel.findByIdAndUpdate(id, teacher);
+exports.updateTeacher = async (id, data) => {
+  return await TeacherModel.findByIdAndUpdate(id, data, { new: true });
 };
 
 exports.deleteTeacher = async (id) => {
