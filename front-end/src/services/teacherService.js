@@ -6,7 +6,7 @@ export const getTeacher = async (id) => {
 };
 
 export const updateTeacher = async (id, body) => {
-  const { data } = await API.put(`${API_URL}/api/teachers/${id}`, { ...body });
+  const { data } = await API.patch(`${API_URL}/api/teachers/${id}`, { ...body });
   return data;
 };
 

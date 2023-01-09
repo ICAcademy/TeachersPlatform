@@ -48,13 +48,14 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
           message: 'Error',
           severity: 'error',
         });
-      } else {
-        await updateTeacher(currentUser.roleId, patchTeacher);
-        snackbarShowMessage({
-          message: 'Changes saved',
-          severity: 'success',
-        });
+        return;
       }
+      await updateTeacher(currentUser.roleId, patchTeacher);
+      snackbarShowMessage({
+        message: 'Changes saved',
+        severity: 'success',
+      });
+      return;
     } catch (error) {
       snackbarShowMessage({
         message: 'Error',

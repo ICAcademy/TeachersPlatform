@@ -8,8 +8,6 @@ import TextareaAutosize from '@mui/base/TextareaAutosize';
 import styles from './TextAreaInfo.module.scss';
 
 const TextAreaInfo = ({ header, value, setValue, error }) => {
-  console.log('value', value);
-
   const handleChange = (event) => {
     setValue(event.target.value);
   };
