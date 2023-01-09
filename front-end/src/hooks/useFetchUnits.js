@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { getQuestionsByUnitName, getUnitsByLevel } from 'services/questionService';
-import { getUnitsOnLevel, getMaterialsByUnit } from 'services/MaterialsService/MaterialsService';
+import { getQuestionsByUnitName, getQuestionsUnitsByLevel } from 'services/questionService';
+import {
+  getMaterialsUnitsByLevel,
+  getMaterialsByUnit,
+} from 'services/MaterialsService/MaterialsService';
 
 const useFetchUnits = (isEdit, searchUnit, selectedLevel, materialsOrQuestions) => {
   const [data, setData] = useState([]);
@@ -15,8 +18,8 @@ const useFetchUnits = (isEdit, searchUnit, selectedLevel, materialsOrQuestions) 
           setLoading(true);
           const units =
             materialsOrQuestions === 'question'
-              ? await getUnitsByLevel(selectedLevel)
-              : await getUnitsOnLevel(selectedLevel);
+              ? await getQuestionsUnitsByLevel(selectedLevel)
+              : await getMaterialsUnitsByLevel(selectedLevel);
           setData(units);
           setLoading(false);
           setError(null);

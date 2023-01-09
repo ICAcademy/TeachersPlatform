@@ -5,7 +5,7 @@ export const getLevels = async () => {
   return response.data;
 };
 
-export const getUnitsOnLevel = async (level) => {
+export const getMaterialsUnitsByLevel = async (level) => {
   const response = await API.get(`/api/materials-levels/get-units-by-level/${level}`);
   return response.data;
 };
