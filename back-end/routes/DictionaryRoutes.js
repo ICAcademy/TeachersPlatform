@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  getAllDictionaries,
+  getDictionaryByStudentId,
   createDictionary,
   getDictionaryById,
   updateDictionary,
@@ -11,7 +11,7 @@ const {
 } = require('../controllers/DictionaryController');
 
 router.post('/', createDictionary);
-router.get('/', getAllDictionaries);
+router.get('/', getDictionaryByStudentId);
 router.get('/:id', getDictionaryById);
 router.patch('/:id', updateDictionary);
 router.delete('/:id', deleteDictionary);

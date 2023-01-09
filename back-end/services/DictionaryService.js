@@ -1,11 +1,13 @@
 const DictionaryModel = require('../models/Dictionary');
 
-exports.getAllDictionaries = async () => {
-  return await DictionaryModel.find();
-};
-
 exports.getDictionaryByStudentId = async (studentId) => {
   return await DictionaryModel.find({ studentId });
+};
+
+exports.getDictionaryByWord = async (search, studentId) => {
+  return await DictionaryModel.find({
+    $and: [{ word: { $regex: search, $options: 'i' } }, { studentId }],
+  });
 };
 
 exports.createDictionary = async (dictionary) => {

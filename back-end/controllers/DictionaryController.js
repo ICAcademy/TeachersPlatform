@@ -1,8 +1,10 @@
+/* eslint-disable indent */
 const {
   getDictionaryByStudentId,
   getAllDictionaries,
   createDictionary,
   getDictionaryById,
+  getDictionaryByWord,
   updateDictionary,
   deleteDictionary,
 } = require('../services/DictionaryService');
@@ -16,12 +18,13 @@ exports.createDictionary = async (req, res) => {
   }
 };
 
-exports.getAllDictionaries = async (req, res) => {
+exports.getDictionaryByStudentId = async (req, res) => {
   try {
-    const { studentId } = req.query;
-    const dictionary = studentId
-      ? await getDictionaryByStudentId(studentId)
-      : await getAllDictionaries();
+    const { studentId, search } = req.query;
+    const dictionary =
+      search && studentId
+        ? await getDictionaryByWord(search, studentId)
+        : await getDictionaryByStudentId(studentId);
     res.status(200).json(dictionary);
   } catch (err) {
     res.status(400).json({ error: err.message });
