@@ -1,7 +1,5 @@
-/* eslint-disable indent */
 const {
   getDictionaryByStudentId,
-  getAllDictionaries,
   createDictionary,
   getDictionaryById,
   getDictionaryByWord,
