@@ -7,7 +7,7 @@ import ProfileTab from '../ProfileTab/ProfileTab';
 import { CurrentUserContext } from 'context/AppProvider';
 
 import styles from './ProfileTabs.module.scss';
-import { TEACHER } from 'constants/UserRoles';
+import { TEACHER_ROLE } from 'constants/userRoles';
 
 let defaultTabs = [
   {
@@ -39,7 +39,7 @@ const ProfileTabs = () => {
   };
 
   useEffect(() => {
-    if (currentUser.role === TEACHER) {
+    if (currentUser.role === TEACHER_ROLE) {
       setTabs((prevState) => {
         return [
           ...prevState,

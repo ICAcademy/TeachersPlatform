@@ -7,13 +7,16 @@ import Transactions from 'components/Transactions/Transactions';
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
 
+// Constants
+import { ADMIN_ROLE } from 'constants/userRoles';
+
 const Finances = () => {
-  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   return (
     <React.Fragment>
       <Pricing />
-      {isAuthenticated && currentUser.role === 'admin' && <Transactions />}
+      {currentUser.role === ADMIN_ROLE && <Transactions />}
     </React.Fragment>
   );
 };

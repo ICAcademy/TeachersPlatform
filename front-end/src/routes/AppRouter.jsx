@@ -13,7 +13,9 @@ import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
 import TeacherInfo from 'components/Profile/TeacherInfo/TeacherInfo';
-import { ADMIN, TEACHER } from 'constants/UserRoles';
+
+// Constants
+import { ADMIN_ROLE, STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
@@ -51,7 +53,7 @@ const RouterWrapper = () => {
             <Route path='general-info' element={<GeneralInfo />} />
             <Route
               path='teacher-info'
-              element={isAuthenticated && currentUser.role === TEACHER && <TeacherInfo />}
+              element={isAuthenticated && currentUser.role === TEACHER_ROLE && <TeacherInfo />}
             />
             <Route path='subjects' element={<h1>This route is not created!!!</h1>} />
             <Route path='languages' element={<h1>This route is not created!!!</h1>} />
@@ -76,7 +78,7 @@ const RouterWrapper = () => {
             path='/app/materials/edit/:url'
             element={
               isAuthenticated &&
-              currentUser.role === ADMIN && (
+              currentUser.role === ADMIN_ROLE && (
                 <PrivateRoute>
                   <AdminMaterials />
                 </PrivateRoute>
@@ -110,7 +112,7 @@ const RouterWrapper = () => {
           <Route
             path='/app/teachers'
             element={
-              currentUser?.role === 'teacher' ? (
+              currentUser?.role === TEACHER_ROLE ? (
                 <Navigate to='/app' />
               ) : (
                 <PrivateRoute>
@@ -122,7 +124,7 @@ const RouterWrapper = () => {
           <Route
             path='/app/teachers/:id/overview'
             element={
-              currentUser?.role === 'teacher' ? (
+              currentUser?.role === TEACHER_ROLE ? (
                 <Navigate to='/app' />
               ) : (
                 <PrivateRoute>
@@ -134,7 +136,7 @@ const RouterWrapper = () => {
           <Route
             path='/app/teachers/:id/courses'
             element={
-              currentUser?.role === 'teacher' ? (
+              currentUser?.role === TEACHER_ROLE ? (
                 <Navigate to='/app' />
               ) : (
                 <PrivateRoute>
@@ -146,7 +148,7 @@ const RouterWrapper = () => {
           <Route
             path='/app/subscriptions'
             element={
-              currentUser?.role === 'student' ? (
+              currentUser?.role === STUDENT_ROLE ? (
                 <PrivateRoute>
                   <StudentSubscriptions />
                 </PrivateRoute>
