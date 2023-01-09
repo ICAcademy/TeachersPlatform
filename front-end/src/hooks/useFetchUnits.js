@@ -26,7 +26,7 @@ const useFetchUnits = (isEdit, searchUnit, selectedLevel, materialsOrQuestions) 
           const questionsFromInput =
             materialsOrQuestions === 'question'
               ? await getQuestionsByUnitName({ searchUnit })
-              : await getMaterialsByUnit({ searchUnit });
+              : await getMaterialsByUnit({ unitName: searchUnit });
           setData(questionsFromInput);
           setLoading(false);
           setError(null);

@@ -1,14 +1,10 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 //Services
-import {
-  getLevels,
-  getUnitsOnLevel,
-  getMaterialsByUnit,
-} from 'services/MaterialsService/MaterialsService';
+import { getLevels } from 'services/MaterialsService/MaterialsService';
 
 //HOC
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
@@ -17,6 +13,7 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 import Levels from 'components/common/Levels/Levels';
 import Units from 'components/Materials/Units/Units';
 import Loader from 'components/common/Loader/Loader';
+import useFetchUnits from 'hooks/useFetchUnits';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -32,9 +29,8 @@ import Add from '@mui/icons-material/Add';
 const Materials = ({ snackbarShowMessage }) => {
   const [levels, setLevels] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState('beginner');
-  const [unitsByLevel, setUnitsByLevel] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [searchByUnitName, setSearchByUnitName] = useState('');
+  const [searchUnit, setSearchUnit] = useState('');
   const [isEdit, setIsEdit] = useState(false);
 
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
@@ -50,29 +46,8 @@ const Materials = ({ snackbarShowMessage }) => {
     }
   };
 
-  const unitsByLevelData = async (level) => {
-    try {
-      setIsLoading(true);
-      const units = await getUnitsOnLevel(level);
-      setUnitsByLevel(units);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchMaterialsByUnitName = useCallback(async (searchByUnit) => {
-    try {
-      setIsLoading(true);
-      const data = await getMaterialsByUnit({ unitName: searchByUnit });
-      setUnitsByLevel(data);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
-
   const changeLevelHandler = (level) => {
+    setSelectedLevel(level);
     setIsEdit(false);
     setSelectedLevel(level);
     setSearchByUnitName('');
@@ -108,16 +83,15 @@ const Materials = ({ snackbarShowMessage }) => {
   }, [location, snackbarShowMessage]);
 
   useEffect(() => {
-    if (!isEdit) {
-      unitsByLevelData(selectedLevel);
-    }
-    if (isEdit) {
-      const timer = setTimeout(() => {
-        fetchMaterialsByUnitName(searchByUnitName);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [fetchMaterialsByUnitName, isEdit, searchByUnitName, selectedLevel]);
+    const timer = setTimeout(() => {
+      setSearchUnit(searchByUnitName);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchByUnitName]);
+
+  const searching = searchByUnitName === '' ? searchByUnitName : searchUnit;
+
+  const { data, loading } = useFetchUnits(isEdit, searching, selectedLevel, 'materials');
 
   return (
     <div className={styles.materials}>
@@ -127,6 +101,7 @@ const Materials = ({ snackbarShowMessage }) => {
             list={levels}
             selectedLevel={isEdit ? '' : selectedLevel}
             onChangeLevel={changeLevelHandler}
+            searchByUnitName={searchByUnitName}
           />
           <TextField
             sx={{
@@ -148,7 +123,7 @@ const Materials = ({ snackbarShowMessage }) => {
         </div>
         {saveMaterialBtn}
       </div>
-      {isLoading ? <Loader /> : <Units materials={unitsByLevel} />}
+      {loading ? <Loader /> : <Units materials={data} />}
     </div>
   );
 };

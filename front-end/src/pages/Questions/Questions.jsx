@@ -58,7 +58,9 @@ const Questions = () => {
 
   const searching = searchUnitName === '' ? searchUnitName : searchUnit;
 
-  const { data, loading } = useFetchUnits(isEdit, searching, selectedLevel);
+  const { data, loading } = useFetchUnits(isEdit, searching, selectedLevel, 'question');
+
+  console.log(data);
 
   return (
     <div className={styles.materials}>
