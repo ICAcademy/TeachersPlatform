@@ -3,6 +3,7 @@ const studentService = require('../services/StudentService');
 const teacherService = require('../services/TeacherService');
 const SubscriptionModel = require('../models/Subscription');
 const sendMail = require('../services/nodemailer');
+const { SUBSCRIPTION } = require('../constants/emailSend');
 
 exports.getAllSubscriptions = async (req, res) => {
   try {
@@ -44,12 +45,7 @@ exports.createSubscription = async (req, res) => {
     const teacher = await teacherService.getTeacherById(req.body.teacher._id);
     if (student && teacher) {
       const subscription = await subscriptionService.createSubscription(req.body);
-      await sendMail(
-        req.body.sendEmail.email,
-        req.body.sendEmail.fullName,
-        req.body.sendEmail.registrationOrSubscription,
-        req.body.sendEmail.teacherName,
-      );
+      await sendMail(req.body.email, req.body.fullName, SUBSCRIPTION, req.body.teacherName);
       return res.status(200).json(subscription);
     }
     throw new Error('Teacher or Student was not found!');

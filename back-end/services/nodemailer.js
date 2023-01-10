@@ -1,5 +1,5 @@
 require('dotenv').config({ path: '../.env' });
-const { REGISTRATION } = require('../constants/emailSend');
+const { REGISTRATION, SUBSCRIPTION } = require('../constants/emailSend');
 const nodemailer = require('nodemailer');
 
 const registrationTemplate = (name) =>
@@ -43,10 +43,16 @@ const sendMail = async (emailTo, name, registrationOrSubscription, teacherName) 
     },
   });
 
-  const options =
-    registrationOrSubscription === REGISTRATION
-      ? registrationMailOptions(emailTo, name)
-      : subcriptionMailOptions(emailTo, name, teacherName);
+  let options;
+
+  switch (registrationOrSubscription) {
+    case REGISTRATION:
+      options = registrationMailOptions(emailTo, name);
+      break;
+    case SUBSCRIPTION:
+      options = subcriptionMailOptions(emailTo, name, teacherName);
+      break;
+  }
 
   await transporter.sendMail(options, (error, info) => {
     if (error) {

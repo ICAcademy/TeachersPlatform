@@ -29,9 +29,6 @@ import {
 // context
 import { CurrentUserContext } from 'context/AppProvider';
 
-// constants
-import { SUBSCRIPTION } from 'constants/emailSend';
-
 // Styles
 import styles from './Teacher.module.scss';
 import { teacher, certificate, favourite, reward, speechBubble } from 'constants/photo';
@@ -56,7 +53,6 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
         currentUser.roleId,
         currentUser.email,
         currentUser.fullName,
-        SUBSCRIPTION,
         fullName,
       );
       await fetchStudentSubscriptions(currentUser.roleId);
