@@ -47,7 +47,7 @@ exports.createSubscription = async (req, res) => {
     const teacher = await teacherService.getTeacherById(req.body.teacher._id);
     if (student && teacher) {
       const subscription = await subscriptionService.createSubscription(req.body);
-      socket('create', req.body);
+      socket('create_subscription', req.body);
       return res.status(200).json(subscription);
     }
     throw new Error('Teacher or Student was not found!');
@@ -72,7 +72,7 @@ exports.updateSubscription = async (req, res) => {
       id: req.params.id,
       body: req.body,
     };
-    socket('update', data);
+    socket('update_subscription', data);
     res.json(subscription);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -82,7 +82,7 @@ exports.updateSubscription = async (req, res) => {
 exports.deleteSubscription = async (req, res) => {
   try {
     const subscription = await subscriptionService.deleteSubscription(req.params.id);
-    socket('delete', req.params.id);
+    socket('delete_subscription', req.params.id);
     res.json(subscription);
   } catch (err) {
     res.status(400).json({ error: err.message });

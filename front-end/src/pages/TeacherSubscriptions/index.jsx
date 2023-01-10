@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import io from 'socket.io-client';
-const socket = io.connect('http://localhost:5000/');
+
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
 
@@ -10,6 +9,7 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // Service
 import { getTeachersSubscription, deleteSubscription } from 'services/subscriptionService';
+import { socket } from 'services/socketService';
 
 // Components
 import SubscriptionsTable from 'components/common/SubscriptionsTable';
@@ -61,8 +61,7 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
   }, [currentUser]);
 
   useEffect(() => {
-    socket.on('create', (data) => {
-      console.log(data);
+    socket.on('create_subscription', (data) => {
       if (data.teacher._id === currentUser.roleId) {
         fetchSubscriptions(currentUser?.roleId);
       }
@@ -70,11 +69,10 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
   }, [currentUser?.roleId]);
 
   useEffect(() => {
-    socket.on('delete', (data) => {
+    socket.on('delete_subscription', (data) => {
       const deletedSubscription = subscriptions.find((subscription) => {
         return subscription._id === data;
       });
-      console.log(deletedSubscription);
       if (deletedSubscription) {
         fetchSubscriptions(currentUser.roleId);
       }

@@ -1,12 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import io from 'socket.io-client';
-const socket = io.connect('http://localhost:5000/');
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Services
 import { deleteSubscription, getStudentSubscription } from 'services/subscriptionService';
+import { socket } from 'services/socketService';
 
 // Components
 import SubscriptionsTable from 'components/common/SubscriptionsTable';
@@ -56,11 +55,10 @@ const StudentSubscriptions = () => {
   }, [currentUser]);
 
   useEffect(() => {
-    socket.on('delete', (data) => {
+    socket.on('delete_subscription', (data) => {
       const deletedSubscription = subscriptions.find((subscription) => {
         return subscription._id === data;
       });
-      console.log(deletedSubscription);
       if (deletedSubscription) {
         fetchSubscriptions(currentUser.roleId);
       }

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import io from 'socket.io-client';
 
 // MUI library
 import List from '@mui/material/List';
@@ -27,6 +26,7 @@ import {
 
 // Services
 import { logout } from 'services/authService';
+import { socket } from 'services/socketService';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -37,8 +37,6 @@ import Badge from '@mui/material/Badge';
 
 // Constants
 import { STUDENT_ROLE } from 'constants/userRoles';
-
-const socket = io.connect('http://localhost:5000/');
 
 export const SidebarList = () => {
   const navigate = useNavigate();
@@ -57,7 +55,12 @@ export const SidebarList = () => {
   });
 
   useEffect(() => {
-    socket.on('create', () => {
+    socket.on('create_subscription', () => {
+      dispatchFunction(
+        pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }),
+      );
+    });
+    socket.on('delete_subscription', () => {
       dispatchFunction(
         pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }),
       );
