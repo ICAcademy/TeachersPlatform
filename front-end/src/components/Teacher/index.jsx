@@ -48,7 +48,13 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
   const patchSubscription = async () => {
     try {
       setButtonLoader(true);
-      const subscribe = await createSubscription(id, currentUser.roleId);
+      const subscribe = await createSubscription(
+        id,
+        currentUser.roleId,
+        currentUser.email,
+        currentUser.fullName,
+        fullName,
+      );
       await fetchStudentSubscriptions(currentUser.roleId);
       setButtonLoader(false);
       return subscribe;
