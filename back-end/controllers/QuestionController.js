@@ -11,18 +11,24 @@ const {
   getCountOfQuestionTopics,
 } = require('../services/QuestionService');
 
+const getCorrectFilter = async (units) => {
+  const unitsMap = await Promise.all(
+    units.map(async (unit) => {
+      return { ...unit, numberOfLessons: await getCountOfQuestionTopics(unit.unit) };
+    }),
+  );
+  const result = unitsMap.map((item) => {
+    return { ...item._doc, numberOfLessons: item.numberOfLessons };
+  });
+
+  return result;
+};
+
 const getAllQuestions = async (req, res) => {
   try {
     const { searchUnit } = req.query;
     const questions = searchUnit ? await getQuestionsByUnitName(searchUnit) : await getQuestions();
-    const unitsMap = await Promise.all(
-      questions.map(async (unit) => {
-        return { ...unit, numberOfLessons: await getCountOfQuestionTopics(unit.unit) };
-      }),
-    );
-    const result = unitsMap.map((item) => {
-      return { ...item._doc, numberOfLessons: item.numberOfLessons };
-    });
+    const result = await getCorrectFilter(questions);
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json(error);
@@ -42,14 +48,7 @@ const getQuestionUnitsByLevel = async (req, res) => {
   try {
     const { level } = req.query;
     const units = await getUnitsByLevel({ level });
-    const unitsMap = await Promise.all(
-      units.map(async (unit) => {
-        return { ...unit, numberOfLessons: await getCountOfQuestionTopics(unit.unit) };
-      }),
-    );
-    const result = unitsMap.map((item) => {
-      return { ...item._doc, numberOfLessons: item.numberOfLessons };
-    });
+    const result = await getCorrectFilter(units);
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json(error);
@@ -105,16 +104,6 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
-const getCountTopicsByQuestion = async (req, res) => {
-  try {
-    const { unit } = req.query;
-    const count = await getCountOfQuestionTopics(unit);
-    res.status(200).json(count);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-};
-
 module.exports = {
   getAllQuestions,
   getQuestionLevels,
@@ -124,5 +113,4 @@ module.exports = {
   getQuestionById,
   updateQuestion,
   deleteQuestion,
-  getCountTopicsByQuestion,
 };

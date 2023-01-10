@@ -9,7 +9,6 @@ const {
   getQuestionById,
   updateQuestion,
   deleteQuestion,
-  getCountTopicsByQuestion,
 } = require('../controllers/QuestionController');
 
 const router = express.Router();
@@ -18,7 +17,6 @@ router.get('/', getAllQuestions);
 router.get('/levels', getQuestionLevels);
 router.get('/units', getQuestionUnitsByLevel);
 router.get('/url', getTopicDataByUrl);
-router.get('/count-of-topics', getCountTopicsByQuestion);
 router.post('/', createNewQuestion);
 router.get('/:id', getQuestionById);
 router.patch('/:id', updateQuestion);
