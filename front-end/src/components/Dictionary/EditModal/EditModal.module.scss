@@ -1,0 +1,18 @@
+.headOfModal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btnWrapper {
+  & svg {
+    width: 20px;
+    height: 20px;
+  }
+}

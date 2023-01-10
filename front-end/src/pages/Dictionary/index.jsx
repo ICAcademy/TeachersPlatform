@@ -1,4 +1,14 @@
-import React from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
+
+// Context
+import { CurrentUserContext } from 'context/AppProvider';
+
+// Services
+import {
+  createDictionary,
+  getDictionaryByStudentId,
+  deleteDictionary,
+} from 'services/dictionaryService';
 
 // Components
 import AddWord from 'components/Dictionary/AddWord';
@@ -7,14 +17,68 @@ import DictionaryTable from 'components/Dictionary/DictionaryTable';
 // Styles
 import styles from './Dictionary.module.scss';
 
-const subscriptions = [{}, {}];
-
 const Dictionary = () => {
+  const {
+    currentUser: { roleId },
+  } = useContext(CurrentUserContext);
+  const [dictionary, setDictionary] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchCreateDictionary = async (word, translation) => {
+    try {
+      setIsLoading(true);
+      const newInstance = await createDictionary({ studentId: roleId, word, translation });
+      setDictionary((prev) => [newInstance, ...prev]);
+    } catch (error) {
+      setIsLoading(false);
+      return error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchDictionary = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const dictionaryOfStudent = await getDictionaryByStudentId({
+        studentId: roleId,
+      });
+      setDictionary(dictionaryOfStudent);
+    } catch (error) {
+      return error;
+    } finally {
+      setIsLoading(false);
+    }
+  }, [roleId]);
+
+  const deleteWordById = async (id) => {
+    try {
+      setIsLoading(true);
+      await deleteDictionary(id);
+      const updatedDictionary = dictionary.filter((word) => {
+        return word._id !== id;
+      });
+      setDictionary(updatedDictionary);
+    } catch (e) {
+      return e;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDictionary();
+  }, [fetchDictionary]);
+
   return (
-    <div className={styles.wrapper}>
-      <h1>My dictionary</h1>
-      <AddWord />
-      <DictionaryTable subscriptions={subscriptions} />
+    <div className={styles.wrap}>
+      <h1 className={styles.title}>My dictionary</h1>
+      <AddWord roleId={roleId} isLoading={isLoading} handleAddWord={fetchCreateDictionary} />
+      <DictionaryTable
+        dictionary={dictionary}
+        loading={isLoading}
+        deleteWordById={deleteWordById}
+      />
     </div>
   );
 };

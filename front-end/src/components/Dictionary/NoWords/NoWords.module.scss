@@ -1,0 +1,27 @@
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
+
+.wrapper {
+  height: 500px;
+  background: $bouquet;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 25px;
+
+  & h1 {
+    color: $white;
+    font-size: $f21;
+    font-weight: 400;
+    font-family: 'Poppins-Regular', sans-serif;
+    text-align: center;
+  }
+
+  & img {
+    display: flex;
+    height: 350px;
+    width: 600px;
+  }
+}

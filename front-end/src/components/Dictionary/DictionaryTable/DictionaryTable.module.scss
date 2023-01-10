@@ -10,7 +10,7 @@
     font-family: 'Poppins-Regular', sans-serif;
   }
 
-  & tr:nth-child(2) {
+  & tr:nth-child(even) {
     background-color: #f6eff5;
   }
 
@@ -24,6 +24,7 @@
 }
 
 .btnWrap {
+  display: flex;
   & svg {
     & path {
       fill: #a968a3;
