@@ -12,6 +12,7 @@ import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
+import TeacherInfo from 'components/Profile/TeacherInfo/TeacherInfo';
 
 // Constants
 import { ADMIN_ROLE, STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
@@ -50,7 +51,10 @@ const RouterWrapper = () => {
         >
           <Route path='/app/profile' element={<Profile />}>
             <Route path='general-info' element={<GeneralInfo />} />
-            <Route path='contact-info' element={<h1>This route is not created!!!</h1>} />
+            <Route
+              path='teacher-info'
+              element={isAuthenticated && currentUser.role === TEACHER_ROLE && <TeacherInfo />}
+            />
             <Route path='subjects' element={<h1>This route is not created!!!</h1>} />
             <Route path='languages' element={<h1>This route is not created!!!</h1>} />
           </Route>
@@ -73,7 +77,8 @@ const RouterWrapper = () => {
           <Route
             path='/app/materials/edit/:url'
             element={
-              currentUser?.role === ADMIN_ROLE && (
+              isAuthenticated &&
+              currentUser.role === ADMIN_ROLE && (
                 <PrivateRoute>
                   <AdminMaterials />
                 </PrivateRoute>
