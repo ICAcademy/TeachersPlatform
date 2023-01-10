@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:5000/');
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
 
@@ -58,6 +59,27 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
   useEffect(() => {
     fetchSubscriptions(currentUser?.roleId);
   }, [currentUser]);
+
+  useEffect(() => {
+    socket.on('create', (data) => {
+      console.log(data);
+      if (data.teacher._id === currentUser.roleId) {
+        fetchSubscriptions(currentUser?.roleId);
+      }
+    });
+  }, [currentUser?.roleId]);
+
+  useEffect(() => {
+    socket.on('delete', (data) => {
+      const deletedSubscription = subscriptions.find((subscription) => {
+        return subscription._id === data;
+      });
+      console.log(deletedSubscription);
+      if (deletedSubscription) {
+        fetchSubscriptions(currentUser.roleId);
+      }
+    });
+  }, [currentUser.roleId, subscriptions]);
 
   return (
     <div className={styles.wrapper}>

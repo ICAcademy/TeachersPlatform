@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:5000/');
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -52,6 +54,18 @@ const StudentSubscriptions = () => {
   useEffect(() => {
     fetchSubscriptions(currentUser?.roleId);
   }, [currentUser]);
+
+  useEffect(() => {
+    socket.on('delete', (data) => {
+      const deletedSubscription = subscriptions.find((subscription) => {
+        return subscription._id === data;
+      });
+      console.log(deletedSubscription);
+      if (deletedSubscription) {
+        fetchSubscriptions(currentUser.roleId);
+      }
+    });
+  }, [currentUser.roleId, subscriptions]);
 
   return (
     <div className={styles.container}>

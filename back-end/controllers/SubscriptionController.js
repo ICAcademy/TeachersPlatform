@@ -2,6 +2,7 @@ const subscriptionService = require('../services/SubscriptionService');
 const studentService = require('../services/StudentService');
 const teacherService = require('../services/TeacherService');
 const SubscriptionModel = require('../models/Subscription');
+const { socket } = require('../services/Socket');
 
 exports.getAllSubscriptions = async (req, res) => {
   try {
@@ -46,6 +47,7 @@ exports.createSubscription = async (req, res) => {
     const teacher = await teacherService.getTeacherById(req.body.teacher._id);
     if (student && teacher) {
       const subscription = await subscriptionService.createSubscription(req.body);
+      socket('create', req.body);
       return res.status(200).json(subscription);
     }
     throw new Error('Teacher or Student was not found!');
@@ -66,6 +68,11 @@ exports.getSubscriptionById = async (req, res) => {
 exports.updateSubscription = async (req, res) => {
   try {
     const subscription = await subscriptionService.updateSubscription(req.params.id, req.body);
+    const data = {
+      id: req.params.id,
+      body: req.body,
+    };
+    socket('update', data);
     res.json(subscription);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -75,6 +82,7 @@ exports.updateSubscription = async (req, res) => {
 exports.deleteSubscription = async (req, res) => {
   try {
     const subscription = await subscriptionService.deleteSubscription(req.params.id);
+    socket('delete', req.params.id);
     res.json(subscription);
   } catch (err) {
     res.status(400).json({ error: err.message });

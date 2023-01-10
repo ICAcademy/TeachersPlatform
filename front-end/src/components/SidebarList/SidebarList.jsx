@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
 
 // MUI library
 import List from '@mui/material/List';
@@ -37,6 +38,8 @@ import Badge from '@mui/material/Badge';
 // Constants
 import { STUDENT_ROLE } from 'constants/userRoles';
 
+const socket = io.connect('http://localhost:5000/');
+
 export const SidebarList = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(CurrentUserContext);
@@ -50,7 +53,15 @@ export const SidebarList = () => {
   };
 
   useEffect(() => {
-    dispatchFunction(pendingSubscriptionsCount());
+    dispatchFunction(pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }));
+  });
+
+  useEffect(() => {
+    socket.on('create', () => {
+      dispatchFunction(
+        pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }),
+      );
+    });
   });
 
   return (
@@ -87,13 +98,13 @@ export const SidebarList = () => {
               Teachers
             </Link>
           ) : (
-            <Badge badgeContent={subscriptions} color='primary' className={styles.sidebarBadge}>
-              <Link to='/app/subscriptions' className={styles.sidebarLink}>
-                <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
+            <Link to='/app/subscriptions' className={styles.sidebarLink}>
+              <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
+              <Badge badgeContent={subscriptions} color='primary' className={styles.sidebarBadge}>
                 Students
-              </Link>
-              {subscriptions > 0 && <div className={styles.pulseWave}></div>}
-            </Badge>
+                {subscriptions > 0 && <div className={styles.pulseWave}></div>}
+              </Badge>
+            </Link>
           )}
         </ListItem>
         {currentUser?.role === STUDENT_ROLE && (

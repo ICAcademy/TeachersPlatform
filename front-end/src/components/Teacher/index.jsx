@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import io from 'socket.io-client';
 
 // FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,6 +33,8 @@ import { CurrentUserContext } from 'context/AppProvider';
 // Styles
 import styles from './Teacher.module.scss';
 import { teacher, certificate, favourite, reward, speechBubble } from 'constants/photo';
+
+const socket = io.connect('http://localhost:5000/');
 
 const Teacher = ({ fullName, activity, id, overview, courses }) => {
   const { pathname } = useLocation();

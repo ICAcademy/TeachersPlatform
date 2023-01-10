@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:5000/');
 
 // Redux
 import { useDispatch } from 'react-redux';
@@ -56,8 +58,21 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
 
   useEffect(() => {
     updateStatus(status);
-    dispatchFunction(pendingSubscriptionsCount());
+    dispatchFunction(
+      pendingSubscriptionsCount({ statusName: 'pending', id: subscription.teacherID }),
+    );
   });
+
+  useEffect(() => {
+    socket.on('update', (data) => {
+      if (data.id === subscription._id) {
+        setStatus(data.body.status);
+        dispatchFunction(
+          pendingSubscriptionsCount({ statusName: 'pending', id: subscription.teacherID }),
+        );
+      }
+    });
+  }, [subscription._id, dispatchFunction, subscription.teacherID]);
 
   return (
     <div className={styles.subcriptionItem}>

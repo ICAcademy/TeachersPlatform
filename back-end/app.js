@@ -4,18 +4,19 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const { Server } = require('socket.io');
+const { socketConnection } = require('./services/Socket'); //
 
+const http = require('http');
 const app = express();
 const port = process.env.PORT;
-const http = require('http');
-const { Server } = require('socket.io');
 const server = http.createServer(app);
-
-const io = new Server(server, {});
 
 // Middlewares
 const authentication = require('./middlewares/authentication');
 const cors = require('./middlewares/cors');
+const io = new Server(server, { cors: { origin: 'http://localhost:3000' } });
+socketConnection(io);
 
 // Routers
 const appRouter = require('./routes/AppRouter');
