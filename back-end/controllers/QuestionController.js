@@ -8,13 +8,22 @@ const {
   editQuestion,
   removeQuestion,
   getQuestionsByUnitName,
+  getCountOfQuestionTopics,
 } = require('../services/QuestionService');
 
 const getAllQuestions = async (req, res) => {
   try {
     const { searchUnit } = req.query;
     const questions = searchUnit ? await getQuestionsByUnitName(searchUnit) : await getQuestions();
-    res.status(200).json(questions);
+    const unitsMap = await Promise.all(
+      questions.map(async (unit) => {
+        return { ...unit, numberOfLessons: await getCountOfQuestionTopics(unit.unit) };
+      }),
+    );
+    const result = unitsMap.map((item) => {
+      return { ...item._doc, numberOfLessons: item.numberOfLessons };
+    });
+    res.status(200).json(result);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -25,22 +34,33 @@ const getQuestionLevels = async (req, res) => {
     const levels = await getLevels();
     res.status(200).json(levels);
   } catch (error) {
-    res.sattus(400).json(error);
+    res.status(400).json(error);
   }
 };
 
 const getQuestionUnitsByLevel = async (req, res) => {
   try {
-    const units = await getUnitsByLevel(req.query);
-    res.status(200).json(units);
+    const { level } = req.query;
+    const units = await getUnitsByLevel({ level });
+    const unitsMap = await Promise.all(
+      units.map(async (unit) => {
+        return { ...unit, numberOfLessons: await getCountOfQuestionTopics(unit.unit) };
+      }),
+    );
+    const result = unitsMap.map((item) => {
+      return { ...item._doc, numberOfLessons: item.numberOfLessons };
+    });
+    res.status(200).json(result);
   } catch (error) {
-    res.sattus(400).json(error);
+    res.status(400).json(error);
   }
 };
 
 const getTopicDataByUrl = async (req, res) => {
   try {
     const data = await getDataByUrl(req.query);
+    const { unit } = req.query;
+    await getCountOfQuestionTopics(unit);
     res.status(200).json(data);
   } catch (error) {
     res.sattus(400).json(error);
@@ -85,6 +105,16 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
+const getCountTopicsByQuestion = async (req, res) => {
+  try {
+    const { unit } = req.query;
+    const count = await getCountOfQuestionTopics(unit);
+    res.status(200).json(count);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 module.exports = {
   getAllQuestions,
   getQuestionLevels,
@@ -94,4 +124,5 @@ module.exports = {
   getQuestionById,
   updateQuestion,
   deleteQuestion,
+  getCountTopicsByQuestion,
 };
