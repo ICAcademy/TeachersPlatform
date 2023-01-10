@@ -31,7 +31,7 @@ const subcriptionMailOptions = (emailTo, name, teacherName) => ({
   html: subcriptionTemplate(name, teacherName),
 });
 
-const sendMail = async (emailTo, name, registrationOrSubscription, teacherName) => {
+const sendMail = async (emailTo, name, emailType, teacherName) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: 'smtp.@gmail.com',
@@ -45,7 +45,7 @@ const sendMail = async (emailTo, name, registrationOrSubscription, teacherName) 
 
   let options;
 
-  switch (registrationOrSubscription) {
+  switch (emailType) {
     case REGISTRATION:
       options = registrationMailOptions(emailTo, name);
       break;
