@@ -8,7 +8,6 @@ import { Button } from '@mui/material';
 const Level = (props) => {
   const changeLevelHandler = (event) => {
     props.onChangeLevel(event.target.value);
-    props.setSearchUnitName('');
   };
 
   const contained = props.level === props.selectedLevel ? 'contained' : 'outlined';
@@ -26,7 +25,6 @@ Level.propTypes = {
   level: PropTypes.string,
   selectedLevel: PropTypes.string,
   onChangeLevel: PropTypes.func,
-  setSearchUnitName: PropTypes.func,
 };
 Level.defaultProps = {
   level: '',
