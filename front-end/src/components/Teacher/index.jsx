@@ -48,7 +48,13 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
   const patchSubscription = async () => {
     try {
       setButtonLoader(true);
-      const subscribe = await createSubscription(id, currentUser.roleId);
+      const subscribe = await createSubscription(
+        id,
+        currentUser.roleId,
+        currentUser.email,
+        currentUser.fullName,
+        fullName,
+      );
       await fetchStudentSubscriptions(currentUser.roleId);
       setButtonLoader(false);
       return subscribe;
@@ -145,7 +151,6 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
           </div>
           {isSubscripted ? (
             <LoadingButton
-              className={styles.subscribeBtn}
               loading={buttonLoader}
               variant='contained'
               onClick={deleteSubscriptionOfStudent}
@@ -153,12 +158,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
               unsubscribe
             </LoadingButton>
           ) : (
-            <LoadingButton
-              className={styles.subscribeBtn}
-              loading={buttonLoader}
-              variant='contained'
-              onClick={patchSubscription}
-            >
+            <LoadingButton loading={buttonLoader} variant='contained' onClick={patchSubscription}>
               subscribe
             </LoadingButton>
           )}

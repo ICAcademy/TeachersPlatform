@@ -1,0 +1,43 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/font.scss';
+
+.container {
+  width: 760px;
+  margin-top: 30px;
+  padding: 0px 20px;
+  border-radius: 5px;
+}
+
+.headerContainer {
+  margin-bottom: 25px;
+}
+
+.header {
+  font-size: 20px;
+  font-weight: $fw600;
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: row;
+}
+
+.minAgeContainer {
+  width: 108px;
+}
+
+.range {
+  margin-left: 20px;
+  margin-top: 10px;
+  font-weight: $fw600;
+  font-size: $f18;
+}
+
+.maxAgeContainer {
+  margin-left: 20px;
+  width: 108px;
+}
+
+.input {
+  width: 100%;
+}

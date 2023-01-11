@@ -18,6 +18,8 @@ import { CurrentUserContext } from 'context/AppProvider';
 // Hooks
 import useInput from 'hooks/useInput';
 
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
+
 // Services
 import { uploadPhoto } from 'services/firebaseService';
 import { updateUserById } from 'services/userService';
@@ -27,6 +29,7 @@ import { regexFullName, regexEmail, regexDateOfBirth } from 'helpers/regex';
 
 // Assets
 import userImg from 'assets/sidebar/avatar.png';
+import { updateToken } from 'services/tokenService';
 
 // Styles
 import styles from './GeneralInfo.module.scss';
@@ -45,9 +48,10 @@ const fullNameHelperText =
 const emailHelperText = 'Please enter a valid email address; examples: cockroaches@gmail.com';
 const dateOfBirthHelperText = `Please enter a valid date in range between ${minDate} and ${maxDate}`;
 
-const GeneralInfo = () => {
+const GeneralInfo = ({ snackbarShowMessage }) => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [open, setOpen] = useState(false);
+  const [existEmail, setExistEmail] = useState(false);
   const handleClose = () => setOpen(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -95,13 +99,24 @@ const GeneralInfo = () => {
   const saveChanges = async (id, data) => {
     try {
       setIsLoading(true);
-      const updatedUser = await updateUserById(id, data);
-      setCurrentUser(updatedUser);
+      const updatedUser =
+        data.email !== currentUser.email
+          ? await updateUserById(id, data)
+          : await updateUserById(id, { fullName: data.fullName, dateOfBirth: data.dateOfBirth });
+      setCurrentUser(updatedUser.user);
+      updateToken(updatedUser.token);
+      snackbarShowMessage({
+        message: 'Changes saved',
+        severity: 'success',
+      });
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
-    } finally {
       setIsLoading(false);
+      setExistEmail(true);
+      snackbarShowMessage({
+        message: 'Error',
+        severity: 'error',
+      });
     }
   };
 
@@ -113,7 +128,7 @@ const GeneralInfo = () => {
         <>
           <Box
             component='img'
-            src={currentUser?.url || userImg}
+            src={currentUser.url || userImg}
             alt='User photo'
             className={styles.profile__img}
           />
@@ -142,6 +157,9 @@ const GeneralInfo = () => {
               helperText={emailHasError ? emailHelperText : ''}
               sx={sx.profileItem}
             />
+            {existEmail && currentUser.email !== enteredEmail && (
+              <div className={styles.existEmail}>Exist user with this email</div>
+            )}
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DesktopDatePicker
                 inputFormat='DD/MM/YYYY'
@@ -191,6 +209,7 @@ const GeneralInfo = () => {
 GeneralInfo.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  snackbarShowMessage: PropTypes.func,
 };
 
 GeneralInfo.defaultProps = {
@@ -198,4 +217,4 @@ GeneralInfo.defaultProps = {
   setOpen: () => {},
 };
 
-export default GeneralInfo;
+export default withSnackbar(GeneralInfo);
