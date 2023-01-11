@@ -8,6 +8,7 @@ const {
   editQuestion,
   removeQuestion,
   getQuestionsByUnitName,
+  getTest,
 } = require('../services/QuestionService');
 
 const getAllQuestions = async (req, res) => {
@@ -85,6 +86,15 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
+const getTestByUrl = async (req, res) => {
+  try {
+    const material = await getTest(req.params.url);
+    res.json(material);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getAllQuestions,
   getQuestionLevels,
@@ -94,4 +104,5 @@ module.exports = {
   getQuestionById,
   updateQuestion,
   deleteQuestion,
+  getTestByUrl,
 };

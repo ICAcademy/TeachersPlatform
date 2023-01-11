@@ -49,6 +49,12 @@ const getQuestionsByUnitName = async (search) => {
   return result;
 };
 
+const getTest = async (url) => {
+  return await Question.findOne({
+    url: { $eq: url },
+  });
+};
+
 module.exports = {
   getQuestions,
   getLevels,
@@ -59,4 +65,5 @@ module.exports = {
   editQuestion,
   removeQuestion,
   getQuestionsByUnitName,
+  getTest,
 };

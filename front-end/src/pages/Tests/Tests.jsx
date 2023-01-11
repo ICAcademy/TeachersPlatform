@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
-import API, { API_URL } from 'API';
+import { useParams } from 'react-router-dom';
 
 // components
 import Header from 'components/Tests/Header/Header';
 import Question from 'components/Tests/Question/Question';
 import { Button } from '@mui/material';
+import Loader from 'components/common/Loader/Loader';
+
+//services
+import { getTestByUrl } from 'services/TestsService';
+import { getLevels } from 'services/questionService';
 
 // styles
 import styles from './Tests.module.scss';
@@ -32,6 +37,38 @@ const Tests = () => {
     },
   ]);
   const [postInfo, setPostInfo] = useState(false);
+  const [test, setTest] = useState({});
+  const [levels, setLevels] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { url } = useParams();
+
+  //Understanding create or edit page by url
+  const createAction = url === 'new' ? 'create' : '';
+
+  const getData = async (url) => {
+    try {
+      setIsLoading(true);
+      const test = await getTestByUrl(url);
+      const levels = await getLevels();
+      setTest(test);
+      setLevels(levels);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const newTest = {
+    level: '',
+    unit: '',
+    topic: '',
+    questions: [],
+  };
+
+  useEffect(() => {
+    getData(url);
+  }, [url]);
 
   const addQuestion = () => {
     setQuestions([
@@ -199,11 +236,9 @@ const Tests = () => {
           question.title !== '' && question.answers.every((answer) => answer.answer !== ''),
       )
     ) {
-      postData(data);
+      // postData(data);
     }
   };
-
-  const postData = (tests) => API.post(`${API_URL}/api/questions/`, tests);
 
   return (
     <div className={styles.pageContainer}>
@@ -214,6 +249,9 @@ const Tests = () => {
           </div>
           <div className={styles.headerContainer}>
             <Header
+              test={test || newTest}
+              levels={levels}
+              create={createAction}
               level={level}
               setLevel={setLevel}
               unit={unit}
