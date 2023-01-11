@@ -19,7 +19,10 @@ exports.getDictionaryById = async (id) => {
 };
 
 exports.updateDictionary = async (id, dictionary) => {
-  return await DictionaryModel.findByIdAndUpdate(id, dictionary);
+  return await DictionaryModel.findByIdAndUpdate(id, dictionary, {
+    new: true,
+    runValidators: true,
+  });
 };
 
 exports.deleteDictionary = async (id) => {

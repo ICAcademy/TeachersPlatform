@@ -7,11 +7,13 @@ import { CurrentUserContext } from 'context/AppProvider';
 import {
   createDictionary,
   getDictionaryByStudentId,
+  updateDictionaryById,
   deleteDictionary,
 } from 'services/dictionaryService';
 
 // Components
 import AddWord from 'components/Dictionary/AddWord';
+import AddWordModal from 'components/Dictionary/AddWordModal';
 import DictionaryTable from 'components/Dictionary/DictionaryTable';
 
 // Styles
@@ -51,6 +53,22 @@ const Dictionary = () => {
     }
   }, [roleId]);
 
+  const updateDictionary = async (id, data) => {
+    try {
+      setIsLoading(true);
+      const updatedWord = await updateDictionaryById(id, data);
+      const updatedDictionary = dictionary.map((item) => {
+        return item._id === id ? updatedWord : item;
+      });
+      setDictionary(updatedDictionary);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const deleteWordById = async (id) => {
     try {
       setIsLoading(true);
@@ -73,10 +91,12 @@ const Dictionary = () => {
   return (
     <div className={styles.wrap}>
       <h1 className={styles.title}>My dictionary</h1>
-      <AddWord roleId={roleId} isLoading={isLoading} handleAddWord={fetchCreateDictionary} />
+      <AddWord isLoading={isLoading} createDictionary={fetchCreateDictionary} />
       <DictionaryTable
-        dictionary={dictionary}
         loading={isLoading}
+        dictionary={dictionary}
+        createDictionary={fetchCreateDictionary}
+        updateDictionary={updateDictionary}
         deleteWordById={deleteWordById}
       />
     </div>

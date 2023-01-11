@@ -25,12 +25,19 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import NoWords from 'components/Dictionary/NoWords';
 import Loader from 'components/common/Loader/Loader';
 import EditModal from 'components/Dictionary/EditModal';
+import AddWordModal from 'components/Dictionary/AddWordModal';
 import TablePaginationActions from 'components/Dictionary/DictionaryTable/TablePaginationActions';
 
 // Styles
 import styles from './DictionaryTable.module.scss';
 
-const DictionaryTable = ({ dictionary, isLoading, deleteWordById }) => {
+const DictionaryTable = ({
+  dictionary,
+  isLoading,
+  deleteWordById,
+  updateDictionary,
+  createDictionary,
+}) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -92,7 +99,11 @@ const DictionaryTable = ({ dictionary, isLoading, deleteWordById }) => {
                     <TableCell align='center'>{item?.translation}</TableCell>
                     <TableCell align='center'>
                       <div className={styles.btnWrap}>
-                        <EditModal />
+                        <EditModal
+                          dictionary={item}
+                          isLoading={isLoading}
+                          updateDictionary={updateDictionary}
+                        />
                         <IconButton aria-label='delete' onClick={() => deleteWordById(item._id)}>
                           <FontAwesomeIcon icon={faTrash} width={15} height={15} />
                         </IconButton>
@@ -132,11 +143,14 @@ const DictionaryTable = ({ dictionary, isLoading, deleteWordById }) => {
       ) : (
         <NoWords />
       )}
+      <AddWordModal isLoading={isLoading} createDictionary={createDictionary} />
     </>
   );
 };
 
 DictionaryTable.propTypes = {
+  updateDictionary: PropTypes.func.isRequired,
+  createDictionary: PropTypes.func.isRequired,
   dictionary: PropTypes.array.isRequired,
   isLoading: PropTypes.bool,
   deleteWordById: PropTypes.func.isRequired,

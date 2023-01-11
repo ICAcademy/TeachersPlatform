@@ -12,6 +12,7 @@ import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
+// import AddWordModal from 'components/Dictionary/AddWordModal';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));

@@ -25,6 +25,8 @@
 
 .btnWrap {
   display: flex;
+  align-items: center;
+  justify-content: center;
   & svg {
     & path {
       fill: #a968a3;

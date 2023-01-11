@@ -20,8 +20,8 @@ export const getDictionaryByQueries = async (params) => {
   return data;
 };
 
-export const updateDictionaryById = async (id) => {
-  const { data } = await API.patch(`/api/dictionary/${id}`);
+export const updateDictionaryById = async (id, body) => {
+  const { data } = await API.patch(`/api/dictionary/${id}`, { ...body });
   return data;
 };
 

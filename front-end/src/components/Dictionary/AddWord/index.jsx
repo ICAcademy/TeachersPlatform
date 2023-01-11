@@ -7,21 +7,36 @@ import { TextField, Box, Button } from '@mui/material';
 // Components
 import Loader from 'components/common/Loader/Loader';
 
+// Hooks
+import useInput from 'hooks/useInput';
+
+// Helpers
+import { regexDictionaryWord, regexDictionaryTranslation } from 'helpers/regex';
+
 // Styles
 import styles from './AddWord.module.scss';
 
-const AddWord = ({ isLoading, handleAddWord }) => {
-  const [translation, setTranslation] = useState('');
+const wordHelperText = 'Please enter word in english without numbers';
+const translationHelperText = 'Please enter word in ukrainian without numbers';
 
-  const [word, setWord] = useState('');
+const AddWord = ({ isLoading, createDictionary }) => {
+  const {
+    value: enteredWord,
+    isValid: wordIsValid,
+    hasError: wordHasError,
+    valueChangeHandler: wordChangeHandler,
+    valueOnBlurHandler: wordBlurHandler,
+  } = useInput('word', '', regexDictionaryWord);
 
-  const handleWordChange = (e) => {
-    setWord(e.target.value);
-  };
+  const {
+    value: enteredTranslation,
+    isValid: translationIsValid,
+    hasError: translationHasError,
+    valueChangeHandler: translationChangeHandler,
+    valueOnBlurHandler: translationBlurHandler,
+  } = useInput('translation', '', regexDictionaryTranslation);
 
-  const handleTranslationChange = (e) => {
-    setTranslation(e.target.value);
-  };
+  const formIsValid = wordIsValid && translationIsValid;
 
   return (
     <>
@@ -39,35 +54,36 @@ const AddWord = ({ isLoading, handleAddWord }) => {
           >
             <div className={styles.block}>
               <TextField
-                required
                 id='outlined-required'
                 name='word'
-                value={word}
-                onChange={handleWordChange}
                 label='Word'
+                value={enteredWord}
+                onChange={wordChangeHandler}
+                onBlur={wordBlurHandler}
+                error={wordHasError}
+                helperText={wordHasError ? wordHelperText : ' '}
                 size='small'
                 align='center'
               />
               <TextField
-                required
                 id='outlined-required'
                 name='translation'
-                value={translation}
-                onChange={handleTranslationChange}
                 label='Translation'
+                value={enteredTranslation}
+                onChange={translationChangeHandler}
+                onBlur={translationBlurHandler}
+                error={translationHasError}
+                helperText={translationHasError ? translationHelperText : ' '}
                 size='small'
                 align='center'
               />
               <Button
                 variant='contained'
                 size='small'
-                sx={{ width: 100, height: 40 }}
-                onClick={() => {
-                  handleAddWord(word, translation);
-                  setWord('');
-                  setTranslation('');
-                }}
+                sx={{ width: 100, height: 40, mb: 3 }}
+                onClick={() => createDictionary(enteredWord, enteredTranslation)}
                 type='submit'
+                disabled={!formIsValid}
               >
                 Add
               </Button>
@@ -80,9 +96,8 @@ const AddWord = ({ isLoading, handleAddWord }) => {
 };
 
 AddWord.propTypes = {
-  roleId: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
-  handleAddWord: PropTypes.func.isRequired,
+  createDictionary: PropTypes.func.isRequired,
 };
 
 AddWord.defaultProps = {

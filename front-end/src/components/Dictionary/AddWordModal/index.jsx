@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // MUI library
 import { Box, Typography, Modal, IconButton, TextField, Button } from '@mui/material';
 
 // FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faBookBookmark } from '@fortawesome/free-solid-svg-icons';
 
 // Hooks
 import useInput from 'hooks/useInput';
@@ -18,7 +19,7 @@ import { regexDictionaryWord, regexDictionaryTranslation } from 'helpers/regex';
 import Loader from 'components/common/Loader/Loader';
 
 // Styles
-import styles from './EditModal.module.scss';
+import styles from './AddWordModal.module.scss';
 
 const style = {
   position: 'absolute',
@@ -37,10 +38,22 @@ const style = {
   borderRadius: 4,
 };
 
+const sx = {
+  dictionaryBtn: {
+    width: '60px',
+    height: '60px',
+    bgcolor: '#a968a3',
+    '&:hover': {
+      bgcolor: '#a968a3',
+      transform: 'translateY(-5px)',
+    },
+  },
+};
+
 const wordHelperText = 'Please enter word in english without numbers';
 const translationHelperText = 'Please enter word in ukrainian without numbers';
 
-const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
+const AddWordModal = ({ createDictionary, isLoading }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -51,7 +64,7 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
     hasError: wordHasError,
     valueChangeHandler: wordChangeHandler,
     valueOnBlurHandler: wordBlurHandler,
-  } = useInput('word', dictionary?.word, regexDictionaryWord);
+  } = useInput('word', '', regexDictionaryWord);
 
   const {
     value: enteredTranslation,
@@ -59,14 +72,19 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
     hasError: translationHasError,
     valueChangeHandler: translationChangeHandler,
     valueOnBlurHandler: translationBlurHandler,
-  } = useInput('translation', dictionary?.translation, regexDictionaryTranslation);
+  } = useInput('translation', '', regexDictionaryTranslation);
 
   const formIsValid = wordIsValid && translationIsValid;
 
   return (
     <div className={styles.wrapper}>
-      <IconButton onClick={handleOpen} aria-label='update'>
-        <FontAwesomeIcon icon={faPen} width={15} height={15} />
+      <IconButton
+        sx={sx.dictionaryBtn}
+        onClick={handleOpen}
+        aria-label='add'
+        className={styles.icon}
+      >
+        <FontAwesomeIcon icon={faBookBookmark} width={15} height={15} />
       </IconButton>
       {isLoading ? (
         <Loader />
@@ -80,11 +98,16 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
           <Box sx={style}>
             <div className={styles.headOfModal}>
               <Typography id='modal-modal-title' variant='h6' component='h2'>
-                Edit word
+                Add word
               </Typography>
-              <IconButton onClick={handleClose}>
-                <FontAwesomeIcon icon={faXmark} />
-              </IconButton>
+              <div className={styles.btnWrapper}>
+                <Link to='/app/dictionary' className={styles.linkBtn} onClick={handleClose}>
+                  <FontAwesomeIcon icon={faBookBookmark} />
+                </Link>
+                <IconButton onClick={handleClose}>
+                  <FontAwesomeIcon icon={faXmark} />
+                </IconButton>
+              </div>
             </div>
             <Box
               component='form'
@@ -125,14 +148,12 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
                   disabled={!formIsValid}
                   sx={{ width: 100, height: 40, my: 1.5 }}
                   onClick={() => {
-                    updateDictionary(dictionary?._id, {
-                      word: enteredWord,
-                      translation: enteredTranslation,
-                    });
+                    console.log(enteredWord, enteredTranslation);
+                    createDictionary(enteredWord, enteredTranslation);
                     handleClose();
                   }}
                 >
-                  Update
+                  Add
                 </Button>
               </div>
             </Box>
@@ -143,16 +164,14 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
   );
 };
 
-EditModal.propTypes = {
-  dictionary: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object])
-    .isRequired,
-  updateDictionary: PropTypes.func,
+AddWordModal.propTypes = {
+  createDictionary: PropTypes.func,
   isLoading: PropTypes.bool,
 };
 
-EditModal.defaultProps = {
-  updateDictionary: () => {},
+AddWordModal.defaultProps = {
+  createDictionary: () => {},
   isLoading: false,
 };
 
-export default EditModal;
+export default AddWordModal;
