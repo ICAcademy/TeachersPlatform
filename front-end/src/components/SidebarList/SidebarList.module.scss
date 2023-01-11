@@ -1,15 +1,43 @@
 @import '../../styles/colors.scss';
 
 .sidebarMenu {
-  display: flex;
-  justify-content: center;
-
   .sidebarList {
-    margin-bottom: 20px;
+    margin: 20px 0;
 
     .sidebarItem {
       font-size: 1.143rem;
-      padding: 10px 15px;
+      padding: 0;
+      transition: all 0.3s ease-in-out;
+
+      &:after {
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        content: '';
+        top: 50%;
+        right: 0;
+        background-color: $purple500;
+        height: 65%;
+        width: 5px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        transform: translate(0%, -50%);
+        transition: all 0.3s ease-in-out;
+      }
+
+      &:hover {
+        background-color: $lightPurple;
+
+        .sidebarLink {
+          color: $purple500;
+        }
+
+        &:after {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
 
       .sidebarLink {
         color: #7f839a;
@@ -19,9 +47,11 @@
         align-items: center;
         width: 100%;
         text-decoration: none;
+        padding: 10px 15px;
+        transition: all 0.3s ease-in-out;
 
-        &:hover {
-          color: $purple500;
+        &.active {
+          background-color: $lightPurple;
         }
       }
 
@@ -67,4 +97,8 @@
     -webkit-transform: scale(1.2, 1.2);
     opacity: 0;
   }
+}
+
+.active {
+  background-color: #000;
 }
