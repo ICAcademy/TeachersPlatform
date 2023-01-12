@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserContext } from 'context/AppProvider';
 import { getTeachersSubscription } from 'services/subscriptionService';
+import { starNewLesson } from 'services/lessonService';
 
 const Topics = () => {
   const [unitData, setUnitData] = useState([]);
@@ -21,6 +22,8 @@ const Topics = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [students, setStudents] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
+
+  const canStartLesson = Object.keys(selectedTopic).length && selectedStudentId;
 
   const {
     currentUser: { roleId },
@@ -58,6 +61,21 @@ const Topics = () => {
     }
   };
 
+  const startLessonHandler = async () => {
+    try {
+      const body = {
+        teacherId: roleId,
+        studentId: selectedStudentId,
+        questions: selectedTopic.questions,
+      };
+
+      const lesson = await starNewLesson(body);
+      console.log(lesson);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchStudents(roleId);
   }, [roleId]);
@@ -73,6 +91,7 @@ const Topics = () => {
   ) : (
     ''
   );
+
   return (
     <Box className={styles.wrapper}>
       <Box className={`${styles.topics} ${isFullscreen ? styles.topics__shrink : ''}`}>
@@ -89,7 +108,7 @@ const Topics = () => {
             <Select
               labelId='demo-simple-select-label'
               label='select student'
-              value={selectedStudentId._id}
+              value={selectedStudentId}
               onChange={studentSelectHandler}
             >
               {students.map((student) => (
@@ -99,7 +118,9 @@ const Topics = () => {
               ))}
             </Select>
           </FormControl>
-          <Button variant='contained'>Start lesson</Button>
+          <Button variant='contained' onClick={startLessonHandler} disabled={!canStartLesson}>
+            Start lesson
+          </Button>
         </Box>
         {quiz}
       </Box>
