@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 import LessonsHeader from 'components/Lessons/LessonsHeader/LessonsHeader';
@@ -22,16 +22,16 @@ const Topics = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [students, setStudents] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
-
-  const canStartLesson = Object.keys(selectedTopic).length && selectedStudentId;
+  const params = useParams();
+  const navigate = useNavigate();
 
   const {
     currentUser: { roleId },
   } = useContext(CurrentUserContext);
 
-  const studentSelectHandler = (e) => setSelectedStudentId(e.target.value);
+  const canStartLesson = Object.keys(selectedTopic).length && selectedStudentId;
 
-  const params = useParams();
+  const studentSelectHandler = (e) => setSelectedStudentId(e.target.value);
 
   const fetchTopicsData = async (url) => {
     try {
@@ -64,13 +64,14 @@ const Topics = () => {
   const startLessonHandler = async () => {
     try {
       const body = {
+        topic: selectedTopic.topic,
         teacherId: roleId,
         studentId: selectedStudentId,
         questions: selectedTopic.questions,
       };
 
       const lesson = await starNewLesson(body);
-      console.log(lesson);
+      navigate(`/app/lessons/${lesson._id}`);
     } catch (error) {
       console.log(error);
     }
