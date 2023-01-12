@@ -7,7 +7,7 @@ import { CurrentUserContext } from 'context/AppProvider';
 import {
   createDictionary,
   getDictionaryByStudentId,
-  updateDictionaryById,
+  updateDictionary,
   deleteDictionary,
 } from 'services/dictionaryService';
 
@@ -26,13 +26,12 @@ const Dictionary = () => {
   const [dictionary, setDictionary] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchCreateDictionary = async (word, translation) => {
+  const handleCreateDictionary = async (word, translation) => {
     try {
       setIsLoading(true);
-      const newInstance = await createDictionary({ studentId: roleId, word, translation });
+      const newInstance = await createDictionary({ word, translation, studentId: roleId });
       setDictionary((prev) => [newInstance, ...prev]);
     } catch (error) {
-      setIsLoading(false);
       return error;
     } finally {
       setIsLoading(false);
@@ -42,9 +41,7 @@ const Dictionary = () => {
   const fetchDictionary = useCallback(async () => {
     try {
       setIsLoading(true);
-      const dictionaryOfStudent = await getDictionaryByStudentId({
-        studentId: roleId,
-      });
+      const dictionaryOfStudent = await getDictionaryByStudentId({ studentId: roleId });
       setDictionary(dictionaryOfStudent);
     } catch (error) {
       return error;
@@ -53,17 +50,16 @@ const Dictionary = () => {
     }
   }, [roleId]);
 
-  const updateDictionary = async (id, data) => {
+  const handleUpdateDictionary = async (id, data) => {
     try {
       setIsLoading(true);
-      const updatedWord = await updateDictionaryById(id, data);
+      const updatedWord = await updateDictionary(id, data);
       const updatedDictionary = dictionary.map((item) => {
         return item._id === id ? updatedWord : item;
       });
       setDictionary(updatedDictionary);
-      setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      return error;
     } finally {
       setIsLoading(false);
     }
@@ -73,12 +69,10 @@ const Dictionary = () => {
     try {
       setIsLoading(true);
       await deleteDictionary(id);
-      const updatedDictionary = dictionary.filter((word) => {
-        return word._id !== id;
-      });
+      const updatedDictionary = dictionary.filter((word) => word._id !== id);
       setDictionary(updatedDictionary);
-    } catch (e) {
-      return e;
+    } catch (error) {
+      return error;
     } finally {
       setIsLoading(false);
     }
@@ -88,23 +82,19 @@ const Dictionary = () => {
     fetchDictionary();
   }, [fetchDictionary]);
 
-  return (
-    <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className={styles.wrap}>
-          <h1 className={styles.title}>My dictionary</h1>
-          <AddWord isLoading={isLoading} createDictionary={fetchCreateDictionary} />
-          <DictionaryTable
-            loading={isLoading}
-            dictionary={dictionary}
-            updateDictionary={updateDictionary}
-            deleteWordById={deleteWordById}
-          />
-        </div>
-      )}
-    </>
+  return isLoading ? (
+    <Loader />
+  ) : (
+    <div className={styles.wrap}>
+      <h1 className={styles.title}>My dictionary</h1>
+      <AddWord isLoading={isLoading} createDictionary={handleCreateDictionary} />
+      <DictionaryTable
+        loading={isLoading}
+        dictionary={dictionary}
+        updateDictionary={handleUpdateDictionary}
+        deleteWordById={deleteWordById}
+      />
+    </div>
   );
 };
 

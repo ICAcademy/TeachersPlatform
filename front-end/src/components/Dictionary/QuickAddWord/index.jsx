@@ -44,16 +44,13 @@ const sx = {
   },
 };
 
-const wordHelperText = 'Wrong! Example: you';
-const translationHelperText = 'Wrong! Example: ти';
+const wordHelperText = 'Wrong! Example: you'; // TODO: rename
+const translationHelperText = 'Wrong! Example: ти'; // TODO: rename
 
 const QuickAddWord = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleOpen = () => {
-    setIsClicked(true);
-  };
   const handleClose = () => {
     setIsClicked(false);
   };
@@ -76,25 +73,21 @@ const QuickAddWord = () => {
     resetValue: resetTranslation,
   } = useInput('translation', '', regexDictionaryTranslation);
 
-  const formIsValid = wordIsValid && translationIsValid;
-
-  const fetchCreateDictionary = async (word, translation) => {
+  const handleCreateDictionary = async (word, translation) => {
     try {
       setIsLoading(true);
-      await createDictionary({ studentId: '63bbeee8fcd9c7f8a838b749', word, translation });
+      await createDictionary({ word, translation, studentId: '63bbeee8fcd9c7f8a838b749' });
     } catch (error) {
-      setIsLoading(false);
       return error;
     } finally {
       setIsLoading(false);
     }
   };
 
-  return (
-    <>
-      {isLoading ? (
-        <Loader />
-      ) : isClicked ? (
+  const getComponent = () => {
+    if (isLoading) return <Loader />;
+    if (isClicked)
+      return (
         <div className={styles.contentWrap}>
           <div className={styles.wrap}>
             <div className={styles.blockHeader}>
@@ -138,10 +131,10 @@ const QuickAddWord = () => {
               <Button
                 variant='contained'
                 size='small'
-                disabled={!formIsValid}
+                disabled={!wordIsValid || !translationIsValid}
                 sx={sx.addBtn}
                 onClick={() => {
-                  fetchCreateDictionary(enteredWord, enteredTranslation);
+                  handleCreateDictionary(enteredWord, enteredTranslation);
                   handleClose();
                   resetWord();
                   resetTranslation();
@@ -152,22 +145,22 @@ const QuickAddWord = () => {
             </Box>
           </div>
         </div>
-      ) : (
-        <div className={styles.buttonWrap}>
-          <IconButton
-            sx={sx.dictionaryBtn}
-            onClick={() => (isClicked ? handleClose() : handleOpen())}
-            aria-label='add'
-            className={`${styles.dictionaryIcon} ${
-              isClicked ? styles.btnDisable : styles.btnActive
-            }`}
-          >
-            <FontAwesomeIcon icon={faBookBookmark} />
-          </IconButton>
-        </div>
-      )}
-    </>
-  );
+      );
+    return (
+      <div className={styles.buttonWrap}>
+        <IconButton
+          sx={sx.dictionaryBtn}
+          onClick={() => (isClicked ? handleClose() : setIsClicked(true))}
+          aria-label='add'
+          className={`${styles.dictionaryIcon} ${isClicked ? styles.btnDisable : styles.btnActive}`}
+        >
+          <FontAwesomeIcon icon={faBookBookmark} />
+        </IconButton>
+      </div>
+    );
+  };
+
+  return getComponent();
 };
 
 export default QuickAddWord;

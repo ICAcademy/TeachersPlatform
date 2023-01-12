@@ -23,6 +23,6 @@ router.use('/subscriptions', subscriptionsRouter);
 router.use('/scheduled-lessons', scheduledLessonRoute);
 router.use('/liqpay', paymentRouter);
 router.use('/pricing', pricingRouter);
-router.use('/dictionary', dictionaryRouter);
+router.use('/dictionaries', dictionaryRouter);
 
 module.exports = router;

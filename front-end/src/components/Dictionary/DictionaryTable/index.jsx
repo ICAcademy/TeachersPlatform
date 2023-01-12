@@ -27,6 +27,9 @@ import Loader from 'components/common/Loader/Loader';
 import EditModal from 'components/Dictionary/EditModal';
 import TablePaginationActions from 'components/Dictionary/DictionaryTable/TablePaginationActions';
 
+// Constants
+const TABLE_HEADER_CELLS = ['Word', 'Translation', 'Settings'];
+
 // Styles
 import styles from './DictionaryTable.module.scss';
 
@@ -66,81 +69,77 @@ const DictionaryTable = ({ dictionary, isLoading, deleteWordById, updateDictiona
     setPage(0);
   };
 
-  const tableHeaderCells = ['Word', 'Translation', 'Settings'];
-
-  return (
-    <>
-      {isLoading ? (
-        <Loader />
-      ) : dictionary.length ? (
-        <Paper sx={sx.paper}>
-          <TableContainer sx={sx.tableContainer}>
-            <Table className={styles.root} stickyHeader aria-label='sticky table'>
-              <TableHead sx={sx.tableHead}>
-                <TableRow>
-                  {tableHeaderCells?.map((item, i) => (
-                    <TableCell key={i} align='center'>
-                      {item}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody sx={sx.tableBody}>
-                {(rowsPerPage > 0
-                  ? dictionary.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  : dictionary
-                ).map((item) => (
-                  <TableRow key={item?._id}>
-                    <TableCell align='center'>{item?.word}</TableCell>
-                    <TableCell align='center'>{item?.translation}</TableCell>
-                    <TableCell align='center'>
-                      <div className={styles.btnWrap}>
-                        <EditModal
-                          dictionary={item}
-                          isLoading={isLoading}
-                          updateDictionary={updateDictionary}
-                        />
-                        <IconButton aria-label='delete' onClick={() => deleteWordById(item?._id)}>
-                          <FontAwesomeIcon icon={faTrash} />
-                        </IconButton>
-                      </div>
-                    </TableCell>
-                  </TableRow>
+  const getComponent = () => {
+    if (isLoading) return <Loader />;
+    if (dictionary.length === 0) return <NoWords />;
+    return (
+      <Paper sx={sx.paper}>
+        <TableContainer sx={sx.tableContainer}>
+          <Table className={styles.root} stickyHeader aria-label='sticky table'>
+            <TableHead sx={sx.tableHead}>
+              <TableRow>
+                {TABLE_HEADER_CELLS.map((item) => (
+                  <TableCell key={item} align='center'>
+                    {item}
+                  </TableCell>
                 ))}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                    colSpan={4}
-                    count={dictionary?.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                      inputProps: {
-                        'aria-label': 'rows per page',
-                      },
-                      native: true,
-                    }}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
-                  />
+              </TableRow>
+            </TableHead>
+            <TableBody sx={sx.tableBody}>
+              {(rowsPerPage > 0
+                ? dictionary.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : dictionary
+              ).map((item) => (
+                <TableRow key={item._id}>
+                  <TableCell align='center'>{item?.word}</TableCell>
+                  <TableCell align='center'>{item?.translation}</TableCell>
+                  <TableCell align='center'>
+                    <div className={styles.btnWrap}>
+                      <EditModal
+                        dictionary={item}
+                        isLoading={isLoading}
+                        updateDictionary={updateDictionary}
+                      />
+                      <IconButton aria-label='delete' onClick={() => deleteWordById(item._id)}>
+                        <FontAwesomeIcon icon={faTrash} />
+                      </IconButton>
+                    </div>
+                  </TableCell>
                 </TableRow>
-              </TableFooter>
-            </Table>
-          </TableContainer>
-        </Paper>
-      ) : (
-        <NoWords />
-      )}
-    </>
-  );
+              ))}
+              {emptyRows > 0 ? (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              ) : null}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  colSpan={4}
+                  count={dictionary?.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'rows per page',
+                    },
+                    native: true,
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      </Paper>
+    );
+  };
+
+  return getComponent();
 };
 
 DictionaryTable.propTypes = {

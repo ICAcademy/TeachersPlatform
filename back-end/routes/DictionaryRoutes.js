@@ -1,18 +1,18 @@
-const express = require('express');
+const { Router } = require('express');
 
-const router = express.Router();
+const router = Router();
 
 const {
-  getDictionaryByStudentId,
   createDictionary,
-  getDictionaryById,
+  getDictionaryByStudentId,
+  getDictionary,
   updateDictionary,
   deleteDictionary,
-} = require('../controllers/DictionaryController');
+} = require.main.require('./controllers/DictionaryController');
 
 router.post('/', createDictionary);
 router.get('/', getDictionaryByStudentId);
-router.get('/:id', getDictionaryById);
+router.get('/:id', getDictionary);
 router.patch('/:id', updateDictionary);
 router.delete('/:id', deleteDictionary);
 

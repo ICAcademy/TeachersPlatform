@@ -37,12 +37,11 @@ const style = {
   borderRadius: 4,
 };
 
-const wordHelperText = 'Enter word in english without numbers';
-const translationHelperText = 'Enter word in ukrainian without numbers';
+const wordHelperText = 'Enter word in english without numbers'; // TODO: rename
+const translationHelperText = 'Enter word in ukrainian without numbers'; // TODO: rename
 
 const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const {
@@ -61,11 +60,9 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
     valueOnBlurHandler: translationBlurHandler,
   } = useInput('translation', dictionary?.translation, regexDictionaryTranslation);
 
-  const formIsValid = wordIsValid && translationIsValid;
-
   return (
     <div className={styles.wrapper}>
-      <IconButton onClick={handleOpen} aria-label='update'>
+      <IconButton onClick={() => setOpen(true)} aria-label='update'>
         <FontAwesomeIcon icon={faPen} />
       </IconButton>
       {isLoading ? (
@@ -122,7 +119,7 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
                 <Button
                   variant='contained'
                   size='small'
-                  disabled={!formIsValid}
+                  disabled={!wordIsValid || !translationIsValid}
                   sx={{ width: 100, height: 40, my: 1.5 }}
                   onClick={() => {
                     updateDictionary(dictionary?._id, {
@@ -144,14 +141,12 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
 };
 
 EditModal.propTypes = {
-  dictionary: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object])
-    .isRequired,
-  updateDictionary: PropTypes.func,
+  dictionary: PropTypes.shape().isRequired,
+  updateDictionary: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
 };
 
 EditModal.defaultProps = {
-  updateDictionary: () => {},
   isLoading: false,
 };
 

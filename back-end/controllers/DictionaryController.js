@@ -1,57 +1,56 @@
 const {
   getDictionaryByStudentId,
   createDictionary,
-  getDictionaryById,
+  getDictionary,
   getDictionaryByWord,
   updateDictionary,
   deleteDictionary,
-} = require('../services/DictionaryService');
+} = require.main.require('./services/DictionaryService');
 
 exports.createDictionary = async (req, res) => {
   try {
     const dictionary = await createDictionary(req.body);
     res.status(201).json(dictionary);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+  } catch ({ message }) {
+    res.status(400).json(message);
   }
 };
 
 exports.getDictionaryByStudentId = async (req, res) => {
   try {
     const { studentId, search } = req.query;
-    const dictionary =
-      search && studentId
-        ? await getDictionaryByWord(search, studentId)
-        : await getDictionaryByStudentId(studentId);
-    res.status(200).json(dictionary);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    const dictionary = search
+      ? await getDictionaryByWord(search, studentId)
+      : await getDictionaryByStudentId(studentId);
+    res.json(dictionary);
+  } catch ({ message }) {
+    res.status(400).json(message);
   }
 };
 
-exports.getDictionaryById = async (req, res) => {
+exports.getDictionary = async (req, res) => {
   try {
-    const dictionary = await getDictionaryById(req.params.id);
-    res.status(200).json(dictionary);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    const dictionary = await getDictionary(req.params.id);
+    res.json(dictionary);
+  } catch ({ message }) {
+    res.status(400).json(message);
   }
 };
 
 exports.updateDictionary = async (req, res) => {
   try {
     const dictionary = await updateDictionary(req.params.id, req.body);
-    res.status(200).json(dictionary);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.json(dictionary);
+  } catch ({ message }) {
+    res.status(400).json(message);
   }
 };
 
 exports.deleteDictionary = async (req, res) => {
   try {
     const dictionary = await deleteDictionary(req.params.id);
-    res.status(200).json(dictionary);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.json(dictionary);
+  } catch ({ message }) {
+    res.status(400).json(message);
   }
 };

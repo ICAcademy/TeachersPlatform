@@ -6,12 +6,16 @@ const dictionarySchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
     },
-    word: { type: String, required: true },
-    translation: { type: String, required: true },
+    word: {
+      type: String,
+      required: true,
+    },
+    translation: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true },
 );
 
-const Dictionary = model('Dictionary', dictionarySchema);
-
-module.exports = Dictionary;
+module.exports = model('Dictionary', dictionarySchema);
