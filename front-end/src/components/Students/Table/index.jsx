@@ -49,7 +49,8 @@ const Table = () => {
 
   useEffect(() => {
     fetchSubscriptions(currentUser.roleId);
-  }, [currentUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClick = (event, index) => {
     setAnchorEl(event.currentTarget);
