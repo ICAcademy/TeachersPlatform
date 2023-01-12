@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // MUI library
 import List from '@mui/material/List';
@@ -37,7 +38,7 @@ import Badge from '@mui/material/Badge';
 // Constants
 import { STUDENT_ROLE } from 'constants/userRoles';
 
-export const SidebarList = () => {
+export const SidebarList = ({ showSidebar }) => {
   const navigate = useNavigate();
   const { currentUser } = useContext(CurrentUserContext);
   const { subscriptions } = useSelector((state) => state.approveStudent);
@@ -47,6 +48,10 @@ export const SidebarList = () => {
   const handleLogout = () => {
     logout();
     navigate('/login', { replace: true });
+  };
+
+  const handlePathTo = () => {
+    showSidebar(false);
   };
 
   useEffect(() => {
@@ -60,37 +65,37 @@ export const SidebarList = () => {
     <div className={styles.sidebarMenu}>
       <List className={styles.sidebarList}>
         <ListItem className={styles.sidebarItem}>
-          <NavLink exact='true' to='/app' className={isActive} end={true}>
+          <NavLink to='/app' className={isActive} end={true} onClick={handlePathTo}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faHouseUser} />
             Dashboard
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/calendar' className={isActive}>
+          <NavLink to='/app/calendar' className={isActive} onClick={handlePathTo}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faCalendarDays} />
             Calendar
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/materials' className={isActive}>
+          <NavLink to='/app/materials' className={isActive} onClick={handlePathTo}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
             Materials
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/questions' className={isActive}>
+          <NavLink to='/app/questions' className={isActive} onClick={handlePathTo}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />
             Grammar
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
           {currentUser?.role === STUDENT_ROLE ? (
-            <NavLink to='/app/teachers' className={isActive}>
+            <NavLink to='/app/teachers' className={isActive} onClick={handlePathTo}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faChalkboardUser} />
               Teachers
             </NavLink>
           ) : (
-            <NavLink to='/app/subscriptions' className={isActive}>
+            <NavLink to='/app/subscriptions' className={isActive} onClick={handlePathTo}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
               <Badge badgeContent={subscriptions} color='primary' className={styles.sidebarBadge}>
                 Students
@@ -101,14 +106,14 @@ export const SidebarList = () => {
         </ListItem>
         {currentUser?.role === STUDENT_ROLE && (
           <ListItem className={styles.sidebarItem}>
-            <NavLink to='/app/subscriptions' className={isActive}>
+            <NavLink to='/app/subscriptions' className={isActive} onClick={handlePathTo}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faBell} />
               Subscriptions
             </NavLink>
           </ListItem>
         )}
         <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/finances' className={isActive}>
+          <NavLink to='/app/finances' className={isActive} onClick={handlePathTo}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSackDollar} />
             Finances
           </NavLink>
@@ -122,4 +127,9 @@ export const SidebarList = () => {
       </List>
     </div>
   );
+};
+
+//propTypes
+SidebarList.propTypes = {
+  showSidebar: PropTypes.func,
 };

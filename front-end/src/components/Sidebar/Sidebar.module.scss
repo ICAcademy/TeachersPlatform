@@ -76,3 +76,22 @@ img {
     box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
   }
 }
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    padding: 0;
+    width: 15rem;
+    transform: translate(-15rem, 0);
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    z-index: 999;
+
+    &.open {
+      transform: translate(0, 0);
+    }
+
+    .sidebarImgHolder,
+    .sidebarImgAvatar {
+      display: none;
+    }
+  }
+}
