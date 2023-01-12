@@ -1,7 +1,7 @@
 const DictionaryModel = require('../models/Dictionary');
 
 exports.getDictionaryByStudentId = async (studentId) => {
-  return await DictionaryModel.find({ studentId });
+  return await DictionaryModel.find({ studentId }).sort({ createdAt: -1 });
 };
 
 exports.getDictionaryByWord = async (search, studentId) => {
