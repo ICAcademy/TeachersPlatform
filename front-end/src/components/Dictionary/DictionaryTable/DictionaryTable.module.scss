@@ -1,3 +1,6 @@
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
+
 .root {
   & tr {
     width: 100%;
@@ -6,12 +9,12 @@
 
   & td {
     padding: 0;
-    font-size: 15px;
+    font-size: $f15;
     font-family: 'Poppins-Regular', sans-serif;
   }
 
   & tr:nth-child(even) {
-    background-color: #f6eff5;
+    background-color: $pearl;
   }
 
   & th {
@@ -28,8 +31,9 @@
   align-items: center;
   justify-content: center;
   & svg {
+    font-size: $f16;
     & path {
-      fill: #a968a3;
+      fill: $softPurple;
     }
   }
 }

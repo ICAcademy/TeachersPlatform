@@ -1,12 +1,14 @@
+@import 'styles/font.scss';
+
 .wrap {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   .title {
+    margin-bottom: 25px;
+    font-size: $f28;
+    font-weight: $fw500;
     font-family: 'Poppins-Regular', sans-serif;
-    font-size: 28px;
-    margin-bottom: 50px;
-    font-weight: 500;
   }
 }

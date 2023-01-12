@@ -12,7 +12,7 @@ import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
-// import AddWordModal from 'components/Dictionary/AddWordModal';
+import QuickAddWord from 'components/Dictionary/QuickAddWord';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
@@ -58,6 +58,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Materials />
+                <QuickAddWord />
               </PrivateRoute>
             }
           />
@@ -85,6 +86,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Questions />
+                <QuickAddWord />
               </PrivateRoute>
             }
           />

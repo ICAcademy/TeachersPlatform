@@ -1,3 +1,11 @@
+@import 'styles/font.scss';
+
+.wrapper {
+  & svg {
+    font-size: $f16;
+  }
+}
+
 .headOfModal {
   display: flex;
   justify-content: space-between;

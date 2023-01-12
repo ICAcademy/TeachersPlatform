@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // MUI library
@@ -16,8 +16,15 @@ import { regexDictionaryWord, regexDictionaryTranslation } from 'helpers/regex';
 // Styles
 import styles from './AddWord.module.scss';
 
-const wordHelperText = 'Please enter word in english without numbers';
-const translationHelperText = 'Please enter word in ukrainian without numbers';
+const sx = {
+  inputsBox: {
+    '& .MuiTextField-root': { m: 1, width: '30ch' },
+  },
+  addBtn: { width: '100px', height: '40px', mb: 3, mx: 1 },
+};
+
+const wordHelperText = 'Enter word in english without numbers';
+const translationHelperText = 'Enter word in ukrainian without numbers';
 
 const AddWord = ({ isLoading, createDictionary }) => {
   const {
@@ -26,6 +33,7 @@ const AddWord = ({ isLoading, createDictionary }) => {
     hasError: wordHasError,
     valueChangeHandler: wordChangeHandler,
     valueOnBlurHandler: wordBlurHandler,
+    resetValue: resetWord,
   } = useInput('word', '', regexDictionaryWord);
 
   const {
@@ -34,6 +42,7 @@ const AddWord = ({ isLoading, createDictionary }) => {
     hasError: translationHasError,
     valueChangeHandler: translationChangeHandler,
     valueOnBlurHandler: translationBlurHandler,
+    resetValue: resetTranslation,
   } = useInput('translation', '', regexDictionaryTranslation);
 
   const formIsValid = wordIsValid && translationIsValid;
@@ -43,53 +52,48 @@ const AddWord = ({ isLoading, createDictionary }) => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className={styles.wrapper}>
-          <Box
-            component='form'
-            sx={{
-              '& .MuiTextField-root': { m: 1, width: '45ch' },
-            }}
-            noValidate
-            autoComplete='off'
-          >
-            <div className={styles.block}>
-              <TextField
-                id='outlined-required'
-                name='word'
-                label='Word'
-                value={enteredWord}
-                onChange={wordChangeHandler}
-                onBlur={wordBlurHandler}
-                error={wordHasError}
-                helperText={wordHasError ? wordHelperText : ' '}
-                size='small'
-                align='center'
-              />
-              <TextField
-                id='outlined-required'
-                name='translation'
-                label='Translation'
-                value={enteredTranslation}
-                onChange={translationChangeHandler}
-                onBlur={translationBlurHandler}
-                error={translationHasError}
-                helperText={translationHasError ? translationHelperText : ' '}
-                size='small'
-                align='center'
-              />
-              <Button
-                variant='contained'
-                size='small'
-                sx={{ width: 100, height: 40, mb: 3 }}
-                onClick={() => createDictionary(enteredWord, enteredTranslation)}
-                type='submit'
-                disabled={!formIsValid}
-              >
-                Add
-              </Button>
-            </div>
-          </Box>
-        </div>
+        <Box component='form' sx={sx.inputsBox} noValidate autoComplete='off'>
+          <div className={styles.inputsWrap}>
+            <TextField
+              id='outlined-required'
+              name='word'
+              label='Word'
+              value={enteredWord}
+              onChange={wordChangeHandler}
+              onBlur={wordBlurHandler}
+              error={wordHasError}
+              helperText={wordHasError ? wordHelperText : ' '}
+              size='small'
+              align='center'
+            />
+            <TextField
+              id='outlined-required'
+              name='translation'
+              label='Translation'
+              value={enteredTranslation}
+              onChange={translationChangeHandler}
+              onBlur={translationBlurHandler}
+              error={translationHasError}
+              helperText={translationHasError ? translationHelperText : ' '}
+              size='small'
+              align='center'
+            />
+            <Button
+              variant='contained'
+              size='small'
+              sx={sx.addBtn}
+              onClick={() => {
+                createDictionary(enteredWord, enteredTranslation);
+                resetWord();
+                resetTranslation();
+              }}
+              type='submit'
+              disabled={!formIsValid}
+            >
+              Add
+            </Button>
+          </div>
+        </Box>
       )}
     </>
   );

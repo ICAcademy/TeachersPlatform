@@ -13,7 +13,7 @@ import {
 
 // Components
 import AddWord from 'components/Dictionary/AddWord';
-import AddWordModal from 'components/Dictionary/AddWordModal';
+import Loader from 'components/common/Loader/Loader';
 import DictionaryTable from 'components/Dictionary/DictionaryTable';
 
 // Styles
@@ -89,17 +89,22 @@ const Dictionary = () => {
   }, [fetchDictionary]);
 
   return (
-    <div className={styles.wrap}>
-      <h1 className={styles.title}>My dictionary</h1>
-      <AddWord isLoading={isLoading} createDictionary={fetchCreateDictionary} />
-      <DictionaryTable
-        loading={isLoading}
-        dictionary={dictionary}
-        createDictionary={fetchCreateDictionary}
-        updateDictionary={updateDictionary}
-        deleteWordById={deleteWordById}
-      />
-    </div>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className={styles.wrap}>
+          <h1 className={styles.title}>My dictionary</h1>
+          <AddWord isLoading={isLoading} createDictionary={fetchCreateDictionary} />
+          <DictionaryTable
+            loading={isLoading}
+            dictionary={dictionary}
+            updateDictionary={updateDictionary}
+            deleteWordById={deleteWordById}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

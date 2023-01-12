@@ -25,8 +25,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 450,
-  height: 350,
+  width: '450px',
+  height: '350px',
   bgcolor: 'background.paper',
   border: 'none',
   boxShadow: 24,
@@ -37,8 +37,8 @@ const style = {
   borderRadius: 4,
 };
 
-const wordHelperText = 'Please enter word in english without numbers';
-const translationHelperText = 'Please enter word in ukrainian without numbers';
+const wordHelperText = 'Enter word in english without numbers';
+const translationHelperText = 'Enter word in ukrainian without numbers';
 
 const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
   const [open, setOpen] = useState(false);
@@ -66,7 +66,7 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
   return (
     <div className={styles.wrapper}>
       <IconButton onClick={handleOpen} aria-label='update'>
-        <FontAwesomeIcon icon={faPen} width={15} height={15} />
+        <FontAwesomeIcon icon={faPen} />
       </IconButton>
       {isLoading ? (
         <Loader />

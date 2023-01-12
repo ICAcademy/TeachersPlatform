@@ -25,19 +25,33 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import NoWords from 'components/Dictionary/NoWords';
 import Loader from 'components/common/Loader/Loader';
 import EditModal from 'components/Dictionary/EditModal';
-import AddWordModal from 'components/Dictionary/AddWordModal';
 import TablePaginationActions from 'components/Dictionary/DictionaryTable/TablePaginationActions';
 
 // Styles
 import styles from './DictionaryTable.module.scss';
 
-const DictionaryTable = ({
-  dictionary,
-  isLoading,
-  deleteWordById,
-  updateDictionary,
-  createDictionary,
-}) => {
+const sx = {
+  paper: { width: '560px', overflow: 'hidden', my: 2.5 },
+  tableContainer: { width: '560px' },
+  tableHead: {
+    '& th': {
+      color: '#fff',
+      backgroundColor: '#b464a6',
+      fontSize: '17px',
+      fontWeight: 500,
+      height: '65px',
+      fontFamily: 'Poppins-Regular, sans-serif',
+    },
+  },
+  tableBody: {
+    '& tr': {
+      height: '55px',
+      backgroundColor: '#fff',
+    },
+  },
+};
+
+const DictionaryTable = ({ dictionary, isLoading, deleteWordById, updateDictionary }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -59,21 +73,10 @@ const DictionaryTable = ({
       {isLoading ? (
         <Loader />
       ) : dictionary.length ? (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
+        <Paper sx={sx.paper}>
+          <TableContainer sx={sx.tableContainer}>
             <Table className={styles.root} stickyHeader aria-label='sticky table'>
-              <TableHead
-                sx={{
-                  '& th': {
-                    color: '#fff',
-                    backgroundColor: '#a968a3',
-                    fontSize: 17,
-                    fontWeight: 500,
-                    height: 65,
-                    fontFamily: 'Poppins-Regular, sans-serif',
-                  },
-                }}
-              >
+              <TableHead sx={sx.tableHead}>
                 <TableRow>
                   {tableHeaderCells?.map((item, i) => (
                     <TableCell key={i} align='center'>
@@ -82,14 +85,7 @@ const DictionaryTable = ({
                   ))}
                 </TableRow>
               </TableHead>
-              <TableBody
-                sx={{
-                  '& tr': {
-                    height: 55,
-                    backgroundColor: 'white',
-                  },
-                }}
-              >
+              <TableBody sx={sx.tableBody}>
                 {(rowsPerPage > 0
                   ? dictionary.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   : dictionary
@@ -104,8 +100,8 @@ const DictionaryTable = ({
                           isLoading={isLoading}
                           updateDictionary={updateDictionary}
                         />
-                        <IconButton aria-label='delete' onClick={() => deleteWordById(item._id)}>
-                          <FontAwesomeIcon icon={faTrash} width={15} height={15} />
+                        <IconButton aria-label='delete' onClick={() => deleteWordById(item?._id)}>
+                          <FontAwesomeIcon icon={faTrash} />
                         </IconButton>
                       </div>
                     </TableCell>
@@ -143,16 +139,14 @@ const DictionaryTable = ({
       ) : (
         <NoWords />
       )}
-      <AddWordModal isLoading={isLoading} createDictionary={createDictionary} />
     </>
   );
 };
 
 DictionaryTable.propTypes = {
-  updateDictionary: PropTypes.func.isRequired,
-  createDictionary: PropTypes.func.isRequired,
-  dictionary: PropTypes.array.isRequired,
   isLoading: PropTypes.bool,
+  dictionary: PropTypes.array.isRequired,
+  updateDictionary: PropTypes.func.isRequired,
   deleteWordById: PropTypes.func.isRequired,
 };
 
