@@ -1,4 +1,5 @@
 require('dotenv').config({ path: '../.env' });
+const { REGISTRATION, SUBSCRIPTION } = require('../constants/emailSend');
 const nodemailer = require('nodemailer');
 
 const registrationTemplate = (name) =>
@@ -10,10 +11,10 @@ const registrationTemplate = (name) =>
   <p style='color:grey'>The InterLearn team</p>
   </div>`;
 
-const subcriptionTemplate = (name) =>
+const subcriptionTemplate = (name, teacherName) =>
   `<div style='text-align: center'>
   <h1>Hello ${name}!</h1>
-  <p style="color:#292929;">You have successfully subscribed to your teachers lessons</p>
+  <p style="color:#292929;">You have successfully subscribed to your ${teacherName}'s lessons</p>
   </div>`;
 
 const registrationMailOptions = (emailTo, name) => ({
@@ -23,14 +24,14 @@ const registrationMailOptions = (emailTo, name) => ({
   html: registrationTemplate(name),
 });
 
-const subcriptionMailOptions = (emailTo, name) => ({
+const subcriptionMailOptions = (emailTo, name, teacherName) => ({
   from: process.env.EMAIL_TEST,
   to: emailTo,
   subject: 'Subcription to lessons',
-  html: subcriptionTemplate(name),
+  html: subcriptionTemplate(name, teacherName),
 });
 
-const sendMail = async (emailTo, name) => {
+const sendMail = async (emailTo, name, emailType, teacherName) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: 'smtp.@gmail.com',
@@ -42,9 +43,18 @@ const sendMail = async (emailTo, name) => {
     },
   });
 
-  const mailOptions = registrationMailOptions(name);
+  let options;
 
-  await transporter.sendMail(mailOptions, (error, info) => {
+  switch (emailType) {
+    case REGISTRATION:
+      options = registrationMailOptions(emailTo, name);
+      break;
+    case SUBSCRIPTION:
+      options = subcriptionMailOptions(emailTo, name, teacherName);
+      break;
+  }
+
+  await transporter.sendMail(options, (error, info) => {
     if (error) {
       return console.log(error);
     }

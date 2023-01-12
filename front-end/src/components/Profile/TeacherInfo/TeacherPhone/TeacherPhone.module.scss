@@ -1,0 +1,31 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/font.scss';
+
+.container {
+  width: 760px;
+  padding: 0px 20px;
+  border-radius: 5px;
+}
+
+.headerContainer {
+  margin-bottom: 25px;
+}
+
+.header {
+  font-size: $f20;
+  font-weight: $fw600;
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+}
+
+.select {
+  width: 110px;
+  margin-right: 15px;
+}
+
+.input {
+  width: 660px;
+}

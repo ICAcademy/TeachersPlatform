@@ -18,6 +18,9 @@ const studentSchema = new Schema(
     url: {
       type: String,
     },
+    level: {
+      type: String,
+    },
   },
   { timestamps: true },
 );

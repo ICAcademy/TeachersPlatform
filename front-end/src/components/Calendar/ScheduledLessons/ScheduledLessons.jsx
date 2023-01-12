@@ -24,6 +24,9 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import styles from './ScheduledLessons.module.scss';
 
+//Constants
+import { TEACHER_ROLE } from 'constants/userRoles';
+
 const sx = {
   item: {
     alignItems: 'flex-start',
@@ -56,7 +59,7 @@ const ScheduledLessons = ({ list }) => {
                 sx={sx.item}
                 className={styles.lesson}
                 secondaryAction={
-                  role === 'teacher' && (
+                  role === TEACHER_ROLE && (
                     <Box sx={sx.actions}>
                       <IconButton
                         edge='end'
@@ -103,7 +106,7 @@ const ScheduledLessons = ({ list }) => {
           </Typography>
         )}
       </Box>
-      {role === 'teacher' && (
+      {role === TEACHER_ROLE && (
         <Button
           startIcon={<AddIcon />}
           variant='contained'
