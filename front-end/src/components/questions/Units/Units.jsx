@@ -18,9 +18,9 @@ const Units = ({ units }) => {
                 key={i}
                 unit={item.unit}
                 image={item.image}
-                editLink={`/app/tests/edit/${item.url}`}
                 url={item.url}
                 numberOfLessons={item.numberOfLessons}
+                type='questions'
               />
             );
           })}

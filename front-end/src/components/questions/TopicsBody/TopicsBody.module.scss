@@ -35,6 +35,7 @@
   box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
   transition: all 0.25s ease;
   cursor: pointer;
+  position: relative;
 
   &__index {
     width: 35px;
@@ -55,4 +56,15 @@
     transform: translateY(-4px) scale(1.02);
     box-shadow: 0 14px 24px rgb(0 0 0 / 20%);
   }
+}
+
+.editIcon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  padding: 5px;
+  top: -4px;
+  right: -5px;
+  background-color: #b464a6;
+  color: #fff;
 }

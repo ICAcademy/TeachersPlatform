@@ -18,6 +18,7 @@ const Units = (props) => {
           numberOfLessons={item.numberOfLessons}
           editLink={`/app/materials/edit/${item.url}`}
           url={item.url}
+          type='materials'
         />
       ))}
     </div>
