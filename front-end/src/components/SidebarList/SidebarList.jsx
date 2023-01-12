@@ -22,6 +22,7 @@ import {
   faRightFromBracket,
   faChalkboardUser,
   faBell,
+  faBookBookmark,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Services
@@ -81,6 +82,12 @@ export const SidebarList = () => {
           <NavLink to='/app/questions' className={isActive}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />
             Grammar
+          </NavLink>
+        </ListItem>
+        <ListItem className={styles.sidebarItem}>
+          <NavLink to='/app/dictionary' className={isActive}>
+            <FontAwesomeIcon className={styles.sidebarIcon} icon={faBookBookmark} />
+            Dictionary
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>

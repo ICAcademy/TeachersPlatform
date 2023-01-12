@@ -4,3 +4,5 @@ export const regexDateOfBirth = /^((0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])\/(1
 export const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*?[/#?!@$%^&*-.)()]).{8,10}$/;
 export const regexTime = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
 export const regexLabel = /^[\w\s\-,\.:;()''""]{1,30}$/;
+export const regexDictionaryWord = /^[a-zA-Z]{1,20}$/;
+export const regexDictionaryTranslation = /^[А-ЩЬЮЯҐЄІЇа-щьюяґєії]{1,20}$/;

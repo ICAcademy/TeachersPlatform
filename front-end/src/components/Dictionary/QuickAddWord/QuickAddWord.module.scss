@@ -1,0 +1,82 @@
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
+
+.buttonWrap {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 1000;
+}
+
+.btnActive {
+  display: flex;
+}
+
+.btnDisable {
+  display: none;
+}
+
+.contentWrap {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+}
+
+.wrap {
+  width: 380px;
+  height: 180px;
+  background-color: $white;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border-radius: 7px;
+  padding: 10px 20px;
+  box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%),
+    0px 9px 46px 8px rgb(0 0 0 / 12%);
+}
+
+.blockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & h1 {
+    font-family: 'Poppins-Regular', sans-serif;
+    font-size: $f21;
+    font-weight: $fw500;
+  }
+}
+
+.btnsWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & svg {
+    width: 20px;
+    height: 20px;
+
+    & path {
+      fill: rgba(0, 0, 0, 0.54);
+    }
+  }
+}
+
+.inputsWrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.dictionaryIcon {
+  & svg {
+    width: 20px;
+    height: 20px;
+
+    & path {
+      fill: $white;
+    }
+  }
+}
