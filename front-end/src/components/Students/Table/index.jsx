@@ -23,7 +23,9 @@ import styles from './Table.module.scss';
 import { Menu, MenuItem } from '@mui/material';
 
 const Table = () => {
-  const { currentUser } = useContext(CurrentUserContext);
+  const {
+    currentUser: { roleId },
+  } = useContext(CurrentUserContext);
   const [subscriptions, setSubscriptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItemIdx, setSelectedItemIdx] = useState('');
@@ -48,9 +50,8 @@ const Table = () => {
   };
 
   useEffect(() => {
-    fetchSubscriptions(currentUser.roleId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    fetchSubscriptions(roleId);
+  }, [roleId]);
 
   const handleClick = (event, index) => {
     setAnchorEl(event.currentTarget);
@@ -73,7 +74,7 @@ const Table = () => {
   const handleClickDeleteSubscriptions = (id) => {
     async () => {
       handleDeleteSubscription(id);
-      await fetchSubscriptions(currentUser.roleId);
+      await fetchSubscriptions(roleId);
     };
   };
 
