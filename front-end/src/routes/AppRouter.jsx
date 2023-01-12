@@ -95,7 +95,7 @@ const RouterWrapper = () => {
             }
           />
           <Route
-            path='/app/tests/edit/:url'
+            path='/app/questions/edit/:url'
             element={
               isAuthenticated &&
               currentUser.role === 'admin' && (

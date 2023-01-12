@@ -21,8 +21,8 @@ const TopicsBody = ({ topics, selectHandler, fullscreen }) => {
           <p className={styles.topic__title}>{item.topic}</p>
           <FontAwesomeIcon icon={faArrowRight} />
           {isAuthenticated && currentUser.role === 'admin' && (
-            <Link to={`/app/tests/edit/${item.url}`}>
-              <EditIcon className={styles.editIcon} fontSize='large' />
+            <Link to={`/app/questions/edit/${item.url}`}>
+              <EditIcon className={styles.editIcon} fontSize='medium' />
             </Link>
           )}
         </>
