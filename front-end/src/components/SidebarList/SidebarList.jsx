@@ -53,41 +53,44 @@ export const SidebarList = () => {
     dispatchFunction(pendingSubscriptionsCount());
   });
 
+  const isActive = ({ isActive }) =>
+    isActive ? `${styles.sidebarLink} ${styles.active}` : styles.sidebarLink;
+
   return (
     <div className={styles.sidebarMenu}>
       <List className={styles.sidebarList}>
         <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app' className={styles.sidebarLink}>
+          <NavLink exact='true' to='/app' className={isActive} end={true}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faHouseUser} />
             Dashboard
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/calendar' className={styles.sidebarLink}>
+          <NavLink to='/app/calendar' className={isActive}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faCalendarDays} />
             Calendar
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/materials' className={styles.sidebarLink}>
+          <NavLink to='/app/materials' className={isActive}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
             Materials
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/questions' className={styles.sidebarLink}>
+          <NavLink to='/app/questions' className={isActive}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />
             Grammar
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
           {currentUser?.role === STUDENT_ROLE ? (
-            <NavLink to='/app/teachers' className={styles.sidebarLink}>
+            <NavLink to='/app/teachers' className={isActive}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faChalkboardUser} />
               Teachers
             </NavLink>
           ) : (
-            <NavLink to='/app/subscriptions' className={styles.sidebarLink}>
+            <NavLink to='/app/subscriptions' className={isActive}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
               <Badge badgeContent={subscriptions} color='primary' className={styles.sidebarBadge}>
                 Students
@@ -98,20 +101,20 @@ export const SidebarList = () => {
         </ListItem>
         {currentUser?.role === STUDENT_ROLE && (
           <ListItem className={styles.sidebarItem}>
-            <NavLink to='/app/subscriptions' className={styles.sidebarLink}>
+            <NavLink to='/app/subscriptions' className={isActive}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faBell} />
               Subscriptions
             </NavLink>
           </ListItem>
         )}
         <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/finances' className={styles.sidebarLink}>
+          <NavLink to='/app/finances' className={isActive}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSackDollar} />
             Finances
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <NavLink onClick={handleLogout} to='/login' className={styles.sidebarLink}>
+          <NavLink onClick={handleLogout} to='/login' className={isActive}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faRightFromBracket} />
             Logout
           </NavLink>

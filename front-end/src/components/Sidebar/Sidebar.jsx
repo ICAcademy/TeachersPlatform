@@ -7,7 +7,6 @@ import { SidebarList } from 'components/SidebarList/SidebarList';
 import { CurrentUserContext } from 'context/AppProvider';
 
 import styles from './Sidebar.module.scss';
-// import logo from 'assets/sidebar/logo-dark-text.png';
 import logo1 from 'assets/sidebar/logo-letter.png';
 import avatar from 'assets/sidebar/avatar.png';
 
