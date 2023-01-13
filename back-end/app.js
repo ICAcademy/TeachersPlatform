@@ -4,13 +4,19 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const { Server } = require('socket.io');
+const { socketConnection } = require('./services/Socket'); //
 
+const http = require('http');
 const app = express();
 const port = process.env.PORT;
+const server = http.createServer(app);
 
 // Middlewares
 const authentication = require('./middlewares/authentication');
 const cors = require('./middlewares/cors');
+const io = new Server(server, { cors: { origin: 'https://incredible-torte-ac738e.netlify.app' } });
+socketConnection(io);
 
 // Routers
 const appRouter = require('./routes/AppRouter');
@@ -39,7 +45,7 @@ async function main() {
       useUnifiedTopology: true,
     });
 
-    app.listen(port, () => {
+    server.listen(port, () => {
       console.log(`Server has been started on port ${port}`);
     });
   } catch (err) {

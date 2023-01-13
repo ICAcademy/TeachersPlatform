@@ -26,6 +26,7 @@ import {
 
 // Services
 import { logout } from 'services/authService';
+import { socket } from 'services/socketService';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -50,7 +51,20 @@ export const SidebarList = () => {
   };
 
   useEffect(() => {
-    dispatchFunction(pendingSubscriptionsCount());
+    dispatchFunction(pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }));
+  });
+
+  useEffect(() => {
+    socket.on('create_subscription', () => {
+      dispatchFunction(
+        pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }),
+      );
+    });
+    socket.on('delete_subscription', () => {
+      dispatchFunction(
+        pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }),
+      );
+    });
   });
 
   const isActive = ({ isActive }) =>
