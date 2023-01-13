@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -11,6 +12,9 @@ import {
   deleteDictionary,
 } from 'services/dictionaryService';
 
+// HOC
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
+
 // Components
 import AddWord from 'components/Dictionary/AddWord';
 import Loader from 'components/common/Loader/Loader';
@@ -19,7 +23,7 @@ import Table from 'components/Dictionary/Table';
 // Styles
 import styles from './Dictionary.module.scss';
 
-const Dictionary = () => {
+const Dictionary = ({ snackbarShowMessage }) => {
   const {
     currentUser: { roleId },
   } = useContext(CurrentUserContext);
@@ -31,8 +35,15 @@ const Dictionary = () => {
       setIsLoading(true);
       const newInstance = await createDictionary({ word, translation, studentId: roleId });
       setWords((prev) => [newInstance, ...prev]);
+      snackbarShowMessage({
+        message: 'Created word!',
+        severity: 'success',
+      });
     } catch (error) {
-      return error;
+      snackbarShowMessage({
+        message: 'Error! Word did not added!',
+        severity: 'error',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -44,11 +55,14 @@ const Dictionary = () => {
       const dictionaryOfStudent = await getDictionaryByStudentId({ studentId: roleId });
       setWords(dictionaryOfStudent);
     } catch (error) {
-      return error;
+      snackbarShowMessage({
+        message: 'Something went wrong!',
+        severity: 'error',
+      });
     } finally {
       setIsLoading(false);
     }
-  }, [roleId]);
+  }, [roleId, snackbarShowMessage]);
 
   const handleUpdateDictionary = async (id, data) => {
     try {
@@ -58,8 +72,15 @@ const Dictionary = () => {
         return item._id === id ? updatedWord : item;
       });
       setWords(updatedDictionary);
+      snackbarShowMessage({
+        message: 'Successfully updated!',
+        severity: 'success',
+      });
     } catch (error) {
-      return error;
+      snackbarShowMessage({
+        message: 'Something went wrong!',
+        severity: 'error',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -71,8 +92,15 @@ const Dictionary = () => {
       await deleteDictionary(id);
       const updatedDictionary = words.filter((word) => word._id !== id);
       setWords(updatedDictionary);
+      snackbarShowMessage({
+        message: 'Successfully deleted!',
+        severity: 'success',
+      });
     } catch (error) {
-      return error;
+      snackbarShowMessage({
+        message: 'Something went wrong!',
+        severity: 'error',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -98,4 +126,8 @@ const Dictionary = () => {
   );
 };
 
-export default Dictionary;
+Dictionary.propTypes = {
+  snackbarShowMessage: PropTypes.func,
+};
+
+export default withSnackbar(Dictionary);

@@ -14,6 +14,9 @@ import { createDictionary } from 'services/dictionaryService';
 // Hooks
 import useInput from 'hooks/useInput';
 
+// HOC
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
+
 // Helpers
 import { REGEX_WORD, REGEX_TRANSLATION } from 'helpers/regex';
 
@@ -47,7 +50,7 @@ const sx = {
   },
 };
 
-const QuickAddWord = () => {
+const QuickAddWord = ({ snackbarShowMessage }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -77,8 +80,15 @@ const QuickAddWord = () => {
     try {
       setIsLoading(true);
       await createDictionary({ word, translation, studentId: '63bbeee8fcd9c7f8a838b749' });
+      snackbarShowMessage({
+        message: 'Created word!',
+        severity: 'success',
+      });
     } catch (error) {
-      return error;
+      snackbarShowMessage({
+        message: 'Error! Word did not added!',
+        severity: 'error',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -163,4 +173,4 @@ const QuickAddWord = () => {
   return getComponent();
 };
 
-export default QuickAddWord;
+export default withSnackbar(QuickAddWord);
