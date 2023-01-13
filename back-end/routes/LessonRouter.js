@@ -1,6 +1,7 @@
 const express = require('express');
 const {
   getAllLessons,
+  getSingleLesson,
   startNewLesson,
   updateActiveLesson,
 } = require('../controllers/LessonController');
@@ -8,6 +9,7 @@ const {
 const router = express.Router();
 
 router.get('/', getAllLessons);
+router.get('/:id', getSingleLesson);
 router.post('/', startNewLesson);
 router.patch('/:id', updateActiveLesson);
 

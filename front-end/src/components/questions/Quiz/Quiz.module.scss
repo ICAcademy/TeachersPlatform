@@ -1,5 +1,10 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
+}
+
 .title {
-  margin-top: 20px;
-  margin-left: 20px;
   color: #9000ff;
 }

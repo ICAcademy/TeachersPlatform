@@ -1,4 +1,9 @@
-const { getLessonsById, startLesson, updateLesson } = require('../services/LessonService');
+const {
+  getLessonsById,
+  getSingleLessonById,
+  startLesson,
+  updateLesson,
+} = require('../services/LessonService');
 
 const getAllLessons = async (req, res) => {
   try {
@@ -7,6 +12,18 @@ const getAllLessons = async (req, res) => {
     const lessons = await getLessonsById(id);
 
     res.status(200).json(lessons);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+const getSingleLesson = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const lesson = await getSingleLessonById(id);
+
+    res.status(200).json(lesson);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -37,4 +54,4 @@ const updateActiveLesson = async (req, res) => {
   }
 };
 
-module.exports = { getAllLessons, startNewLesson, updateActiveLesson };
+module.exports = { getAllLessons, getSingleLesson, startNewLesson, updateActiveLesson };

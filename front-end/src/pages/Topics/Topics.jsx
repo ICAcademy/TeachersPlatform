@@ -65,6 +65,7 @@ const Topics = () => {
     try {
       const body = {
         topic: selectedTopic.topic,
+        level: unitData.level,
         teacherId: roleId,
         studentId: selectedStudentId,
         questions: selectedTopic.questions,

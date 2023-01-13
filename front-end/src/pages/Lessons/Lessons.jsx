@@ -38,6 +38,7 @@ const Lessons = () => {
         {lessons.map((lesson) => (
           <LessonItem
             key={lesson._id}
+            id={lesson._id}
             topic={lesson.topic}
             student={lesson.studentId.fullName}
             status={lesson.lessonStatus}

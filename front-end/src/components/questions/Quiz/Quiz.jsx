@@ -1,12 +1,33 @@
-import React from 'react';
-import { List, ListItem } from '@mui/material';
+import React, { useContext } from 'react';
+import { Box, Button, List, ListItem } from '@mui/material';
 import PropTypes from 'prop-types';
+
+import { CurrentUserContext } from 'context/AppProvider';
 
 import AnswerPicker from 'components/questions/AnswerPicker/AnswerPicker';
 
-import styles from './Quiz.module.scss';
+import { TEACHER_ROLE } from 'constants/userRoles';
 
-const Quiz = ({ questions }) => {
+import styles from './Quiz.module.scss';
+import { endLesson } from 'services/lessonService';
+import { useNavigate } from 'react-router';
+
+const Quiz = ({ id, questions, isLesson }) => {
+  const navigate = useNavigate();
+
+  const {
+    currentUser: { role },
+  } = useContext(CurrentUserContext);
+
+  const endLessonHandler = async (lessonId) => {
+    try {
+      await endLesson(lessonId, { lessonStatus: 'ended' });
+      navigate('/app/lessons');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const quiz = questions.map((question) => (
     <ListItem
       divider
@@ -20,18 +41,29 @@ const Quiz = ({ questions }) => {
 
   return (
     <>
-      <h3 className={styles.title}>Quiz</h3>
+      <Box className={styles.header} sx={{ '& button': { m: 1 } }}>
+        <h3 className={styles.title}>Quiz</h3>
+        {isLesson && role === TEACHER_ROLE && (
+          <Button variant='contained' size='small' onClick={() => endLessonHandler(id)}>
+            End lesson
+          </Button>
+        )}
+      </Box>
       <List className={styles.list}>{quiz}</List>
     </>
   );
 };
 
 Quiz.propTypes = {
+  id: PropTypes.string,
   questions: PropTypes.array,
+  isLesson: PropTypes.bool,
 };
 
 Quiz.defaultProps = {
+  id: '',
   questions: [],
+  isLesson: false,
 };
 
 export default Quiz;
