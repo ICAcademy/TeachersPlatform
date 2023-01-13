@@ -54,21 +54,15 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-exports.resetPasswordRequestController = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const link = await requestPasswordReset(email);
-    res.status(201).json({ link });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
 exports.resetPasswordController = async (req, res) => {
   try {
-    const { userId, token, password } = req.body;
+    const { email, userId, token, password } = req.body;
+    if (email) {
+      const link = await requestPasswordReset(email);
+      return res.status(201).json({ link });
+    }
     const resetPasswordService = await resetPassword(userId, token, password);
-    res.status(200).json(resetPasswordService);
+    return res.status(200).json(resetPasswordService);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

@@ -16,6 +16,7 @@ import TeacherInfo from 'components/Profile/TeacherInfo/TeacherInfo';
 
 // Constants
 import { ADMIN_ROLE, STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
+import ChangePassword from 'pages/ChangePassword/ChangePassword';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
@@ -34,12 +35,6 @@ const TeacherSubscriptions = lazy(() => import('pages/TeacherSubscriptions'));
 const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
 const StudentSubscriptions = lazy(() => import('pages/StudentSubscriptions'));
 const Finances = lazy(() => import('pages/Finances/Finances'));
-const RequestChangePassword = lazy(() =>
-  import('pages/RequestChangePassword/RequestChangePassword'),
-);
-const ChangeForgottenPassword = lazy(() =>
-  import('pages/ChangeForgottenPassword/ChangeForgottenPassword'),
-);
 
 const RouterWrapper = () => {
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
@@ -185,8 +180,7 @@ const RouterWrapper = () => {
 
         <Route path='/login' element={<Login />} />
         <Route path='/registration' element={<Registration />} />
-        <Route path='/request-change-password' element={<RequestChangePassword />} />
-        <Route path='/password-reset' element={<ChangeForgottenPassword />} />
+        <Route path='/reset-password' element={<ChangePassword />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Suspense>

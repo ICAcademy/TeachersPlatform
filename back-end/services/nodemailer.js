@@ -28,12 +28,11 @@ const forgotPasswordTemplate = (name, link) =>
 <p style="color:#292929;">Link for change password is here ${link} </p>
 </div>`;
 
-const changedPasswordTemplate = (name) => {
+const changedPasswordTemplate = (name) =>
   `<div style='text-align: center'>
   <h1>Hello ${name}!</h1>
   <p style="color:#292929;">You sucessfully have changed password. </p>
   </div>`;
-};
 
 const registrationMailOptions = (emailTo, name) => ({
   from: process.env.EMAIL_TEST,

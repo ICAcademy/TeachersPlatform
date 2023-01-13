@@ -66,38 +66,4 @@ const changePassword = async (req, res) => {
   }
 };
 
-const forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.query;
-    const findedUser = await findByEmail(email);
-    if (findedUser) {
-      await sendMail(findedUser.email, findedUser.fullName, FORGOTPASSWORD);
-      return res.status(200).json({ link: 'here must be link for changing password' });
-    }
-    throw new Error('User was not found by email');
-  } catch (error) {
-    res.status(400).json(error.message);
-  }
-};
-
-const changeForgotPassword = async (req, res) => {
-  try {
-    const { email, newPassword, confirmPassword } = req.body;
-    const findedUser = await findByEmail(email);
-    const userPass = await getCurrentPassword(findedUser.id);
-    if (!findedUser) {
-      throw new Error('user was not found by email');
-    }
-    if (findedUser && newPassword === confirmPassword) {
-      const hashedPass = await hashPassword(newPassword);
-      userPass.password = hashedPass;
-      await userPass.save();
-      return res.json({ message: 'password updated' });
-    }
-    throw new Error('newPassword does not equal confirm password');
-  } catch (error) {
-    res.status(400).json(error.message);
-  }
-};
-
-module.exports = { getUser, updateUserById, changePassword, forgotPassword, changeForgotPassword };
+module.exports = { getUser, updateUserById, changePassword };

@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // components
 import { Box } from '@mui/system';
 import { TextField, InputAdornment, FormControl, Button } from '@mui/material';
-
-// service
-import { requestChangePasswordService } from 'services/authService';
 
 // assets
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,27 +12,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 // styles
 import styles from './RequestChangePassword.module.scss';
 
-const RequestChangePassword = () => {
-  const [email, setEmail] = useState('');
-
-  const hangeChangeEmail = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const requestChangePassword = async (email) => {
-    try {
-      const changePassword = await requestChangePasswordService(email);
-      return changePassword;
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
-
-  const handleSubmit = async () => {
-    await requestChangePassword(email);
-    setEmail('');
-  };
-
+const RequestChangePassword = ({ handleChangeEmail, handleSubmitEmail, email }) => {
   return (
     <div className={styles.wrap}>
       <div className={styles.blocksWrap}>
@@ -47,7 +25,7 @@ const RequestChangePassword = () => {
               type='email'
               name='email'
               value={email}
-              onChange={(event) => hangeChangeEmail(event)}
+              onChange={(event) => handleChangeEmail(event)}
               placeholder='Email'
               color='purple'
               size='small'
@@ -61,7 +39,7 @@ const RequestChangePassword = () => {
               }}
             />
             <Button
-              onClick={handleSubmit}
+              onClick={handleSubmitEmail}
               type='submit'
               variant='contained'
               sx={{ margin: '15px 0', bgcolor: '#7c08ff' }}
@@ -73,6 +51,12 @@ const RequestChangePassword = () => {
       </div>
     </div>
   );
+};
+
+RequestChangePassword.propTypes = {
+  handleChangeEmail: PropTypes.func,
+  handleSubmitEmail: PropTypes.func,
+  email: PropTypes.string,
 };
 
 export default RequestChangePassword;
