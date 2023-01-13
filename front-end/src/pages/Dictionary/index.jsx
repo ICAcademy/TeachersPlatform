@@ -41,7 +41,7 @@ const Dictionary = ({ snackbarShowMessage }) => {
       });
     } catch (error) {
       snackbarShowMessage({
-        message: 'Error! Word did not added!',
+        message: error.response.data,
         severity: 'error',
       });
     } finally {

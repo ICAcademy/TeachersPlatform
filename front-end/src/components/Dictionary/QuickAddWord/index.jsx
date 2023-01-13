@@ -52,6 +52,7 @@ const sx = {
 
 const QuickAddWord = ({ snackbarShowMessage }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const [existWord, setExistWord] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClose = () => {
@@ -85,13 +86,20 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
         severity: 'success',
       });
     } catch (error) {
+      setExistWord(true);
       snackbarShowMessage({
-        message: 'Error! Word did not added!',
+        message: error.response.data,
         severity: 'error',
       });
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const reset = () => {
+    resetWord();
+    resetTranslation();
+    handleClose();
   };
 
   const getComponent = () => {
@@ -143,11 +151,9 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
                 size='small'
                 disabled={!wordIsValid || !translationIsValid}
                 sx={sx.addBtn}
-                onClick={() => {
+                onClick={async () => {
                   handleCreateDictionary(enteredWord, enteredTranslation);
-                  handleClose();
-                  resetWord();
-                  resetTranslation();
+                  (await existWord) ? reset() : '';
                 }}
               >
                 add
