@@ -15,7 +15,10 @@ import { createDictionary } from 'services/dictionaryService';
 import useInput from 'hooks/useInput';
 
 // Helpers
-import { regexDictionaryWord, regexDictionaryTranslation } from 'helpers/regex';
+import { REGEX_WORD, REGEX_TRANSLATION } from 'helpers/regex';
+
+const WORD_HELPER_TEXT = 'Wrong! Example: you';
+const TRANSLATION_HELPER_TEXT = 'Wrong! Example: ти';
 
 // Components
 import Loader from 'components/common/Loader/Loader';
@@ -44,9 +47,6 @@ const sx = {
   },
 };
 
-const wordHelperText = 'Wrong! Example: you'; // TODO: rename
-const translationHelperText = 'Wrong! Example: ти'; // TODO: rename
-
 const QuickAddWord = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ const QuickAddWord = () => {
     valueChangeHandler: wordChangeHandler,
     valueOnBlurHandler: wordBlurHandler,
     resetValue: resetWord,
-  } = useInput('word', '', regexDictionaryWord);
+  } = useInput('word', '', REGEX_WORD);
 
   const {
     value: enteredTranslation,
@@ -71,7 +71,7 @@ const QuickAddWord = () => {
     valueChangeHandler: translationChangeHandler,
     valueOnBlurHandler: translationBlurHandler,
     resetValue: resetTranslation,
-  } = useInput('translation', '', regexDictionaryTranslation);
+  } = useInput('translation', '', REGEX_TRANSLATION);
 
   const handleCreateDictionary = async (word, translation) => {
     try {
@@ -111,7 +111,7 @@ const QuickAddWord = () => {
                   onChange={wordChangeHandler}
                   onBlur={wordBlurHandler}
                   error={wordHasError}
-                  helperText={wordHasError ? wordHelperText : ' '}
+                  helperText={wordHasError ? WORD_HELPER_TEXT : ' '}
                   size='small'
                   align='center'
                 />
@@ -123,7 +123,7 @@ const QuickAddWord = () => {
                   onChange={translationChangeHandler}
                   onBlur={translationBlurHandler}
                   error={translationHasError}
-                  helperText={translationHasError ? translationHelperText : ' '}
+                  helperText={translationHasError ? TRANSLATION_HELPER_TEXT : ' '}
                   size='small'
                   align='center'
                 />

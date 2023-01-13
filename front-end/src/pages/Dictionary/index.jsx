@@ -14,7 +14,7 @@ import {
 // Components
 import AddWord from 'components/Dictionary/AddWord';
 import Loader from 'components/common/Loader/Loader';
-import DictionaryTable from 'components/Dictionary/DictionaryTable';
+import Table from 'components/Dictionary/Table';
 
 // Styles
 import styles from './Dictionary.module.scss';
@@ -23,14 +23,14 @@ const Dictionary = () => {
   const {
     currentUser: { roleId },
   } = useContext(CurrentUserContext);
-  const [dictionary, setDictionary] = useState([]);
+  const [words, setWords] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCreateDictionary = async (word, translation) => {
     try {
       setIsLoading(true);
       const newInstance = await createDictionary({ word, translation, studentId: roleId });
-      setDictionary((prev) => [newInstance, ...prev]);
+      setWords((prev) => [newInstance, ...prev]);
     } catch (error) {
       return error;
     } finally {
@@ -42,7 +42,7 @@ const Dictionary = () => {
     try {
       setIsLoading(true);
       const dictionaryOfStudent = await getDictionaryByStudentId({ studentId: roleId });
-      setDictionary(dictionaryOfStudent);
+      setWords(dictionaryOfStudent);
     } catch (error) {
       return error;
     } finally {
@@ -54,10 +54,10 @@ const Dictionary = () => {
     try {
       setIsLoading(true);
       const updatedWord = await updateDictionary(id, data);
-      const updatedDictionary = dictionary.map((item) => {
+      const updatedDictionary = words.map((item) => {
         return item._id === id ? updatedWord : item;
       });
-      setDictionary(updatedDictionary);
+      setWords(updatedDictionary);
     } catch (error) {
       return error;
     } finally {
@@ -69,8 +69,8 @@ const Dictionary = () => {
     try {
       setIsLoading(true);
       await deleteDictionary(id);
-      const updatedDictionary = dictionary.filter((word) => word._id !== id);
-      setDictionary(updatedDictionary);
+      const updatedDictionary = words.filter((word) => word._id !== id);
+      setWords(updatedDictionary);
     } catch (error) {
       return error;
     } finally {
@@ -88,9 +88,9 @@ const Dictionary = () => {
     <div className={styles.wrap}>
       <h1 className={styles.title}>My dictionary</h1>
       <AddWord isLoading={isLoading} createDictionary={handleCreateDictionary} />
-      <DictionaryTable
+      <Table
         loading={isLoading}
-        dictionary={dictionary}
+        dictionary={words}
         updateDictionary={handleUpdateDictionary}
         deleteWordById={deleteWordById}
       />

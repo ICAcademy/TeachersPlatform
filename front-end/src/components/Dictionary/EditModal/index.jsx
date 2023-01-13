@@ -12,7 +12,8 @@ import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons';
 import useInput from 'hooks/useInput';
 
 // Helpers
-import { regexDictionaryWord, regexDictionaryTranslation } from 'helpers/regex';
+import { REGEX_WORD, REGEX_TRANSLATION } from 'helpers/regex';
+import { WORD_HELPER_TEXT, TRANSLATION_HELPER_TEXT } from 'helpers/text';
 
 // Components
 import Loader from 'components/common/Loader/Loader';
@@ -37,8 +38,19 @@ const style = {
   borderRadius: 4,
 };
 
-const wordHelperText = 'Enter word in english without numbers'; // TODO: rename
-const translationHelperText = 'Enter word in ukrainian without numbers'; // TODO: rename
+const sx = {
+  inputsBox: {
+    '& .MuiTextField-root': {
+      m: 1,
+      width: '45ch',
+    },
+  },
+  updateBtn: {
+    width: '100px',
+    height: '40px',
+    my: 1.5,
+  },
+};
 
 const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
   const [open, setOpen] = useState(false);
@@ -50,7 +62,7 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
     hasError: wordHasError,
     valueChangeHandler: wordChangeHandler,
     valueOnBlurHandler: wordBlurHandler,
-  } = useInput('word', dictionary?.word, regexDictionaryWord);
+  } = useInput('word', dictionary.word, REGEX_WORD);
 
   const {
     value: enteredTranslation,
@@ -58,7 +70,7 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
     hasError: translationHasError,
     valueChangeHandler: translationChangeHandler,
     valueOnBlurHandler: translationBlurHandler,
-  } = useInput('translation', dictionary?.translation, regexDictionaryTranslation);
+  } = useInput('translation', dictionary.translation, REGEX_TRANSLATION);
 
   return (
     <div className={styles.wrapper}>
@@ -83,14 +95,7 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
                 <FontAwesomeIcon icon={faXmark} />
               </IconButton>
             </div>
-            <Box
-              component='form'
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '45ch' },
-              }}
-              noValidate
-              autoComplete='off'
-            >
+            <Box component='form' sx={sx.inputsBox} noValidate autoComplete='off'>
               <div className={styles.block}>
                 <TextField
                   id='outlined-required'
@@ -100,7 +105,7 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
                   onChange={wordChangeHandler}
                   onBlur={wordBlurHandler}
                   error={wordHasError}
-                  helperText={wordHasError ? wordHelperText : ' '}
+                  helperText={wordHasError ? WORD_HELPER_TEXT : ' '}
                   size='small'
                   align='center'
                 />
@@ -112,7 +117,7 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
                   onChange={translationChangeHandler}
                   onBlur={translationBlurHandler}
                   error={translationHasError}
-                  helperText={translationHasError ? translationHelperText : ' '}
+                  helperText={translationHasError ? TRANSLATION_HELPER_TEXT : ' '}
                   size='small'
                   align='center'
                 />
@@ -120,9 +125,9 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
                   variant='contained'
                   size='small'
                   disabled={!wordIsValid || !translationIsValid}
-                  sx={{ width: 100, height: 40, my: 1.5 }}
+                  sx={sx.updateBtn}
                   onClick={() => {
-                    updateDictionary(dictionary?._id, {
+                    updateDictionary(dictionary._id, {
                       word: enteredWord,
                       translation: enteredTranslation,
                     });
@@ -141,7 +146,12 @@ const EditModal = ({ dictionary, updateDictionary, isLoading }) => {
 };
 
 EditModal.propTypes = {
-  dictionary: PropTypes.shape().isRequired,
+  dictionary: PropTypes.shape({
+    _id: PropTypes.string,
+    studentId: PropTypes.string,
+    word: PropTypes.string,
+    translation: PropTypes.string,
+  }).isRequired,
   updateDictionary: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
 };

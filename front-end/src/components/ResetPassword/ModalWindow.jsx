@@ -12,7 +12,7 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { CurrentUserContext } from 'context/AppProvider';
 import { changePassword } from 'services/userService';
-import { regexPassword } from 'helpers/regex';
+import { REGEX_PASSWORD } from 'helpers/regex';
 import useInput from 'hooks/useInput';
 
 const style = {
@@ -48,7 +48,7 @@ const ModalWindow = ({ open, handleClose }) => {
     hasError: newPasswordHasError,
     valueChangeHandler: newPasswordChangeHandler,
     valueOnBlurHandler: newPasswordBlurHandler,
-  } = useInput('newPassword', '', regexPassword);
+  } = useInput('newPassword', '', REGEX_PASSWORD);
 
   const {
     value: enteredNewPasswordAgain,
@@ -56,7 +56,7 @@ const ModalWindow = ({ open, handleClose }) => {
     hasError: newPasswordAgainHasError,
     valueChangeHandler: newPasswordAgainChangeHandler,
     valueOnBlurHandler: newPasswordAgainBlurHandler,
-  } = useInput('newPasswordAgain', '', regexPassword);
+  } = useInput('newPasswordAgain', '', REGEX_PASSWORD);
 
   const formIsValid = newPasswordIsValid && newPasswordAgainIsValid;
 

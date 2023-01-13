@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 // MUI library
 import {
   Paper,
-  Table,
+  Table as TableComponent,
   TableBody,
   TableCell,
   TableContainer,
@@ -25,13 +25,13 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import NoWords from 'components/Dictionary/NoWords';
 import Loader from 'components/common/Loader/Loader';
 import EditModal from 'components/Dictionary/EditModal';
-import TablePaginationActions from 'components/Dictionary/DictionaryTable/TablePaginationActions';
+import TablePaginationActions from 'components/Dictionary/Table/TablePaginationActions';
 
 // Constants
 const TABLE_HEADER_CELLS = ['Word', 'Translation', 'Settings'];
 
 // Styles
-import styles from './DictionaryTable.module.scss';
+import styles from './Table.module.scss';
 
 const sx = {
   paper: { width: '560px', overflow: 'hidden', my: 2.5 },
@@ -54,7 +54,7 @@ const sx = {
   },
 };
 
-const DictionaryTable = ({ dictionary, isLoading, deleteWordById, updateDictionary }) => {
+const Table = ({ dictionary, isLoading, deleteWordById, updateDictionary }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -75,7 +75,7 @@ const DictionaryTable = ({ dictionary, isLoading, deleteWordById, updateDictiona
     return (
       <Paper sx={sx.paper}>
         <TableContainer sx={sx.tableContainer}>
-          <Table className={styles.root} stickyHeader aria-label='sticky table'>
+          <TableComponent className={styles.root} stickyHeader aria-label='sticky table'>
             <TableHead sx={sx.tableHead}>
               <TableRow>
                 {TABLE_HEADER_CELLS.map((item) => (
@@ -133,7 +133,7 @@ const DictionaryTable = ({ dictionary, isLoading, deleteWordById, updateDictiona
                 />
               </TableRow>
             </TableFooter>
-          </Table>
+          </TableComponent>
         </TableContainer>
       </Paper>
     );
@@ -142,15 +142,15 @@ const DictionaryTable = ({ dictionary, isLoading, deleteWordById, updateDictiona
   return getComponent();
 };
 
-DictionaryTable.propTypes = {
+Table.propTypes = {
   isLoading: PropTypes.bool,
   dictionary: PropTypes.array.isRequired,
   updateDictionary: PropTypes.func.isRequired,
   deleteWordById: PropTypes.func.isRequired,
 };
 
-DictionaryTable.defaultProps = {
+Table.defaultProps = {
   isLoading: false,
 };
 
-export default DictionaryTable;
+export default Table;

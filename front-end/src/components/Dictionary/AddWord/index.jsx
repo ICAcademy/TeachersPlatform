@@ -11,9 +11,8 @@ import Loader from 'components/common/Loader/Loader';
 import useInput from 'hooks/useInput';
 
 // Helpers
-import { regexDictionaryWord, regexDictionaryTranslation } from 'helpers/regex';
-const WORD_HELPER_TEXT = 'Enter word in english without numbers';
-const TRANSLATION_HELPER_TEXT = 'Enter word in ukrainian without numbers';
+import { REGEX_WORD, REGEX_TRANSLATION } from 'helpers/regex';
+import { WORD_HELPER_TEXT, TRANSLATION_HELPER_TEXT } from 'helpers/text';
 
 // Styles
 import styles from './AddWord.module.scss';
@@ -38,7 +37,7 @@ const AddWord = ({ isLoading, createDictionary }) => {
     valueChangeHandler: wordChangeHandler,
     valueOnBlurHandler: wordBlurHandler,
     resetValue: resetWord,
-  } = useInput('word', '', regexDictionaryWord);
+  } = useInput('word', '', REGEX_WORD);
 
   const {
     value: enteredTranslation,
@@ -47,7 +46,7 @@ const AddWord = ({ isLoading, createDictionary }) => {
     valueChangeHandler: translationChangeHandler,
     valueOnBlurHandler: translationBlurHandler,
     resetValue: resetTranslation,
-  } = useInput('translation', '', regexDictionaryTranslation);
+  } = useInput('translation', '', REGEX_TRANSLATION);
 
   return isLoading ? (
     <Loader />

@@ -23,7 +23,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // Regex
-import { regexEmail, regexFullName, regexPassword } from 'helpers/regex';
+import { REGEX_EMAIL, REGEX_FULL_NAME, REGEX_PASSWORD } from 'helpers/regex';
 
 // Services
 import { registration } from 'services/authService';
@@ -96,9 +96,9 @@ const RegistrationForm = () => {
   const checkValidation = () => {
     const errors = {
       hasMessageError: errMessage,
-      hasFullNameError: !regexFullName.test(data.fullName),
-      hasEmailError: !regexEmail.test(data.email),
-      hasPasswordError: !regexPassword.test(data.password),
+      hasFullNameError: !REGEX_FULL_NAME.test(data.fullName),
+      hasEmailError: !REGEX_EMAIL.test(data.email),
+      hasPasswordError: !REGEX_PASSWORD.test(data.password),
       hasRepeatPasswordError: data.password !== data.repeatPassword,
     };
 
