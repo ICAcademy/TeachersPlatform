@@ -12,8 +12,8 @@ exports.getStudentById = async (id) => {
   return await StudentModel.findById(id);
 };
 
-exports.updateStudent = async (id, data) => {
-  return await StudentModel.findByIdAndUpdate(id, data, { new: true });
+exports.updateStudent = async (id, body) => {
+  return await StudentModel.findByIdAndUpdate(id, body, { new: true, runValidators: true });
 };
 
 exports.deleteStudent = async (id) => {

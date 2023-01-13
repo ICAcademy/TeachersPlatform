@@ -1,5 +1,17 @@
+@import '../../../styles/colors.scss';
+
 .units {
   display: flex;
   flex-wrap: wrap;
   margin: 1.5rem -0.75rem 0;
+}
+
+.notFound {
+  display: flex;
+  justify-content: center;
+  padding: 90px 0;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 30px;
+  color: $darkGrey;
 }

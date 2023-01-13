@@ -1,0 +1,77 @@
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
+
+table {
+  & tr {
+    text-align: center;
+    height: 60px;
+    color: $purpleHeart;
+    font-weight: $fw600;
+    font-size: $f14;
+  }
+
+  & thead tr {
+    font-size: $f16;
+    color: $white;
+    background: rgb(138, 35, 255);
+    background: linear-gradient(
+      180deg,
+      rgba(138, 35, 255, 0.7990546560421043) 39%,
+      rgba(173, 102, 255, 0.5889706224286589) 87%
+    );
+    height: 60px;
+  }
+
+  & th {
+    width: 20%;
+  }
+
+  & th:first-child {
+    width: 12%;
+  }
+
+  & th:last-child,
+  th:nth-child(4) {
+    width: 8%;
+  }
+
+  & tr:nth-child(even) {
+    background-color: $white;
+  }
+
+  & tr:nth-child(odd) {
+    background-color: rgba(173, 102, 255, 0.2);
+  }
+
+  & td {
+    & img {
+      width: 50px;
+      height: 50px;
+      margin: auto;
+    }
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.settingsBtn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 10px 20px;
+
+  & svg {
+    font-size: 18px;
+    & path {
+      fill: $purpleHeart;
+
+      &:hover {
+        fill: $purpleHaze;
+      }
+    }
+  }
+}

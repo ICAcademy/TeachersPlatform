@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getQuestionsByUnitName, getUnitsByLevel } from 'services/questionService';
+import { getQuestionsByUnitName, getQuestionsUnitsByLevel } from 'services/questionService';
+import {
+  getMaterialsUnitsByLevel,
+  getMaterialsByUnit,
+} from 'services/MaterialsService/MaterialsService';
 
-const useFetchUnits = (isEdit, searchUnit, selectedLevel) => {
+const useFetchUnits = (isEdit, searchUnit, selectedLevel, materialsOrQuestions) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,14 +16,20 @@ const useFetchUnits = (isEdit, searchUnit, selectedLevel) => {
       try {
         if (!isEdit) {
           setLoading(true);
-          const units = await getUnitsByLevel(selectedLevel);
+          const units =
+            materialsOrQuestions === 'question'
+              ? await getQuestionsUnitsByLevel(selectedLevel)
+              : await getMaterialsUnitsByLevel(selectedLevel);
           setData(units);
           setLoading(false);
           setError(null);
         }
         if (isEdit && searchUnit !== '') {
           setLoading(true);
-          const questionsFromInput = await getQuestionsByUnitName({ searchUnit });
+          const questionsFromInput =
+            materialsOrQuestions === 'question'
+              ? await getQuestionsByUnitName({ searchUnit })
+              : await getMaterialsByUnit({ unitName: searchUnit });
           setData(questionsFromInput);
           setLoading(false);
           setError(null);
@@ -33,7 +43,7 @@ const useFetchUnits = (isEdit, searchUnit, selectedLevel) => {
       }
     })();
     return () => controller.abort();
-  }, [searchUnit, isEdit, selectedLevel]);
+  }, [searchUnit, isEdit, selectedLevel, materialsOrQuestions]);
   return { data, loading, error };
 };
 

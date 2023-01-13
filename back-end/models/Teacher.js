@@ -11,10 +11,25 @@ const teacherSchema = new Schema(
     email: {
       type: String,
     },
+    language: {
+      type: String,
+    },
+    biography: {
+      type: String,
+    },
     phone: {
       type: String,
     },
     url: {
+      type: String,
+    },
+    age: {
+      type: Number,
+    },
+    preferences: {
+      type: String,
+    },
+    socialMedias: {
       type: String,
     },
   },
