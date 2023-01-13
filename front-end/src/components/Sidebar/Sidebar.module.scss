@@ -77,7 +77,33 @@ img {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1280px) {
+  .sidebar {
+    width: 15rem;
+
+    .sidebarImgAvatar {
+      .sidebarAvatarLink {
+        width: 55px;
+        height: 55px;
+      }
+
+      h6 {
+        font-size: 1rem;
+        line-height: 20px;
+
+        .sidebarRole {
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    .sidebarLogoText {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
   .sidebar {
     padding: 0;
     width: 15rem;

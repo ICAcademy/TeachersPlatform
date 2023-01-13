@@ -7,3 +7,9 @@
   height: 100%;
   margin-top: 40px;
 }
+
+@media screen and (max-width: 480px) {
+  .month {
+    margin-top: 25px;
+  }
+}
