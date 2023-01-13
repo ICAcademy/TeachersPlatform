@@ -158,7 +158,7 @@ const RegistrationForm = () => {
             <p>Register a new membership</p>
           </div>
           <Box>
-            <FormControl margin='normal'>
+            <FormControl margin='normal' className={styles.formControl}>
               <TextField
                 error={hasError.hasFullNameError}
                 helperText={
@@ -290,7 +290,7 @@ const RegistrationForm = () => {
                 placeholder='Repeat password'
                 color='purple'
                 size='small'
-                sx={{ width: '500px', m: '10px 0' }}
+                sx={{ m: '10px 0' }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
