@@ -13,6 +13,7 @@ import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
 import TeacherInfo from 'components/Profile/TeacherInfo/TeacherInfo';
+import MeetRoom from 'components/MeetRoom/MeetRoom';
 
 // Constants
 import { ADMIN_ROLE, STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
@@ -46,6 +47,7 @@ const RouterWrapper = () => {
           element={
             <PrivateRoute>
               <GeneralLayout />
+              <MeetRoom />
             </PrivateRoute>
           }
         >
