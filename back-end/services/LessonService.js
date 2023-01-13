@@ -1,7 +1,10 @@
 const Lesson = require('../models/Lesson');
 
 const getLessonsById = async (id) =>
-  await Lesson.find({ $or: [{ teacherId: id }, { studentId: id }] });
+  await Lesson.find({ $or: [{ teacherId: id }, { studentId: id }] }).populate({
+    path: 'studentId',
+    select: 'fullName',
+  });
 
 const startLesson = async (body) => await Lesson.create(body);
 
