@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Assets
-import logo1 from 'assets/sidebar/logo-letter.png';
+import logo from 'assets/sidebar/logo-letter.png';
 import avatar from 'assets/sidebar/avatar.png';
 
 // Styles
@@ -32,7 +32,7 @@ const MobileHeader = ({ showSidebar, sidebarState }) => {
       <div className={styles.sidebarImgHolder}>
         <div className={styles.sidebarImgBlock}>
           <Link to='/'>
-            <img src={logo1} alt='logo' width='30px' />
+            <img src={logo} alt='logo' width='30px' />
           </Link>
           <Link to='/'>
             <span className={styles.sidebarLogoText}>Inter School</span>
