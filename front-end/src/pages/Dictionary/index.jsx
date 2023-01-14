@@ -31,16 +31,12 @@ const Dictionary = ({ snackbarShowMessage }) => {
   const [words, setWords] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchWord, setSearchWord] = useState('');
-  // const [isEdit, setIsEdit] = useState();
-  // const [error, setError] = useState(null);
 
   const searchByWord = useCallback(async () => {
     try {
-      console.log('1');
       setIsLoading(true);
-      const words1 = await getDictionaryByStudentId({ studentId: roleId, search: searchWord });
-      console.log(words1);
-      setWords(words1);
+      const newWords = await getDictionaryByStudentId({ studentId: roleId, search: searchWord });
+      setWords(newWords);
     } catch (error) {
       return error;
     } finally {
@@ -48,16 +44,12 @@ const Dictionary = ({ snackbarShowMessage }) => {
     }
   }, [roleId, searchWord]);
 
-  const handleInput = (e) => {
-    setSearchWord(e.target.value);
-  };
-
   useEffect(() => {
-    const debounce = setTimeout(() => {
-      searchByWord();
-    }, 300);
+    const delayDebounceFn = setTimeout(() => {
+      return searchByWord();
+    }, 1500);
 
-    return clearTimeout(debounce);
+    return () => clearTimeout(delayDebounceFn);
   }, [searchByWord]);
 
   const handleCreateDictionary = async (word, translation) => {
@@ -147,7 +139,7 @@ const Dictionary = ({ snackbarShowMessage }) => {
       <h1 className={styles.title}>My dictionary</h1>
       <div className={styles.inputsWrap}>
         <AddWord isLoading={isLoading} createDictionary={handleCreateDictionary} />
-        <SearchWord word={searchWord} handleInput={handleInput} />
+        <SearchWord word={searchWord} handleInput={(e) => setSearchWord(e.target.value)} />
       </div>
       <Table
         loading={isLoading}

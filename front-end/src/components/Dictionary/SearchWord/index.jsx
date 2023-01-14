@@ -16,27 +16,25 @@ const sx = {
   },
 };
 
-const SearchWord = ({ word, handleInput }) => {
-  return (
-    <Box component='form' sx={sx.inputsBox} noValidate autoComplete='off'>
-      <TextField
-        id='outlined-required'
-        name='search'
-        label='search'
-        value={word}
-        onChange={handleInput}
-        size='small'
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position='center'>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </InputAdornment>
-          ),
-        }}
-      />
-    </Box>
-  );
-};
+const SearchWord = ({ word, handleInput }) => (
+  <Box component='form' sx={sx.inputsBox} noValidate autoComplete='off'>
+    <TextField
+      id='outlined-required'
+      name='Search'
+      label='Search'
+      value={word}
+      onChange={handleInput}
+      size='small'
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position='center'>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </InputAdornment>
+        ),
+      }}
+    />
+  </Box>
+);
 
 SearchWord.propTypes = {
   word: PropTypes.string,
