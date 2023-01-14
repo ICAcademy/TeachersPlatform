@@ -17,6 +17,7 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // Components
 import AddWord from 'components/Dictionary/AddWord';
+import SearchWord from 'components/Dictionary/SearchWord';
 import Loader from 'components/common/Loader/Loader';
 import Table from 'components/Dictionary/Table';
 
@@ -29,6 +30,35 @@ const Dictionary = ({ snackbarShowMessage }) => {
   } = useContext(CurrentUserContext);
   const [words, setWords] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchWord, setSearchWord] = useState('');
+  // const [isEdit, setIsEdit] = useState();
+  // const [error, setError] = useState(null);
+
+  const searchByWord = useCallback(async () => {
+    try {
+      console.log('1');
+      setIsLoading(true);
+      const words1 = await getDictionaryByStudentId({ studentId: roleId, search: searchWord });
+      console.log(words1);
+      setWords(words1);
+    } catch (error) {
+      return error;
+    } finally {
+      setIsLoading(false);
+    }
+  }, [roleId, searchWord]);
+
+  const handleInput = (e) => {
+    setSearchWord(e.target.value);
+  };
+
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      searchByWord();
+    }, 300);
+
+    return clearTimeout(debounce);
+  }, [searchByWord]);
 
   const handleCreateDictionary = async (word, translation) => {
     try {
@@ -115,7 +145,10 @@ const Dictionary = ({ snackbarShowMessage }) => {
   ) : (
     <div className={styles.wrap}>
       <h1 className={styles.title}>My dictionary</h1>
-      <AddWord isLoading={isLoading} createDictionary={handleCreateDictionary} />
+      <div className={styles.inputsWrap}>
+        <AddWord isLoading={isLoading} createDictionary={handleCreateDictionary} />
+        <SearchWord word={searchWord} handleInput={handleInput} />
+      </div>
       <Table
         loading={isLoading}
         dictionary={words}
