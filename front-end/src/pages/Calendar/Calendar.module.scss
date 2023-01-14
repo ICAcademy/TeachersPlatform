@@ -1,0 +1,26 @@
+.calendarWrap {
+  background-color: #fff;
+  box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
+  border-radius: 5px;
+
+  .calendarBody {
+    padding: 1.5rem;
+    position: relative;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .calendarWrap {
+    overflow-y: auto;
+
+    .calendarBody {
+      min-width: 768px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .calendarBody {
+    padding: 1rem;
+  }
+}
