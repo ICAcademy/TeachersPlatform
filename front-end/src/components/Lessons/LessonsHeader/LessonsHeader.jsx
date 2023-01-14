@@ -6,6 +6,8 @@ import styles from './LessonsHeader.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
+import avatar from 'assets/sidebar/avatar.png';
+
 const LessonsHeader = (props) => {
   const lessonsCount = props.numberOfLessons ? (
     <div className={`${styles.lessonInfoItem}`}>
@@ -19,6 +21,13 @@ const LessonsHeader = (props) => {
     </div>
   ) : (
     ''
+  );
+
+  const teacherStatus = props.teacherStatus === 'online' && (
+    <img src={avatar} alt='Teacher img' style={{ width: '30px', height: '30px' }} />
+  );
+  const studentStatus = props.studentStatus === 'online' && (
+    <img src={avatar} alt='Student img' style={{ width: '30px', height: '30px' }} />
   );
 
   return (
@@ -35,6 +44,8 @@ const LessonsHeader = (props) => {
           </div>
         </div>
         {lessonsCount}
+        {teacherStatus}
+        {studentStatus}
       </div>
     </div>
   );
@@ -44,11 +55,15 @@ LessonsHeader.propTypes = {
   title: PropTypes.string,
   level: PropTypes.string,
   numberOfLessons: PropTypes.number,
+  teacherStatus: PropTypes.string,
+  studentStatus: PropTypes.string,
 };
 LessonsHeader.defaultProps = {
   title: '',
   level: '',
   numberOfLessons: 0,
+  teacherStatus: 'offline',
+  studentStatus: 'offline',
 };
 
 export default LessonsHeader;

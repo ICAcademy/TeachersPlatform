@@ -8,7 +8,7 @@ import styles from './LessonItem.module.scss';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import PersonIcon from '@mui/icons-material/Person';
 
-const LessonItem = ({ id, topic, student, status }) => {
+const LessonItem = ({ id, topic, participant, status }) => {
   return (
     <Link to={`${id}`} className={styles.lesson}>
       <Box className={styles.lesson__info}>
@@ -22,7 +22,7 @@ const LessonItem = ({ id, topic, student, status }) => {
           <ListItemIcon sx={{ minWidth: 'auto', mr: '10px', transform: 'translateY(-5%)' }}>
             <PersonIcon />
           </ListItemIcon>
-          <ListItemText primary={student} />
+          <ListItemText primary={participant} />
         </Box>
       </Box>
       <Box
@@ -41,7 +41,7 @@ const LessonItem = ({ id, topic, student, status }) => {
 LessonItem.propTypes = {
   id: PropTypes.string,
   topic: PropTypes.string,
-  student: PropTypes.string,
+  participant: PropTypes.string,
   status: PropTypes.string,
 };
 

@@ -22,12 +22,12 @@ const appRouter = require('./routes/AppRouter');
 const authRouter = require('./routes/AuthRouter');
 const transactionRouter = require('./routes/TransactionRoutes');
 
-const { registerQuestionHandlers } = require('./ios/questionsSocket.io');
+const { registerLessonHandlers } = require('./ios/lessonSocket.io');
 const { registerDisconnect } = require('./ios/socket.io');
 
 const onConnection = (socket) => {
   console.log('User connects');
-  registerQuestionHandlers(io, socket);
+  registerLessonHandlers(io, socket);
   registerDisconnect(io, socket);
 };
 

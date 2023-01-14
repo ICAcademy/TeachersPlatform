@@ -23,7 +23,7 @@ const LessonSchema = new mongoose.Schema(
     teacherStatus: {
       type: String,
       enum: ['online', 'offline'],
-      default: 'online',
+      default: 'offline',
       required: true,
     },
     studentStatus: {
