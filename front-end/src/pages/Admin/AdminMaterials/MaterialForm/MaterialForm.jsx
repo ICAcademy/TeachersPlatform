@@ -225,7 +225,7 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
                 </div>
               </div>
             )}
-            {imgUrl && <img src={imgUrl} />}
+            {!material.image && imgUrl && <img src={imgUrl} />}
           </label>
 
           <input
