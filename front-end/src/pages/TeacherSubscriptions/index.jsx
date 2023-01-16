@@ -9,6 +9,7 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // Service
 import { getTeachersSubscription, deleteSubscription } from 'services/subscriptionService';
+import { socket } from 'services/socketService';
 
 // Components
 import SubscriptionsTable from 'components/common/SubscriptionsTable';
@@ -58,6 +59,25 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
   useEffect(() => {
     fetchSubscriptions(currentUser?.roleId);
   }, [currentUser]);
+
+  useEffect(() => {
+    socket.on('create_subscription', (data) => {
+      if (data.teacher._id === currentUser.roleId) {
+        fetchSubscriptions(currentUser?.roleId);
+      }
+    });
+  }, [currentUser?.roleId]);
+
+  useEffect(() => {
+    socket.on('delete_subscription', (data) => {
+      const deletedSubscription = subscriptions.find((subscription) => {
+        return subscription._id === data;
+      });
+      if (deletedSubscription) {
+        fetchSubscriptions(currentUser.roleId);
+      }
+    });
+  }, [currentUser.roleId, subscriptions]);
 
   return (
     <div className={styles.wrapper}>

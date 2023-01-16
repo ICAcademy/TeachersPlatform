@@ -4,6 +4,7 @@ const teacherService = require('../services/TeacherService');
 const SubscriptionModel = require('../models/Subscription');
 const sendMail = require('../services/nodemailer');
 const { SUBSCRIPTION } = require('../constants/emailSend');
+const { socket } = require('../services/Socket');
 
 exports.getAllSubscriptions = async (req, res) => {
   try {
@@ -48,6 +49,7 @@ exports.createSubscription = async (req, res) => {
     const teacher = await teacherService.getTeacherById(req.body.teacher._id);
     if (student && teacher) {
       const subscription = await subscriptionService.createSubscription(req.body);
+      socket('create_subscription', req.body);
       await sendMail(req.body.email, req.body.fullName, SUBSCRIPTION, req.body.teacherName);
       return res.status(200).json(subscription);
     }
@@ -69,6 +71,11 @@ exports.getSubscriptionById = async (req, res) => {
 exports.updateSubscription = async (req, res) => {
   try {
     const subscription = await subscriptionService.updateSubscription(req.params.id, req.body);
+    const data = {
+      id: req.params.id,
+      body: req.body,
+    };
+    socket('update_subscription', data);
     res.json(subscription);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -78,6 +85,7 @@ exports.updateSubscription = async (req, res) => {
 exports.deleteSubscription = async (req, res) => {
   try {
     const subscription = await subscriptionService.deleteSubscription(req.params.id);
+    socket('delete_subscription', req.params.id);
     res.json(subscription);
   } catch (err) {
     res.status(400).json({ error: err.message });

@@ -35,6 +35,10 @@
   height: 600px;
   border-radius: 15px;
   padding: 15px;
+
+  .formControl {
+    width: 500px;
+  }
 }
 
 .bottomWrap {
@@ -126,4 +130,23 @@
 .active {
   background-color: transparent;
   border-bottom: 2px solid $vividViolet;
+}
+
+@media screen and (max-width: 480px) {
+  .contentWrap {
+    padding: 0 15px;
+
+    .blocksWrap {
+      width: 100%;
+      align-items: normal;
+
+      .formControl {
+        width: 100%;
+      }
+    }
+
+    .bottomWrap {
+      width: 100%;
+    }
+  }
 }
