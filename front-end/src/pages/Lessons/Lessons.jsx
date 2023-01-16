@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
+import Loader from 'components/common/Loader/Loader';
 import LessonItem from './LessonItem/LessonItem';
 
 import { getAllLessons } from 'services/lessonService';
@@ -15,6 +16,7 @@ const getParticipant = (role, lesson) =>
 
 const Lessons = () => {
   const [lessons, setLessons] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     currentUser: { roleId, role },
@@ -22,8 +24,10 @@ const Lessons = () => {
 
   const fetchLessons = async (id) => {
     try {
+      setIsLoading(true);
       const data = await getAllLessons(id);
       setLessons(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +37,9 @@ const Lessons = () => {
     fetchLessons(roleId);
   }, [roleId]);
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Box>
       <Typography variant='h6' sx={{ mb: '20px', pl: '10px' }}>
         Lessons

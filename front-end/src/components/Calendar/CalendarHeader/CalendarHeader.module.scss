@@ -2,10 +2,21 @@
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  margin-left: 20px;
 
   &__arrow {
     margin-right: 5px;
     cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    position: sticky;
+    top: 0;
+    left: 20px;
+    display: inline-block;
+  }
+  .calendarActions {
+    position: sticky;
   }
 }

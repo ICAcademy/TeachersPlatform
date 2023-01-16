@@ -5,11 +5,11 @@ import LessonsHeader from 'components/Lessons/LessonsHeader/LessonsHeader';
 
 import { getSingleLessonById } from 'services/lessonService';
 import Quiz from 'components/questions/Quiz/Quiz';
+import Loader from 'components/common/Loader/Loader';
 
-import { io } from 'socket.io-client';
 import { CurrentUserContext } from 'context/AppProvider';
 
-const socket = io('http://localhost:5000');
+import { socket } from 'services/socketService';
 
 const Lesson = () => {
   const { id } = useParams();
@@ -19,11 +19,14 @@ const Lesson = () => {
   } = useContext(CurrentUserContext);
 
   const [lesson, setLesson] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchLessonById = async (lessonId) => {
     try {
+      setIsLoading(true);
       const response = await getSingleLessonById(lessonId);
       setLesson(response);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -31,21 +34,27 @@ const Lesson = () => {
 
   useEffect(() => {
     fetchLessonById(id);
+  }, [id]);
 
-    socket.on('user:connected', (data) => setLesson(data));
-
+  useEffect(() => {
     socket.emit('user:join', id, role);
+
+    socket.on('user:update-lesson', (data) => setLesson(data));
 
     return () => socket.emit('user:leave', id, role);
   }, [id, role]);
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
       <LessonsHeader
         title={lesson.topic}
         level={lesson.level}
         teacherStatus={lesson.teacherStatus}
         studentStatus={lesson.studentStatus}
+        teacherImg={lesson.teacherId?.url}
+        studentImg={lesson.studentId?.url}
       />
       <Quiz id={id} questions={lesson.questions} isLesson={true} />
     </>

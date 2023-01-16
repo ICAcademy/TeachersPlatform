@@ -6,8 +6,6 @@ import styles from './LessonsHeader.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 
-import avatar from 'assets/sidebar/avatar.png';
-
 const LessonsHeader = (props) => {
   const lessonsCount = props.numberOfLessons ? (
     <div className={`${styles.lessonInfoItem}`}>
@@ -24,10 +22,10 @@ const LessonsHeader = (props) => {
   );
 
   const teacherStatus = props.teacherStatus === 'online' && (
-    <img src={avatar} alt='Teacher img' style={{ width: '30px', height: '30px' }} />
+    <img className={styles.statusItem} src={props.teacherImg} alt='Teacher img' />
   );
   const studentStatus = props.studentStatus === 'online' && (
-    <img src={avatar} alt='Student img' style={{ width: '30px', height: '30px' }} />
+    <img className={styles.statusItem} src={props.studentImg} alt='Student img' />
   );
 
   return (
@@ -42,10 +40,12 @@ const LessonsHeader = (props) => {
             <h5>Level</h5>
             <div className={styles.infoValue}>{props.level}</div>
           </div>
+          {lessonsCount}
         </div>
-        {lessonsCount}
-        {teacherStatus}
-        {studentStatus}
+        <div className={styles.statuses}>
+          {teacherStatus}
+          {studentStatus}
+        </div>
       </div>
     </div>
   );
@@ -57,6 +57,8 @@ LessonsHeader.propTypes = {
   numberOfLessons: PropTypes.number,
   teacherStatus: PropTypes.string,
   studentStatus: PropTypes.string,
+  teacherImg: PropTypes.string,
+  studentImg: PropTypes.string,
 };
 LessonsHeader.defaultProps = {
   title: '',
@@ -64,6 +66,8 @@ LessonsHeader.defaultProps = {
   numberOfLessons: 0,
   teacherStatus: 'offline',
   studentStatus: 'offline',
+  teacherImg: '',
+  studentImg: '',
 };
 
 export default LessonsHeader;

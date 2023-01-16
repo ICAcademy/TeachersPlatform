@@ -7,6 +7,7 @@ import { pendingSubscriptionsCount } from 'store/pending-subscriptions-slice';
 
 // Services
 import { updateSubscription } from 'services/subscriptionService';
+import { socket } from 'services/socketService';
 
 // Styles
 import styles from './SubscriptionItem.module.scss';
@@ -56,8 +57,21 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
 
   useEffect(() => {
     updateStatus(status);
-    dispatchFunction(pendingSubscriptionsCount());
+    dispatchFunction(
+      pendingSubscriptionsCount({ statusName: 'pending', id: subscription.teacherID }),
+    );
   });
+
+  useEffect(() => {
+    socket.on('update_subscription', (data) => {
+      if (data.id === subscription._id) {
+        setStatus(data.body.status);
+        dispatchFunction(
+          pendingSubscriptionsCount({ statusName: 'pending', id: subscription.teacherID }),
+        );
+      }
+    });
+  }, [subscription._id, dispatchFunction, subscription.teacherID]);
 
   return (
     <div className={styles.subcriptionItem}>

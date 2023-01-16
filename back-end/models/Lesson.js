@@ -20,6 +20,12 @@ const LessonSchema = new mongoose.Schema(
       required: true,
       ref: 'Student',
     },
+    teacherSocketId: {
+      type: String,
+    },
+    studentSocketId: {
+      type: String,
+    },
     teacherStatus: {
       type: String,
       enum: ['online', 'offline'],
