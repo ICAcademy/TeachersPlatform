@@ -14,6 +14,7 @@ import { ADMIN_ROLE } from 'constants/userRoles';
 
 const UnitImg = ({ url, unit, image, editLink }) => {
   const { currentUser } = useContext(CurrentUserContext);
+
   return (
     <div className={styles.unitImg}>
       {currentUser.role === ADMIN_ROLE && (

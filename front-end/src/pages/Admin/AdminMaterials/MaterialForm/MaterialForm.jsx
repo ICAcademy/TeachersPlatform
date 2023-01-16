@@ -96,9 +96,11 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
     const data = new FormData();
     data.append('file', event.target.files[0]);
     try {
+      setIsLoading(true);
       const imageUrl = await uploadImage(data);
       setImgUrl(imageUrl);
       setSaveBtn(true);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -159,6 +161,13 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
     }
   };
 
+  const imageSpinner = (
+    <div className={styles.imageSpinner}>
+      <div></div>
+      <div></div>
+    </div>
+  );
+
   return (
     <div className={styles.adminForm}>
       <div className={styles.formPart}>
@@ -206,6 +215,7 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
         </Box>
         <Box className={styles.imageUploader}>
           <label htmlFor='upload-image' className={styles.imageWrapper}>
+            {isLoading && imageSpinner}
             {material.image && <img src={imgUrl} />}
             {!material.image && !imgUrl && (
               <div className={styles.noImage}>
@@ -215,7 +225,7 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
                 </div>
               </div>
             )}
-            {!material.image && imgUrl && <img src={imgUrl} />}
+            {imgUrl && <img src={imgUrl} />}
           </label>
 
           <input
