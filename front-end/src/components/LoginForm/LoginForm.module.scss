@@ -86,3 +86,21 @@
   font-size: 16px;
   font-weight: $fw600;
 }
+
+.forgotPasswordContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
+  width: 55%;
+}
+
+.forgotPassword {
+  font-size: $f14;
+  color: $vividViolet;
+  font-weight: $fw600;
+  margin-left: 5px;
+  &:hover {
+    color: $softPurple;
+  }
+}

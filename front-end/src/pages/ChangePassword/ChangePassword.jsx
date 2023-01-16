@@ -2,7 +2,7 @@ import ChangeForgottenPassword from 'components/ChangeForgottenPassword/ChangeFo
 import RequestChangePassword from 'components/RequestChangePassword/RequestChangePassword';
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // service
@@ -16,6 +16,7 @@ const ChangePassword = ({ snackbarShowMessage }) => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
   const id = searchParams.get('id');
+  const navigate = useNavigate();
 
   const hangleChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -55,6 +56,7 @@ const ChangePassword = ({ snackbarShowMessage }) => {
           severity: 'success',
         });
         setError('');
+        navigate('/login');
         return changePassword;
       }
       throw new Error('Passwords do not match');
