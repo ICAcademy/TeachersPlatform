@@ -12,7 +12,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 // styles
 import styles from './RequestChangePassword.module.scss';
 
-const RequestChangePassword = ({ handleChangeEmail, handleSubmitEmail, email }) => {
+const RequestChangePassword = ({ handleChangeEmail, handleSubmitEmail, email, error }) => {
   return (
     <div className={styles.wrap}>
       <div className={styles.blocksWrap}>
@@ -38,6 +38,7 @@ const RequestChangePassword = ({ handleChangeEmail, handleSubmitEmail, email }) 
                 ),
               }}
             />
+            <span className={styles.error}>{error}</span>
             <Button
               onClick={handleSubmitEmail}
               type='submit'
@@ -57,6 +58,8 @@ RequestChangePassword.propTypes = {
   handleChangeEmail: PropTypes.func,
   handleSubmitEmail: PropTypes.func,
   email: PropTypes.string,
+  snackbarShowMessage: PropTypes.func,
+  error: PropTypes.string,
 };
 
 export default RequestChangePassword;

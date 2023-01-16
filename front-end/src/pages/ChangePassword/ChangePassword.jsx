@@ -1,12 +1,14 @@
 import ChangeForgottenPassword from 'components/ChangeForgottenPassword/ChangeForgottenPassword';
 import RequestChangePassword from 'components/RequestChangePassword/RequestChangePassword';
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // service
 import { resetPasswordService, requestChangePasswordService } from 'services/authService';
 
-const ChangePassword = () => {
+const ChangePassword = ({ snackbarShowMessage }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -30,19 +32,39 @@ const ChangePassword = () => {
   const requestChangePassword = async (email) => {
     try {
       const changePassword = await requestChangePasswordService(email);
+      snackbarShowMessage({
+        message: 'Email was sent',
+        severity: 'success',
+      });
+      setError('');
       return changePassword;
     } catch (error) {
-      console.log('error', error.message);
+      setError(error.response.data.error);
+      console.log('error', error);
     }
   };
 
   const changePassword = async () => {
     try {
-      const changePassword = await resetPasswordService(token, id, password);
-      return changePassword;
+      if (password === confirmPassword) {
+        const changePassword = await resetPasswordService(token, id, password);
+        setPassword('');
+        setConfirmPassword('');
+        snackbarShowMessage({
+          message: 'Password was sent',
+          severity: 'success',
+        });
+        setError('');
+        return changePassword;
+      }
+      throw new Error('Passwords do not match');
     } catch (error) {
-      setError(error.message);
-      console.log('error', error.message);
+      setError(error.response.data.error);
+      snackbarShowMessage({
+        message: 'Error',
+        severity: 'error',
+      });
+      console.log('error', error);
     }
   };
 
@@ -53,8 +75,6 @@ const ChangePassword = () => {
 
   const handleSubmitChangePassword = async () => {
     await changePassword();
-    setPassword('');
-    setConfirmPassword('');
   };
 
   return (
@@ -73,10 +93,15 @@ const ChangePassword = () => {
           handleChangeEmail={hangleChangeEmail}
           handleSubmitEmail={handleSubmitEmail}
           email={email}
+          error={error}
         />
       )}
     </>
   );
 };
 
-export default ChangePassword;
+ChangePassword.propTypes = {
+  snackbarShowMessage: PropTypes.func,
+};
+
+export default withSnackbar(ChangePassword);

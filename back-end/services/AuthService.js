@@ -72,8 +72,6 @@ const requestPasswordReset = async (email) => {
     createdAt: Date.now(),
   }).save();
 
-  /* Token.notifications.createIndex({ userId: user._id, token: hash }, { expireAfterSeconds: 10 }); */
-
   const link = `localhost:3000/reset-password?token=${resetToken}&id=${user._id}`;
   await sendMail(user.email, user.fullName, FORGOT_PASSWORD, null, link);
   return link;
@@ -88,7 +86,6 @@ const resetPassword = async (userId, token, password) => {
   if (!isValid) {
     throw new Error('Invalid or expired password reset token');
   }
-  console.log('createdAt', passwordResetToken.createdAt);
   const hash = await bcrypt.hash(password, Number(bcryptSalt));
   await User.updateOne({ _id: userId }, { $set: { password: hash } }, { new: true });
   const user = await User.findById({ _id: userId });

@@ -1,5 +1,7 @@
 // Helpers
 const registerValidation = require('../helpers/validation');
+const passwordValidation = require('../helpers/passwordValidation');
+const emailValidation = require('../helpers/emailValidation');
 
 // Services
 const { createStudent } = require('../services/StudentService');
@@ -57,13 +59,28 @@ exports.loginUser = async (req, res) => {
 exports.resetPasswordController = async (req, res) => {
   try {
     const { email, userId, token, password } = req.body;
+
+    const data = emailValidation({ email });
+
     if (email) {
+      if (data.error) {
+        throw new Error('Incorrect Email');
+      }
       const link = await requestPasswordReset(email);
       return res.status(201).json({ link });
     }
+
+    const { error } = passwordValidation({ password });
+
+    if (error) {
+      throw new Error(
+        'The password must contain one uppercase letter, one lowercase letter, the number.It must also contain special characters, there must be from 8 to 10 characters',
+      );
+    }
+
     const resetPasswordService = await resetPassword(userId, token, password);
     return res.status(200).json(resetPasswordService);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };
