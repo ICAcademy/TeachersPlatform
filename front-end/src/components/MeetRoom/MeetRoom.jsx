@@ -1,32 +1,46 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { JitsiMeeting } from '@jitsi/react-sdk';
 
+// Context
+import { CurrentUserContext } from 'context/AppProvider';
+
+// Styles
+import Button from '@mui/material/Button';
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+
 const MeetRoom = () => {
+  const [showNew, toggleShowNew] = useState(false);
+
+  const renderNewInstance = () => {
+    if (!showNew) {
+      return null;
+    }
+
+    return (
+      <JitsiMeeting
+        roomName={generateRoomName()}
+        userInfo={{
+          displayName: currentUser.fullName,
+        }}
+        getIFrameRef={(iframeRef) => {
+          iframeRef.style.height = 'calc(100vh - 100px)';
+        }}
+      />
+    );
+  };
+  const generateRoomName = () => `JitsiMeetRoomNo${Math.random() * 100}-${Date.now()}`;
+  const { currentUser } = useContext(CurrentUserContext);
   return (
-    <JitsiMeeting
-      roomName='Lesson room'
-      configOverwrite={{
-        startWithAudioMuted: false,
-        disableModeratorIndicator: true,
-        startScreenSharing: true,
-        enableEmailInStats: false,
-      }}
-      interfaceConfigOverwrite={{
-        DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
-        filmStripOnly: false,
-        SHOW_JITSI_WATERMARK: false,
-      }}
-      userInfo={{
-        displayName: 'YOUR_USERNAME',
-      }}
-      // onApiReady={(externalApi) => {
-      //   // here you can attach custom event listeners to the Jitsi Meet External API
-      //   // you can also store it locally to execute commands
-      // }}
-      getIFrameRef={(iframeRef) => {
-        iframeRef.style.height = '400px';
-      }}
-    />
+    <>
+      <Button
+        variant='contained'
+        startIcon={<VideoCallIcon />}
+        onClick={() => toggleShowNew(!showNew)}
+      >
+        Call
+      </Button>
+      {renderNewInstance()}
+    </>
   );
 };
 
