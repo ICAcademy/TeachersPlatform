@@ -87,6 +87,25 @@
   font-weight: $fw600;
 }
 
+@media screen and (max-width: 480px) {
+  .wrap {
+    padding: 0 15px;
+
+    .blocksWrap {
+      width: 100%;
+      align-items: normal;
+
+      .formControl {
+        width: 100%;
+      }
+    }
+
+    .bottomWrap {
+      width: 100%;
+    }
+  }
+}
+
 .forgotPasswordContainer {
   display: flex;
   justify-content: center;

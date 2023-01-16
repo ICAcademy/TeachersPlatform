@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // MUI library
 import List from '@mui/material/List';
@@ -26,6 +27,7 @@ import {
 
 // Services
 import { logout } from 'services/authService';
+import { socket } from 'services/socketService';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -37,7 +39,7 @@ import Badge from '@mui/material/Badge';
 // Constants
 import { STUDENT_ROLE } from 'constants/userRoles';
 
-export const SidebarList = () => {
+export const SidebarList = ({ showSidebar }) => {
   const navigate = useNavigate();
   const { currentUser } = useContext(CurrentUserContext);
   const { subscriptions } = useSelector((state) => state.approveStudent);
@@ -49,69 +51,89 @@ export const SidebarList = () => {
     navigate('/login', { replace: true });
   };
 
+  const handlePathTo = () => {
+    showSidebar(false);
+  };
+
   useEffect(() => {
-    dispatchFunction(pendingSubscriptionsCount());
+    dispatchFunction(pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }));
   });
+
+  useEffect(() => {
+    socket.on('create_subscription', () => {
+      dispatchFunction(
+        pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }),
+      );
+    });
+    socket.on('delete_subscription', () => {
+      dispatchFunction(
+        pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }),
+      );
+    });
+  });
+
+  const isActive = ({ isActive }) =>
+    isActive ? `${styles.sidebarLink} ${styles.active}` : styles.sidebarLink;
 
   return (
     <div className={styles.sidebarMenu}>
       <List className={styles.sidebarList}>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/app' className={styles.sidebarLink}>
+          <NavLink to='/app' className={isActive} end={true} onClick={handlePathTo}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faHouseUser} />
             Dashboard
-          </Link>
+          </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/app/calendar' className={styles.sidebarLink}>
+          <NavLink to='/app/calendar' className={isActive} onClick={handlePathTo}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faCalendarDays} />
             Calendar
-          </Link>
+          </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/app/materials' className={styles.sidebarLink}>
+          <NavLink to='/app/materials' className={isActive} onClick={handlePathTo}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
             Materials
-          </Link>
+          </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <Link to='/app/questions' className={styles.sidebarLink}>
+          <NavLink to='/app/questions' className={isActive} onClick={handlePathTo}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />
             Grammar
-          </Link>
+          </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
           {currentUser?.role === STUDENT_ROLE ? (
-            <Link to='/app/teachers' className={styles.sidebarLink}>
+            <NavLink to='/app/teachers' className={isActive} onClick={handlePathTo}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faChalkboardUser} />
               Teachers
-            </Link>
+            </NavLink>
           ) : (
-            <Badge badgeContent={subscriptions} color='primary' className={styles.sidebarBadge}>
-              <Link to='/app/subscriptions' className={styles.sidebarLink}>
-                <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
+            <NavLink to='/app/subscriptions' className={isActive} onClick={handlePathTo}>
+              <FontAwesomeIcon className={styles.sidebarIcon} icon={faUserGraduate} />
+              <Badge badgeContent={subscriptions} color='primary' className={styles.sidebarBadge}>
                 Students
-              </Link>
-              {subscriptions > 0 && <div className={styles.pulseWave}></div>}
-            </Badge>
+                {subscriptions > 0 && <div className={styles.pulseWave}></div>}
+              </Badge>
+            </NavLink>
           )}
         </ListItem>
         {currentUser?.role === STUDENT_ROLE && (
           <ListItem className={styles.sidebarItem}>
-            <Link to='/app/subscriptions' className={styles.sidebarLink}>
+            <NavLink to='/app/subscriptions' className={isActive} onClick={handlePathTo}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faBell} />
               Subscriptions
-            </Link>
+            </NavLink>
           </ListItem>
         )}
         <ListItem className={styles.sidebarItem}>
-          <Link to='/app/finances' className={styles.sidebarLink}>
+          <NavLink to='/app/finances' className={isActive} onClick={handlePathTo}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faSackDollar} />
             Finances
-          </Link>
+          </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
-          <NavLink onClick={handleLogout} to='/login' className={styles.sidebarLink}>
+          <NavLink onClick={handleLogout} to='/login' className={isActive}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faRightFromBracket} />
             Logout
           </NavLink>
@@ -119,4 +141,9 @@ export const SidebarList = () => {
       </List>
     </div>
   );
+};
+
+//propTypes
+SidebarList.propTypes = {
+  showSidebar: PropTypes.func,
 };

@@ -4,5 +4,12 @@
   grid-template-columns: repeat(7, minmax(0, 1fr));
   grid-gap: 1px;
   flex-grow: 1;
-  margin-top: 10px;
+  height: 100%;
+  margin-top: 40px;
+}
+
+@media screen and (max-width: 480px) {
+  .month {
+    margin-top: 25px;
+  }
 }
