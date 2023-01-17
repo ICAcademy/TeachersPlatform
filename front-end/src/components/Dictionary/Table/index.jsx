@@ -38,9 +38,11 @@ const sx = {
     width: '560px',
     overflow: 'hidden',
     mb: 2.5,
+    ['@media (max-width: 768px)']: { width: '100%' },
   },
   tableContainer: {
     width: '560px',
+    ['@media (max-width: 768px)']: { width: '100%' },
   },
   tableHead: {
     '& th': {

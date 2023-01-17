@@ -11,9 +11,17 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 // Styles
 const sx = {
   inputsBox: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    ['@media (max-width: 550px)']: { width: '100%' },
     '& .MuiTextField-root': {
-      m: 1,
+      my: 1,
+      ml: 0,
+      mr: 1,
       width: '30ch',
+      ['@media (max-width: 840px)']: { mb: 3 },
+      ['@media (max-width: 768px)']: { width: '24ch' },
+      ['@media (max-width: 550px)']: { width: '97%', mx: 1 },
     },
     '& svg': {
       fontSize: '14px',

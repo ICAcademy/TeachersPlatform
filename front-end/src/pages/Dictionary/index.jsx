@@ -35,6 +35,8 @@ const sx = {
     ml: 0,
     mr: 1,
     width: '30ch',
+    ['@media (max-width: 1100px)']: { width: '24ch' },
+    ['@media (max-width: 550px)']: { width: '97%', mx: 1 },
   },
 };
 

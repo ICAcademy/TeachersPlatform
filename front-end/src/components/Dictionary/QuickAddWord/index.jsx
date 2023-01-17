@@ -59,9 +59,6 @@ const sx = {
     },
   },
   formControl: {
-    my: 1.5,
-    ml: 0,
-    mr: 1,
     width: '100%',
   },
 };
