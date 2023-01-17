@@ -53,6 +53,8 @@ const Lesson = () => {
         level={lesson.level}
         teacherStatus={lesson.teacherStatus}
         studentStatus={lesson.studentStatus}
+        teacherName={lesson.teacherId?.fullName}
+        studentName={lesson.studentId?.fullName}
         teacherImg={lesson.teacherId?.url}
         studentImg={lesson.studentId?.url}
       />
