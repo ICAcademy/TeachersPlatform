@@ -25,6 +25,7 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
             >
               <InputLabel id='levels-select-label'>Level</InputLabel>
               <Select
+                sx={{ marginBottom: '10px' }}
                 labelId='levels-select-label'
                 id='levels-select'
                 autoFocus={level === '' && postInfo}

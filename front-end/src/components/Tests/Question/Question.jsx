@@ -31,7 +31,9 @@ const Question = ({
             <span className={styles.question}>Question</span>
             {index + 1}
           </div>
-          <Button onClick={() => deleteQuestion(id)}>Delete</Button>
+          <Button onClick={() => deleteQuestion(id)} sx={{ padding: '15px', fontSize: '17px' }}>
+            <FontAwesomeIcon icon={faXmark} />
+          </Button>
         </div>
         <div className={styles.titleInputContainer}>
           <Input

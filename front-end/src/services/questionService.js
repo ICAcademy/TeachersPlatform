@@ -20,17 +20,17 @@ export const getQuestionsByUnitName = async (params) => {
   return data;
 };
 
-export const createQuestion = async (question) => {
+export const getTestById = async (id) => {
+  const response = await API.get(`/api/questions/${id}`);
+  return response.data;
+};
+
+export const createTest = async (question) => {
   const { data } = await API.post('/api/questions', question);
   return data;
 };
 
-export const updateQuestion = async (id, question) => {
+export const updateTest = async (id, question) => {
   const { data } = await API.patch(`api/questions/${id}`, question);
-  return data;
-};
-
-export const deleteQuestion = async (id) => {
-  const { data } = await API.delete(`/api/questions/${id}`);
   return data;
 };

@@ -12,8 +12,7 @@ import Loader from 'components/common/Loader/Loader';
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 //services
-import { getTestById } from 'services/TestsService';
-import { getLevels, updateQuestion, createQuestion } from 'services/questionService';
+import { getLevels, getTestById, updateTest, createTest } from 'services/questionService';
 
 // styles
 import styles from './Tests.module.scss';
@@ -284,13 +283,13 @@ const Tests = ({ snackbarShowMessage }) => {
           message: 'Test updated',
           severity: 'success',
         });
-        return await updateQuestion(id, data);
+        return await updateTest(id, data);
       }
       snackbarShowMessage({
         message: 'Test saved',
         severity: 'success',
       });
-      return await createQuestion(data);
+      return await createTest(data);
     } catch (error) {
       console.log(error.message);
     }
