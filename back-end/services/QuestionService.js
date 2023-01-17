@@ -50,9 +50,30 @@ const getQuestionsByUnitName = async (search) => {
   return result;
 };
 
-const getCountOfQuestionTopics = async (unit) => {
-  const findQuestionByUnit = await Question.find({ unit });
-  return findQuestionByUnit.length;
+const getCountOfQuestionTopicsByLevel = async (level) => {
+  const countOfTopics = await Question.aggregate([
+    {
+      $match: { level: { $eq: level } },
+    },
+    {
+      $sortByCount: '$unit',
+    },
+  ]);
+
+  return countOfTopics;
+};
+
+const getCountOfQuestionTopicsByUnit = async (unit) => {
+  const countOfTopics = await Question.aggregate([
+    {
+      $match: { unit: { $regex: unit, $options: 'i' } },
+    },
+    {
+      $sortByCount: '$unit',
+    },
+  ]);
+
+  return countOfTopics;
 };
 
 module.exports = {
@@ -65,5 +86,6 @@ module.exports = {
   editQuestion,
   removeQuestion,
   getQuestionsByUnitName,
-  getCountOfQuestionTopics,
+  getCountOfQuestionTopicsByLevel,
+  getCountOfQuestionTopicsByUnit,
 };
