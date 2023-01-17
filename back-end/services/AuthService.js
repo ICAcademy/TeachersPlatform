@@ -72,7 +72,8 @@ const requestPasswordReset = async (email) => {
     createdAt: Date.now(),
   }).save();
 
-  const link = `localhost:3000/reset-password?token=${resetToken}&id=${user._id}`;
+  /* const link = `http://localhost:3000/reset-password?token=${resetToken}&id=${user._id}`; */
+  const link = `https://incredible-torte-ac738e.netlify.app/reset-password?token=${resetToken}&id=${user._id}`;
   await sendMail(user.email, user.fullName, FORGOT_PASSWORD, null, link);
   return link;
 };

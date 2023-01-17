@@ -25,7 +25,7 @@ const subcriptionTemplate = (name, teacherName) =>
 const forgotPasswordTemplate = (name, link) =>
   `<div style='text-align: center'>
 <h1>Hello ${name}!</h1>
-<a href="http://${link}">Link for changing password</a>
+<a href="${link}">Link for changing password</a>
 </div>`;
 
 const changedPasswordTemplate = (name) =>
@@ -75,8 +75,6 @@ const sendMail = async (emailTo, name, emailType, teacherName, link) => {
   });
 
   let options;
-
-  console.log('link send mail', link);
 
   switch (emailType) {
     case REGISTRATION:
