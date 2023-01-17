@@ -5,7 +5,7 @@ export const getLevels = async () => {
   return data;
 };
 
-export const getUnitsByLevel = async (level) => {
+export const getQuestionsUnitsByLevel = async (level) => {
   const { data } = await API.get('/api/questions/units', { params: { level } });
   return data;
 };

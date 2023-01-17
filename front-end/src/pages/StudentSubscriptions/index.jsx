@@ -5,6 +5,7 @@ import { CurrentUserContext } from 'context/AppProvider';
 
 // Services
 import { deleteSubscription, getStudentSubscription } from 'services/subscriptionService';
+import { socket } from 'services/socketService';
 
 // Components
 import SubscriptionsTable from 'components/common/SubscriptionsTable';
@@ -52,6 +53,17 @@ const StudentSubscriptions = () => {
   useEffect(() => {
     fetchSubscriptions(currentUser?.roleId);
   }, [currentUser]);
+
+  useEffect(() => {
+    socket.on('delete_subscription', (data) => {
+      const deletedSubscription = subscriptions.find((subscription) => {
+        return subscription._id === data;
+      });
+      if (deletedSubscription) {
+        fetchSubscriptions(currentUser.roleId);
+      }
+    });
+  }, [currentUser.roleId, subscriptions]);
 
   return (
     <div className={styles.container}>

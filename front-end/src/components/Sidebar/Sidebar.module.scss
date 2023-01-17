@@ -10,32 +10,114 @@ img {
   border-right: 0px solid rgba(95, 99, 121, 0.16);
   box-shadow: 0 0 35px 0 rgb(154 161 171 / 0%);
   background-color: $white;
-  padding: 20px 20px 10px 20px;
-  min-height: 100%;
-  width: 15%;
+  padding: 20px 0px;
+  width: 20rem;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: auto;
+
+  .sidebarImgBlock {
+    display: flex;
+    padding-bottom: 15px;
+  }
 
   .sidebarImgHolder {
+    width: 100%;
+    border-bottom: 1px solid #f6f9fb;
     display: flex;
     justify-content: space-evenly;
-    padding: 0 15px;
     margin-bottom: 20px;
+  }
+
+  .sidebarLogoText {
+    text-transform: uppercase;
+    vertical-align: middle;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-left: 10px;
+    font-size: 1.5rem;
   }
 
   .sidebarImgAvatar {
     display: flex;
-    flex-wrap: wrap;
     justify-self: center;
     align-items: center;
-    flex-direction: column;
+    padding: 0 15px;
+
+    .sidebarAvatarLink {
+      display: block;
+      width: 75px;
+      height: 75px;
+    }
+
+    h6 {
+      width: 70%;
+      text-align: left;
+      font-size: 1.25rem;
+      margin-left: 10px;
+      font-weight: 600;
+
+      .sidebarRole {
+        display: block;
+        font-size: 0.85rem;
+        text-transform: capitalize;
+        color: #8c949d;
+        font-weight: 400;
+      }
+    }
   }
 
   .sidebarAvatar {
-    width: 125px;
-    height: 125px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    border: 1px solid $lightBlue;
-    background-color: $sideBackground;
-    margin-bottom: 20px;
+    border: 5px solid #ffffff;
+    box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .sidebar {
+    width: 15rem;
+
+    .sidebarImgAvatar {
+      .sidebarAvatarLink {
+        width: 55px;
+        height: 55px;
+      }
+
+      h6 {
+        font-size: 1rem;
+        line-height: 20px;
+
+        .sidebarRole {
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    .sidebarLogoText {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .sidebar {
+    padding: 0;
+    width: 15rem;
+    transform: translate(-15rem, 0);
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    z-index: 999;
+
+    &.open {
+      transform: translate(0, 0);
+    }
+
+    .sidebarImgHolder,
+    .sidebarImgAvatar {
+      display: none;
+    }
   }
 }

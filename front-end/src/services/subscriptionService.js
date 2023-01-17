@@ -10,7 +10,7 @@ export const getStudentSubscription = async (id) => {
   return data;
 };
 
-export const createSubscription = async (teacherId, studentId) => {
+export const createSubscription = async (teacherId, studentId, email, fullName, teacherName) => {
   const body = {
     teacher: {
       _id: teacherId,
@@ -18,6 +18,9 @@ export const createSubscription = async (teacherId, studentId) => {
     student: {
       _id: studentId,
     },
+    email,
+    fullName,
+    teacherName,
   };
   const { data } = await API.post('/api/subscriptions/', body);
   return data;

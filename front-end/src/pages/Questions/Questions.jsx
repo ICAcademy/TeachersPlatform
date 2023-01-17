@@ -67,7 +67,7 @@ const Questions = () => {
 
   const searching = searchUnitName === '' ? searchUnitName : searchUnit;
 
-  const { data, loading } = useFetchUnits(isEdit, searching, selectedLevel);
+  const { data, loading } = useFetchUnits(isEdit, searching, selectedLevel, 'question');
 
   const saveTestBtn = isAuthenticated && currentUser.role === 'admin' && (
     <Button component={Link} to='/app/questions/new' variant='contained' endIcon={<Add />}>

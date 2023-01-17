@@ -7,20 +7,25 @@ import styles from './Units.module.scss';
 //Components
 import UnitCard from 'components/common/UnitCard/UnitCard';
 
-const Units = (props) => {
+const Units = ({ materials }) => {
   return (
-    <div className={styles.units}>
-      {props.materials.map((item) => (
-        <UnitCard
-          key={item._id}
-          unit={item.unit}
-          image={item.image}
-          numberOfLessons={item.numberOfLessons}
-          editLink={`/app/materials/edit/${item.url}`}
-          url={item.url}
-          type='materials'
-        />
-      ))}
+    <div className={styles.container}>
+      {materials.length === 0 ? (
+        <div className={styles.notFound}>Not Found Materials</div>
+      ) : (
+        <div className={styles.units}>
+          {materials.map((item) => (
+            <UnitCard
+              key={item._id}
+              numberOfLessons={item.numberOfLessons}
+              unit={item.unit}
+              image={item.image}
+              url={item.url}
+              type='materials'
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

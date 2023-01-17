@@ -1,0 +1,21 @@
+@import '../../../styles/colors.scss';
+
+.content {
+  margin-bottom: 50px;
+}
+
+.buttonContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.infoContainer {
+  width: 800px;
+  margin-top: 30px;
+  padding: 20px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 74px rgb(0 0 0 / 8%);
+  background: $white;
+}
