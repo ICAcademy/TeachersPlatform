@@ -7,13 +7,13 @@ import TopicsBody from 'components/questions/TopicsBody/TopicsBody';
 import Quiz from 'components/questions/Quiz/Quiz';
 
 import { getTopicDataByUrl } from 'services/questionService';
+import { socket } from 'services/socketService';
 
 import styles from './Topics.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserContext } from 'context/AppProvider';
 import { getTeachersSubscription } from 'services/subscriptionService';
-import { starNewLesson } from 'services/lessonService';
 
 const Topics = () => {
   const [unitData, setUnitData] = useState([]);
@@ -61,21 +61,16 @@ const Topics = () => {
     }
   };
 
-  const startLessonHandler = async () => {
-    try {
-      const body = {
-        topic: selectedTopic.topic,
-        level: unitData.level,
-        teacherId: roleId,
-        studentId: selectedStudentId,
-        questions: selectedTopic.questions,
-      };
+  const startLessonHandler = () => {
+    const body = {
+      topic: selectedTopic.topic,
+      level: unitData.level,
+      teacherId: roleId,
+      studentId: selectedStudentId,
+      questions: selectedTopic.questions,
+    };
 
-      const lesson = await starNewLesson(body);
-      navigate(`/app/lessons/${lesson._id}`);
-    } catch (error) {
-      console.log(error);
-    }
+    socket.emit('lesson:add', body);
   };
 
   useEffect(() => {
@@ -85,6 +80,10 @@ const Topics = () => {
   useEffect(() => {
     fetchTopicsData(params.url);
   }, [params.url]);
+
+  useEffect(() => {
+    socket.on('lesson:added', (lesson) => navigate(`/app/lessons/${lesson._id}`));
+  }, [navigate]);
 
   const quiz = Object.keys(selectedTopic).length ? (
     <div className={`${styles.lesson__quiz} ${isFullscreen ? styles.quiz__full : ''}`}>

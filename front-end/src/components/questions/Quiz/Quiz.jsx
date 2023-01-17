@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router';
 import { Box, Button, List, ListItem } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -7,28 +6,21 @@ import { CurrentUserContext } from 'context/AppProvider';
 
 import AnswerPicker from 'components/questions/AnswerPicker/AnswerPicker';
 
-import { endLesson } from 'services/lessonService';
+import { socket } from 'services/socketService';
+
 import { TEACHER_ROLE } from 'constants/userRoles';
 
 import styles from './Quiz.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
-// import { FaCircleCheck } from '@fontawesome/fa-circle-check';
 
 const Quiz = ({ id, questions, isLesson }) => {
-  const navigate = useNavigate();
-
   const {
     currentUser: { role },
   } = useContext(CurrentUserContext);
 
-  const endLessonHandler = async (lessonId) => {
-    try {
-      await endLesson(lessonId, { lessonStatus: 'ended' });
-      navigate('/app/lessons');
-    } catch (error) {
-      console.log(error);
-    }
+  const endLessonHandler = () => {
+    socket.emit('lesson:end', id);
   };
 
   const quiz = questions.map((question) => (
@@ -39,7 +31,7 @@ const Quiz = ({ id, questions, isLesson }) => {
     >
       <p>{question.title}</p>
 
-      {question.selected && (
+      {role === TEACHER_ROLE && question.selected && (
         <Box className={styles.answerStatus}>
           {question.correct === question.selected ? (
             <FontAwesomeIcon
@@ -70,7 +62,7 @@ const Quiz = ({ id, questions, isLesson }) => {
       <Box className={styles.header} sx={{ '& button': { m: 1 } }}>
         <h3 className={styles.title}>Quiz</h3>
         {isLesson && role === TEACHER_ROLE && (
-          <Button variant='contained' size='small' onClick={() => endLessonHandler(id)}>
+          <Button variant='contained' size='small' onClick={endLessonHandler}>
             End lesson
           </Button>
         )}

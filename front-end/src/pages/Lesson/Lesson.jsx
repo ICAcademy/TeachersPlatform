@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+
+import { useParams, useNavigate } from 'react-router';
 
 import LessonsHeader from 'components/Lessons/LessonsHeader/LessonsHeader';
 
@@ -13,6 +14,7 @@ import { socket } from 'services/socketService';
 
 const Lesson = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const {
     currentUser: { role },
@@ -37,12 +39,13 @@ const Lesson = () => {
   }, [id]);
 
   useEffect(() => {
-    socket.emit('lesson:user-join', id, role);
+    socket.emit('lesson:join', id, role);
 
     socket.on('lesson:updated', (data) => setLesson(data));
+    socket.on('lesson:ended', () => navigate('/app/lessons'));
 
-    return () => socket.emit('lesson:user-leave', id, role);
-  }, [id, role]);
+    return () => socket.emit('lesson:leave', id, role);
+  }, [id, navigate, role]);
 
   return isLoading ? (
     <Loader />

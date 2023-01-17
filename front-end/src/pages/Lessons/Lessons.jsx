@@ -10,6 +10,7 @@ import { getAllLessons } from 'services/lessonService';
 
 import styles from './Lessons.module.scss';
 import { TEACHER_ROLE } from 'constants/userRoles';
+import { socket } from 'services/socketService';
 
 const getParticipant = (role, lesson) =>
   role === TEACHER_ROLE ? lesson.studentId.fullName : lesson.teacherId.fullName;
@@ -35,6 +36,8 @@ const Lessons = () => {
 
   useEffect(() => {
     fetchLessons(roleId);
+
+    socket.on('lesson:added', () => fetchLessons(roleId));
   }, [roleId]);
 
   return isLoading ? (
@@ -44,17 +47,25 @@ const Lessons = () => {
       <Typography variant='h6' sx={{ mb: '20px', pl: '10px' }}>
         Lessons
       </Typography>
-      <Box className={styles.lessons}>
-        {lessons.map((lesson) => (
-          <LessonItem
-            key={lesson._id}
-            id={lesson._id}
-            topic={lesson.topic}
-            participant={getParticipant(role, lesson)}
-            status={lesson.lessonStatus}
-          />
-        ))}
-      </Box>
+      {lessons.length ? (
+        <Box className={styles.lessons}>
+          {lessons.map((lesson) => (
+            <LessonItem
+              key={lesson._id}
+              id={lesson._id}
+              topic={lesson.topic}
+              participant={getParticipant(role, lesson)}
+              status={lesson.lessonStatus}
+            />
+          ))}
+        </Box>
+      ) : (
+        <Box className={styles.noLessons}>
+          <Typography variant='h6' sx={{ mt: '15%' }}>
+            You have no lessons for now
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 };

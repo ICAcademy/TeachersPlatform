@@ -1,7 +1,7 @@
 const Lesson = require('../models/Lesson');
 
 const getLessonsById = async (id) =>
-  await Lesson.find({ $or: [{ teacherId: id }, { studentId: id }] })
+  await Lesson.find({ $or: [{ teacherId: id }, { studentId: id }], lessonStatus: 'processing' })
     .populate({
       path: 'studentId teacherId',
       select: 'fullName',
@@ -31,6 +31,9 @@ const updateLessonAnswerById = async (roomId, questionId, answer) =>
     path: 'studentId teacherId',
     select: 'fullName url',
   });
+
+const endLesson = async (id) =>
+  await Lesson.findByIdAndUpdate(id, { lessonStatus: 'ended' }, { new: true, runValidators: true });
 
 const updateOnDisconnect = async (id) => {
   return Lesson.findOneAndUpdate(
@@ -72,5 +75,6 @@ module.exports = {
   startLesson,
   updateLesson,
   updateLessonAnswerById,
+  endLesson,
   updateOnDisconnect,
 };
