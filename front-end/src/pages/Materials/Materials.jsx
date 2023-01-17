@@ -65,8 +65,14 @@ const Materials = ({ snackbarShowMessage }) => {
     }
   };
 
-  const saveMaterialBtn = currentUser.role === ADMIN_ROLE && (
-    <Button component={Link} to='/app/materials/edit/new' variant='contained' endIcon={<Add />}>
+  const createMaterialBtn = currentUser.role === ADMIN_ROLE && (
+    <Button
+      className={styles.createBtn}
+      component={Link}
+      to='/app/materials/edit/new'
+      variant='contained'
+      endIcon={<Add />}
+    >
       Create material
     </Button>
   );
@@ -116,7 +122,7 @@ const Materials = ({ snackbarShowMessage }) => {
             className={styles.materialsSearch}
             InputProps={{
               endAdornment: (
-                <InputAdornment position='start'>
+                <InputAdornment position='start' className={styles.inputWrap}>
                   <SearchOutlined />
                 </InputAdornment>
               ),
@@ -125,7 +131,7 @@ const Materials = ({ snackbarShowMessage }) => {
             value={searchByUnitName}
           />
         </div>
-        {saveMaterialBtn}
+        {createMaterialBtn}
       </div>
       {loading ? <Loader /> : <Units materials={data} />}
     </div>

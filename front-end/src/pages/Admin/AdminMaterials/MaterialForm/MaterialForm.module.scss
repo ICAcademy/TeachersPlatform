@@ -76,3 +76,32 @@
     margin: auto;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .formPart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &:first-child {
+      width: 100%;
+      border-right: none;
+      padding-right: 0;
+    }
+
+    &:last-child {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .deleteBtn {
+      position: static;
+      margin-top: 15px;
+    }
+  }
+
+  .adminForm {
+    flex-direction: column;
+  }
+}
