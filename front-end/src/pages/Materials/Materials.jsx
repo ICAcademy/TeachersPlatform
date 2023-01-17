@@ -113,6 +113,7 @@ const Materials = ({ snackbarShowMessage }) => {
             variant='outlined'
             size='small'
             label='Enter here to find a lesson'
+            className={styles.materialsSearch}
             InputProps={{
               endAdornment: (
                 <InputAdornment position='start'>

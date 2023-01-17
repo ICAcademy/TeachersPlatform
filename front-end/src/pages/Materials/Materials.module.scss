@@ -4,15 +4,45 @@
 }
 
 .materialsSearch {
-  padding: 10px;
-  width: 360px;
-  border-radius: 5px;
-  border: 1px solid rgb(182, 182, 182);
-  float: right;
+  background-color: #ffffff;
+
+  label {
+    text-transform: uppercase;
+  }
 }
 
 .navigationRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 1366px) {
+  .materialsSearch {
+    width: 260px !important;
+
+    label {
+      font-size: 0.65rem;
+      line-height: 1em;
+    }
+    input {
+      padding: 6px;
+      font-size: 0.65rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .materialsHeader {
+    justify-content: center;
+  }
+
+  .navigationRow {
+    flex-direction: column;
+  }
+
+  .materialsSearch {
+    width: 100% !important;
+    margin-top: 15px !important;
+  }
 }
