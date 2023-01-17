@@ -35,7 +35,13 @@ const Quiz = ({ id, questions, isLesson }) => {
       sx={{ display: 'flex', justifyContent: 'space-between', py: '15px' }}
     >
       <p>{question.title}</p>
-      <AnswerPicker id={question._id} options={question.answers} />
+      <AnswerPicker
+        id={question._id}
+        roomId={id}
+        options={question.answers}
+        selected={isLesson ? question.selected : ''}
+        isLesson={isLesson}
+      />
     </ListItem>
   ));
 

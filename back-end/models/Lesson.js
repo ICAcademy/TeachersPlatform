@@ -61,6 +61,7 @@ const LessonSchema = new mongoose.Schema(
           },
           selected: {
             type: String,
+            default: '',
           },
         },
       ],

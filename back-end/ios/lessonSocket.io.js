@@ -1,29 +1,39 @@
-const { updateLesson, updateOnDisconnect } = require('../services/LessonService');
+const {
+  updateLesson,
+  updateOnDisconnect,
+  updateLessonAnswerById,
+} = require('../services/LessonService');
 
-const getStatus = (role, socketId) =>
+const getStatus = (role, status, socketId) =>
   role === 'teacher'
-    ? { teacherStatus: 'online', teacherSocketId: socketId }
-    : { studentStatus: 'online', studentSocketId: socketId };
+    ? { teacherStatus: status, teacherSocketId: socketId }
+    : { studentStatus: status, studentSocketId: socketId };
 
 const registerLessonHandlers = (io, socket) => {
-  const userJoin = async (id, role) => {
-    socket.join(id);
+  const userJoin = async (roomId, role) => {
+    socket.join(roomId);
 
-    const body = getStatus(role, socket.id);
+    const body = getStatus(role, 'online', socket.id);
 
-    const lesson = await updateLesson(id, body);
+    const lesson = await updateLesson(roomId, body);
 
-    io.to(id).emit('user:update-lesson', lesson);
+    io.to(roomId).emit('lesson:updated', lesson);
   };
 
-  const userLeave = async (id, role) => {
-    socket.leave(id);
+  const userLeave = async (roomId, role) => {
+    socket.leave(roomId);
 
-    const body = getStatus(role, socket.id);
+    const body = getStatus(role, 'offline', socket.id);
 
-    const lesson = await updateLesson(id, body);
+    const lesson = await updateLesson(roomId, body);
 
-    io.to(id).emit('user:update-lesson', lesson);
+    io.to(roomId).emit('lesson:updated', lesson);
+  };
+
+  const userSelectAnswer = async (roomId, questionId, answer) => {
+    const lesson = await updateLessonAnswerById(roomId, questionId, answer);
+
+    io.to(roomId).emit('lesson:updated', lesson);
   };
 
   const userDisconnect = async () => {
@@ -31,11 +41,12 @@ const registerLessonHandlers = (io, socket) => {
 
     const lesson = await updateOnDisconnect(socket.id);
 
-    io.to(lesson._id).emit('user:update-lesson', lesson);
+    io.to(lesson?._id.toString()).emit('lesson:updated', lesson);
   };
 
-  socket.on('user:join', userJoin);
-  socket.on('user:leave', userLeave);
+  socket.on('lesson:user-join', userJoin);
+  socket.on('lesson:user-leave', userLeave);
+  socket.on('lesson:select-answer', userSelectAnswer);
   socket.on('disconnect', userDisconnect);
 };
 

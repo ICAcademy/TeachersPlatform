@@ -22,6 +22,16 @@ const updateLesson = async (id, body) =>
     select: 'fullName url',
   });
 
+const updateLessonAnswerById = async (roomId, questionId, answer) =>
+  await Lesson.findByIdAndUpdate(
+    roomId,
+    { $set: { 'questions.$[el].selected': answer } },
+    { arrayFilters: [{ 'el._id': questionId }], new: true, runValidators: true },
+  ).populate({
+    path: 'studentId teacherId',
+    select: 'fullName url',
+  });
+
 const updateOnDisconnect = async (id) => {
   return Lesson.findOneAndUpdate(
     { $or: [{ teacherSocketId: id }, { studentSocketId: id }] },
@@ -61,5 +71,6 @@ module.exports = {
   getSingleLessonById,
   startLesson,
   updateLesson,
+  updateLessonAnswerById,
   updateOnDisconnect,
 };

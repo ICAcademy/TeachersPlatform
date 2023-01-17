@@ -37,11 +37,11 @@ const Lesson = () => {
   }, [id]);
 
   useEffect(() => {
-    socket.emit('user:join', id, role);
+    socket.emit('lesson:user-join', id, role);
 
-    socket.on('user:update-lesson', (data) => setLesson(data));
+    socket.on('lesson:updated', (data) => setLesson(data));
 
-    return () => socket.emit('user:leave', id, role);
+    return () => socket.emit('lesson:user-leave', id, role);
   }, [id, role]);
 
   return isLoading ? (
