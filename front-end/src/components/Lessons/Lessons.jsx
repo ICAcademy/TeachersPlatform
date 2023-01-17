@@ -40,15 +40,17 @@ const Lessons = (props) => {
             Back to materials
           </div>
         </div>
-        {props.lessons.map((lesson, index) => (
-          <Lesson
-            key={index}
-            index={`${index + 1}`}
-            lesson={lesson}
-            selectedLesson={selectedLesson}
-            onChange={onChangeHandler}
-          />
-        ))}
+        <div className={styles.lessonsWrap}>
+          {props.lessons.map((lesson, index) => (
+            <Lesson
+              key={index}
+              index={`${index + 1}`}
+              lesson={lesson}
+              selectedLesson={selectedLesson}
+              onChange={onChangeHandler}
+            />
+          ))}
+        </div>
       </div>
       {selectedLesson.layout && (
         <div

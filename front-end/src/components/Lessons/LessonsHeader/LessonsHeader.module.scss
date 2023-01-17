@@ -97,3 +97,29 @@
     margin-right: 25px;
   }
 }
+
+@media screen and (max-width: 1280px) {
+  .lessonHeader {
+    background-image: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .lessonHeader {
+    background-image: none;
+  }
+
+  .lessonHeaderInfo {
+    flex-direction: column;
+  }
+
+  .lessonInfoItem {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .lessonHeader {
+    background-image: url('../../../assets/lesson/lesson-header-img.svg');
+  }
+}

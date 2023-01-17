@@ -18,3 +18,9 @@
     font-size: 1rem;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .letterIcon {
+    margin-right: 0;
+  }
+}
