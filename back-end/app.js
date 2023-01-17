@@ -15,7 +15,11 @@ const server = http.createServer(app);
 // Middlewares
 const authentication = require('./middlewares/authentication');
 const cors = require('./middlewares/cors');
-const io = new Server(server, { cors: { origin: 'https://incredible-torte-ac738e.netlify.app' } });
+const io = new Server(server, {
+  cors: {
+    origin: ['http://localhost:3000', 'https://incredible-torte-ac738e.netlify.app'],
+  },
+});
 socketConnection(io);
 
 // Routers
