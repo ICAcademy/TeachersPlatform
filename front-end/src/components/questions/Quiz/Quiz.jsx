@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router';
 import { Box, Button, List, ListItem } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -6,11 +7,13 @@ import { CurrentUserContext } from 'context/AppProvider';
 
 import AnswerPicker from 'components/questions/AnswerPicker/AnswerPicker';
 
+import { endLesson } from 'services/lessonService';
 import { TEACHER_ROLE } from 'constants/userRoles';
 
 import styles from './Quiz.module.scss';
-import { endLesson } from 'services/lessonService';
-import { useNavigate } from 'react-router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+// import { FaCircleCheck } from '@fontawesome/fa-circle-check';
 
 const Quiz = ({ id, questions, isLesson }) => {
   const navigate = useNavigate();
@@ -35,6 +38,23 @@ const Quiz = ({ id, questions, isLesson }) => {
       sx={{ display: 'flex', justifyContent: 'space-between', py: '15px' }}
     >
       <p>{question.title}</p>
+
+      {question.selected && (
+        <Box className={styles.answerStatus}>
+          {question.correct === question.selected ? (
+            <FontAwesomeIcon
+              icon={faCircleCheck}
+              className={`${styles.answerIcon} ${styles['answerIcon--correct']}`}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              className={`${styles.answerIcon} ${styles['answerIcon--incorrect']}`}
+            />
+          )}
+        </Box>
+      )}
+
       <AnswerPicker
         id={question._id}
         roomId={id}
