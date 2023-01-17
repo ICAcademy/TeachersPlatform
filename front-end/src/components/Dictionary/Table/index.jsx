@@ -34,8 +34,14 @@ const TABLE_HEADER_CELLS = ['Word', 'Translation', 'Settings'];
 import styles from './Table.module.scss';
 
 const sx = {
-  paper: { width: '560px', overflow: 'hidden', my: 2.5 },
-  tableContainer: { width: '560px' },
+  paper: {
+    width: '560px',
+    overflow: 'hidden',
+    mb: 2.5,
+  },
+  tableContainer: {
+    width: '560px',
+  },
   tableHead: {
     '& th': {
       color: '#fff',
@@ -54,7 +60,7 @@ const sx = {
   },
 };
 
-const Table = ({ dictionary, isLoading, deleteWordById, updateDictionary }) => {
+const Table = ({ dictionary, isLoading, deleteWordById, updateDictionary, isTeacher }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -69,9 +75,13 @@ const Table = ({ dictionary, isLoading, deleteWordById, updateDictionary }) => {
     setPage(0);
   };
 
+  const text = isTeacher
+    ? 'Choose the student to add a word!'
+    : 'You do not have any words... but you can create it above!';
+
   const getComponent = () => {
     if (isLoading) return <Loader />;
-    if (dictionary.length === 0) return <NoWords />;
+    if (dictionary.length === 0) return <NoWords text={text} />;
     return (
       <Paper sx={sx.paper}>
         <TableContainer sx={sx.tableContainer}>
@@ -144,13 +154,15 @@ const Table = ({ dictionary, isLoading, deleteWordById, updateDictionary }) => {
 
 Table.propTypes = {
   isLoading: PropTypes.bool,
+  isTeacher: PropTypes.bool,
   dictionary: PropTypes.array.isRequired,
-  updateDictionary: PropTypes.func.isRequired,
   deleteWordById: PropTypes.func.isRequired,
+  updateDictionary: PropTypes.func.isRequired,
 };
 
 Table.defaultProps = {
   isLoading: false,
+  isTeacher: false,
 };
 
 export default Table;

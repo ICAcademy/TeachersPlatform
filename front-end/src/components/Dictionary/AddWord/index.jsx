@@ -19,7 +19,12 @@ import styles from './AddWord.module.scss';
 
 const sx = {
   inputsBox: {
-    '& .MuiTextField-root': { m: 1, width: '30ch' },
+    '& .MuiTextField-root': {
+      my: 1,
+      ml: 0,
+      mr: 1,
+      width: '30ch',
+    },
   },
   addBtn: {
     width: '100px',
@@ -29,7 +34,7 @@ const sx = {
   },
 };
 
-const AddWord = ({ isLoading, createDictionary }) => {
+const AddWord = ({ isLoading, createDictionary, selectError }) => {
   const {
     value: enteredWord,
     isValid: wordIsValid,
@@ -64,6 +69,7 @@ const AddWord = ({ isLoading, createDictionary }) => {
           helperText={wordHasError ? WORD_HELPER_TEXT : ' '}
           size='small'
           align='center'
+          disabled={selectError}
         />
         <TextField
           id='outlined-required'
@@ -76,6 +82,7 @@ const AddWord = ({ isLoading, createDictionary }) => {
           helperText={translationHasError ? TRANSLATION_HELPER_TEXT : ' '}
           size='small'
           align='center'
+          disabled={selectError}
         />
         <Button
           variant='contained'
@@ -87,7 +94,7 @@ const AddWord = ({ isLoading, createDictionary }) => {
             resetTranslation();
           }}
           type='submit'
-          disabled={!wordIsValid || !translationIsValid}
+          disabled={!wordIsValid || !translationIsValid || selectError}
         >
           Add
         </Button>
@@ -98,11 +105,13 @@ const AddWord = ({ isLoading, createDictionary }) => {
 
 AddWord.propTypes = {
   isLoading: PropTypes.bool,
+  selectError: PropTypes.bool,
   createDictionary: PropTypes.func.isRequired,
 };
 
 AddWord.defaultProps = {
   isLoading: false,
+  selectError: false,
 };
 
 export default AddWord;

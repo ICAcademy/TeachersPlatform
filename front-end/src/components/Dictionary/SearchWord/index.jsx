@@ -11,12 +11,17 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 // Styles
 const sx = {
   inputsBox: {
-    '& .MuiTextField-root': { m: 1, width: '30ch' },
-    '& svg': { fontSize: '14px' },
+    '& .MuiTextField-root': {
+      m: 1,
+      width: '30ch',
+    },
+    '& svg': {
+      fontSize: '14px',
+    },
   },
 };
 
-const SearchWord = ({ word, handleInput }) => (
+const SearchWord = ({ word, handleInput, selectError }) => (
   <Box component='form' sx={sx.inputsBox} noValidate autoComplete='off'>
     <TextField
       id='outlined-required'
@@ -25,9 +30,10 @@ const SearchWord = ({ word, handleInput }) => (
       value={word}
       onChange={handleInput}
       size='small'
+      disabled={selectError}
       InputProps={{
         endAdornment: (
-          <InputAdornment position='center'>
+          <InputAdornment position='end'>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </InputAdornment>
         ),
@@ -38,11 +44,13 @@ const SearchWord = ({ word, handleInput }) => (
 
 SearchWord.propTypes = {
   word: PropTypes.string,
+  selectError: PropTypes.bool,
   handleInput: PropTypes.func,
 };
 
 SearchWord.defaultProps = {
   word: '',
+  selectError: false,
   handleInput: () => {},
 };
 

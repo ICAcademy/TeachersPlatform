@@ -11,51 +11,75 @@ import {
   updateDictionary,
   deleteDictionary,
 } from 'services/dictionaryService';
+import { getTeachersSubscription } from 'services/subscriptionService';
+
+// Constants
+import { TEACHER_ROLE } from 'constants/userRoles';
 
 // HOC
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // Components
-import AddWord from 'components/Dictionary/AddWord';
-import SearchWord from 'components/Dictionary/SearchWord';
-import Loader from 'components/common/Loader/Loader';
 import Table from 'components/Dictionary/Table';
+import StudentsSelect from 'components/Dictionary/StudentsSelect';
+import AddWord from 'components/Dictionary/AddWord';
+import Loader from 'components/common/Loader/Loader';
+import SearchWord from 'components/Dictionary/SearchWord';
 
 // Styles
 import styles from './Dictionary.module.scss';
 
+const sx = {
+  formControl: {
+    my: 1,
+    ml: 0,
+    mr: 1,
+    width: '30ch',
+  },
+};
+
 const Dictionary = ({ snackbarShowMessage }) => {
   const {
-    currentUser: { roleId },
+    currentUser: { roleId, role },
   } = useContext(CurrentUserContext);
   const [words, setWords] = useState([]);
+  const [selectedStudentId, setSelectedStudentId] = useState('');
+  const [students, setStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchWord, setSearchWord] = useState('');
 
-  const searchByWord = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const newWords = await getDictionaryByStudentId({ studentId: roleId, search: searchWord });
-      setWords(newWords);
-    } catch (error) {
-      return error;
-    } finally {
-      setIsLoading(false);
+  const isTeacher = role === TEACHER_ROLE;
+  const selectHasError = isTeacher && selectedStudentId === '';
+
+  const getId = useCallback(() => {
+    if (isTeacher) {
+      return selectedStudentId;
     }
-  }, [roleId, searchWord]);
+    return roleId;
+  }, [isTeacher, roleId, selectedStudentId]);
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      return searchByWord();
-    }, 1500);
-
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchByWord]);
+  const fetchSubscriptions = useCallback(
+    async (id) => {
+      try {
+        setIsLoading(true);
+        const subscriptions = await getTeachersSubscription(id);
+        setStudents(subscriptions);
+      } catch (error) {
+        snackbarShowMessage({
+          message: 'Something went wrong',
+          severity: 'error',
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [snackbarShowMessage],
+  );
 
   const handleCreateDictionary = async (word, translation) => {
     try {
       setIsLoading(true);
-      const newInstance = await createDictionary({ word, translation, studentId: roleId });
+      const newInstance = await createDictionary({ word, translation, studentId: getId() });
       setWords((prev) => [newInstance, ...prev]);
       snackbarShowMessage({
         message: 'Created word!',
@@ -63,7 +87,7 @@ const Dictionary = ({ snackbarShowMessage }) => {
       });
     } catch (error) {
       snackbarShowMessage({
-        message: error.response.data,
+        message: 'Something went wrong',
         severity: 'error',
       });
     } finally {
@@ -74,7 +98,7 @@ const Dictionary = ({ snackbarShowMessage }) => {
   const fetchDictionary = useCallback(async () => {
     try {
       setIsLoading(true);
-      const dictionaryOfStudent = await getDictionaryByStudentId({ studentId: roleId });
+      const dictionaryOfStudent = await getDictionaryByStudentId({ studentId: getId() });
       setWords(dictionaryOfStudent);
     } catch (error) {
       snackbarShowMessage({
@@ -84,7 +108,35 @@ const Dictionary = ({ snackbarShowMessage }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [roleId, snackbarShowMessage]);
+  }, [getId, snackbarShowMessage]);
+
+  const searchByWord = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const newWords = await getDictionaryByStudentId({
+        studentId: getId(),
+        search: searchWord,
+      });
+      setWords(newWords);
+    } catch (error) {
+      snackbarShowMessage({
+        message: 'Something went wrong',
+        severity: 'error',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [getId, searchWord, snackbarShowMessage]);
+
+  useEffect(() => {
+    if (searchWord !== '') {
+      const delayDebounceFn = setTimeout(() => {
+        return searchByWord();
+      }, 1000);
+
+      return () => clearTimeout(delayDebounceFn);
+    }
+  }, [searchByWord, searchWord]);
 
   const handleUpdateDictionary = async (id, data) => {
     try {
@@ -110,7 +162,6 @@ const Dictionary = ({ snackbarShowMessage }) => {
 
   const deleteWordById = async (id) => {
     try {
-      setIsLoading(true);
       await deleteDictionary(id);
       const updatedDictionary = words.filter((word) => word._id !== id);
       setWords(updatedDictionary);
@@ -123,29 +174,61 @@ const Dictionary = ({ snackbarShowMessage }) => {
         message: 'Something went wrong!',
         severity: 'error',
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchDictionary();
-  }, [fetchDictionary]);
+    if (selectedStudentId !== '' && searchWord === '') {
+      fetchDictionary();
+    }
+  }, [fetchDictionary, searchWord, selectedStudentId]);
+
+  useEffect(() => {
+    if (!isTeacher && searchWord === '') {
+      fetchDictionary();
+    }
+  }, [fetchDictionary, isTeacher, searchWord]);
+
+  useEffect(() => {
+    if (isTeacher) {
+      fetchSubscriptions(roleId);
+    }
+  }, [fetchSubscriptions, isTeacher, roleId]);
 
   return isLoading ? (
     <Loader />
   ) : (
     <div className={styles.wrap}>
       <h1 className={styles.title}>My dictionary</h1>
+      {role === TEACHER_ROLE ? (
+        <StudentsSelect
+          students={students}
+          style={sx.formControl}
+          selectError={selectHasError}
+          studentId={selectedStudentId}
+          handleStudentId={(student) => setSelectedStudentId(student)}
+        />
+      ) : (
+        ''
+      )}
       <div className={styles.inputsWrap}>
-        <AddWord isLoading={isLoading} createDictionary={handleCreateDictionary} />
-        <SearchWord word={searchWord} handleInput={(e) => setSearchWord(e.target.value)} />
+        <AddWord
+          isLoading={isLoading}
+          selectError={selectHasError}
+          createDictionary={handleCreateDictionary}
+        />
+        <SearchWord
+          word={searchWord}
+          selectError={selectHasError}
+          handleInput={(e) => setSearchWord(e.target.value)}
+        />
       </div>
       <Table
-        loading={isLoading}
         dictionary={words}
-        updateDictionary={handleUpdateDictionary}
+        loading={isLoading}
+        isTeacher={isTeacher}
         deleteWordById={deleteWordById}
+        updateDictionary={handleUpdateDictionary}
       />
     </div>
   );

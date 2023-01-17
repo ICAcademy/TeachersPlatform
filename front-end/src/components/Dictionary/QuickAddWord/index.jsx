@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 // MUI library
@@ -8,8 +8,15 @@ import { Box, IconButton, TextField, Button } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faBookBookmark } from '@fortawesome/free-solid-svg-icons';
 
+// Context
+import { CurrentUserContext } from 'context/AppProvider';
+
+// Constants
+import { TEACHER_ROLE } from 'constants/userRoles';
+
 // Services
 import { createDictionary } from 'services/dictionaryService';
+import { getTeachersSubscription } from 'services/subscriptionService';
 
 // Hooks
 import useInput from 'hooks/useInput';
@@ -25,6 +32,7 @@ const TRANSLATION_HELPER_TEXT = 'Wrong! Example: ти';
 
 // Components
 import Loader from 'components/common/Loader/Loader';
+import StudentsSelect from 'components/Dictionary/StudentsSelect';
 
 // Styles
 import styles from './QuickAddWord.module.scss';
@@ -46,17 +54,43 @@ const sx = {
     my: 0.5,
   },
   inputsBox: {
-    '& .MuiTextField-root': { width: '19ch' },
+    '& .MuiTextField-root': {
+      width: '19ch',
+    },
+  },
+  formControl: {
+    my: 1.5,
+    ml: 0,
+    mr: 1,
+    width: '100%',
   },
 };
 
 const QuickAddWord = ({ snackbarShowMessage }) => {
+  const {
+    currentUser: { roleId, role },
+  } = useContext(CurrentUserContext);
+
   const [isClicked, setIsClicked] = useState(false);
   const [existWord, setExistWord] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedStudentId, setSelectedStudentId] = useState('');
+  const [students, setStudents] = useState('');
+
+  const isTeacher = role === TEACHER_ROLE;
+  const selectHasError = isTeacher && selectedStudentId === '';
+
+  const getId = useCallback(() => {
+    if (isTeacher) return selectedStudentId;
+    return roleId;
+  }, [isTeacher, roleId, selectedStudentId]);
 
   const handleClose = () => {
     setIsClicked(false);
+  };
+
+  const handleStudentId = (student) => {
+    setSelectedStudentId(student);
   };
 
   const {
@@ -80,7 +114,8 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
   const handleCreateDictionary = async (word, translation) => {
     try {
       setIsLoading(true);
-      await createDictionary({ word, translation, studentId: '63bbeee8fcd9c7f8a838b749' });
+      await createDictionary({ word, translation, studentId: getId() });
+      setExistWord(false);
       snackbarShowMessage({
         message: 'Created word!',
         severity: 'success',
@@ -88,13 +123,28 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
     } catch (error) {
       setExistWord(true);
       snackbarShowMessage({
-        message: error.response.data,
+        message: 'Something went wrong!',
         severity: 'error',
       });
     } finally {
       setIsLoading(false);
     }
   };
+
+  const fetchSubscriptions = useCallback(async (id) => {
+    try {
+      const subscriptions = await getTeachersSubscription(id);
+      setStudents(subscriptions);
+    } catch (error) {
+      return error;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isTeacher) {
+      fetchSubscriptions(roleId);
+    }
+  }, [fetchSubscriptions, isTeacher, roleId]);
 
   const reset = () => {
     resetWord();
@@ -107,7 +157,7 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
     if (isClicked)
       return (
         <div className={styles.contentWrap}>
-          <div className={styles.wrap}>
+          <div className={`${styles.wrap} ${isTeacher ? styles.mediumSize : styles.normalSize}`}>
             <div className={styles.blockHeader}>
               <h1>Add word</h1>
               <div className={styles.btnsWrap}>
@@ -119,6 +169,17 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
                 </IconButton>
               </div>
             </div>
+            {isTeacher ? (
+              <StudentsSelect
+                students={students}
+                style={sx.formControl}
+                selectError={selectHasError}
+                studentId={selectedStudentId}
+                handleStudentId={handleStudentId}
+              />
+            ) : (
+              ''
+            )}
             <Box component='form' sx={sx.inputsBox} autoComplete='off'>
               <div className={styles.inputsWrap}>
                 <TextField
@@ -149,11 +210,11 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
               <Button
                 variant='contained'
                 size='small'
-                disabled={!wordIsValid || !translationIsValid}
+                disabled={!wordIsValid || !translationIsValid || selectHasError}
                 sx={sx.addBtn}
                 onClick={async () => {
                   handleCreateDictionary(enteredWord, enteredTranslation);
-                  (await existWord) ? reset() : '';
+                  (await !existWord) ? reset() : null;
                 }}
               >
                 add

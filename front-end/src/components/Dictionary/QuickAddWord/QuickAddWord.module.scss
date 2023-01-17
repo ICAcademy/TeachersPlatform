@@ -24,8 +24,6 @@
 }
 
 .wrap {
-  width: 380px;
-  height: 180px;
   background-color: $white;
   border: none;
   display: flex;
@@ -35,6 +33,16 @@
   padding: 10px 20px;
   box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%),
     0px 9px 46px 8px rgb(0 0 0 / 12%);
+}
+
+.mediumSize {
+  width: 375px;
+  height: 225px;
+}
+
+.normalSize {
+  width: 375px;
+  height: 180px;
 }
 
 .blockHeader {
