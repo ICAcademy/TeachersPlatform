@@ -1,25 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { nanoid } from 'nanoid';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // components
 import Header from 'components/Tests/Header/Header';
 import Question from 'components/Tests/Question/Question';
 import { Button } from '@mui/material';
 import Loader from 'components/common/Loader/Loader';
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 //services
-import { getTestByUrl } from 'services/TestsService';
-import { getLevels } from 'services/questionService';
+import { getTestById } from 'services/TestsService';
+import { getLevels, updateQuestion, createQuestion } from 'services/questionService';
 
 // styles
 import styles from './Tests.module.scss';
 
-const Tests = () => {
+const Tests = ({ snackbarShowMessage }) => {
   const [tests, setTests] = useState({
-    level: 'Beginer',
-    unit: 'Unit 5',
-    topic: 'Present Perfect',
+    level: '',
+    unit: '',
+    topic: '',
     questions: [],
   });
 
@@ -37,38 +40,62 @@ const Tests = () => {
     },
   ]);
   const [postInfo, setPostInfo] = useState(false);
-  const [test, setTest] = useState({});
   const [levels, setLevels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { url } = useParams();
+  const { id } = useParams();
 
-  //Understanding create or edit page by url
-  const createAction = url === 'new' ? 'create' : '';
-
-  const getData = async (url) => {
+  const getData = useCallback(async (id) => {
     try {
       setIsLoading(true);
-      const test = await getTestByUrl(url);
-      const levels = await getLevels();
-      setTest(test);
-      setLevels(levels);
+      const fetchTest = await getTestById(id);
+      const newQuestions = transform(fetchTest.questions);
+      setQuestions(newQuestions);
+      setTests(fetchTest);
+      setTopic(fetchTest.topic);
+      setUnit(fetchTest.unit);
+      setLevel(fetchTest.level);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
-  const newTest = {
-    level: '',
-    unit: '',
-    topic: '',
-    questions: [],
-  };
+  const getLevel = useCallback(async () => {
+    const levels = await getLevels();
+    setLevels(levels);
+  }, []);
 
   useEffect(() => {
-    getData(url);
-  }, [url]);
+    if (id) {
+      getData(id);
+    }
+    getLevel();
+  }, [getData, getLevel, id]);
+
+  const transform = (questions) => {
+    const newQuestions = questions.map((question) => {
+      return {
+        id: question._id,
+        title: question.title,
+        answers: question.answers.map((answer) => {
+          if (question.correct === answer) {
+            return {
+              id: nanoid(),
+              answer: answer,
+              right: true,
+            };
+          }
+          return {
+            id: nanoid(),
+            answer: answer,
+            right: false,
+          };
+        }),
+      };
+    });
+    return newQuestions;
+  };
 
   const addQuestion = () => {
     setQuestions([
@@ -180,7 +207,17 @@ const Tests = () => {
     );
   };
 
-  const save = () => {
+  const deleteQuestion = (idQuestion) => {
+    const questionsCopy = JSON.parse(JSON.stringify(questions));
+    const newQuestions = questionsCopy.filter((question) => idQuestion !== question.id);
+    setQuestions(newQuestions);
+    snackbarShowMessage({
+      message: 'Question deleted',
+      severity: 'success',
+    });
+  };
+
+  const save = async () => {
     const questionsCopy = JSON.parse(JSON.stringify(questions));
 
     const data = {
@@ -236,77 +273,108 @@ const Tests = () => {
           question.title !== '' && question.answers.every((answer) => answer.answer !== ''),
       )
     ) {
-      // postData(data);
+      await updateOrCreate(id, data);
+    }
+  };
+
+  const updateOrCreate = async (id, data) => {
+    try {
+      if (id) {
+        snackbarShowMessage({
+          message: 'Test updated',
+          severity: 'success',
+        });
+        return await updateQuestion(id, data);
+      }
+      snackbarShowMessage({
+        message: 'Test saved',
+        severity: 'success',
+      });
+      return await createQuestion(data);
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <div className={styles.container}>
-        <div className={styles.content}>
-          <div className={styles.editTestContainer}>
-            <h2>Edit Test</h2>
-          </div>
-          <div className={styles.headerContainer}>
-            <Header
-              test={test || newTest}
-              levels={levels}
-              create={createAction}
-              level={level}
-              setLevel={setLevel}
-              unit={unit}
-              setUnit={setUnit}
-              topic={topic}
-              setTopic={setTopic}
-              postInfo={postInfo}
-            />
-          </div>
-          {questions.length > 0 && (
-            <div className={styles.questionsContainer}>
-              {questions.map((question, index) => {
-                return (
-                  <Question
-                    key={question.id}
-                    index={index}
-                    question={question}
-                    setQuestions={setQuestions}
-                    addAnswer={addAnswer}
-                    changeTitleForQuestion={changeTitleForQuestion}
-                    changeRightAnswerForQuestion={changeRightAnswerForQuestion}
-                    changeAnswerForQuestion={changeAnswerForQuestion}
-                    deleteAnwerForQuestion={deleteAnwerForQuestion}
-                    postInfo={postInfo}
-                  />
-                );
-              })}
-              <div className={styles.buttonsContainer}>
-                <div className={styles.addQuestionContainer}>
-                  <Button
-                    className={styles.button}
-                    sx={{ borderRadius: 50 }}
-                    variant='contained'
-                    onClick={addQuestion}
-                  >
-                    Add Question
-                  </Button>
-                </div>
-                <div className={styles.saveTestsContainer}>
-                  <Button
-                    className={styles.button}
-                    sx={{ borderRadius: 100 }}
-                    variant='contained'
-                    onClick={save}
-                  >
-                    Save Test
-                  </Button>
-                </div>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className={styles.pageContainer}>
+          <div className={styles.container}>
+            <div className={styles.content}>
+              <div className={styles.editTestContainer}>
+                <h2>Edit Test</h2>
               </div>
+              <div className={styles.headerContainer}>
+                <Header
+                  levels={levels}
+                  level={level}
+                  setLevel={setLevel}
+                  unit={unit}
+                  setUnit={setUnit}
+                  topic={topic}
+                  setTopic={setTopic}
+                  postInfo={postInfo}
+                />
+              </div>
+              {questions.length > 0 && (
+                <div className={styles.questionsContainer}>
+                  {questions.map((question, index) => {
+                    return (
+                      <Question
+                        key={question.id}
+                        id={question.id}
+                        index={index}
+                        question={question}
+                        setQuestions={setQuestions}
+                        addAnswer={addAnswer}
+                        deleteQuestion={deleteQuestion}
+                        changeTitleForQuestion={changeTitleForQuestion}
+                        changeRightAnswerForQuestion={changeRightAnswerForQuestion}
+                        changeAnswerForQuestion={changeAnswerForQuestion}
+                        deleteAnwerForQuestion={deleteAnwerForQuestion}
+                        postInfo={postInfo}
+                      />
+                    );
+                  })}
+                  <div className={styles.buttonsContainer}>
+                    <div className={styles.addQuestionContainer}>
+                      <Button
+                        className={styles.button}
+                        sx={{ borderRadius: 50 }}
+                        variant='contained'
+                        onClick={addQuestion}
+                      >
+                        Add Question
+                      </Button>
+                    </div>
+                    <div className={styles.saveTestsContainer}>
+                      <Button
+                        className={styles.button}
+                        sx={{ borderRadius: 100 }}
+                        variant='contained'
+                        component={Link}
+                        to='/app/questions/'
+                        onClick={save}
+                      >
+                        Save Test
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
-export default Tests;
+Tests.propTypes = {
+  snackbarShowMessage: PropTypes.func,
+};
+
+export default withSnackbar(Tests);

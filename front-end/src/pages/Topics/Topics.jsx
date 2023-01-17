@@ -17,7 +17,7 @@ const Topics = () => {
   const [selectedTopic, setSelectedTopic] = useState({});
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const params = useParams();
+  const { url } = useParams();
 
   const fetchTopicsData = async (url) => {
     try {
@@ -50,8 +50,8 @@ const Topics = () => {
   );
 
   useEffect(() => {
-    fetchTopicsData(params.url);
-  }, [params.url]);
+    fetchTopicsData(url);
+  }, [url]);
 
   return (
     <div className={styles.wrapper}>

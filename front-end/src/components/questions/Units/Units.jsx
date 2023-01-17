@@ -20,6 +20,7 @@ const Units = ({ units }) => {
                 image={item.image}
                 url={item.url}
                 numberOfLessons={item.numberOfLessons}
+                editLink={`/app/questions/edit/${item.url}`}
                 type='questions'
               />
             );

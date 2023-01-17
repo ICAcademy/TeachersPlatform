@@ -69,8 +69,8 @@ const Questions = () => {
 
   const { data, loading } = useFetchUnits(isEdit, searching, selectedLevel);
 
-  const saveMaterialBtn = isAuthenticated && currentUser.role === 'admin' && (
-    <Button component={Link} to='/app/tests' variant='contained' endIcon={<Add />}>
+  const saveTestBtn = isAuthenticated && currentUser.role === 'admin' && (
+    <Button component={Link} to='/app/questions/new' variant='contained' endIcon={<Add />}>
       Create new test
     </Button>
   );
@@ -104,7 +104,7 @@ const Questions = () => {
             }}
           />
         </div>
-        {saveMaterialBtn}
+        {saveTestBtn}
       </div>
       {loading ? <Loader /> : <Units units={data} baseUrl={baseUrl} />}
     </div>

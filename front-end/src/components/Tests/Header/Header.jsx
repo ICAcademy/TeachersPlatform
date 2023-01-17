@@ -6,7 +6,7 @@ import { TextField } from '@mui/material';
 import styles from './Header.module.scss';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
-const Header = ({ test, levels, level, setLevel, unit, setUnit, topic, setTopic, postInfo }) => {
+const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postInfo }) => {
   const handleChangeInput = (setFunc, event) => {
     setFunc(event.target.value);
   };

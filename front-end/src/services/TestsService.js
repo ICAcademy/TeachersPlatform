@@ -1,6 +1,6 @@
 import API from 'API';
 
-export const getTestByUrl = async (url) => {
-  const response = await API.get(`/api/questions/get-test-by-url/${url}`);
+export const getTestById = async (id) => {
+  const response = await API.get(`/api/questions/${id}`);
   return response.data;
 };

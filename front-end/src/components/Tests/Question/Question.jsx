@@ -20,13 +20,18 @@ const Question = ({
   changeAnswerForQuestion,
   deleteAnwerForQuestion,
   postInfo,
+  deleteQuestion,
+  id,
 }) => {
   return (
     <div className={styles.questionContainer}>
       <div className={styles.titleContainer}>
         <div className={styles.numberOfQuestion}>
-          <span className={styles.question}>Question</span>
-          {index + 1}
+          <div>
+            <span className={styles.question}>Question</span>
+            {index + 1}
+          </div>
+          <Button onClick={() => deleteQuestion(id)}>Delete</Button>
         </div>
         <div className={styles.titleInputContainer}>
           <Input
@@ -100,6 +105,8 @@ Question.propTypes = {
   changeTitleForQuestion: PropTypes.func,
   deleteAnwerForQuestion: PropTypes.func,
   postInfo: PropTypes.bool,
+  deleteQuestion: PropTypes.func,
+  id: PropTypes.string,
 };
 
 export default Question;
