@@ -5,6 +5,7 @@ import { JitsiMeeting } from '@jitsi/react-sdk';
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Styles
+import styles from './MeetRoom.module.scss';
 import Button from '@mui/material/Button';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 
@@ -17,15 +18,21 @@ const MeetRoom = () => {
     }
 
     return (
-      <JitsiMeeting
-        roomName={generateRoomName()}
-        userInfo={{
-          displayName: currentUser.fullName,
-        }}
-        getIFrameRef={(iframeRef) => {
-          iframeRef.style.height = 'calc(100vh - 100px)';
-        }}
-      />
+      <div className={styles.meetRoom}>
+        <JitsiMeeting
+          roomName={generateRoomName()}
+          configOverwrite={{
+            startAudioOnly: true,
+            prejoinPageEnabled: false,
+          }}
+          userInfo={{
+            displayName: currentUser.fullName,
+          }}
+          getIFrameRef={(iframeRef) => {
+            iframeRef.style.height = '150px';
+          }}
+        />
+      </div>
     );
   };
   const generateRoomName = () => `JitsiMeetRoomNo${Math.random() * 100}-${Date.now()}`;
