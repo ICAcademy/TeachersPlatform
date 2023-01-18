@@ -24,6 +24,7 @@
     display: flex;
     align-items: center;
     column-gap: 5px;
+    color: $green;
 
     &:before {
       display: block;
@@ -31,24 +32,8 @@
       height: 5px;
       width: 5px;
       border-radius: 50%;
-    }
-
-    &--processing {
-      color: $green;
-
-      &:before {
-        background-color: $green;
-        animation: pulse 2s infinite;
-      }
-    }
-
-    &--ended {
-      color: $red;
-
-      &:before {
-        background-color: $red;
-        transform: translate(0%, 50%);
-      }
+      background-color: $green;
+      animation: pulse 2s infinite;
     }
   }
 

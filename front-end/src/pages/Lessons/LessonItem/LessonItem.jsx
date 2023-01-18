@@ -25,15 +25,7 @@ const LessonItem = ({ id, topic, participant, status }) => {
           <ListItemText primary={participant} />
         </Box>
       </Box>
-      <Box
-        className={
-          status === 'processing'
-            ? `${styles.lesson__status} ${styles['lesson__status--processing']}`
-            : `${styles.lesson__status} ${styles['lesson__status--ended']}`
-        }
-      >
-        {status}
-      </Box>
+      <Box className={styles.lesson__status}>{status}</Box>
     </Link>
   );
 };

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
-const { socketConnection } = require('./services/Socket');
+const { socketConnection } = require('./listeners/Socket');
 
 const app = express();
 const server = createServer(app);
@@ -28,14 +28,6 @@ socketConnection(io);
 const appRouter = require('./routes/AppRouter');
 const authRouter = require('./routes/AuthRouter');
 const transactionRouter = require('./routes/TransactionRoutes');
-
-const { registerLessonHandlers } = require('./ios/lessonSocket.io');
-
-const onConnection = (socket) => {
-  registerLessonHandlers(io, socket);
-};
-
-io.on('connection', onConnection);
 
 app.use(cors);
 app.use(express.json());
