@@ -31,7 +31,7 @@ const transactionRouter = require('./routes/TransactionRoutes');
 
 Sentry.init({
   release: process.env.SENTRY_PROJECT,
-  dsn: 'https://d4647e67db714ddd96cd9d1b92b93bf4@o4504524620103680.ingest.sentry.io/4504524623708160',
+  dsn: process.env.SENTRY_DSN,
   integrations: [
     // enable HTTP calls tracing
     new Sentry.Integrations.Http({ tracing: true }),
