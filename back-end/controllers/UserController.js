@@ -3,9 +3,11 @@ const { findByEmail, updateByID, getCurrentPassword } = require('../services/Use
 const { comparePasswords, hashPassword, createToken } = require('../services/AuthService');
 const { updateTeacher } = require('../services/TeacherService');
 const { updateStudent } = require('../services/StudentService');
+const sendMail = require('../services/nodemailer');
 
 // Constants
 const { STUDENT, TEACHER } = require('../constants/UserRoles');
+const { FORGOTPASSWORD } = require('../constants/emailSend');
 
 const getUser = async (req, res) => {
   try {

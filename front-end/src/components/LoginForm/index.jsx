@@ -174,6 +174,11 @@ const LoginForm = () => {
               <span>Sign Up</span>
             </Link>
           </div>
+          <div className={styles.forgotPasswordContainer}>
+            <Link className={styles.link} to='/reset-password'>
+              <span className={styles.forgotPassword}>Forgot Password</span>
+            </Link>
+          </div>
         </div>
       )}
     </div>

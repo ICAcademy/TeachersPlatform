@@ -15,3 +15,13 @@ export const login = async (user) => {
 export const logout = async () => {
   removeToken();
 };
+
+export const requestChangePasswordService = async (email) => {
+  const { data } = await API.post('/auth/request-reset-password', { email });
+  return data;
+};
+
+export const resetPasswordService = async (token, userId, password) => {
+  const { data } = await API.post('/auth/request-reset-password', { token, userId, password });
+  return data;
+};
