@@ -86,10 +86,11 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
-const getTestByUrl = async (req, res) => {
+const getTestByLevelAndUnit = async (req, res) => {
   try {
-    const material = await getTest(req.params.url);
-    res.json(material);
+    const { level, unit } = req.query;
+    const questions = await getTest(level, unit);
+    res.json(questions);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -104,5 +105,5 @@ module.exports = {
   getQuestionById,
   updateQuestion,
   deleteQuestion,
-  getTestByUrl,
+  getTestByLevelAndUnit,
 };

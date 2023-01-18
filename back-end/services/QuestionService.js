@@ -50,9 +50,9 @@ const getQuestionsByUnitName = async (search) => {
   return result;
 };
 
-const getTest = async (url) => {
-  return await Question.findOne({
-    url: { $eq: url },
+const getTest = async (level, unit) => {
+  return await Question.find({
+    $and: [{ level }, { unit }],
   });
 };
 
