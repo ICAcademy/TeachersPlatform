@@ -8,29 +8,13 @@ const {
   editQuestion,
   removeQuestion,
   getQuestionsByUnitName,
-  getCountOfQuestionTopicsByLevel,
-  getCountOfQuestionTopicsByUnit,
 } = require('../services/QuestionService');
-
-const getCorrectFilter = (units, count) => {
-  const unitsMap = units.map((unit, index) => {
-    return { ...unit, numberOfLessons: count[index].count };
-  });
-
-  const result = unitsMap.map((item) => {
-    return { ...item._doc, numberOfLessons: item.numberOfLessons };
-  });
-
-  return result;
-};
 
 const getAllQuestions = async (req, res) => {
   try {
     const { searchUnit } = req.query;
-    const count = await getCountOfQuestionTopicsByUnit(searchUnit);
     const questions = searchUnit ? await getQuestionsByUnitName(searchUnit) : await getQuestions();
-    const result = await getCorrectFilter(questions, count);
-    res.status(200).json(result);
+    res.status(200).json(questions);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -49,9 +33,7 @@ const getQuestionUnitsByLevel = async (req, res) => {
   try {
     const { level } = req.query;
     const units = await getUnitsByLevel({ level });
-    const count = await getCountOfQuestionTopicsByLevel(level);
-    const result = getCorrectFilter(units, count);
-    res.status(200).json(result);
+    res.status(200).json(units);
   } catch (error) {
     res.status(400).json(error);
   }

@@ -5,17 +5,29 @@ const getQuestions = async () => await Question.find({});
 const getLevels = async () => await Question.distinct('level');
 
 const getUnitsByLevel = async (level) => {
+  const countOfTopics = await Question.aggregate([
+    {
+      $match: { level: { $eq: level.level } },
+    },
+    {
+      $sortByCount: '$unit',
+    },
+  ]);
   const questions = await Question.find(level);
-  const result = questions.reduce((acc, curr) => {
+  const duplicateFilter = questions.reduce((acc, curr) => {
     if (
       !acc.some((item) => {
         return item.unit === curr.unit;
       })
     ) {
-      acc.push(curr);
+      acc.push({ ...curr._doc });
     }
     return acc;
   }, []);
+
+  const result = duplicateFilter.map((item, index) => {
+    return { ...item, numberOfLessons: countOfTopics[index].count };
+  });
 
   return result;
 };
@@ -37,43 +49,30 @@ const removeQuestion = async (id) => await Question.findByIdAndDelete(id);
 
 const getQuestionsByUnitName = async (search) => {
   const questions = await Question.find({ unit: { $regex: search, $options: 'i' } });
-  const result = questions.reduce((acc, curr) => {
+  const countOfTopics = await Question.aggregate([
+    {
+      $match: { unit: { $regex: search, $options: 'i' } },
+    },
+    {
+      $sortByCount: '$unit',
+    },
+  ]);
+  const duplicateFilter = questions.reduce((acc, curr) => {
     if (
       !acc.some((item) => {
         return item.unit === curr.unit;
       })
     ) {
-      acc.push(curr);
+      acc.push({ ...curr._doc });
     }
     return acc;
   }, []);
+
+  const result = duplicateFilter.map((item, index) => {
+    return { ...item, numberOfLessons: countOfTopics[index].count };
+  });
+
   return result;
-};
-
-const getCountOfQuestionTopicsByLevel = async (level) => {
-  const countOfTopics = await Question.aggregate([
-    {
-      $match: { level: { $eq: level } },
-    },
-    {
-      $sortByCount: '$unit',
-    },
-  ]);
-
-  return countOfTopics;
-};
-
-const getCountOfQuestionTopicsByUnit = async (unit) => {
-  const countOfTopics = await Question.aggregate([
-    {
-      $match: { unit: { $regex: unit, $options: 'i' } },
-    },
-    {
-      $sortByCount: '$unit',
-    },
-  ]);
-
-  return countOfTopics;
 };
 
 module.exports = {
@@ -86,6 +85,4 @@ module.exports = {
   editQuestion,
   removeQuestion,
   getQuestionsByUnitName,
-  getCountOfQuestionTopicsByLevel,
-  getCountOfQuestionTopicsByUnit,
 };
