@@ -1,0 +1,12 @@
+.lessons {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.noLessons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #969ca5;
+}

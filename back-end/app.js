@@ -4,22 +4,24 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const { createServer } = require('http');
 const { Server } = require('socket.io');
-const { socketConnection } = require('./services/Socket'); //
+const { socketConnection } = require('./listeners/Socket');
 
-const http = require('http');
 const app = express();
-const port = process.env.PORT;
-const server = http.createServer(app);
+const server = createServer(app);
 
-// Middlewares
-const authentication = require('./middlewares/authentication');
-const cors = require('./middlewares/cors');
+const port = process.env.PORT;
+
 const io = new Server(server, {
   cors: {
     origin: ['http://localhost:3000', 'https://incredible-torte-ac738e.netlify.app'],
   },
 });
+
+// Middlewares
+const authentication = require('./middlewares/authentication');
+const cors = require('./middlewares/cors');
 socketConnection(io);
 
 // Routers
