@@ -1,6 +1,11 @@
 const User = require('../models/User');
+const Token = require('../models/Token');
 const bcrypt = require('bcryptjs');
+const bcryptSalt = process.env.BCRYPT_SALT;
+const crypto = require('crypto-js');
 const jwt = require('jsonwebtoken');
+const sendMail = require('./nodemailer');
+const { FORGOT_PASSWORD, CHANGED_PASSWORD } = require('../constants/emailSend');
 
 const register = async (data) => {
   const password = await hashPassword(data.password);
@@ -52,4 +57,50 @@ const createToken = (email) => {
   return jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '30d' });
 };
 
-module.exports = { register, login, comparePasswords, hashPassword, createToken };
+const requestPasswordReset = async (email) => {
+  const user = await User.findOne({ email });
+
+  if (!user) throw new Error('User does not exist');
+  let token = await Token.findOne({ userId: user._id });
+  if (token) await token.deleteOne();
+  let resetToken = crypto.lib.WordArray.random(32).toString(crypto.enc.Hex);
+  const hash = await bcrypt.hash(resetToken, Number(bcryptSalt));
+
+  await new Token({
+    userId: user._id,
+    token: hash,
+    createdAt: Date.now(),
+  }).save();
+
+  /* const link = `http://localhost:3000/reset-password?token=${resetToken}&id=${user._id}`; */
+  const link = `https://incredible-torte-ac738e.netlify.app/reset-password?token=${resetToken}&id=${user._id}`;
+  await sendMail(user.email, user.fullName, FORGOT_PASSWORD, null, link);
+  return link;
+};
+
+const resetPassword = async (userId, token, password) => {
+  let passwordResetToken = await Token.findOne({ userId });
+  if (!passwordResetToken) {
+    throw new Error('Invalid or expired password reset token');
+  }
+  const isValid = await bcrypt.compare(token, passwordResetToken.token);
+  if (!isValid) {
+    throw new Error('Invalid or expired password reset token');
+  }
+  const hash = await bcrypt.hash(password, Number(bcryptSalt));
+  await User.updateOne({ _id: userId }, { $set: { password: hash } }, { new: true });
+  const user = await User.findById({ _id: userId });
+  sendMail(user.email, user.fullName, CHANGED_PASSWORD);
+  await passwordResetToken.deleteOne();
+  return true;
+};
+
+module.exports = {
+  register,
+  login,
+  comparePasswords,
+  hashPassword,
+  createToken,
+  requestPasswordReset,
+  resetPassword,
+};

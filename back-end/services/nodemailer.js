@@ -1,5 +1,10 @@
 require('dotenv').config({ path: '../.env' });
-const { REGISTRATION, SUBSCRIPTION } = require('../constants/emailSend');
+const {
+  REGISTRATION,
+  SUBSCRIPTION,
+  FORGOT_PASSWORD,
+  CHANGED_PASSWORD,
+} = require('../constants/emailSend');
 const nodemailer = require('nodemailer');
 
 const registrationTemplate = (name) =>
@@ -17,6 +22,18 @@ const subcriptionTemplate = (name, teacherName) =>
   <p style="color:#292929;">You have successfully subscribed to your ${teacherName}'s lessons</p>
   </div>`;
 
+const forgotPasswordTemplate = (name, link) =>
+  `<div style='text-align: center'>
+<h1>Hello ${name}!</h1>
+<a href="${link}">Link for changing password</a>
+</div>`;
+
+const changedPasswordTemplate = (name) =>
+  `<div style='text-align: center'>
+  <h1>Hello ${name}!</h1>
+  <p style="color:#292929;">You sucessfully have changed password. </p>
+  </div>`;
+
 const registrationMailOptions = (emailTo, name) => ({
   from: process.env.EMAIL_TEST,
   to: emailTo,
@@ -31,7 +48,21 @@ const subcriptionMailOptions = (emailTo, name, teacherName) => ({
   html: subcriptionTemplate(name, teacherName),
 });
 
-const sendMail = async (emailTo, name, emailType, teacherName) => {
+const forgotPasswordOptions = (emailTo, name, link) => ({
+  from: process.env.EMAIL_TEST,
+  to: emailTo,
+  subject: 'Forgot password',
+  html: forgotPasswordTemplate(name, link),
+});
+
+const changedPasswordOptions = (emailTo, name) => ({
+  from: process.env.EMAIL_TEST,
+  to: emailTo,
+  subject: 'Forgot password',
+  html: changedPasswordTemplate(name),
+});
+
+const sendMail = async (emailTo, name, emailType, teacherName, link) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: 'smtp.@gmail.com',
@@ -51,6 +82,12 @@ const sendMail = async (emailTo, name, emailType, teacherName) => {
       break;
     case SUBSCRIPTION:
       options = subcriptionMailOptions(emailTo, name, teacherName);
+      break;
+    case FORGOT_PASSWORD:
+      options = forgotPasswordOptions(emailTo, name, link);
+      break;
+    case CHANGED_PASSWORD:
+      options = changedPasswordOptions(emailTo, name);
       break;
   }
 
