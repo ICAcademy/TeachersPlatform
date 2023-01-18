@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+// MUI library
+import { LoadingButton } from '@mui/lab';
 
 // FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,47 +15,41 @@ import {
 import { faShareNodes } from '@fortawesome/free-solid-svg-icons';
 
 // Components
-import Tabs from 'components/common/Tabs';
-import Overview from 'components/Teacher/Overview';
-import Courses from 'components/Teacher/Courses';
 import Loader from 'components/common/Loader/Loader';
-import { LoadingButton } from '@mui/lab';
 
-// services
+// Constants
+import { teacherPhoto, certificate, favourite, reward, speechBubble } from 'constants/photo';
+
+// Services
 import {
   createSubscription,
   deleteSubscription,
   getStudentSubscription,
 } from 'services/subscriptionService';
 
-// context
+// Context
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Styles
 import styles from './Teacher.module.scss';
-import { teacher, certificate, favourite, reward, speechBubble } from 'constants/photo';
 
-const Teacher = ({ fullName, activity, id, overview, courses }) => {
-  const { pathname } = useLocation();
-  const tabs = [
-    { title: 'Overview', link: `/app/teachers/${id}/overview` },
-    { title: 'Courses', link: `/app/teachers/${id}/courses` },
-  ];
+const Teacher = ({ teacher }) => {
   const { currentUser } = useContext(CurrentUserContext);
-  const [subscriptions, setSubscriptions] = useState([]);
-  const [isSubscripted, setIsSubscripted] = useState(false);
+
   const [isLoader, setIsLoader] = useState(false);
+  const [subscriptions, setSubscriptions] = useState([]);
   const [buttonLoader, setButtonLoader] = useState(false);
+  const [isSubscripted, setIsSubscripted] = useState(false);
 
   const patchSubscription = async () => {
     try {
       setButtonLoader(true);
       const subscribe = await createSubscription(
-        id,
+        teacher.id,
         currentUser.roleId,
         currentUser.email,
         currentUser.fullName,
-        fullName,
+        teacher.fullName,
       );
       await fetchStudentSubscriptions(currentUser.roleId);
       setButtonLoader(false);
@@ -112,7 +108,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
         <Loader />
       ) : (
         <>
-          <div className={styles.test}>
+          <div className={styles.contentWrap}>
             <div className={styles.iconsWrap}>
               <FontAwesomeIcon icon={faFacebookF} />
               <FontAwesomeIcon icon={faTwitter} />
@@ -120,7 +116,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
               <FontAwesomeIcon icon={faLinkedinIn} />
             </div>
             <div className={styles.imageWrap}>
-              <img src={teacher} alt='teacher' />
+              <img src={teacherPhoto} alt='teacher' />
             </div>
             <div className={styles.share}>
               <FontAwesomeIcon icon={faShareNodes} />
@@ -162,14 +158,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
               subscribe
             </LoadingButton>
           )}
-          <div className={styles.tabs}>
-            <Tabs list={tabs} />
-            {tabs?.find((tab) => tab.link === pathname)?.title === 'Overview' ? (
-              <Overview biography={overview} />
-            ) : (
-              <Courses information={courses} />
-            )}
-          </div>
+          <div>info</div>
         </>
       )}
     </div>
@@ -177,16 +166,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
 };
 
 Teacher.propTypes = {
-  fullName: PropTypes.string,
-  activity: PropTypes.string.isRequired,
-  id: PropTypes.string,
-  overview: PropTypes.string.isRequired,
-  courses: PropTypes.string.isRequired,
-};
-
-Teacher.defaultProps = {
-  fullName: '',
-  id: '',
+  teacher: PropTypes.shape().isRequired,
 };
 
 export default Teacher;

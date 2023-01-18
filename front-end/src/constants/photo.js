@@ -1,5 +1,5 @@
 // Teachers list page
-export const teacher =
+export const teacherPhoto =
   'https://storage.googleapis.com/teachers-platform-40cbe.appspot.com/f53bdc08d852eafe73d86a7c78847814.jpg';
 
 // Teachers list page

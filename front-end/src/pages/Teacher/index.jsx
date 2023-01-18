@@ -17,24 +17,18 @@ const Teacher = () => {
       if (data) {
         setTeacher(data);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      return error;
     }
   };
+
+  console.log(teacher);
 
   useEffect(() => {
     fetchTeacher(id);
   }, [id]);
 
-  return (
-    <SelectedTeacher
-      id={teacher?._id}
-      fullName={teacher?.fullName}
-      activity='English teacher'
-      overview='Overview ;)'
-      courses='Courses ;)'
-    />
-  );
+  return <SelectedTeacher teacher={teacher} />;
 };
 
 export default Teacher;

@@ -122,19 +122,7 @@ const RouterWrapper = () => {
             }
           />
           <Route
-            path='/app/teachers/:id/overview'
-            element={
-              currentUser?.role === TEACHER_ROLE ? (
-                <Navigate to='/app' />
-              ) : (
-                <PrivateRoute>
-                  <Teacher />
-                </PrivateRoute>
-              )
-            }
-          />
-          <Route
-            path='/app/teachers/:id/courses'
+            path='/app/teachers/:id'
             element={
               currentUser?.role === TEACHER_ROLE ? (
                 <Navigate to='/app' />
