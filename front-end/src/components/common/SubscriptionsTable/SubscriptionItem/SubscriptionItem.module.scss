@@ -127,4 +127,17 @@
       }
     }
   }
+
+  .editIcon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    width: 14px;
+    cursor: pointer;
+
+    svg {
+      color: #4f4f4f;
+      width: 100%;
+    }
+  }
 }

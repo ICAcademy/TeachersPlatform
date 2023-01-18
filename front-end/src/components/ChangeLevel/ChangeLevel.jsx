@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Box, Typography, FormControl, Select, MenuItem, Button } from '@mui/material';
-import { updateStudentData } from 'services/studentService';
-import { withSnackbar } from 'components/withSnackbar/withSnackbar';
+
+//Services
+import { getLevels } from 'services/MaterialsService/MaterialsService';
 
 const style = {
   position: 'absolute',
@@ -19,32 +20,31 @@ const style = {
   justifyContent: 'center',
 };
 
-const ChangeLevel = ({
-  isOpen,
-  handleIsClose,
-  selectedIdx,
-  updateHandler,
-  snackbarShowMessage,
-}) => {
-  const [level, setLevel] = useState('');
+const ChangeLevel = ({ isOpen, handleIsClose, level, changeLevel }) => {
+  const [selectedLevel, setSelectedLevel] = useState(level || '');
+  const [levels, setLevels] = useState([]);
 
-  const addStudentLevel = useCallback(async () => {
+  const fetchLevels = async () => {
     try {
-      const updatedSubscription = await updateStudentData(selectedIdx, { level });
-      updateHandler(updatedSubscription);
-      snackbarShowMessage({
-        message: 'Level updated',
-        severity: 'success',
-      });
-      handleIsClose();
+      const levels = await getLevels();
+      setLevels(levels);
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
-  }, [selectedIdx, level, updateHandler, handleIsClose, snackbarShowMessage]);
+  };
+
+  const updateLevelHandler = () => {
+    changeLevel(selectedLevel);
+    handleIsClose();
+  };
 
   const handleChange = (e) => {
-    setLevel(e.target.value);
+    setSelectedLevel(e.target.value);
   };
+
+  useEffect(() => {
+    fetchLevels();
+  }, []);
 
   return (
     <Modal open={isOpen} onClose={handleIsClose}>
@@ -53,10 +53,19 @@ const ChangeLevel = ({
           Student Name
         </Typography>
         <FormControl sx={{ width: '100%' }}>
-          <Select value={level} onChange={handleChange} size='small' sx={{ marginBottom: '35px' }}>
-            <MenuItem value={'Elementary'}>Elementary</MenuItem>
-            <MenuItem value={'Intermediate'}>Intermediate</MenuItem>
-            <MenuItem value={'Advanced'}>Advanced</MenuItem>
+          <Select
+            value={selectedLevel}
+            onChange={handleChange}
+            size='small'
+            sx={{ marginBottom: '35px' }}
+          >
+            {levels.map((item, index) => {
+              return (
+                <MenuItem key={index} value={item}>
+                  {item}
+                </MenuItem>
+              );
+            })}
           </Select>
           <Box
             sx={{
@@ -67,7 +76,7 @@ const ChangeLevel = ({
             <Button variant='contained' onClick={handleIsClose}>
               Close
             </Button>
-            <Button variant='contained' onClick={addStudentLevel}>
+            <Button variant='contained' onClick={updateLevelHandler}>
               Confirm
             </Button>
           </Box>
@@ -80,10 +89,8 @@ const ChangeLevel = ({
 ChangeLevel.propTypes = {
   isOpen: PropTypes.bool,
   handleIsClose: PropTypes.func,
-  selectedIdx: PropTypes.string,
-  getSubscriptions: PropTypes.func,
-  updateHandler: PropTypes.func,
-  snackbarShowMessage: PropTypes.func,
+  level: PropTypes.string,
+  changeLevel: PropTypes.func,
 };
 
-export default withSnackbar(ChangeLevel);
+export default ChangeLevel;
