@@ -16,6 +16,7 @@ import TeacherInfo from 'components/Profile/TeacherInfo/TeacherInfo';
 
 // Constants
 import { ADMIN_ROLE, STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
+import ChangePassword from 'pages/ChangePassword/ChangePassword';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
@@ -197,6 +198,7 @@ const RouterWrapper = () => {
 
         <Route path='/login' element={<Login />} />
         <Route path='/registration' element={<Registration />} />
+        <Route path='/reset-password' element={<ChangePassword />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Suspense>
