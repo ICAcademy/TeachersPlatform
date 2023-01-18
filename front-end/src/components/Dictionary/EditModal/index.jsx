@@ -46,9 +46,9 @@ const sx = {
     },
   },
   updateBtn: {
+    my: 1.5,
     width: '100px',
     height: '40px',
-    my: 1.5,
   },
 };
 

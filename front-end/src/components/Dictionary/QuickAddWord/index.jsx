@@ -26,9 +26,7 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // Helpers
 import { REGEX_WORD, REGEX_TRANSLATION } from 'helpers/regex';
-
-const WORD_HELPER_TEXT = 'Wrong! Example: you';
-const TRANSLATION_HELPER_TEXT = 'Wrong! Example: ти';
+import { WORD_HELPER_TEXT, TRANSLATION_HELPER_TEXT } from 'helpers/text';
 
 // Components
 import Loader from 'components/common/Loader/Loader';
@@ -86,10 +84,6 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
     setIsClicked(false);
   };
 
-  const handleStudentId = (student) => {
-    setSelectedStudentId(student);
-  };
-
   const {
     value: enteredWord,
     isValid: wordIsValid,
@@ -118,9 +112,14 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
         severity: 'success',
       });
     } catch (error) {
-      setExistWord(true);
+      if (error.response.data === 'This word already exist') {
+        setExistWord(true);
+      }
       snackbarShowMessage({
-        message: 'Something went wrong!',
+        message:
+          error.response.data === 'This word already exist'
+            ? error.response.data
+            : 'Something went wrong!',
         severity: 'error',
       });
     } finally {
@@ -172,7 +171,7 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
                 style={sx.formControl}
                 selectError={selectHasError}
                 studentId={selectedStudentId}
-                handleStudentId={handleStudentId}
+                handleStudentId={(student) => setSelectedStudentId(student)}
               />
             ) : (
               ''

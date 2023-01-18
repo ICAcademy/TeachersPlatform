@@ -21,10 +21,10 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // Components
 import Table from 'components/Dictionary/Table';
-import StudentsSelect from 'components/Dictionary/StudentsSelect';
 import AddWord from 'components/Dictionary/AddWord';
 import Loader from 'components/common/Loader/Loader';
 import SearchWord from 'components/Dictionary/SearchWord';
+import StudentsSelect from 'components/Dictionary/StudentsSelect';
 
 // Styles
 import styles from './Dictionary.module.scss';
@@ -44,11 +44,12 @@ const Dictionary = ({ snackbarShowMessage }) => {
   const {
     currentUser: { roleId, role },
   } = useContext(CurrentUserContext);
+
   const [words, setWords] = useState([]);
-  const [selectedStudentId, setSelectedStudentId] = useState('');
   const [students, setStudents] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [searchWord, setSearchWord] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedStudentId, setSelectedStudentId] = useState('');
 
   const isTeacher = role === TEACHER_ROLE;
   const selectHasError = isTeacher && selectedStudentId === '';
@@ -60,23 +61,14 @@ const Dictionary = ({ snackbarShowMessage }) => {
     return roleId;
   }, [isTeacher, roleId, selectedStudentId]);
 
-  const fetchSubscriptions = useCallback(
-    async (id) => {
-      try {
-        setIsLoading(true);
-        const subscriptions = await getTeachersSubscription(id);
-        setStudents(subscriptions);
-      } catch (error) {
-        snackbarShowMessage({
-          message: 'Something went wrong',
-          severity: 'error',
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [snackbarShowMessage],
-  );
+  const fetchSubscriptions = useCallback(async (id) => {
+    try {
+      const subscriptions = await getTeachersSubscription(id);
+      setStudents(subscriptions);
+    } catch (error) {
+      return error;
+    }
+  }, []);
 
   const handleCreateDictionary = async (word, translation) => {
     try {
@@ -89,7 +81,10 @@ const Dictionary = ({ snackbarShowMessage }) => {
       });
     } catch (error) {
       snackbarShowMessage({
-        message: 'Something went wrong',
+        message:
+          error.response.data === 'This word already exist'
+            ? error.response.data
+            : 'Something went wrong!',
         severity: 'error',
       });
     } finally {
