@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
@@ -45,7 +46,7 @@ const Teacher = ({ teacher }) => {
     try {
       setButtonLoader(true);
       const subscribe = await createSubscription(
-        teacher.id,
+        teacher._id,
         currentUser.roleId,
         currentUser.email,
         currentUser.fullName,
@@ -73,18 +74,18 @@ const Teacher = ({ teacher }) => {
   const teacherSubscription = useCallback(
     (fetchedSubscriptions) => {
       const subscripted = fetchedSubscriptions.find((subscription) => {
-        return subscription.teacherID._id === id;
+        return subscription.teacherID._id === teacher._id;
       });
       setIsSubscripted(subscripted);
     },
-    [id],
+    [teacher._id],
   );
 
   const deleteSubscriptionOfStudent = async () => {
     try {
       setButtonLoader(true);
       const neededSubscription = subscriptions.find((subscription) => {
-        return subscription.teacherID._id === id;
+        return subscription.teacherID._id === teacher._id;
       });
       await deleteSubscription(neededSubscription._id);
       setIsSubscripted(false);
@@ -124,8 +125,8 @@ const Teacher = ({ teacher }) => {
             </div>
           </div>
           <div className={styles.description}>
-            <h1>{fullName}</h1>
-            <span>{activity}</span>
+            <h1>{teacher.fullName}</h1>
+            <span>{`${teacher.language} teacher`}</span>
           </div>
           <div className={styles.additionalInfo}>
             <div className={styles.blockWrap}>
@@ -158,7 +159,33 @@ const Teacher = ({ teacher }) => {
               subscribe
             </LoadingButton>
           )}
-          <div>info</div>
+          <div className={styles.teacherInfo}>
+            <div>
+              <div className={styles.test}>
+                <h2>Languages:</h2>
+                <p>{teacher.language}</p>
+              </div>
+              <div className={styles.test}>
+                <h2>Age of students:</h2>
+                <p>{teacher.preferences}</p>
+              </div>
+            </div>
+            <h2>Biograpghy</h2>
+            <p>{teacher.biography}</p>
+            <div>
+              <h2>Contacts</h2>
+              <div>
+                <div className={styles.test}>
+                  <span>Phone</span>
+                  <p>{teacher.phone}</p>
+                </div>
+                <div className={styles.test}>
+                  <span>Email</span>
+                  <p>{teacher.email}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </div>

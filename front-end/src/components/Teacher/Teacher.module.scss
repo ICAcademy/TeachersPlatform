@@ -149,3 +149,32 @@
     background-color: $purple500;
   }
 }
+
+.teacherInfo {
+  background-color: #fff;
+  width: 95%;
+  padding: 25px;
+  margin: 25px 0;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
+  & h2 {
+    margin: 10px 10px 10px 0;
+    font-family: 'Poppins-Regular', sans-serif;
+    font-size: 21px;
+  }
+
+  & p {
+    font-size: 14px;
+    font-family: 'Poppins-Regular', sans-serif;
+    line-height: 1.5;
+  }
+
+  & span {
+    margin-right: 10px;
+  }
+}
+
+.test {
+  display: flex;
+  align-items: center;
+}

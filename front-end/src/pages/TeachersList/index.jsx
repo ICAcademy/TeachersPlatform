@@ -36,10 +36,10 @@ const TeachersList = () => {
           {teachers.length
             ? teachers.map((teacher) => (
                 <Card
-                  key={teacher?._id}
-                  link={teacher?._id}
-                  fullName={teacher?.fullName}
-                  activity='English teacher'
+                  key={teacher._id}
+                  teacherId={teacher._id}
+                  fullName={teacher.fullName}
+                  activity={`${teacher?.language || 'English'} teacher`}
                 />
               ))
             : ''}
