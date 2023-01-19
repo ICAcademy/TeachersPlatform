@@ -13,7 +13,13 @@ import {
   faInstagram,
   faLinkedinIn,
 } from '@fortawesome/free-brands-svg-icons';
-import { faShareNodes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faLanguage,
+  faGraduationCap,
+  faSquarePhone,
+  faComments,
+  faSquareEnvelope,
+} from '@fortawesome/free-solid-svg-icons';
 
 // Components
 import Loader from 'components/common/Loader/Loader';
@@ -37,6 +43,9 @@ import styles from './Teacher.module.scss';
 const Teacher = ({ teacher }) => {
   const { currentUser } = useContext(CurrentUserContext);
 
+  const teacherInformation =
+    teacher.language && teacher.preferences && teacher.phone && teacher.biography;
+
   const [isLoader, setIsLoader] = useState(false);
   const [subscriptions, setSubscriptions] = useState([]);
   const [buttonLoader, setButtonLoader] = useState(false);
@@ -56,7 +65,7 @@ const Teacher = ({ teacher }) => {
       setButtonLoader(false);
       return subscribe;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -65,9 +74,10 @@ const Teacher = ({ teacher }) => {
       setIsLoader(true);
       const fetchedSubscriptions = await getStudentSubscription(userId);
       setSubscriptions(fetchedSubscriptions);
-      setIsLoader(false);
     } catch (error) {
-      console.log(error);
+      return error;
+    } finally {
+      setIsLoader(false);
     }
   };
 
@@ -91,12 +101,12 @@ const Teacher = ({ teacher }) => {
       setIsSubscripted(false);
       setButtonLoader(false);
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
   useEffect(() => {
-    fetchStudentSubscriptions(currentUser.roleId);
+    fetchStudentSubscriptions(currentUser?.roleId);
   }, [currentUser]);
 
   useEffect(() => {
@@ -104,7 +114,7 @@ const Teacher = ({ teacher }) => {
   }, [subscriptions, teacherSubscription]);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${!teacherInformation ? styles.addHeightParameter : ''}`}>
       {isLoader ? (
         <Loader />
       ) : (
@@ -117,39 +127,41 @@ const Teacher = ({ teacher }) => {
               <FontAwesomeIcon icon={faLinkedinIn} />
             </div>
             <div className={styles.imageWrap}>
-              <img src={image ? image : teacherPhoto} alt='teacher' />
+              <img src={teacher.url ? teacher.url : teacherPhoto} alt='teacher' />
             </div>
-            <div className={styles.share}>
-              <FontAwesomeIcon icon={faShareNodes} />
-              <span>Report This Author</span>
+            <div className={styles.shareWrap}>
+              <FontAwesomeIcon icon={faSquareEnvelope} />
+              <span>{teacher.email}</span>
             </div>
           </div>
-          <div className={styles.description}>
-            <h1>{teacher.fullName}</h1>
-            <span>{`${teacher.language} teacher`}</span>
+          <div className={styles.descriptionWrap}>
+            <div className={styles.description}>
+              <h1>{teacher.fullName}</h1>
+              <span>{`${teacher.language || 'English'} teacher`}</span>
+            </div>
           </div>
-          <div className={styles.additionalInfo}>
-            <div className={styles.blockWrap}>
+          <div className={styles.infoWrap}>
+            <div className={styles.info}>
               <img src={speechBubble} alt='speechBubble' />
               <span>533 Reviews</span>
             </div>
-            <div className={styles.blockWrap}>
+            <div className={styles.info}>
               <img src={favourite} alt='favourite' />
               <span>4.87 Rating</span>
             </div>
-            <div className={styles.blockWrap}>
+            <div className={styles.info}>
               <img src={reward} alt='reward' />
               <span>Top teacher</span>
             </div>
-            <div className={styles.blockWrap}>
+            <div className={styles.info}>
               <img src={certificate} alt='certificate' />
               <span>29 courses</span>
             </div>
           </div>
           {isSubscripted ? (
             <LoadingButton
-              loading={buttonLoader}
               variant='contained'
+              loading={buttonLoader}
               onClick={deleteSubscriptionOfStudent}
             >
               unsubscribe
@@ -159,33 +171,38 @@ const Teacher = ({ teacher }) => {
               subscribe
             </LoadingButton>
           )}
-          <div className={styles.teacherInfo}>
-            <div>
-              <div className={styles.test}>
-                <h2>Languages:</h2>
-                <p>{teacher.language}</p>
-              </div>
-              <div className={styles.test}>
-                <h2>Age of students:</h2>
-                <p>{teacher.preferences}</p>
-              </div>
-            </div>
-            <h2>Biograpghy</h2>
-            <p>{teacher.biography}</p>
-            <div>
-              <h2>Contacts</h2>
-              <div>
-                <div className={styles.test}>
-                  <span>Phone</span>
-                  <p>{teacher.phone}</p>
-                </div>
-                <div className={styles.test}>
-                  <span>Email</span>
-                  <p>{teacher.email}</p>
+          {teacherInformation ? (
+            <>
+              <div className={styles.teacherInfoWrap}>
+                <div className={styles.blocksWrap}>
+                  <div className={styles.block}>
+                    <FontAwesomeIcon icon={faLanguage} />
+                    <h2>Language</h2>
+                    <p>{teacher.language}</p>
+                  </div>
+                  <div className={styles.block}>
+                    <FontAwesomeIcon icon={faGraduationCap} />
+                    <h2>Students age</h2>
+                    <p>{`${teacher.preferences} years old`}</p>
+                  </div>
+                  <div className={styles.block}>
+                    <FontAwesomeIcon icon={faSquarePhone} />
+                    <h2>Phone</h2>
+                    <p>{teacher.phone}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+              <div className={`${styles.teacherInfoWrap} ${styles.margin}`}>
+                <div className={styles.biographyBlock}>
+                  <FontAwesomeIcon icon={faComments} />
+                  <h2>Biograpghy</h2>
+                </div>
+                <p className={styles.biography}>{teacher.biography}</p>
+              </div>
+            </>
+          ) : (
+            ''
+          )}
         </>
       )}
     </div>
@@ -193,7 +210,16 @@ const Teacher = ({ teacher }) => {
 };
 
 Teacher.propTypes = {
-  teacher: PropTypes.shape().isRequired,
+  teacher: PropTypes.shape({
+    _id: PropTypes.string,
+    url: PropTypes.string,
+    phone: PropTypes.string,
+    preferences: PropTypes.string,
+    biography: PropTypes.string,
+    language: PropTypes.string,
+    fullName: PropTypes.string,
+    email: PropTypes.string,
+  }).isRequired,
 };
 
 export default Teacher;

@@ -22,13 +22,11 @@ const Teacher = () => {
     }
   };
 
-  console.log(teacher);
-
   useEffect(() => {
     fetchTeacher(id);
   }, [id]);
 
-  return <SelectedTeacher teacher={teacher} image={teacher?.url} />;
+  return <SelectedTeacher teacher={teacher} />;
 };
 
 export default Teacher;

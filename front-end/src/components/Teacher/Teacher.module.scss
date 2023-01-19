@@ -8,6 +8,10 @@
   align-items: center;
 }
 
+.addHeightParameter {
+  height: 80vh;
+}
+
 .iconsWrap {
   display: flex;
   justify-content: space-between;
@@ -21,6 +25,11 @@
     border-radius: 50%;
     cursor: pointer;
 
+    @media screen and (max-width: 480px) {
+      width: 13px;
+      height: 13px;
+    }
+
     &:hover {
       box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
       padding: 5px;
@@ -33,7 +42,7 @@
   }
 }
 
-.share {
+.shareWrap {
   display: flex;
   justify-content: space-between;
   border-bottom: 2px solid transparent;
@@ -50,12 +59,21 @@
     font-family: 'Poppins-Regular', sans-serif;
     font-weight: $fw600;
     margin-bottom: 5px;
+
+    @media screen and (max-width: 480px) {
+      font-size: $f13;
+    }
   }
 
   & svg {
     width: 18px;
     height: 18px;
     margin-right: 5px;
+
+    @media screen and (max-width: 480px) {
+      width: 15px;
+      height: 15px;
+    }
 
     & path {
       fill: $gulfStream;
@@ -65,8 +83,8 @@
 
 .imageWrap {
   height: 175px;
-  width: 175px;
-  padding: 15px;
+  max-width: 175px;
+  padding: 10px;
   border-radius: 50%;
   background-color: $white;
   box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
@@ -76,19 +94,21 @@
     object-fit: cover;
     border-radius: 50%;
   }
+
+  @media screen and (max-width: 768px) {
+    height: 150px;
+    max-width: 150px;
+  }
 }
 
 .contentWrap {
-  width: 45%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.description {
+.descriptionWrap {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   margin: 25px 0;
   height: 60px;
@@ -103,7 +123,13 @@
   }
 }
 
-.blockWrap {
+.description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info {
   display: flex;
   align-items: center;
   margin-right: 35px;
@@ -120,7 +146,7 @@
   }
 }
 
-.additionalInfo {
+.infoWrap {
   display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
@@ -131,16 +157,50 @@
   }
 }
 
-.tabs {
+.teacherInfoWrap {
   width: 100%;
-  padding: 1.5rem;
   margin-top: 50px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   background-color: $white;
   box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
   border-radius: 5px;
   box-sizing: border-box;
+
+  & h2,
+  p {
+    font-family: 'Poppins-Regular', sans-serif;
+  }
+
+  & h2 {
+    margin: 10px 10px 10px 0;
+    font-size: $f18;
+    font-weight: $fw600;
+    color: $softPurple;
+
+    @media screen and (max-width: 480px) {
+      font-size: $f16;
+    }
+  }
+
+  & p {
+    font-size: $f14;
+    line-height: 1.7;
+
+    @media screen and (max-width: 480px) {
+      font-size: $f13;
+    }
+  }
+}
+
+.margin {
+  margin-top: 10px;
+}
+
+.biography {
+  padding: 10px;
+  text-align: justify;
 }
 
 .subscribeBtn {
@@ -161,31 +221,42 @@
   }
 }
 
-.teacherInfo {
-  background-color: #fff;
-  width: 95%;
-  padding: 25px;
-  margin: 25px 0;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+.blocksWrap {
+  display: flex;
+  justify-content: space-around;
+}
 
-  & h2 {
-    margin: 10px 10px 10px 0;
-    font-family: 'Poppins-Regular', sans-serif;
-    font-size: 21px;
-  }
-
-  & p {
-    font-size: 14px;
-    font-family: 'Poppins-Regular', sans-serif;
-    line-height: 1.5;
-  }
-
-  & span {
+.biographyBlock {
+  display: flex;
+  align-items: center;
+  & svg {
     margin-right: 10px;
+    font-size: $f20;
+
+    @media screen and (max-width: 480px) {
+      font-size: $f16;
+    }
+
+    & path {
+      fill: $softPurple;
+    }
   }
 }
 
-.test {
+.block {
   display: flex;
+  flex-direction: column;
   align-items: center;
+
+  & svg {
+    font-size: $f20;
+
+    @media screen and (max-width: 480px) {
+      font-size: $f16;
+    }
+
+    & path {
+      fill: $softPurple;
+    }
+  }
 }
