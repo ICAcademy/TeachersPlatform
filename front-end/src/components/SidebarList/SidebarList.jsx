@@ -23,6 +23,7 @@ import {
   faRightFromBracket,
   faChalkboardUser,
   faBell,
+  faBookBookmark,
   faGraduationCap,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -109,6 +110,12 @@ export const SidebarList = ({ showSidebar }) => {
           <NavLink to='/app/lessons' className={isActive}>
             <FontAwesomeIcon className={styles.sidebarIcon} icon={faGraduationCap} />
             Lessons
+          </NavLink>
+        </ListItem>
+        <ListItem className={styles.sidebarItem}>
+          <NavLink to='/app/dictionary' className={isActive}>
+            <FontAwesomeIcon className={styles.sidebarIcon} icon={faBookBookmark} />
+            Dictionary
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>
