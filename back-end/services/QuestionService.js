@@ -10,26 +10,18 @@ const getUnitsByLevel = async (level) => {
       $match: { level: { $eq: level.level } },
     },
     {
-      $sortByCount: '$unit',
+      $group: {
+        _id: '$unit',
+        level: { $first: '$level' },
+        unit: { $first: '$unit' },
+        topic: { $first: '$topic' },
+        questions: { $first: '$questions' },
+        url: { $first: '$url' },
+        numberOfLessons: { $sum: 1 },
+      },
     },
   ]);
-  const questions = await Question.find(level);
-  const duplicateFilter = questions.reduce((acc, curr) => {
-    if (
-      !acc.some((item) => {
-        return item.unit === curr.unit;
-      })
-    ) {
-      acc.push({ ...curr._doc });
-    }
-    return acc;
-  }, []);
-
-  const result = duplicateFilter.map((item, index) => {
-    return { ...item, numberOfLessons: countOfTopics[index].count };
-  });
-
-  return result;
+  return countOfTopics;
 };
 
 const getDataByUrl = async (url) => {
@@ -48,31 +40,23 @@ const editQuestion = async (id, body) =>
 const removeQuestion = async (id) => await Question.findByIdAndDelete(id);
 
 const getQuestionsByUnitName = async (search) => {
-  const questions = await Question.find({ unit: { $regex: search, $options: 'i' } });
   const countOfTopics = await Question.aggregate([
     {
       $match: { unit: { $regex: search, $options: 'i' } },
     },
     {
-      $sortByCount: '$unit',
+      $group: {
+        _id: '$unit',
+        level: { $first: '$level' },
+        unit: { $first: '$unit' },
+        topic: { $first: '$topic' },
+        questions: { $first: '$questions' },
+        url: { $first: '$url' },
+        numberOfLessons: { $sum: 1 },
+      },
     },
   ]);
-  const duplicateFilter = questions.reduce((acc, curr) => {
-    if (
-      !acc.some((item) => {
-        return item.unit === curr.unit;
-      })
-    ) {
-      acc.push({ ...curr._doc });
-    }
-    return acc;
-  }, []);
-
-  const result = duplicateFilter.map((item, index) => {
-    return { ...item, numberOfLessons: countOfTopics[index].count };
-  });
-
-  return result;
+  return countOfTopics;
 };
 
 module.exports = {
