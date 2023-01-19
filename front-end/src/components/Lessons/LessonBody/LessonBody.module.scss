@@ -8,10 +8,20 @@
   transition: all 0.25s ease;
   box-sizing: border-box;
 
-  h2 {
-    margin: 0;
+  .lessonTitle {
+    margin: 0 0 35px;
+    padding-bottom: 25px;
     font-weight: 600;
     font-size: 1.85rem;
+    border-bottom: 1px solid #f0f3f6;
+  }
+
+  p,
+  h2,
+  h3,
+  h4,
+  h5 {
+    margin-bottom: 15px;
   }
 
   p {
@@ -25,5 +35,17 @@
     p {
       font-size: 1rem;
     }
+  }
+}
+
+@media screen and (max-width: 1680px) {
+  .lessonBody {
+    padding: 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .lessonBody {
+    min-height: 100%;
   }
 }

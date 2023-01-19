@@ -95,3 +95,37 @@
     padding: 0 0 1rem;
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .lessonsColumn {
+    &:first-child {
+      padding-right: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .lessonsColumn {
+    &:first-child {
+      padding-right: 0;
+    }
+
+    &.w40 {
+      position: relative;
+      top: 0;
+      width: 100%;
+    }
+
+    &.w60 {
+      width: 100%;
+    }
+
+    .arrow {
+      display: none;
+    }
+
+    .lessonsWrap {
+      display: flex;
+    }
+  }
+}

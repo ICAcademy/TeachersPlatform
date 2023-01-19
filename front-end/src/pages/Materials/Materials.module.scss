@@ -3,8 +3,53 @@
   justify-content: space-between;
 }
 
+.materialsSearch {
+  margin-left: 15px !important;
+}
+
 .navigationRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 1680px) {
+  .materialsHeader {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .createBtn {
+    margin-top: 20px !important;
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .materialsSearch {
+    width: 260px !important;
+
+    label {
+      font-size: 0.65rem;
+      line-height: 1em;
+    }
+    input {
+      padding: 6px;
+      font-size: 0.65rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .materialsHeader {
+    justify-content: center;
+  }
+
+  .navigationRow {
+    flex-direction: column;
+  }
+
+  .materialsSearch {
+    width: 100% !important;
+    margin: 15px 0 0 0 !important;
+  }
 }

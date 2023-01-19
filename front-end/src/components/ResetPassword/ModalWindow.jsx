@@ -12,13 +12,15 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { CurrentUserContext } from 'context/AppProvider';
 import { changePassword } from 'services/userService';
-import { regexPassword } from 'helpers/regex';
+import { REGEX_PASSWORD } from 'helpers/regex';
 import useInput from 'hooks/useInput';
+import Loader from 'components/common/Loader/Loader';
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 const style = {
   position: 'absolute',
   top: '50%',
-  right: '416px',
+  left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
@@ -28,14 +30,20 @@ const style = {
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
+  '& .MuiBox-root': {
+    px: 1,
+    width: '30ch',
+    ['@media (max-width: 550px)']: { width: '100%', px: 3 },
+  },
 };
 
 const newPasswordAgainHelperText = 'Passwords do not match';
 
-const ModalWindow = ({ open, handleClose }) => {
+const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
   const { currentUser } = useContext(CurrentUserContext);
 
   const [enteredCurrentPassword, setEnteredCurrentPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const currentPasswordChangeHandler = (e) => {
     setIsError({});
@@ -48,7 +56,8 @@ const ModalWindow = ({ open, handleClose }) => {
     hasError: newPasswordHasError,
     valueChangeHandler: newPasswordChangeHandler,
     valueOnBlurHandler: newPasswordBlurHandler,
-  } = useInput('newPassword', '', regexPassword);
+    resetValue: resetNewPassword,
+  } = useInput('newPassword', '', REGEX_PASSWORD);
 
   const {
     value: enteredNewPasswordAgain,
@@ -56,7 +65,8 @@ const ModalWindow = ({ open, handleClose }) => {
     hasError: newPasswordAgainHasError,
     valueChangeHandler: newPasswordAgainChangeHandler,
     valueOnBlurHandler: newPasswordAgainBlurHandler,
-  } = useInput('newPasswordAgain', '', regexPassword);
+    resetValue: resetNewPasswordAgain,
+  } = useInput('newPasswordAgain', '', REGEX_PASSWORD);
 
   const formIsValid = newPasswordIsValid && newPasswordAgainIsValid;
 
@@ -76,15 +86,30 @@ const ModalWindow = ({ open, handleClose }) => {
 
   const savePassword = async (id, data) => {
     try {
+      setIsLoading(true);
       await changePassword(id, data);
       setIsError('');
-      handleClose();
+      snackbarShowMessage({
+        message: 'Password changed',
+        severity: 'success',
+      });
+      reset();
+      setIsLoading(false);
     } catch (error) {
       setIsError(error.response.data);
     }
   };
 
-  return (
+  const reset = () => {
+    setEnteredCurrentPassword('');
+    resetNewPassword();
+    resetNewPasswordAgain();
+    handleClose();
+  };
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
         <FormControl sx={{ width: '100%' }}>
@@ -216,6 +241,7 @@ ModalWindow.propTypes = {
   children: PropTypes.string,
   open: PropTypes.bool,
   handleClose: PropTypes.func,
+  snackbarShowMessage: PropTypes.func,
 };
 
 ModalWindow.defaultProps = {
@@ -224,4 +250,4 @@ ModalWindow.defaultProps = {
   handleClose: () => {},
 };
 
-export default ModalWindow;
+export default withSnackbar(ModalWindow);

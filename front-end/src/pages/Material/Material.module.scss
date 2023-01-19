@@ -1,3 +1,9 @@
 .materials {
   display: flex;
 }
+
+@media screen and (max-width: 768px) {
+  .materials {
+    flex-direction: column;
+  }
+}
