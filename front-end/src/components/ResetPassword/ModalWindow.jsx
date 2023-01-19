@@ -18,7 +18,7 @@ import useInput from 'hooks/useInput';
 const style = {
   position: 'absolute',
   top: '50%',
-  right: '416px',
+  left: '60%',
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
@@ -78,6 +78,7 @@ const ModalWindow = ({ open, handleClose }) => {
     try {
       await changePassword(id, data);
       setIsError('');
+      setShowPassword('');
       handleClose();
     } catch (error) {
       setIsError(error.response.data);
