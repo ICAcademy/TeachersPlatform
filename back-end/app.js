@@ -84,7 +84,8 @@ async function main() {
       console.log(`Server has been started on port ${port}`);
     });
   } catch (err) {
-    console.log(err);
+    Sentry.captureException(err);
+    console.log('error', err);
   }
 }
 
