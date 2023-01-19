@@ -25,6 +25,22 @@
 
 .lessonHeaderInfo {
   display: flex;
+  align-items: center;
+}
+
+.statuses {
+  display: flex;
+  column-gap: 5px;
+}
+
+.statusItem {
+  border-radius: 50%;
+}
+
+.statusItem {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
 .roundedCircle {
