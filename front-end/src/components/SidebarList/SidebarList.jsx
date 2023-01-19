@@ -23,6 +23,8 @@ import {
   faRightFromBracket,
   faChalkboardUser,
   faBell,
+  faBookBookmark,
+  faGraduationCap,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Services
@@ -37,7 +39,7 @@ import styles from './SidebarList.module.scss';
 import Badge from '@mui/material/Badge';
 
 // Constants
-import { STUDENT_ROLE } from 'constants/userRoles';
+import { STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
 
 export const SidebarList = ({ showSidebar }) => {
   const navigate = useNavigate();
@@ -96,10 +98,24 @@ export const SidebarList = ({ showSidebar }) => {
             Materials
           </NavLink>
         </ListItem>
+        {currentUser.role === TEACHER_ROLE && (
+          <ListItem className={styles.sidebarItem}>
+            <NavLink to='/app/questions' className={isActive}>
+              <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />
+              Grammar
+            </NavLink>
+          </ListItem>
+        )}
         <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/questions' className={isActive} onClick={handlePathTo}>
-            <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />
-            Grammar
+          <NavLink to='/app/lessons' className={isActive}>
+            <FontAwesomeIcon className={styles.sidebarIcon} icon={faGraduationCap} />
+            Lessons
+          </NavLink>
+        </ListItem>
+        <ListItem className={styles.sidebarItem}>
+          <NavLink to='/app/dictionary' className={isActive}>
+            <FontAwesomeIcon className={styles.sidebarIcon} icon={faBookBookmark} />
+            Dictionary
           </NavLink>
         </ListItem>
         <ListItem className={styles.sidebarItem}>

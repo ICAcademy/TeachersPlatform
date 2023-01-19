@@ -4,7 +4,7 @@ const teacherService = require('../services/TeacherService');
 const SubscriptionModel = require('../models/Subscription');
 const sendMail = require('../services/nodemailer');
 const { SUBSCRIPTION } = require('../constants/emailSend');
-const { socket } = require('../services/Socket');
+const { socket } = require('../listeners/Socket');
 
 exports.getAllSubscriptions = async (req, res) => {
   try {
