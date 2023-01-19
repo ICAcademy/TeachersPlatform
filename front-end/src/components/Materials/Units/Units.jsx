@@ -21,6 +21,7 @@ const Units = ({ materials }) => {
               unit={item.unit}
               image={item.image}
               url={item.url}
+              editLink={`/app/materials/edit/${item.url}`}
               type='materials'
             />
           ))}

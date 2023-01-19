@@ -78,8 +78,8 @@ const Topics = () => {
   }, [roleId]);
 
   useEffect(() => {
-    fetchTopicsData(params.url);
-  }, [params.url]);
+    fetchTopicsData(url);
+  }, [url]);
 
   useEffect(() => {
     socket.on('lesson:added', (lesson) => navigate(`/app/lessons/${lesson._id}`));
