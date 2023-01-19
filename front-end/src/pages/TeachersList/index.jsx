@@ -39,6 +39,7 @@ const TeachersList = () => {
                   key={teacher._id}
                   teacherId={teacher._id}
                   fullName={teacher.fullName}
+                  image={teacher?.url}
                   activity={`${teacher?.language || 'English'} teacher`}
                 />
               ))

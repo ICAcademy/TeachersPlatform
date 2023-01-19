@@ -17,21 +17,23 @@ import { teacherPhoto } from 'constants/photo';
 // Styles
 import styles from './Card.module.scss';
 
-const Card = ({ fullName, activity, teacherId }) => {
+const Card = ({ fullName, activity, teacherId, image }) => {
   return (
     <Link to={`/app/teachers/${teacherId}`} className={styles.wrap}>
       <div className={styles.block}>
-        <img src={teacherPhoto} alt='teacher' />
-        <div className={styles.iconsWrap}>
-          <FontAwesomeIcon icon={faFacebookF} />
-          <FontAwesomeIcon icon={faTwitter} />
-          <FontAwesomeIcon icon={faInstagram} />
-          <FontAwesomeIcon icon={faLinkedinIn} />
+        <div className={styles.imgBlock}>
+          {image ? <img src={image} alt='teacher' /> : <img src={teacherPhoto} alt='teacher' />}
+          <div className={styles.iconsWrap}>
+            <FontAwesomeIcon icon={faFacebookF} />
+            <FontAwesomeIcon icon={faTwitter} />
+            <FontAwesomeIcon icon={faInstagram} />
+            <FontAwesomeIcon icon={faLinkedinIn} />
+          </div>
         </div>
-      </div>
-      <div className={styles.description}>
-        <h2>{fullName}</h2>
-        <span>{activity}</span>
+        <div className={styles.description}>
+          <h2>{fullName}</h2>
+          <span>{activity}</span>
+        </div>
       </div>
     </Link>
   );
@@ -41,6 +43,7 @@ Card.propTypes = {
   fullName: PropTypes.string.isRequired,
   activity: PropTypes.string.isRequired,
   teacherId: PropTypes.string.isRequired,
+  image: PropTypes.string,
 };
 
 export default Card;

@@ -12,7 +12,7 @@
 
 .noImage {
   display: flex;
-  padding: 0 1.5rem;
+
   margin: 0;
   justify-content: center;
   align-items: center;
@@ -40,4 +40,28 @@
   right: 0;
   background-color: #b464a6;
   color: #fff;
+}
+
+@media screen and (max-width: 1366px) {
+  .noImage {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .unitImg {
+    height: 160px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .noImage {
+    font-size: 1.75rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .unitImg {
+    height: 220px;
+  }
 }

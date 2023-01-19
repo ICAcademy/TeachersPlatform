@@ -28,7 +28,7 @@ const Teacher = () => {
     fetchTeacher(id);
   }, [id]);
 
-  return <SelectedTeacher teacher={teacher} />;
+  return <SelectedTeacher teacher={teacher} image={teacher?.url} />;
 };
 
 export default Teacher;

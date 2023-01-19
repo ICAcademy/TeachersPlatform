@@ -117,7 +117,7 @@ const Teacher = ({ teacher }) => {
               <FontAwesomeIcon icon={faLinkedinIn} />
             </div>
             <div className={styles.imageWrap}>
-              <img src={teacherPhoto} alt='teacher' />
+              <img src={image ? image : teacherPhoto} alt='teacher' />
             </div>
             <div className={styles.share}>
               <FontAwesomeIcon icon={faShareNodes} />

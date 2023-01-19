@@ -21,7 +21,7 @@ import dayjs from 'dayjs';
 import { CalendarContext } from 'context/CalendarProvider';
 
 import useInput from 'hooks/useInput';
-import { regexLabel, regexTime } from 'helpers/regex';
+import { REGEX_LABEL, REGEX_TIME } from 'helpers/regex';
 
 const timeHelperText = 'Provide valid time (hh:mm)';
 const labelHelperText = 'Label is required and should be less than 30 symbols';
@@ -78,7 +78,7 @@ const LessonForm = ({ day }) => {
     hasError: labelHasError,
     valueChangeHandler: labelChangeHandler,
     valueOnBlurHandler: labelBlurHandler,
-  } = useInput('label', label, regexLabel);
+  } = useInput('label', label, REGEX_LABEL);
 
   const {
     value: enteredTime,
@@ -86,7 +86,7 @@ const LessonForm = ({ day }) => {
     hasError: timeHasError,
     valueChangeHandler: timeChangeHandler,
     valueOnBlurHandler: timeBlurHandler,
-  } = useInput('time', date, regexTime);
+  } = useInput('time', date, REGEX_TIME);
 
   const formIsValid = labelIsValid && timeIsValid && studentIsSelected;
 

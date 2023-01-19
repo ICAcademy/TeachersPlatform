@@ -39,6 +39,11 @@ const useInput = (type, value, regex) => {
       break;
   }
 
+  const resetValue = () => {
+    setEnteredValue('');
+    setIsTouched(false);
+  };
+
   const hasError = !valueIsValid && isTouched;
 
   const valueOnBlurHandler = () => {
@@ -51,6 +56,7 @@ const useInput = (type, value, regex) => {
     hasError,
     valueChangeHandler,
     valueOnBlurHandler,
+    resetValue,
   };
 };
 
