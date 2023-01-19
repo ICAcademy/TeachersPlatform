@@ -20,7 +20,7 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 const style = {
   position: 'absolute',
   top: '50%',
-  left: '60%',
+  left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
@@ -30,6 +30,11 @@ const style = {
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
+  '& .MuiBox-root': {
+    px: 1,
+    width: '30ch',
+    ['@media (max-width: 550px)']: { width: '100%', px: 3 },
+  },
 };
 
 const newPasswordAgainHelperText = 'Passwords do not match';
@@ -88,6 +93,7 @@ const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
         message: 'Password changed',
         severity: 'success',
       });
+      reset();
       setIsLoading(false);
     } catch (error) {
       setIsError(error.response.data);
@@ -215,15 +221,11 @@ const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
             <Button
               disabled={!formIsValid}
               onClick={() =>
-                savePassword(
-                  currentUser._id,
-                  {
-                    currentPassword: enteredCurrentPassword,
-                    newPassword: enteredNewPassword,
-                    newPasswordAgain: enteredNewPasswordAgain,
-                  },
-                  reset(),
-                )
+                savePassword(currentUser._id, {
+                  currentPassword: enteredCurrentPassword,
+                  newPassword: enteredNewPassword,
+                  newPasswordAgain: enteredNewPasswordAgain,
+                })
               }
             >
               Confirm
