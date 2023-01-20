@@ -61,6 +61,9 @@ const Quiz = ({ id, questions, isLesson }) => {
     <>
       <Box className={styles.header} sx={{ '& button': { m: 1 } }}>
         <h3 className={styles.title}>Quiz</h3>
+        <Button variant='contained' size='small'>
+          Call to teacher
+        </Button>
         {isLesson && role === TEACHER_ROLE && (
           <Button variant='contained' size='small' onClick={endLessonHandler}>
             End lesson
