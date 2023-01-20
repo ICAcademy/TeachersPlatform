@@ -1,9 +1,14 @@
+@import 'styles/font.scss';
+
 .wrapper {
   display: flex;
   flex-direction: column;
 
   & h1 {
-    margin-bottom: 50px;
+    margin-bottom: 25px;
+    font-size: $f28;
+    font-weight: $fw500;
+    font-family: 'Poppins-Regular', sans-serif;
   }
 }
 

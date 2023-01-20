@@ -12,17 +12,17 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 
 // Images
-import { teacher } from 'constants/photo';
+import { teacherPhoto } from 'constants/photo';
 
 // Styles
 import styles from './Card.module.scss';
 
-const Card = ({ fullName, activity, link, image }) => {
+const Card = ({ fullName, activity, teacherId, image }) => {
   return (
-    <Link to={`/app/teachers/${link}/overview`} className={styles.wrap}>
+    <Link to={`/app/teachers/${teacherId}`} className={styles.wrap}>
       <div className={styles.block}>
         <div className={styles.imgBlock}>
-          {image ? <img src={image} alt='teacher' /> : <img src={teacher} alt='teacher' />}
+          {image ? <img src={image} alt='teacher' /> : <img src={teacherPhoto} alt='teacher' />}
           <div className={styles.iconsWrap}>
             <FontAwesomeIcon icon={faFacebookF} />
             <FontAwesomeIcon icon={faTwitter} />
@@ -42,7 +42,7 @@ const Card = ({ fullName, activity, link, image }) => {
 Card.propTypes = {
   fullName: PropTypes.string.isRequired,
   activity: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+  teacherId: PropTypes.string.isRequired,
   image: PropTypes.string,
 };
 
