@@ -1,5 +1,30 @@
+@import 'styles/colors.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
+}
+
 .title {
-  margin-top: 20px;
-  margin-left: 20px;
   color: #9000ff;
+}
+
+.answerStatus {
+  margin-right: 10px;
+  margin-left: auto;
+}
+
+.answerIcon {
+  width: 20px;
+  height: 20px;
+
+  &--correct {
+    color: $vibrantGreen;
+  }
+
+  &--incorrect {
+    color: $red;
+  }
 }

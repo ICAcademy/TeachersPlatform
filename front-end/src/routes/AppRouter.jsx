@@ -12,10 +12,12 @@ import Profile from 'components/Profile/Profile';
 import Loader from 'components/common/Loader/Loader';
 import GeneralLayout from 'components/generalLayout/GeneralLayout';
 import GeneralInfo from 'components/Profile/GeneralInfo/GeneralInfo';
+import QuickAddWord from 'components/Dictionary/QuickAddWord';
 import TeacherInfo from 'components/Profile/TeacherInfo/TeacherInfo';
 
 // Constants
 import { ADMIN_ROLE, STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
+import ChangePassword from 'pages/ChangePassword/ChangePassword';
 
 // Pages
 const Login = lazy(() => import('pages/Login'));
@@ -34,6 +36,9 @@ const TeacherSubscriptions = lazy(() => import('pages/TeacherSubscriptions'));
 const AdminMaterials = lazy(() => import('pages/Admin/AdminMaterials/AdminMaterial'));
 const StudentSubscriptions = lazy(() => import('pages/StudentSubscriptions'));
 const Finances = lazy(() => import('pages/Finances/Finances'));
+const Dictionary = lazy(() => import('pages/Dictionary'));
+const Lessons = lazy(() => import('pages/Lessons/Lessons'));
+const Lesson = lazy(() => import('pages/Lesson/Lesson'));
 
 const RouterWrapper = () => {
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
@@ -63,6 +68,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Materials />
+                <QuickAddWord />
               </PrivateRoute>
             }
           />
@@ -90,6 +96,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Questions />
+                <QuickAddWord />
               </PrivateRoute>
             }
           />
@@ -167,6 +174,30 @@ const RouterWrapper = () => {
               </PrivateRoute>
             }
           />
+          <Route
+            path='/app/dictionary'
+            element={
+              <PrivateRoute>
+                <Dictionary />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/app/lessons'
+            element={
+              <PrivateRoute>
+                <Lessons />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/app/lessons/:id'
+            element={
+              <PrivateRoute>
+                <Lesson />
+              </PrivateRoute>
+            }
+          />
         </Route>
         <Route
           path='/app/tests'
@@ -176,9 +207,9 @@ const RouterWrapper = () => {
             </PrivateRoute>
           }
         />
-
         <Route path='/login' element={<Login />} />
         <Route path='/registration' element={<Registration />} />
+        <Route path='/reset-password' element={<ChangePassword />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Suspense>

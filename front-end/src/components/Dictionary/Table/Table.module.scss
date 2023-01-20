@@ -1,0 +1,30 @@
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
+
+.root {
+  & th {
+    width: 225px;
+  }
+
+  & th:last-child {
+    width: 125px;
+  }
+
+  & tr:nth-child(even) {
+    background-color: $pearl;
+  }
+}
+
+.btnWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & svg {
+    font-size: $f16;
+
+    & path {
+      fill: $softPurple;
+    }
+  }
+}
