@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from 'context/AppProvider';
+import { ADMIN_ROLE } from 'constants/userRoles';
 
 //components
 import Loader from 'components/common/Loader/Loader';
@@ -69,7 +70,7 @@ const Questions = () => {
 
   const { data, loading } = useFetchUnits(isEdit, searching, selectedLevel, 'question');
 
-  const saveTestBtn = isAuthenticated && currentUser.role === 'admin' && (
+  const saveTestBtn = isAuthenticated && currentUser.role === ADMIN_ROLE && (
     <Button component={Link} to='/app/questions/new' variant='contained' endIcon={<Add />}>
       Create new test
     </Button>
