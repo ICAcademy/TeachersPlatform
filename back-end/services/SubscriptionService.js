@@ -1,5 +1,5 @@
 const SubscriptionModel = require('../models/Subscription');
-const { toAll } = require('../listeners/Socket');
+const { socket } = require('../listeners/Socket');
 
 exports.getAllSubscriptions = async () => {
   return await SubscriptionModel.find();
@@ -25,10 +25,14 @@ exports.getSubscriptionById = async (id) => {
 };
 
 exports.updateSubscription = async (id, subscription) => {
-  return await SubscriptionModel.findByIdAndUpdate(id, subscription, {
+  const updatedSubscription = await SubscriptionModel.findByIdAndUpdate(id, subscription, {
     new: true,
     runValidators: true,
   });
+
+  socket('subscription:updated', updatedSubscription.studentID);
+
+  return updatedSubscription;
 };
 
 exports.deleteSubscription = async (id) => {
@@ -38,6 +42,6 @@ exports.deleteSubscription = async (id) => {
 exports.getSubscriptionsByStatus = async (statusName, id) => {
   return await SubscriptionModel.countDocuments({
     status: { $regex: statusName, $options: 'i' },
-    teacherID: id,
+    $or: [{ teacherID: id }, { studentID: id }],
   });
 };

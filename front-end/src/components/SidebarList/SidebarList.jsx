@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -40,11 +40,22 @@ import Badge from '@mui/material/Badge';
 
 // Constants
 import { STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
+import { getSubscriptionsCountByStatus } from 'services/subscriptionService';
 
 export const SidebarList = ({ showSidebar }) => {
   const navigate = useNavigate();
   const { currentUser } = useContext(CurrentUserContext);
   const { subscriptions } = useSelector((state) => state.approveStudent);
+  const [subscriptionsCount, setSubscriptionsCount] = useState([]);
+
+  const fetchSubscriptionsCount = async (id) => {
+    try {
+      const count = await getSubscriptionsCountByStatus({ statusName: 'approved', id });
+      setSubscriptionsCount(count);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const dispatchFunction = useDispatch();
 
@@ -59,7 +70,7 @@ export const SidebarList = ({ showSidebar }) => {
 
   useEffect(() => {
     dispatchFunction(pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }));
-  });
+  }, [currentUser.roleId, dispatchFunction]);
 
   useEffect(() => {
     socket.on('create_subscription', () => {
@@ -72,7 +83,15 @@ export const SidebarList = ({ showSidebar }) => {
         pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }),
       );
     });
-  });
+    socket.on(
+      'subscription:updated',
+      (id) => id === currentUser.roleId && fetchSubscriptionsCount(currentUser.roleId),
+    );
+  }, [currentUser.roleId, dispatchFunction]);
+
+  useEffect(() => {
+    fetchSubscriptionsCount(currentUser.roleId);
+  }, [currentUser.roleId]);
 
   const isActive = ({ isActive }) =>
     isActive ? `${styles.sidebarLink} ${styles.active}` : styles.sidebarLink;
@@ -92,12 +111,14 @@ export const SidebarList = ({ showSidebar }) => {
             Calendar
           </NavLink>
         </ListItem>
-        <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/materials' className={isActive} onClick={handlePathTo}>
-            <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
-            Materials
-          </NavLink>
-        </ListItem>
+        {subscriptionsCount !== 0 && (
+          <ListItem className={styles.sidebarItem}>
+            <NavLink to='/app/materials' className={isActive} onClick={handlePathTo}>
+              <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
+              Materials
+            </NavLink>
+          </ListItem>
+        )}
         {currentUser.role === TEACHER_ROLE && (
           <ListItem className={styles.sidebarItem}>
             <NavLink to='/app/questions' className={isActive}>
