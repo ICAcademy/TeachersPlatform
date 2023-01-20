@@ -5,19 +5,23 @@ const getQuestions = async () => await Question.find({});
 const getLevels = async () => await Question.distinct('level');
 
 const getUnitsByLevel = async (level) => {
-  const questions = await Question.find(level);
-  const result = questions.reduce((acc, curr) => {
-    if (
-      !acc.some((item) => {
-        return item.unit === curr.unit;
-      })
-    ) {
-      acc.push(curr);
-    }
-    return acc;
-  }, []);
-
-  return result;
+  const countOfTopics = await Question.aggregate([
+    {
+      $match: { level: { $eq: level.level } },
+    },
+    {
+      $group: {
+        _id: '$unit',
+        level: { $first: '$level' },
+        unit: { $first: '$unit' },
+        topic: { $first: '$topic' },
+        questions: { $first: '$questions' },
+        url: { $first: '$url' },
+        numberOfLessons: { $sum: 1 },
+      },
+    },
+  ]);
+  return countOfTopics;
 };
 
 const getDataByUrl = async (url) => {
@@ -36,18 +40,23 @@ const editQuestion = async (id, body) =>
 const removeQuestion = async (id) => await Question.findByIdAndDelete(id);
 
 const getQuestionsByUnitName = async (search) => {
-  const questions = await Question.find({ unit: { $regex: search, $options: 'i' } });
-  const result = questions.reduce((acc, curr) => {
-    if (
-      !acc.some((item) => {
-        return item.unit === curr.unit;
-      })
-    ) {
-      acc.push(curr);
-    }
-    return acc;
-  }, []);
-  return result;
+  const countOfTopics = await Question.aggregate([
+    {
+      $match: { unit: { $regex: search, $options: 'i' } },
+    },
+    {
+      $group: {
+        _id: '$unit',
+        level: { $first: '$level' },
+        unit: { $first: '$unit' },
+        topic: { $first: '$topic' },
+        questions: { $first: '$questions' },
+        url: { $first: '$url' },
+        numberOfLessons: { $sum: 1 },
+      },
+    },
+  ]);
+  return countOfTopics;
 };
 
 module.exports = {

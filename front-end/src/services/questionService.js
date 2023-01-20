@@ -19,3 +19,8 @@ export const getQuestionsByUnitName = async (params) => {
   const { data } = await API.get('/api/questions/', { params });
   return data;
 };
+
+export const getCountOfTopicQuestions = async (params) => {
+  const { data } = await API.get('/api/questions/count-of-topics', { params });
+  return data;
+};
