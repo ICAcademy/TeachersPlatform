@@ -22,7 +22,7 @@ const Topics = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [students, setStudents] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
-  const params = useParams();
+  const { url } = useParams();
   const navigate = useNavigate();
 
   const {
@@ -78,8 +78,8 @@ const Topics = () => {
   }, [roleId]);
 
   useEffect(() => {
-    fetchTopicsData(params.url);
-  }, [params.url]);
+    fetchTopicsData(url);
+  }, [url]);
 
   useEffect(() => {
     socket.on('lesson:added', (lesson) => navigate(`/app/lessons/${lesson._id}`));
@@ -92,6 +92,10 @@ const Topics = () => {
   ) : (
     ''
   );
+
+  useEffect(() => {
+    fetchTopicsData(url);
+  }, [url]);
 
   return (
     <Box className={styles.wrapper}>

@@ -13,15 +13,15 @@ const Units = ({ units }) => {
       ) : (
         <div className={styles.units}>
           {units.map((item, i) => {
-            const url = item.unit.toLowerCase().match(/\w|\s/g).join('').replaceAll(' ', '-');
             return (
               <UnitCard
                 key={i}
                 unit={item.unit}
                 image={item.image}
-                editLink='/app/tests'
+                url={item.url}
                 numberOfLessons={item.numberOfLessons}
-                url={url}
+                editLink={`/app/questions/edit/${item.url}`}
+                type='questions'
               />
             );
           })}

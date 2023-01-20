@@ -1,6 +1,9 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useContext, useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+// MUI library
+import { LoadingButton } from '@mui/lab';
 
 // FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,56 +13,59 @@ import {
   faInstagram,
   faLinkedinIn,
 } from '@fortawesome/free-brands-svg-icons';
-import { faShareNodes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faLanguage,
+  faGraduationCap,
+  faSquarePhone,
+  faComments,
+  faSquareEnvelope,
+} from '@fortawesome/free-solid-svg-icons';
 
 // Components
-import Tabs from 'components/common/Tabs';
-import Overview from 'components/Teacher/Overview';
-import Courses from 'components/Teacher/Courses';
 import Loader from 'components/common/Loader/Loader';
-import { LoadingButton } from '@mui/lab';
 
-// services
+// Constants
+import { teacherPhoto, certificate, favourite, reward, speechBubble } from 'constants/photo';
+
+// Services
 import {
   createSubscription,
   deleteSubscription,
   getStudentSubscription,
 } from 'services/subscriptionService';
 
-// context
+// Context
 import { CurrentUserContext } from 'context/AppProvider';
 
 // Styles
 import styles from './Teacher.module.scss';
-import { teacher, certificate, favourite, reward, speechBubble } from 'constants/photo';
 
-const Teacher = ({ fullName, activity, id, overview, courses, image }) => {
-  const { pathname } = useLocation();
-  const tabs = [
-    { title: 'Overview', link: `/app/teachers/${id}/overview` },
-    { title: 'Courses', link: `/app/teachers/${id}/courses` },
-  ];
+const Teacher = ({ teacher }) => {
   const { currentUser } = useContext(CurrentUserContext);
-  const [subscriptions, setSubscriptions] = useState([]);
-  const [isSubscripted, setIsSubscripted] = useState(false);
+
+  const teacherInformation =
+    teacher.language && teacher.preferences && teacher.phone && teacher.biography;
+
   const [isLoader, setIsLoader] = useState(false);
+  const [subscriptions, setSubscriptions] = useState([]);
   const [buttonLoader, setButtonLoader] = useState(false);
+  const [isSubscripted, setIsSubscripted] = useState(false);
 
   const patchSubscription = async () => {
     try {
       setButtonLoader(true);
       const subscribe = await createSubscription(
-        id,
+        teacher._id,
         currentUser.roleId,
         currentUser.email,
         currentUser.fullName,
-        fullName,
+        teacher.fullName,
       );
       await fetchStudentSubscriptions(currentUser.roleId);
       setButtonLoader(false);
       return subscribe;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -68,38 +74,39 @@ const Teacher = ({ fullName, activity, id, overview, courses, image }) => {
       setIsLoader(true);
       const fetchedSubscriptions = await getStudentSubscription(userId);
       setSubscriptions(fetchedSubscriptions);
-      setIsLoader(false);
     } catch (error) {
-      console.log(error);
+      return error;
+    } finally {
+      setIsLoader(false);
     }
   };
 
   const teacherSubscription = useCallback(
     (fetchedSubscriptions) => {
       const subscripted = fetchedSubscriptions.find((subscription) => {
-        return subscription.teacherID._id === id;
+        return subscription.teacherID._id === teacher._id;
       });
       setIsSubscripted(subscripted);
     },
-    [id],
+    [teacher._id],
   );
 
   const deleteSubscriptionOfStudent = async () => {
     try {
       setButtonLoader(true);
       const neededSubscription = subscriptions.find((subscription) => {
-        return subscription.teacherID._id === id;
+        return subscription.teacherID._id === teacher._id;
       });
       await deleteSubscription(neededSubscription._id);
       setIsSubscripted(false);
       setButtonLoader(false);
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
   useEffect(() => {
-    fetchStudentSubscriptions(currentUser.roleId);
+    fetchStudentSubscriptions(currentUser?.roleId);
   }, [currentUser]);
 
   useEffect(() => {
@@ -107,12 +114,12 @@ const Teacher = ({ fullName, activity, id, overview, courses, image }) => {
   }, [subscriptions, teacherSubscription]);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${!teacherInformation ? styles.addHeightParameter : ''}`}>
       {isLoader ? (
         <Loader />
       ) : (
         <>
-          <div className={styles.test}>
+          <div className={styles.contentWrap}>
             <div className={styles.iconsWrap}>
               <FontAwesomeIcon icon={faFacebookF} />
               <FontAwesomeIcon icon={faTwitter} />
@@ -120,39 +127,41 @@ const Teacher = ({ fullName, activity, id, overview, courses, image }) => {
               <FontAwesomeIcon icon={faLinkedinIn} />
             </div>
             <div className={styles.imageWrap}>
-              <img src={image ? image : teacher} alt='teacher' />
+              <img src={teacher.url ? teacher.url : teacherPhoto} alt='teacher' />
             </div>
-            <div className={styles.share}>
-              <FontAwesomeIcon icon={faShareNodes} />
-              <span>Report This Author</span>
+            <div className={styles.shareWrap}>
+              <FontAwesomeIcon icon={faSquareEnvelope} />
+              <span>{teacher.email}</span>
             </div>
           </div>
-          <div className={styles.description}>
-            <h1>{fullName}</h1>
-            <span>{activity}</span>
+          <div className={styles.descriptionWrap}>
+            <div className={styles.description}>
+              <h1>{teacher.fullName}</h1>
+              <span>{`${teacher.language || 'English'} teacher`}</span>
+            </div>
           </div>
-          <div className={styles.additionalInfo}>
-            <div className={styles.blockWrap}>
+          <div className={styles.infoWrap}>
+            <div className={styles.info}>
               <img src={speechBubble} alt='speechBubble' />
               <span>533 Reviews</span>
             </div>
-            <div className={styles.blockWrap}>
+            <div className={styles.info}>
               <img src={favourite} alt='favourite' />
               <span>4.87 Rating</span>
             </div>
-            <div className={styles.blockWrap}>
+            <div className={styles.info}>
               <img src={reward} alt='reward' />
               <span>Top teacher</span>
             </div>
-            <div className={styles.blockWrap}>
+            <div className={styles.info}>
               <img src={certificate} alt='certificate' />
               <span>29 courses</span>
             </div>
           </div>
           {isSubscripted ? (
             <LoadingButton
-              loading={buttonLoader}
               variant='contained'
+              loading={buttonLoader}
               onClick={deleteSubscriptionOfStudent}
             >
               unsubscribe
@@ -162,14 +171,38 @@ const Teacher = ({ fullName, activity, id, overview, courses, image }) => {
               subscribe
             </LoadingButton>
           )}
-          <div className={styles.tabs}>
-            <Tabs list={tabs} />
-            {tabs?.find((tab) => tab.link === pathname)?.title === 'Overview' ? (
-              <Overview biography={overview} />
-            ) : (
-              <Courses information={courses} />
-            )}
-          </div>
+          {teacherInformation ? (
+            <>
+              <div className={styles.teacherInfoWrap}>
+                <div className={styles.blocksWrap}>
+                  <div className={styles.block}>
+                    <FontAwesomeIcon icon={faLanguage} />
+                    <h2>Language</h2>
+                    <p>{teacher.language}</p>
+                  </div>
+                  <div className={styles.block}>
+                    <FontAwesomeIcon icon={faGraduationCap} />
+                    <h2>Students age</h2>
+                    <p>{`${teacher.preferences} years old`}</p>
+                  </div>
+                  <div className={styles.block}>
+                    <FontAwesomeIcon icon={faSquarePhone} />
+                    <h2>Phone</h2>
+                    <p>{teacher.phone}</p>
+                  </div>
+                </div>
+              </div>
+              <div className={`${styles.teacherInfoWrap} ${styles.margin}`}>
+                <div className={styles.biographyBlock}>
+                  <FontAwesomeIcon icon={faComments} />
+                  <h2>Biograpghy</h2>
+                </div>
+                <p className={styles.biography}>{teacher.biography}</p>
+              </div>
+            </>
+          ) : (
+            ''
+          )}
         </>
       )}
     </div>
@@ -177,17 +210,16 @@ const Teacher = ({ fullName, activity, id, overview, courses, image }) => {
 };
 
 Teacher.propTypes = {
-  fullName: PropTypes.string,
-  image: PropTypes.string,
-  activity: PropTypes.string.isRequired,
-  id: PropTypes.string,
-  overview: PropTypes.string.isRequired,
-  courses: PropTypes.string.isRequired,
-};
-
-Teacher.defaultProps = {
-  fullName: '',
-  id: '',
+  teacher: PropTypes.shape({
+    _id: PropTypes.string,
+    url: PropTypes.string,
+    phone: PropTypes.string,
+    preferences: PropTypes.string,
+    biography: PropTypes.string,
+    language: PropTypes.string,
+    fullName: PropTypes.string,
+    email: PropTypes.string,
+  }).isRequired,
 };
 
 export default Teacher;

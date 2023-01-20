@@ -17,8 +17,8 @@ const Teacher = () => {
       if (data) {
         setTeacher(data);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      return error;
     }
   };
 
@@ -26,16 +26,7 @@ const Teacher = () => {
     fetchTeacher(id);
   }, [id]);
 
-  return (
-    <SelectedTeacher
-      id={teacher?._id}
-      fullName={teacher?.fullName}
-      activity='English teacher'
-      overview='Overview ;)'
-      courses='Courses ;)'
-      image={teacher?.url}
-    />
-  );
+  return <SelectedTeacher teacher={teacher} />;
 };
 
 export default Teacher;

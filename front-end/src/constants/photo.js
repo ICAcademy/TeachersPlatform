@@ -1,5 +1,5 @@
 // Teachers list page
-export const teacher =
+export const teacherPhoto =
   'https://storage.googleapis.com/teachers-platform-40cbe.appspot.com/f53bdc08d852eafe73d86a7c78847814.jpg';
 
 // Teachers list page
@@ -14,3 +14,6 @@ export const reward =
 
 export const speechBubble =
   'https://storage.googleapis.com/teachers-platform-40cbe.appspot.com/e5b18e70845a38cb3232b3625f2f40f9.png';
+
+export const noAvatar =
+  'https://storage.googleapis.com/teachers-platform-40cbe.appspot.com/b7dfa353b6ffb1db78bd1059a3448560.jpg';

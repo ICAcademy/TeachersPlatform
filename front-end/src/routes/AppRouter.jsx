@@ -118,6 +118,28 @@ const RouterWrapper = () => {
             }
           />
           <Route
+            path='/app/questions/edit/:id'
+            element={
+              isAuthenticated &&
+              currentUser.role === ADMIN_ROLE && (
+                <PrivateRoute>
+                  <Tests />
+                </PrivateRoute>
+              )
+            }
+          />
+          <Route
+            path='/app/questions/new'
+            element={
+              isAuthenticated &&
+              currentUser.role === ADMIN_ROLE && (
+                <PrivateRoute>
+                  <Tests />
+                </PrivateRoute>
+              )
+            }
+          />
+          <Route
             path='/app/calendar'
             element={
               <PrivateRoute>
@@ -138,19 +160,7 @@ const RouterWrapper = () => {
             }
           />
           <Route
-            path='/app/teachers/:id/overview'
-            element={
-              currentUser?.role === TEACHER_ROLE ? (
-                <Navigate to='/app' />
-              ) : (
-                <PrivateRoute>
-                  <Teacher />
-                </PrivateRoute>
-              )
-            }
-          />
-          <Route
-            path='/app/teachers/:id/courses'
+            path='/app/teachers/:id'
             element={
               currentUser?.role === TEACHER_ROLE ? (
                 <Navigate to='/app' />
