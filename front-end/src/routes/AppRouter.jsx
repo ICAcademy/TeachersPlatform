@@ -123,7 +123,7 @@ const RouterWrapper = () => {
             path='/app/questions/new'
             element={
               isAuthenticated &&
-              currentUser.role === 'admin' && (
+              currentUser.role === ADMIN_ROLE && (
                 <PrivateRoute>
                   <Tests />
                 </PrivateRoute>
