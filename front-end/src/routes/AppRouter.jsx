@@ -109,6 +109,28 @@ const RouterWrapper = () => {
             }
           />
           <Route
+            path='/app/questions/edit/:id'
+            element={
+              isAuthenticated &&
+              currentUser.role === ADMIN_ROLE && (
+                <PrivateRoute>
+                  <Tests />
+                </PrivateRoute>
+              )
+            }
+          />
+          <Route
+            path='/app/questions/new'
+            element={
+              isAuthenticated &&
+              currentUser.role === ADMIN_ROLE && (
+                <PrivateRoute>
+                  <Tests />
+                </PrivateRoute>
+              )
+            }
+          />
+          <Route
             path='/app/calendar'
             element={
               <PrivateRoute>

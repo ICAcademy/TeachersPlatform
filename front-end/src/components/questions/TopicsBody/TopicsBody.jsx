@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CurrentUserContext } from 'context/AppProvider';
+import { ADMIN_ROLE } from 'constants/userRoles';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './TopicsBody.module.scss';
+import EditIcon from '@mui/icons-material/Edit';
 
 const TopicsBody = ({ topics, selectHandler, fullscreen }) => {
   const navigate = useNavigate();
+  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
 
   const topicsList = topics.map((item, i) => (
     <div className={styles.topic} key={item._id} onClick={() => selectHandler(item._id)}>
@@ -16,6 +21,11 @@ const TopicsBody = ({ topics, selectHandler, fullscreen }) => {
         <>
           <p className={styles.topic__title}>{item.topic}</p>
           <FontAwesomeIcon icon={faArrowRight} />
+          {isAuthenticated && currentUser.role === ADMIN_ROLE && (
+            <Link to={`/app/questions/edit/${item._id}`}>
+              <EditIcon className={styles.editIcon} fontSize='medium' />
+            </Link>
+          )}
         </>
       )}
     </div>

@@ -24,6 +24,8 @@
   height: 18px;
   font-size: $f18;
   font-weight: $fw600;
+  display: flex;
+  justify-content: space-between;
 }
 
 .question {
