@@ -1,0 +1,79 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/font.scss';
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  background: #58baab;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.learn {
+  color: $white;
+  font-weight: $fw600;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.discount {
+  margin: 10px 0;
+  color: $grey200;
+  font-weight: $fw600;
+  line-height: 1.5;
+}
+
+.countOfUsers {
+  display: flex;
+  margin-top: 55px;
+}
+
+.students {
+  display: flex;
+}
+
+.iconOfStudentsContainer {
+  background: $red;
+  border: 1px solid $white;
+  display: flex;
+  align-self: center;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.iconOfTeachersContainer {
+  background: $lightBlue;
+  border: 1px solid $white;
+  display: flex;
+  align-self: center;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.iconOfUsers {
+  color: $white;
+  font-size: 25px;
+}
+
+.teachers {
+  display: flex;
+  margin-left: 30px;
+}
+
+.count {
+  margin-left: 15px;
+}
+
+.nameOfCount {
+  color: $white;
+  font-size: 1.25rem;
+  font-weight: $fw400;
+  line-height: 1.2;
+}
+
+.totalCount {
+  color: $grey200;
+  margin-top: 5px;
+  font-size: 13px;
+}
