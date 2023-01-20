@@ -2,7 +2,7 @@ import API from 'API';
 import { updateToken, removeToken } from 'services/tokenService';
 
 export const registration = async (user) => {
-  const { data } = API.post('/auth/register', user);
+  const { data } = await API.post('/auth/register', user);
   return data;
 };
 
