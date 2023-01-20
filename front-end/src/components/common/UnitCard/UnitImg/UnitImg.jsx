@@ -12,11 +12,11 @@ import EditIcon from '@mui/icons-material/Edit';
 // Constants
 import { ADMIN_ROLE } from 'constants/userRoles';
 
-const UnitImg = ({ url, unit, image, editLink }) => {
-  const { currentUser } = useContext(CurrentUserContext);
+const UnitImg = ({ url, unit, image, editLink, type }) => {
+  const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
   return (
     <div className={styles.unitImg}>
-      {currentUser.role === ADMIN_ROLE && (
+      {isAuthenticated && currentUser.role === ADMIN_ROLE && type === 'materials' && (
         <Link to={editLink}>
           <EditIcon className={styles.editIcon} fontSize='large' />
         </Link>
@@ -41,12 +41,14 @@ UnitImg.propTypes = {
   editLink: PropTypes.string,
   unit: PropTypes.string,
   image: PropTypes.string,
+  type: PropTypes.string,
 };
 UnitImg.defaultProps = {
   url: '',
   editLink: '',
   unit: '',
   image: '',
+  type: '',
 };
 
 export default UnitImg;

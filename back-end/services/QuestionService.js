@@ -59,6 +59,12 @@ const getQuestionsByUnitName = async (search) => {
   return countOfTopics;
 };
 
+const getTest = async (level, unit) => {
+  return await Question.find({
+    $and: [{ level }, { unit }],
+  });
+};
+
 module.exports = {
   getQuestions,
   getLevels,
@@ -69,4 +75,5 @@ module.exports = {
   editQuestion,
   removeQuestion,
   getQuestionsByUnitName,
+  getTest,
 };
