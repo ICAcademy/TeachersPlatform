@@ -1,5 +1,4 @@
+import { API_URL } from 'API';
 import io from 'socket.io-client';
 
-const URL = 'http://localhost:5000';
-
-export const socket = io.connect(URL);
+export const socket = io.connect(API_URL);

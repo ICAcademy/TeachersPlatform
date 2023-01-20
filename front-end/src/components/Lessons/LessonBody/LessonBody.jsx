@@ -7,7 +7,7 @@ import styles from './LessonBody.module.scss';
 const LessonBody = (props) => {
   return (
     <div className={styles.lessonBody}>
-      <h2>{props.title}</h2>
+      <h2 className={styles.lessonTitle}>{props.title}</h2>
       <div dangerouslySetInnerHTML={{ __html: props.layout }} />
     </div>
   );

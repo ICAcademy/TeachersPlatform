@@ -1,5 +1,5 @@
 const SubscriptionModel = require('../models/Subscription');
-const { toAll } = require('../services/Socket');
+const { toAll } = require('../listeners/Socket');
 
 exports.getAllSubscriptions = async () => {
   return await SubscriptionModel.find();

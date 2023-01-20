@@ -33,7 +33,7 @@ import { CurrentUserContext } from 'context/AppProvider';
 import styles from './Teacher.module.scss';
 import { teacher, certificate, favourite, reward, speechBubble } from 'constants/photo';
 
-const Teacher = ({ fullName, activity, id, overview, courses }) => {
+const Teacher = ({ fullName, activity, id, overview, courses, image }) => {
   const { pathname } = useLocation();
   const tabs = [
     { title: 'Overview', link: `/app/teachers/${id}/overview` },
@@ -120,7 +120,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
               <FontAwesomeIcon icon={faLinkedinIn} />
             </div>
             <div className={styles.imageWrap}>
-              <img src={teacher} alt='teacher' />
+              <img src={image ? image : teacher} alt='teacher' />
             </div>
             <div className={styles.share}>
               <FontAwesomeIcon icon={faShareNodes} />
@@ -178,6 +178,7 @@ const Teacher = ({ fullName, activity, id, overview, courses }) => {
 
 Teacher.propTypes = {
   fullName: PropTypes.string,
+  image: PropTypes.string,
   activity: PropTypes.string.isRequired,
   id: PropTypes.string,
   overview: PropTypes.string.isRequired,

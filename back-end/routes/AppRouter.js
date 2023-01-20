@@ -10,6 +10,8 @@ const subscriptionsRouter = require('./SubscriptionRoutes');
 const scheduledLessonRoute = require('./ScheduledLessonRoute');
 const paymentRouter = require('./PaymentRoutes');
 const pricingRouter = require('./PricingRoutes');
+const dictionaryRouter = require('./DictionaryRoutes');
+const lessonRouter = require('./LessonRouter');
 
 router.use('/materials', materialRouter);
 router.use('/materials-levels', materialLevelsRouter);
@@ -22,5 +24,7 @@ router.use('/subscriptions', subscriptionsRouter);
 router.use('/scheduled-lessons', scheduledLessonRoute);
 router.use('/liqpay', paymentRouter);
 router.use('/pricing', pricingRouter);
+router.use('/dictionaries', dictionaryRouter);
+router.use('/lessons', lessonRouter);
 
 module.exports = router;
