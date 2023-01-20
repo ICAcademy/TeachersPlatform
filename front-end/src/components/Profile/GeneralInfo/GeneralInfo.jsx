@@ -25,7 +25,7 @@ import { uploadPhoto } from 'services/firebaseService';
 import { updateUserById } from 'services/userService';
 
 // Helpers
-import { regexFullName, regexEmail, regexDateOfBirth } from 'helpers/regex';
+import { REGEX_FULL_NAME, REGEX_EMAIL, REGEX_DATE_OF_BIRTH } from 'helpers/regex';
 
 // Assets
 import userImg from 'assets/sidebar/avatar.png';
@@ -61,7 +61,7 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
     hasError: fullNameHasError,
     valueChangeHandler: fullNameChangeHandler,
     valueOnBlurHandler: fullNameBlurHandler,
-  } = useInput('fullName', currentUser.fullName, regexFullName);
+  } = useInput('fullName', currentUser.fullName, REGEX_FULL_NAME);
 
   const {
     value: enteredEmail,
@@ -69,7 +69,7 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
     hasError: emailHasError,
     valueChangeHandler: emailChangeHandler,
     valueOnBlurHandler: emailBlurHandler,
-  } = useInput('email', currentUser.email, regexEmail);
+  } = useInput('email', currentUser.email, REGEX_EMAIL);
 
   const {
     value: enteredDateOfBirth,
@@ -77,7 +77,7 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
     hasError: dateOfBirthHasError,
     valueChangeHandler: dateOfBirthChangeHandler,
     valueOnBlurHandler: dateOfBirthBlurHandler,
-  } = useInput('date', currentUser.dateOfBirth, regexDateOfBirth);
+  } = useInput('date', currentUser.dateOfBirth, REGEX_DATE_OF_BIRTH);
 
   const formIsValid = fullNameIsValid && emailIsValid && dateOfBirthIsValid;
 

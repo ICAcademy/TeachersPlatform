@@ -33,6 +33,7 @@ const Teacher = () => {
       activity='English teacher'
       overview='Overview ;)'
       courses='Courses ;)'
+      image={teacher?.url}
     />
   );
 };

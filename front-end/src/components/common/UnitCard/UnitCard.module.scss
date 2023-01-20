@@ -1,9 +1,11 @@
 .unitItem {
   flex: 0 0 25%;
+  padding: 0 0.75rem;
+  box-sizing: border-box;
 }
 
 .unitWrapper {
-  margin: 0 0.75rem 1.5rem;
+  margin-bottom: 1.5rem;
   position: relative;
   background-color: #ffffff;
   border-radius: 5px;
@@ -29,5 +31,17 @@
 @media screen and (max-width: 1680px) {
   .unitItem {
     flex: 0 0 33.33%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .unitItem {
+    flex: 0 0 50%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .unitItem {
+    flex: 0 0 100%;
   }
 }

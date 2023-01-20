@@ -1,13 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 // Redux
 import { useDispatch } from 'react-redux';
 import { pendingSubscriptionsCount } from 'store/pending-subscriptions-slice';
 
+//Components
+import ChangeLevel from 'components/ChangeLevel/ChangeLevel';
+
 // Services
 import { updateSubscription } from 'services/subscriptionService';
+import { updateStudentData } from 'services/studentService';
 import { socket } from 'services/socketService';
+
+//Constants
+import { noAvatar } from 'constants/photo';
+import { TEACHER_ROLE, STUDENT_ROLE } from 'constants/userRoles';
 
 // Styles
 import styles from './SubscriptionItem.module.scss';
@@ -16,11 +24,16 @@ import CakeIcon from '@mui/icons-material/Cake';
 import { Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const SubscriptionItem = ({ role, subscription, onDelete }) => {
   const [status, setStatus] = useState(subscription.status || 'pending');
+  const [level, setLevel] = useState(subscription.studentID.level || '');
+  const [isOpen, setIsOpen] = useState(false);
 
   const dispatchFunction = useDispatch();
+
+  const studentID = subscription.studentID._id;
 
   const updateStatus = async (status) => {
     try {
@@ -52,8 +65,16 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
     statusClass = styles.reject;
   }
 
-  const noAvatarUrl =
-    'https://storage.googleapis.com/teachers-platform-40cbe.appspot.com/b7dfa353b6ffb1db78bd1059a3448560.jpg';
+  const handleIsClose = useCallback(() => setIsOpen(false), []);
+
+  const changeLevelHandler = async (value) => {
+    try {
+      await updateStudentData(studentID, { level: value });
+      setLevel(value);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     updateStatus(status);
@@ -78,42 +99,47 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
       <div className={styles.itemPart}>
         <div className={`${styles.badgeDot} ${statusClass}`}></div>
         <div className={styles.avatar}>
-          <img src={subscription.studentID.url || noAvatarUrl} />
+          <img src={subscription.studentID.url || noAvatar} />
         </div>
 
         <div className={styles.itemInfo}>
-          <p className={styles.userName}>
-            {role === 'student' ? subscription.teacherID.fullName : subscription.studentID.fullName}
+          <div className={styles.userName}>
+            {role === STUDENT_ROLE
+              ? subscription.teacherID.fullName
+              : subscription.studentID.fullName}
             {status && <span className={`${styles.statusValue} ${statusClass}`}>{status}</span>}
-          </p>
-          <p>
-            {role === 'student'
-              ? subscription.teacherID.level || 'No level'
-              : subscription.studentID.level || 'No level'}
-          </p>
+          </div>
+          {role === TEACHER_ROLE && (
+            <div>
+              {level ? level : 'No level'}
+              <div className={styles.editIcon} onClick={() => setIsOpen(true)}>
+                <EditIcon />
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.itemPart}>
         <div className={styles.itemInfo}>
           <div className={styles.infoItem}>
             <EmailIcon className={styles.infoIcon} color='primary' />
-            {role === 'student' ? subscription.teacherID.email : subscription.studentID.email}
+            {role === STUDENT_ROLE ? subscription.teacherID.email : subscription.studentID.email}
           </div>
           <div className={styles.infoItem}>
             <CakeIcon className={styles.infoIcon} color='primary' />
-            {role === 'student'
+            {role === STUDENT_ROLE
               ? subscription.teacherID.dateOfBirth
               : subscription.studentID.dateOfBirth}
           </div>
         </div>
       </div>
       <div className={styles.itemPart}>
-        {role === 'student' && (
+        {role === STUDENT_ROLE && (
           <Button variant='contained' size='small' onClick={() => onDelete(subscription._id)}>
             Unsubscribe
           </Button>
         )}
-        {role === 'teacher' && (
+        {role === TEACHER_ROLE && (
           <div
             className={`${styles.actionBtn} ${styles.success} ${statusClass}`}
             onClick={handleStatus}
@@ -122,7 +148,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
             Approve
           </div>
         )}
-        {role === 'teacher' && (
+        {role === TEACHER_ROLE && (
           <div
             className={`${styles.actionBtn} ${styles.decline} ${statusClass}`}
             onClick={handleStatus}
@@ -131,6 +157,16 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
             Decline
           </div>
         )}
+
+        <div>
+          <ChangeLevel
+            isOpen={isOpen}
+            handleIsClose={handleIsClose}
+            studentID={studentID}
+            level={level}
+            changeLevel={changeLevelHandler}
+          />
+        </div>
 
         <IconButton aria-label='delete' onClick={handleDelete}>
           <DeleteIcon />

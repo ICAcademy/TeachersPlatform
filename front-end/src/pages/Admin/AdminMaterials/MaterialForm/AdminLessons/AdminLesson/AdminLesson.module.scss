@@ -40,3 +40,14 @@
   color: #888;
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .accordionContent {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .deleteLesson {
+    position: static;
+  }
+}
