@@ -58,12 +58,22 @@ const registerLessonHandlers = (io, socket) => {
     io.to(lesson?._id.toString()).emit('lesson:updated', lesson);
   };
 
+  const userCallRequest = async (data) => {
+    io.to(data.roomId).emit('lesson:call-request', data);
+  };
+
+  const userCallApprove = async (data) => {
+    io.to(data.roomId).emit('lesson:call-approve', data);
+  };
+
   socket.on('lesson:add', addLesson);
   socket.on('lesson:join', userJoin);
   socket.on('lesson:leave', userLeave);
   socket.on('lesson:select-answer', userSelectAnswer);
   socket.on('lesson:end', userEndLesson);
   socket.on('disconnect', userDisconnect);
+  socket.on('lesson:call-request', userCallRequest);
+  socket.on('lesson:call-approve', userCallApprove);
 };
 
 module.exports = { registerLessonHandlers };

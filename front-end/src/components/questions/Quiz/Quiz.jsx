@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Box, Button, List, ListItem } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -13,15 +13,44 @@ import { TEACHER_ROLE } from 'constants/userRoles';
 import styles from './Quiz.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+import RingingPhone from 'components/common/RingingPhone/RingingPhone';
 
 const Quiz = ({ id, questions, isLesson }) => {
+  const [callRequest, setCallRequest] = useState(false);
+  const [callApprove, setCallApprove] = useState(false);
+  const [joinCall, setJoinCall] = useState(false);
+
   const {
-    currentUser: { role },
+    currentUser: { role, _id },
   } = useContext(CurrentUserContext);
 
   const endLessonHandler = () => {
     socket.emit('lesson:end', id);
   };
+
+  const callToUserHandler = () => {
+    socket.emit('lesson:call-request', { roomId: id, userId: _id });
+  };
+
+  const callApproveHandler = (state) => {
+    setCallApprove(state);
+
+    socket.emit('lesson:call-approve', { roomId: id, userId: _id });
+  };
+
+  useEffect(() => {
+    socket.on('lesson:call-request', (data) => {
+      if (data.userId !== _id) {
+        setCallRequest(true);
+      }
+    });
+  });
+
+  socket.on('lesson:call-approve', (data) => {
+    // if (data.userId !== _id) {
+    // }
+    setJoinCall(true);
+  });
 
   const quiz = questions.map((question) => (
     <ListItem
@@ -61,7 +90,8 @@ const Quiz = ({ id, questions, isLesson }) => {
     <>
       <Box className={styles.header} sx={{ '& button': { m: 1 } }}>
         <h3 className={styles.title}>Quiz</h3>
-        <Button variant='contained' size='small'>
+        {callRequest && <RingingPhone active={joinCall} onApprove={callApproveHandler} />}
+        <Button variant='contained' size='small' onClick={callToUserHandler}>
           Call to teacher
         </Button>
         {isLesson && role === TEACHER_ROLE && (
