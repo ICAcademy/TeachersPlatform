@@ -1,14 +1,10 @@
-.filtersContainer {
+.questionsHeader {
   display: flex;
-  flex-direction: row;
-  width: 100%;
   justify-content: space-between;
 }
 
-.inputContainer {
-  width: 300px;
-}
-
-.input {
-  width: 100%;
+.navigationRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

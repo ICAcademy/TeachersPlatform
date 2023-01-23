@@ -8,6 +8,7 @@ const {
   editQuestion,
   removeQuestion,
   getQuestionsByUnitName,
+  getTest,
 } = require('../services/QuestionService');
 
 const getAllQuestions = async (req, res) => {
@@ -25,16 +26,17 @@ const getQuestionLevels = async (req, res) => {
     const levels = await getLevels();
     res.status(200).json(levels);
   } catch (error) {
-    res.sattus(400).json(error);
+    res.status(400).json(error);
   }
 };
 
 const getQuestionUnitsByLevel = async (req, res) => {
   try {
-    const units = await getUnitsByLevel(req.query);
+    const { level } = req.query;
+    const units = await getUnitsByLevel({ level });
     res.status(200).json(units);
   } catch (error) {
-    res.sattus(400).json(error);
+    res.status(400).json(error);
   }
 };
 
@@ -85,6 +87,16 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
+const getTestByLevelAndUnit = async (req, res) => {
+  try {
+    const { level, unit } = req.query;
+    const questions = await getTest(level, unit);
+    res.json(questions);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getAllQuestions,
   getQuestionLevels,
@@ -94,4 +106,5 @@ module.exports = {
   getQuestionById,
   updateQuestion,
   deleteQuestion,
+  getTestByLevelAndUnit,
 };
