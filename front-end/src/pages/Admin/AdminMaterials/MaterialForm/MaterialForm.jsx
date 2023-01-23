@@ -7,6 +7,7 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 //Components
 import AdminLessons from './AdminLessons/AdminLessons';
+import ImageSpinner from 'components/common/ImageSpinner/ImageSpinner';
 
 //Services
 import {
@@ -96,9 +97,11 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
     const data = new FormData();
     data.append('file', event.target.files[0]);
     try {
+      setIsLoading(true);
       const imageUrl = await uploadImage(data);
       setImgUrl(imageUrl);
       setSaveBtn(true);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -206,6 +209,7 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
         </Box>
         <Box className={styles.imageUploader}>
           <label htmlFor='upload-image' className={styles.imageWrapper}>
+            {isLoading && <ImageSpinner />}
             {material.image && <img src={imgUrl} />}
             {!material.image && !imgUrl && (
               <div className={styles.noImage}>
