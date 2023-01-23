@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import NoSubscriptions from 'components/NoSubscriptions/NoSubscriptions';
 import Loader from 'components/common/Loader/Loader';
+import NoSubscriptions from 'components/NoSubscriptions/NoSubscriptions';
+import Todo from 'components/Dashboard/Todo/Todo';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
@@ -32,7 +33,16 @@ const Dashboard = () => {
     socket.on('subscription:updated', (id) => id === roleId && fetchSubscriptionsCount(roleId));
   }, [roleId]);
 
-  return isLoading ? <Loader /> : subscriptions === 0 && <NoSubscriptions />;
+  return isLoading ? (
+    <Loader />
+  ) : (
+    subscriptions === 0 && (
+      <>
+        <NoSubscriptions />
+        <Todo />
+      </>
+    )
+  );
 };
 
 export default Dashboard;

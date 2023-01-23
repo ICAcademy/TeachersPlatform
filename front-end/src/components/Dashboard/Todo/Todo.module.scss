@@ -1,0 +1,21 @@
+@import 'styles/colors.scss';
+
+.todo {
+  max-width: 500px;
+  max-height: 500px;
+  padding-bottom: 20px;
+  background-color: $white;
+  border-radius: 10px;
+  box-shadow: 0 0 35px 0 rgb(154 161 171 / 25%);
+
+  &__title {
+    padding-top: 15px;
+    padding-left: 15px;
+    border-bottom: 1px solid #f6f9fb;
+  }
+
+  &__list {
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+}
