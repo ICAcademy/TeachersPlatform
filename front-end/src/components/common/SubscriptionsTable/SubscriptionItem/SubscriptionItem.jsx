@@ -16,6 +16,7 @@ import { socket } from 'services/socketService';
 //Constants
 import { noAvatar } from 'constants/photo';
 import { TEACHER_ROLE, STUDENT_ROLE } from 'constants/userRoles';
+import { APPROVED, PENDING, REJECT } from 'constants/subscriptionStatuses';
 
 // Styles
 import styles from './SubscriptionItem.module.scss';
@@ -27,7 +28,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 const SubscriptionItem = ({ role, subscription, onDelete }) => {
-  const [status, setStatus] = useState(subscription.status || 'pending');
+  const [status, setStatus] = useState(subscription.status || PENDING);
   const [level, setLevel] = useState(subscription.studentID.level || '');
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,8 +49,8 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
       updateStatus(event.target.dataset.status);
       setStatus(event.target.dataset.status);
     } else {
-      updateStatus('pending');
-      setStatus('pending');
+      updateStatus(PENDING);
+      setStatus(PENDING);
     }
   };
 
@@ -59,9 +60,9 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
 
   let statusClass = '';
 
-  if (status === 'approved') {
+  if (status === APPROVED) {
     statusClass = styles.approved;
-  } else if (status === 'reject') {
+  } else if (status === REJECT) {
     statusClass = styles.reject;
   }
 
@@ -79,7 +80,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
   useEffect(() => {
     updateStatus(status);
     dispatchFunction(
-      pendingSubscriptionsCount({ statusName: 'pending', id: subscription.teacherID }),
+      pendingSubscriptionsCount({ statusName: PENDING, id: subscription.teacherID }),
     );
   });
 
@@ -88,7 +89,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
       if (data.id === subscription._id) {
         setStatus(data.body.status);
         dispatchFunction(
-          pendingSubscriptionsCount({ statusName: 'pending', id: subscription.teacherID }),
+          pendingSubscriptionsCount({ statusName: PENDING, id: subscription.teacherID }),
         );
       }
     });
@@ -143,7 +144,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
           <div
             className={`${styles.actionBtn} ${styles.success} ${statusClass}`}
             onClick={handleStatus}
-            data-status='approved'
+            data-status={APPROVED}
           >
             Approve
           </div>
@@ -152,7 +153,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
           <div
             className={`${styles.actionBtn} ${styles.decline} ${statusClass}`}
             onClick={handleStatus}
-            data-status='reject'
+            data-status={REJECT}
           >
             Decline
           </div>

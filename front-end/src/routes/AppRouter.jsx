@@ -39,6 +39,7 @@ const Finances = lazy(() => import('pages/Finances/Finances'));
 const Dictionary = lazy(() => import('pages/Dictionary'));
 const Lessons = lazy(() => import('pages/Lessons/Lessons'));
 const Lesson = lazy(() => import('pages/Lesson/Lesson'));
+const Dashboard = lazy(() => import('pages/Dashboard/Dashboard'));
 
 const RouterWrapper = () => {
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
@@ -54,6 +55,14 @@ const RouterWrapper = () => {
             </PrivateRoute>
           }
         >
+          <Route
+            index
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
           <Route path='/app/profile' element={<Profile />}>
             <Route path='general-info' element={<GeneralInfo />} />
             <Route
