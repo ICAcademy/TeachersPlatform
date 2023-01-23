@@ -41,6 +41,7 @@ import Badge from '@mui/material/Badge';
 // Constants
 import { STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
 import { getSubscriptionsCountByStatus } from 'services/subscriptionService';
+import { APPROVED, PENDING } from 'constants/subscriptionStatuses';
 
 export const SidebarList = ({ showSidebar }) => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ export const SidebarList = ({ showSidebar }) => {
 
   const fetchSubscriptionsCount = async (id) => {
     try {
-      const count = await getSubscriptionsCountByStatus({ statusName: 'approved', id });
+      const count = await getSubscriptionsCountByStatus({ statusName: APPROVED, id });
       setSubscriptionsCount(count);
     } catch (error) {
       console.log(error);
@@ -69,19 +70,15 @@ export const SidebarList = ({ showSidebar }) => {
   };
 
   useEffect(() => {
-    dispatchFunction(pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }));
+    dispatchFunction(pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId }));
   }, [currentUser.roleId, dispatchFunction]);
 
   useEffect(() => {
     socket.on('create_subscription', () => {
-      dispatchFunction(
-        pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }),
-      );
+      dispatchFunction(pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId }));
     });
     socket.on('delete_subscription', () => {
-      dispatchFunction(
-        pendingSubscriptionsCount({ statusName: 'pending', id: currentUser.roleId }),
-      );
+      dispatchFunction(pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId }));
     });
     socket.on(
       'subscription:updated',
