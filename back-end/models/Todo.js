@@ -6,10 +6,9 @@ const TodoSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    studentId: {
+    creatorId: {
       type: mongoose.ObjectId,
       required: true,
-      ref: 'Student',
     },
     isComplete: {
       type: Boolean,

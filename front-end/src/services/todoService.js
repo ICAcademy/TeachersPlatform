@@ -5,6 +5,11 @@ export const getAllTodo = async (id) => {
   return data;
 };
 
+export const createTodo = async (body) => {
+  const { data } = await API.post(`${API_URL}/api/todo`, body);
+  return data;
+};
+
 export const changeTodoStatus = async (id, body) => {
   const { data } = await API.patch(`${API_URL}/api/todo/${id}`, body);
   return data;

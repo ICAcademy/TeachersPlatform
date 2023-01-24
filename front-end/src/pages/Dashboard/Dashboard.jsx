@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import Loader from 'components/common/Loader/Loader';
-import NoSubscriptions from 'components/NoSubscriptions/NoSubscriptions';
+import NoSubscriptions from 'components/Dashboard/NoSubscriptions/NoSubscriptions';
 import Todo from 'components/Dashboard/Todo/Todo';
 
 import { CurrentUserContext } from 'context/AppProvider';

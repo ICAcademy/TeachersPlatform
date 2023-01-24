@@ -31,7 +31,7 @@
       }
     ],
     "linebreak-style": 0,
-    "quotes": ["error", "single"],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "semi": ["error", "always"],
     "prefer-arrow-callback": ["error"],
     "func-style": ["error", "expression"],

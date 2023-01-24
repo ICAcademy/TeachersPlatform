@@ -1,4 +1,5 @@
 @import 'styles/colors.scss';
+@import 'styles/font.scss';
 
 .todo {
   max-width: 500px;
@@ -15,7 +16,25 @@
   }
 
   &__list {
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
     padding: 10px;
   }
+
+  &__add {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    column-gap: 10px;
+    padding: 10px;
+  }
+}
+
+.noTodo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $coolGrey;
+  font-weight: $fw500;
 }

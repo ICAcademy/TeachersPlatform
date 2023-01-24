@@ -1,17 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
 import TodoItem from './TodoItem/TodoItem';
 
-import { changeTodoStatus, deleteTodoById, getAllTodo } from 'services/todoService';
+import useInput from 'hooks/useInput';
+
+import { changeTodoStatus, createTodo, deleteTodoById, getAllTodo } from 'services/todoService';
+
+import { REGEX_TODO } from 'helpers/regex';
 
 import styles from './Todo.module.scss';
-import AddIcon from '@mui/icons-material/Add';
+
+const todoHelperText = `Must be less than 30 symbols`;
+
+const sortTodo = (list) =>
+  list.sort((prev, curr) => new Date(curr.createdAt) - new Date(prev.createdAt));
 
 const Todo = () => {
   const [todoList, setTodoList] = useState([]);
+
+  const {
+    value: enteredTodo,
+    hasError: todoHasError,
+    valueChangeHandler: todoChangeHandler,
+    valueOnBlurHandler: todoOnBlurHandler,
+    resetValue: resetTodo,
+  } = useInput('todo', '', REGEX_TODO);
 
   const {
     currentUser: { roleId },
@@ -21,6 +37,20 @@ const Todo = () => {
     try {
       const response = await getAllTodo(id);
       setTodoList(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const createNewTodo = async () => {
+    try {
+      const body = {
+        description: enteredTodo,
+        creatorId: roleId,
+      };
+      const newTodo = await createTodo(body);
+      setTodoList((prev) => sortTodo([...prev, newTodo]));
+      resetTodo();
     } catch (error) {
       console.error(error);
     }
@@ -58,20 +88,38 @@ const Todo = () => {
         Todo list:
       </Typography>
       <Box className={styles.todo__list}>
-        {todoList.map((todo) => (
-          <TodoItem
-            key={todo._id}
-            id={todo._id}
-            description={todo.description}
-            isComplete={todo.isComplete}
-            handleChange={changeStatus}
-            handleDelete={deleteTodo}
-          />
-        ))}
+        {todoList.length === 0 ? (
+          <Box variant='span' className={styles.noTodo}>
+            {`You have no todo for now :\(`}
+          </Box>
+        ) : (
+          todoList.map((todo) => (
+            <TodoItem
+              key={todo._id}
+              id={todo._id}
+              description={todo.description}
+              isComplete={todo.isComplete}
+              handleChange={changeStatus}
+              handleDelete={deleteTodo}
+            />
+          ))
+        )}
       </Box>
-      <Button startIcon={<AddIcon />} variant='contained' sx={{ display: 'flex', m: '0 auto' }}>
-        Add new task
-      </Button>
+      <Box className={styles.todo__add}>
+        <TextField
+          label='Description'
+          size='small'
+          fullWidth
+          value={enteredTodo}
+          onChange={todoChangeHandler}
+          onBlur={todoOnBlurHandler}
+          error={todoHasError}
+          helperText={todoHasError ? todoHelperText : ''}
+        />
+        <Button variant='contained' disabled={todoHasError} onClick={createNewTodo}>
+          Add
+        </Button>
+      </Box>
     </Box>
   );
 };
