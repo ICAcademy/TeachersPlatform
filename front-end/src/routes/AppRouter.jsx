@@ -39,6 +39,7 @@ const Finances = lazy(() => import('pages/Finances/Finances'));
 const Dictionary = lazy(() => import('pages/Dictionary'));
 const Lessons = lazy(() => import('pages/Lessons/Lessons'));
 const Lesson = lazy(() => import('pages/Lesson/Lesson'));
+const UpcomingLessons = lazy(() => import('pages/Dashboard/UpcomingLessons/UpcomingLessons'));
 
 const RouterWrapper = () => {
   const { isAuthenticated, currentUser } = useContext(CurrentUserContext);
