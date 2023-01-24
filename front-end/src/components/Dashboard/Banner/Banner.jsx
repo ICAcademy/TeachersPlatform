@@ -47,75 +47,73 @@ const Banner = () => {
   }, []);
 
   return (
-    <div>
-      <MouseParallaxContainer
-        className={styles.content}
-        globalFactorX={0.3}
-        globalFactorY={0.3}
-        resetOnLeave
-      >
-        <div className={styles.left}>
-          <div className={styles.info}>
-            <h1 className={styles.learn}>Learn With Effectively With Us!</h1>
-            <p className={styles.discount}>Get 30% off every course on january.</p>
-          </div>
-          <div className={styles.countOfUsers}>
-            <div className={styles.students}>
-              <div className={styles.iconOfStudentsContainer}>
-                <FontAwesomeIcon className={styles.iconOfUsers} icon={faGraduationCap} />
-              </div>
-              <div className={styles.count}>
-                <div className={styles.nameOfCount}>Students</div>
-                <div className={styles.totalCount}>
-                  {loading ? (
-                    <Loader />
-                  ) : (
-                    <div>
-                      <CountUp end={countOfStudents} />
-                      <span>+</span>
-                    </div>
-                  )}
-                </div>
+    <MouseParallaxContainer
+      className={styles.content}
+      globalFactorX={0.3}
+      globalFactorY={0.3}
+      resetOnLeave
+    >
+      <div className={styles.left}>
+        <div className={styles.info}>
+          <h1 className={styles.learn}>Learn With Effectively With Us!</h1>
+          <p className={styles.discount}>Get 30% off every course on january.</p>
+        </div>
+        <div className={styles.countOfUsers}>
+          <div className={styles.students}>
+            <div className={styles.iconOfStudentsContainer}>
+              <FontAwesomeIcon className={styles.iconOfUsers} icon={faGraduationCap} />
+            </div>
+            <div className={styles.count}>
+              <div className={styles.nameOfCount}>Students</div>
+              <div className={styles.totalCount}>
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <div>
+                    <CountUp end={countOfStudents} />
+                    <span>+</span>
+                  </div>
+                )}
               </div>
             </div>
-            <div className={styles.teachers}>
-              <div className={styles.iconOfTeachersContainer}>
-                <FontAwesomeIcon className={styles.iconOfUsers} icon={faUser} />
-              </div>
-              <div className={styles.count}>
-                <div className={styles.nameOfCount}>Expert Mentors</div>
-                <div className={styles.totalCount}>
-                  {loading ? (
-                    <Loader />
-                  ) : (
-                    <div>
-                      <CountUp end={countOfTeachers} />
-                      <span>+</span>
-                    </div>
-                  )}
-                </div>
+          </div>
+          <div className={styles.teachers}>
+            <div className={styles.iconOfTeachersContainer}>
+              <FontAwesomeIcon className={styles.iconOfUsers} icon={faUser} />
+            </div>
+            <div className={styles.count}>
+              <div className={styles.nameOfCount}>Expert Mentors</div>
+              <div className={styles.totalCount}>
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <div>
+                    <CountUp end={countOfTeachers} />
+                    <span>+</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
-        <div className={styles.right}>
-          <div className={styles.images}>
-            <MouseParallaxChild className={styles.cloud} factorX={0.4} factorY={0.4}>
-              <img src={cloudBiggets} />
-            </MouseParallaxChild>
-            <MouseParallaxChild className={styles.layer} factorX={0.2} factorY={0.2}>
-              <img src={layer} />
-            </MouseParallaxChild>
-            <MouseParallaxChild className={styles.layer} factorX={0.4} factorY={0.4}>
-              <img src={cloudBig} />
-            </MouseParallaxChild>
-          </div>
-          <MouseParallaxChild className={styles.logoLetter} factorX={0.1} factorY={0.1}>
-            <img src={logoLetter} />
+      </div>
+      <div className={styles.right}>
+        <div className={styles.images}>
+          <MouseParallaxChild className={styles.cloud} factorX={0.4} factorY={0.4}>
+            <img src={cloudBiggets} />
+          </MouseParallaxChild>
+          <MouseParallaxChild className={styles.layer} factorX={0.2} factorY={0.2}>
+            <img src={layer} />
+          </MouseParallaxChild>
+          <MouseParallaxChild className={styles.layer} factorX={0.4} factorY={0.4}>
+            <img src={cloudBig} />
           </MouseParallaxChild>
         </div>
-      </MouseParallaxContainer>
-    </div>
+        <MouseParallaxChild className={styles.logoLetter} factorX={0.1} factorY={0.1}>
+          <img src={logoLetter} />
+        </MouseParallaxChild>
+      </div>
+    </MouseParallaxContainer>
   );
 };
 
