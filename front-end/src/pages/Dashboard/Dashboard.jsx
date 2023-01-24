@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import Loader from 'components/common/Loader/Loader';
 import NoSubscriptions from 'components/Dashboard/NoSubscriptions/NoSubscriptions';
@@ -9,39 +9,45 @@ import { CurrentUserContext } from 'context/AppProvider';
 import { getSubscriptionsCountByStatus } from 'services/subscriptionService';
 import { socket } from 'services/socketService';
 
+import { STUDENT_ROLE } from 'constants/userRoles';
+
 const Dashboard = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    currentUser: { roleId },
+    currentUser: { roleId, role },
   } = useContext(CurrentUserContext);
 
-  const fetchSubscriptionsCount = async (id) => {
-    try {
-      setIsLoading(true);
-      const response = await getSubscriptionsCountByStatus({ statusName: 'approved', id });
-      setSubscriptions(response);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const fetchSubscriptionsCount = useCallback(
+    async (id = roleId) => {
+      try {
+        setIsLoading(true);
+        const response = await getSubscriptionsCountByStatus({ statusName: 'approved', id });
+        setSubscriptions(response);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [roleId],
+  );
 
   useEffect(() => {
-    fetchSubscriptionsCount(roleId);
+    fetchSubscriptionsCount();
+  }, [fetchSubscriptionsCount]);
+
+  useEffect(() => {
     socket.on('subscription:updated', (id) => id === roleId && fetchSubscriptionsCount(roleId));
-  }, [roleId]);
+  }, [roleId, fetchSubscriptionsCount]);
 
   return isLoading ? (
     <Loader />
   ) : (
-    subscriptions === 0 && (
-      <>
-        <NoSubscriptions />
-        <Todo />
-      </>
-    )
+    <>
+      {role === STUDENT_ROLE && subscriptions === 0 && <NoSubscriptions />}
+      {role === STUDENT_ROLE && <Todo />}
+    </>
   );
 };
 

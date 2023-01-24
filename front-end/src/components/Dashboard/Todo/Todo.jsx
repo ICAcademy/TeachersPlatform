@@ -13,7 +13,7 @@ import { REGEX_TODO } from 'helpers/regex';
 
 import styles from './Todo.module.scss';
 
-const todoHelperText = `Must be less than 30 symbols`;
+const todoHelperText = 'Must be less than 30 symbols';
 
 const sortTodo = (list) =>
   list.sort((prev, curr) => new Date(curr.createdAt) - new Date(prev.createdAt));
