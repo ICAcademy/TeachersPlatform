@@ -1,19 +1,46 @@
-.phoneBtn {
+.ringingPhone {
   position: fixed;
-  left: 0;
-  right: 0;
-  margin: auto !important;
-  bottom: 20px;
+  left: 20px;
+  bottom: 50px;
+  max-width: 150px;
+  z-index: 9;
+
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  .phoneBtns {
+    display: flex;
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, 0%);
+  }
+}
+
+.phoneBtn {
   z-index: 1;
-  width: 5em;
-  height: 5em;
-  padding: 1.5em;
+  width: 2em;
+  height: 2em;
+  margin: 0 10px;
+  padding: 0.5em;
   border-radius: 50%;
   border: none;
-  box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 3em #2296f4, 0 0 0 0 rgba(#2296f4, 0.25);
-  background-color: #3da3f6;
-  animation: scaleUp 2s infinite, borderScale 2s infinite;
+  box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 3em #40d465, 0 0 0 0 rgba(#40d465, 0.25);
+  background-color: #40d465;
+  // animation: scaleUp 2s infinite, borderScale 2s infinite;
   cursor: pointer;
+
+  &.declineCall {
+    box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 3em #f54336, 0 0 0 0 rgba(#f54336, 0.25);
+    background-color: #f54336;
+
+    svg {
+      transform: rotate(135deg);
+    }
+  }
 
   > svg {
     width: 100%;
@@ -23,155 +50,201 @@
   }
 }
 
-@keyframes borderScale {
-  0% {
-    box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 3em #2296f4, 0 0 0 0 rgba(#2296f4, 0.25);
+.callAnimation {
+  background: #fff;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 100%;
+  border: solid 5px #fff;
+  animation: play 2s ease infinite;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 100%;
   }
 
-  50% {
-    box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 0.5em #2296f4, 0 0 0 0 rgba(#2296f4, 0.25);
-  }
-
-  100% {
-    box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 3em #2296f4, 0 0 0 3em rgba(#2296f4, 0);
+  .underCallInfo {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 0.5rem;
   }
 }
 
-@keyframes scaleUp {
+@keyframes play {
   0% {
     transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.125);
-  }
-  60% {
-    transform: scale(1);
-  }
-}
-
-@keyframes shake {
-  0% {
-    transform: translate(0, 0);
-  }
-  1.25% {
-    transform: translate(-2.5%, 0);
-  }
-  2.5% {
-    transform: translate(0, 0);
-  }
-  3.75% {
-    transform: translate(2.5%, 0);
-  }
-  5% {
-    transform: translate(0, 0);
-  }
-  6.25% {
-    transform: translate(-5%, 0);
-  }
-  7.5% {
-    transform: translate(0, 0);
-  }
-  8.75% {
-    transform: translate(5%, 0);
-  }
-  10% {
-    transform: translate(0, 0);
-  }
-  11.25% {
-    transform: translate(-5%, 0);
-  }
-  12.5% {
-    transform: translate(0, 0);
-  }
-  13.75% {
-    transform: translate(5%, 0);
   }
   15% {
-    transform: translate(0, 0);
-  }
-  16.25% {
-    transform: translate(-7.5%, 0);
-  }
-  17.5% {
-    transform: translate(0, 0);
-  }
-  18.75% {
-    transform: translate(7.5%, 0);
-  }
-  20% {
-    transform: translate(0, 0);
-  }
-  21.25% {
-    transform: translate(-7.5%, 0);
-  }
-  22.5% {
-    transform: translate(0, 0);
-  }
-  23.75% {
-    transform: translate(7.5%, 0);
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.4);
   }
   25% {
-    transform: translate(0, 0);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.4), 0 0 0 5px rgba(255, 255, 255, 0.2);
   }
-  26.25% {
-    transform: translate(-7.5%, 0);
-  }
-  27.5% {
-    transform: translate(0, 0);
-  }
-  28.75% {
-    transform: translate(7.5%, 0);
-  }
-  30% {
-    transform: translate(0, 0);
-  }
-  31.25% {
-    transform: translate(-7.5%, 0);
-  }
-  32.5% {
-    transform: translate(0, 0);
-  }
-  33.75% {
-    transform: translate(7.5%, 0);
-  }
-  35% {
-    transform: translate(0, 0);
-  }
-  36.25% {
-    transform: translate(-7.5%, 0);
-  }
-  37.5% {
-    transform: translate(0, 0);
-  }
-  38.75% {
-    transform: translate(7.5%, 0);
-  }
-  40% {
-    transform: translate(0, 0);
-  }
-  41.25% {
-    transform: translate(-7.5%, 0);
-  }
-  42.5% {
-    transform: translate(0, 0);
-  }
-  43.75% {
-    transform: translate(7.5%, 0);
-  }
-  45% {
-    transform: translate(0, 0);
-  }
-  46.25% {
-    transform: translate(-7.5%, 0);
-  }
-  47.5% {
-    transform: translate(0, 0);
-  }
-  48.75% {
-    transform: translate(7.5%, 0);
-  }
-  50% {
-    transform: translate(0, 0);
+  25% {
+    box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.4), 0 0 0 10px rgba(255, 255, 255, 0.2);
   }
 }
+
+// @keyframes borderScale {
+//   0% {
+//     box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 3em #2296f4, 0 0 0 0 rgba(#2296f4, 0.25);
+//   }
+
+//   50% {
+//     box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 0.5em #2296f4, 0 0 0 0 rgba(#2296f4, 0.25);
+//   }
+
+//   100% {
+//     box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 3em #2296f4, 0 0 0 3em rgba(#2296f4, 0);
+//   }
+// }
+
+// @keyframes scaleUp {
+//   0% {
+//     transform: scale(1);
+//   }
+
+//   50% {
+//     transform: scale(1.125);
+//   }
+//   60% {
+//     transform: scale(1);
+//   }
+// }
+
+// @keyframes shake {
+//   0% {
+//     transform: translate(0, 0);
+//   }
+//   1.25% {
+//     transform: translate(-2.5%, 0);
+//   }
+//   2.5% {
+//     transform: translate(0, 0);
+//   }
+//   3.75% {
+//     transform: translate(2.5%, 0);
+//   }
+//   5% {
+//     transform: translate(0, 0);
+//   }
+//   6.25% {
+//     transform: translate(-5%, 0);
+//   }
+//   7.5% {
+//     transform: translate(0, 0);
+//   }
+//   8.75% {
+//     transform: translate(5%, 0);
+//   }
+//   10% {
+//     transform: translate(0, 0);
+//   }
+//   11.25% {
+//     transform: translate(-5%, 0);
+//   }
+//   12.5% {
+//     transform: translate(0, 0);
+//   }
+//   13.75% {
+//     transform: translate(5%, 0);
+//   }
+//   15% {
+//     transform: translate(0, 0);
+//   }
+//   16.25% {
+//     transform: translate(-7.5%, 0);
+//   }
+//   17.5% {
+//     transform: translate(0, 0);
+//   }
+//   18.75% {
+//     transform: translate(7.5%, 0);
+//   }
+//   20% {
+//     transform: translate(0, 0);
+//   }
+//   21.25% {
+//     transform: translate(-7.5%, 0);
+//   }
+//   22.5% {
+//     transform: translate(0, 0);
+//   }
+//   23.75% {
+//     transform: translate(7.5%, 0);
+//   }
+//   25% {
+//     transform: translate(0, 0);
+//   }
+//   26.25% {
+//     transform: translate(-7.5%, 0);
+//   }
+//   27.5% {
+//     transform: translate(0, 0);
+//   }
+//   28.75% {
+//     transform: translate(7.5%, 0);
+//   }
+//   30% {
+//     transform: translate(0, 0);
+//   }
+//   31.25% {
+//     transform: translate(-7.5%, 0);
+//   }
+//   32.5% {
+//     transform: translate(0, 0);
+//   }
+//   33.75% {
+//     transform: translate(7.5%, 0);
+//   }
+//   35% {
+//     transform: translate(0, 0);
+//   }
+//   36.25% {
+//     transform: translate(-7.5%, 0);
+//   }
+//   37.5% {
+//     transform: translate(0, 0);
+//   }
+//   38.75% {
+//     transform: translate(7.5%, 0);
+//   }
+//   40% {
+//     transform: translate(0, 0);
+//   }
+//   41.25% {
+//     transform: translate(-7.5%, 0);
+//   }
+//   42.5% {
+//     transform: translate(0, 0);
+//   }
+//   43.75% {
+//     transform: translate(7.5%, 0);
+//   }
+//   45% {
+//     transform: translate(0, 0);
+//   }
+//   46.25% {
+//     transform: translate(-7.5%, 0);
+//   }
+//   47.5% {
+//     transform: translate(0, 0);
+//   }
+//   48.75% {
+//     transform: translate(7.5%, 0);
+//   }
+//   50% {
+//     transform: translate(0, 0);
+//   }
+// }

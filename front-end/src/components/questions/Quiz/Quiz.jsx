@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { CurrentUserContext } from 'context/AppProvider';
 
 import AnswerPicker from 'components/questions/AnswerPicker/AnswerPicker';
+import MeetRoom from 'components/MeetRoom/MeetRoom';
 
 import { socket } from 'services/socketService';
 
@@ -15,10 +16,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import RingingPhone from 'components/common/RingingPhone/RingingPhone';
 
-const Quiz = ({ id, questions, isLesson }) => {
+const Quiz = ({ id, questions, isLesson, student }) => {
   const [callRequest, setCallRequest] = useState(false);
   const [callApprove, setCallApprove] = useState(false);
   const [joinCall, setJoinCall] = useState(false);
+  const [callingUser, setCallingUser] = useState('');
 
   const {
     currentUser: { role, _id },
@@ -34,8 +36,7 @@ const Quiz = ({ id, questions, isLesson }) => {
 
   const callApproveHandler = (state) => {
     setCallApprove(state);
-
-    socket.emit('lesson:call-approve', { roomId: id, userId: _id });
+    socket.emit('lesson:call-approve', { roomId: id, approved: true });
   };
 
   useEffect(() => {
@@ -43,14 +44,16 @@ const Quiz = ({ id, questions, isLesson }) => {
       if (data.userId !== _id) {
         setCallRequest(true);
       }
+      setCallingUser(data.userId);
+    });
+
+    socket.on('lesson:call-approve', (data) => {
+      setCallApprove(data.approved);
+      setJoinCall(true);
     });
   });
 
-  socket.on('lesson:call-approve', (data) => {
-    // if (data.userId !== _id) {
-    // }
-    setJoinCall(true);
-  });
+  console.log(callingUser);
 
   const quiz = questions.map((question) => (
     <ListItem
@@ -90,7 +93,6 @@ const Quiz = ({ id, questions, isLesson }) => {
     <>
       <Box className={styles.header} sx={{ '& button': { m: 1 } }}>
         <h3 className={styles.title}>Quiz</h3>
-        {callRequest && <RingingPhone active={joinCall} onApprove={callApproveHandler} />}
         <Button variant='contained' size='small' onClick={callToUserHandler}>
           Call to teacher
         </Button>
@@ -101,6 +103,10 @@ const Quiz = ({ id, questions, isLesson }) => {
         )}
       </Box>
       <List className={styles.list}>{quiz}</List>
+      {callRequest && (
+        <RingingPhone active={joinCall} onApprove={callApproveHandler} student={student} />
+      )}
+      {callApprove && <MeetRoom roomId={id} />}
     </>
   );
 };
@@ -109,6 +115,7 @@ Quiz.propTypes = {
   id: PropTypes.string,
   questions: PropTypes.array,
   isLesson: PropTypes.bool,
+  student: PropTypes.object,
 };
 
 Quiz.defaultProps = {
