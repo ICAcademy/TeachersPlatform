@@ -7,3 +7,4 @@ export const REGEX_TIME = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
 export const REGEX_LABEL = /^[\w\s\-,\.:;()''""]{1,30}$/;
 export const REGEX_WORD = /^[a-zA-Z]{1,20}$/;
 export const REGEX_TRANSLATION = /^[А-ЩЬЮЯҐЄІЇа-щьюяґєії]{1,20}$/;
+export const REGEX_TODO = /^[a-zA-Z \-,\.:;()?!''""]{1,30}$/;

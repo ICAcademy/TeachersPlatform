@@ -1,0 +1,28 @@
+@import 'styles/colors.scss';
+
+.todo {
+  &__item {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    padding-left: 20px;
+    color: $darkGrey;
+    background-color: #f6f9fb;
+    border-radius: 5px;
+  }
+
+  &__complete {
+    text-decoration: line-through;
+  }
+
+  &__delete {
+    margin: 10px;
+    margin-left: 20px;
+  }
+}
