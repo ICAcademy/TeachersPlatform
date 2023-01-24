@@ -18,7 +18,7 @@ const UpcomingLessons = () => {
 
   const firstDayOfWeek = dayjs().day(1).format('YYYY/MM/D');
   const lastDayOfWeek = dayjs().day(7).format('YYYY/MM/D');
-
+  console.log(lessonsForWeek);
   useEffect(() => {
     fetchLessonsForWeek(roleId, firstDayOfWeek, lastDayOfWeek);
   }, [fetchLessonsForWeek, firstDayOfWeek, lastDayOfWeek, roleId]);
@@ -35,32 +35,38 @@ const UpcomingLessons = () => {
           </Link>
         </Button>
       </Box>
-      {lessonsForWeek.map((lesson) => (
-        <Box key={lesson._id} className={styles.eventBlock}>
-          <Box className={styles.lesson}>
-            <ListItemIcon>
-              <LabelImportantIcon />
-            </ListItemIcon>
-            <ListItemText primary={lesson.label} />
+      {lessonsForWeek.length === 0 ? (
+        <Typography sx={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
+          No lessons for week
+        </Typography>
+      ) : (
+        lessonsForWeek.map((lesson) => (
+          <Box key={lesson._id} className={styles.eventBlock}>
+            <Box className={styles.lesson}>
+              <ListItemIcon>
+                <LabelImportantIcon />
+              </ListItemIcon>
+              <ListItemText primary={lesson.label} />
+            </Box>
+            <Box className={styles.lesson}>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              {role === TEACHER_ROLE ? (
+                <ListItemText primary={lesson.studentId.fullName} />
+              ) : (
+                <ListItemText primary={lesson.teacherId.fullName} />
+              )}
+            </Box>
+            <Box className={styles.lesson}>
+              <ListItemIcon>
+                <CalendarTodayIcon />
+              </ListItemIcon>
+              <ListItemText primary={dayjs(lesson.date).format('dddd, D MMMM HH:mm')} />
+            </Box>
           </Box>
-          <Box className={styles.lesson}>
-            <ListItemIcon>
-              <PersonIcon />
-            </ListItemIcon>
-            {role === TEACHER_ROLE ? (
-              <ListItemText primary={lesson.studentId.fullName} />
-            ) : (
-              <ListItemText primary={lesson.teacherId.fullName} />
-            )}
-          </Box>
-          <Box className={styles.lesson}>
-            <ListItemIcon>
-              <CalendarTodayIcon />
-            </ListItemIcon>
-            <ListItemText primary={dayjs(lesson.date).format('dddd, D MMMM HH:mm')} />
-          </Box>
-        </Box>
-      ))}
+        ))
+      )}
     </Box>
   );
 };

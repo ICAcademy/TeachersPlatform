@@ -36,7 +36,7 @@ export const updateSubscription = async (id, subscription) => {
   return data;
 };
 
-export const getSubcriptionsCountByStatus = async (params) => {
+export const getSubscriptionsCountByStatus = async (params) => {
   const { data } = await API.get('/api/subscriptions', { params });
   return data;
 };
