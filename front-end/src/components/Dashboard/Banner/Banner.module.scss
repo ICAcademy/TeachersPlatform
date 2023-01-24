@@ -4,8 +4,11 @@
 .content {
   display: flex;
   justify-content: space-between;
-  width: 60%;
-  background: #8ed1fc;
+  width: 70%;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+  background: #58baab;
   padding: 30px;
   border-radius: 5px;
 }
@@ -75,12 +78,11 @@
 .totalCount {
   color: $grey200;
   margin-top: 5px;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .right {
   width: 250px;
-  height: 230px;
   transform: scale(1);
   transition: all 0.4s;
   padding: 0px 10px;
@@ -98,7 +100,12 @@
   margin-left: 20px;
 }
 
-.logoLetter {
+.logoLetterContainer {
   margin-top: 15px;
   margin-left: 60px;
+  width: 70px;
+}
+
+.logoLetter {
+  width: 100%;
 }

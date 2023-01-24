@@ -24,6 +24,17 @@ const Banner = () => {
   const [countOfStudents, setCountOfStudents] = useState();
   const [countOfTeachers, setCountOfTeachers] = useState();
   const [loading, setLoading] = useState(false);
+  const [showMedia, setShowMedia] = useState(true);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 700px)').matches) {
+        setShowMedia(true);
+      } else {
+        setShowMedia(false);
+      }
+    });
+  }, []);
 
   const getCountOfTeachers = async () => {
     setLoading(true);
@@ -55,7 +66,9 @@ const Banner = () => {
     >
       <div className={styles.left}>
         <div className={styles.info}>
-          <h1 className={styles.learn}>Learn With Effectively With Us!</h1>
+          <div className={styles.headerContainer}>
+            <h1 className={styles.learn}>Learn With Effectively With Us!</h1>
+          </div>
           <p className={styles.discount}>Get 30% off every course on january.</p>
         </div>
         <div className={styles.countOfUsers}>
@@ -97,22 +110,24 @@ const Banner = () => {
           </div>
         </div>
       </div>
-      <div className={styles.right}>
-        <div className={styles.images}>
-          <MouseParallaxChild className={styles.cloud} factorX={0.4} factorY={0.4}>
-            <img src={cloudBiggets} />
-          </MouseParallaxChild>
-          <MouseParallaxChild className={styles.layer} factorX={0.2} factorY={0.2}>
-            <img src={layer} />
-          </MouseParallaxChild>
-          <MouseParallaxChild className={styles.layer} factorX={0.4} factorY={0.4}>
-            <img src={cloudBig} />
+      {showMedia && (
+        <div className={styles.right}>
+          <div className={styles.images}>
+            <MouseParallaxChild className={styles.cloud} factorX={0.4} factorY={0.4}>
+              <img src={cloudBiggets} />
+            </MouseParallaxChild>
+            <MouseParallaxChild className={styles.layer} factorX={0.2} factorY={0.2}>
+              <img src={layer} />
+            </MouseParallaxChild>
+            <MouseParallaxChild className={styles.layer} factorX={0.4} factorY={0.4}>
+              <img src={cloudBig} />
+            </MouseParallaxChild>
+          </div>
+          <MouseParallaxChild className={styles.logoLetterContainer} factorX={0.1} factorY={0.1}>
+            <img className={styles.logoLetter} src={logoLetter} />
           </MouseParallaxChild>
         </div>
-        <MouseParallaxChild className={styles.logoLetter} factorX={0.1} factorY={0.1}>
-          <img src={logoLetter} />
-        </MouseParallaxChild>
-      </div>
+      )}
     </MouseParallaxContainer>
   );
 };
