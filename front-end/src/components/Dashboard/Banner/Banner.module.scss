@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   width: 60%;
-  background: #58baab;
+  background: #8ed1fc;
   padding: 30px;
   border-radius: 5px;
 }
@@ -76,4 +76,29 @@
   color: $grey200;
   margin-top: 5px;
   font-size: 13px;
+}
+
+.right {
+  width: 250px;
+  height: 230px;
+  transform: scale(1);
+  transition: all 0.4s;
+  padding: 0px 10px;
+}
+
+.images {
+  display: flex;
+}
+
+.cloud {
+  margin-top: 20px;
+}
+
+.layer {
+  margin-left: 20px;
+}
+
+.logoLetter {
+  margin-top: 15px;
+  margin-left: 60px;
 }
