@@ -31,7 +31,7 @@ const AgePreferences = ({ minAge, setMinAge, maxAge, setMaxAge, error }) => {
             type='number'
             label='Min Age'
             size='small'
-            error={error && minAge === ''}
+            error={error}
             helperText={error && minAge === '' ? 'Empty field!' : ' '}
           />
         </div>
@@ -45,8 +45,8 @@ const AgePreferences = ({ minAge, setMinAge, maxAge, setMaxAge, error }) => {
             type='number'
             label='Max Age'
             size='small'
-            error={error && maxAge === ''}
-            helperText={error && maxAge === '' ? 'Empty field!' : ' '}
+            error={error}
+            helperText={error && maxAge === '' ? 'Empty field!' : 'Age less than zero'}
           />
         </div>
       </div>
