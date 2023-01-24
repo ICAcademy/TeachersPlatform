@@ -55,7 +55,7 @@ const RouterWrapper = () => {
             </PrivateRoute>
           }
         >
-          <Route path='/app' element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
           <Route path='/app/profile' element={<Profile />}>
             <Route path='general-info' element={<GeneralInfo />} />
             <Route
