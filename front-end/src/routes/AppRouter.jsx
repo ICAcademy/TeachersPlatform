@@ -55,7 +55,14 @@ const RouterWrapper = () => {
             </PrivateRoute>
           }
         >
-          <Route index element={<Dashboard />} />
+          <Route
+            index
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
           <Route path='/app/profile' element={<Profile />}>
             <Route path='general-info' element={<GeneralInfo />} />
             <Route
@@ -108,6 +115,28 @@ const RouterWrapper = () => {
               <PrivateRoute>
                 <Topics />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path='/app/questions/edit/:id'
+            element={
+              isAuthenticated &&
+              currentUser.role === ADMIN_ROLE && (
+                <PrivateRoute>
+                  <Tests />
+                </PrivateRoute>
+              )
+            }
+          />
+          <Route
+            path='/app/questions/new'
+            element={
+              isAuthenticated &&
+              currentUser.role === ADMIN_ROLE && (
+                <PrivateRoute>
+                  <Tests />
+                </PrivateRoute>
+              )
             }
           />
           <Route

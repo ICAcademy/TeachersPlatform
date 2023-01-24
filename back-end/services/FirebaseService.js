@@ -12,16 +12,29 @@ admin.initializeApp({
 
 const storage = admin.storage().bucket();
 
-const uploadFile = async (file) => {
-  const name = await saltedMd5(file.originalname, 'SUPER-S@LT!');
-  const fileName = name + path.extname(file.originalname);
-  const fileToUpload = storage.file(fileName);
-  fileToUpload.createWriteStream().end(file.buffer);
-
-  const storageURL = fileToUpload.publicUrl();
-
-  return storageURL;
-};
+const uploadFile = (file) =>
+  new Promise((resolve, reject) => {
+    try {
+      const name = saltedMd5(file.originalname, 'SUPER-S@LT!');
+      const fileName = name + path.extname(file.originalname);
+      const fileToUpload = storage.file(fileName);
+      const fileStream = fileToUpload.createWriteStream({
+        public: true,
+        metadata: {
+          contentType: file.mimetype,
+        },
+      });
+      fileStream
+        .on('error', (err) => {
+          reject(err);
+        })
+        .on('finish', async () => {
+          const storageURL = fileToUpload.publicUrl();
+          resolve(storageURL);
+        })
+        .end(file.buffer);
+    } catch (error) {}
+  });
 
 const deleteFile = async (url) => {
   return await storage.file(url).delete();

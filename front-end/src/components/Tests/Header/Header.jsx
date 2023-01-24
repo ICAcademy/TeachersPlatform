@@ -4,8 +4,9 @@ import { TextField } from '@mui/material';
 
 // styles
 import styles from './Header.module.scss';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
-const Header = ({ level, setLevel, unit, setUnit, topic, setTopic, postInfo }) => {
+const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postInfo }) => {
   const handleChangeInput = (setFunc, event) => {
     setFunc(event.target.value);
   };
@@ -15,17 +16,30 @@ const Header = ({ level, setLevel, unit, setUnit, topic, setTopic, postInfo }) =
       <div className={styles.inputsContainer}>
         <div className={styles.itemContainer}>
           <div className={styles.inputContainer}>
-            <TextField
-              className={styles.input}
-              variant='outlined'
+            <FormControl
               size='small'
-              label='level'
-              autoFocus={level === '' && postInfo}
+              fullWidth
+              margin='normal'
+              variant='outlined'
               error={postInfo && level === ''}
-              helperText={postInfo && level === '' ? 'Empty field!' : ' '}
-              value={level}
-              onChange={(event) => handleChangeInput(setLevel, event)}
-            />
+            >
+              <InputLabel id='levels-select-label'>Level</InputLabel>
+              <Select
+                sx={{ marginBottom: '10px' }}
+                labelId='levels-select-label'
+                id='levels-select'
+                autoFocus={level === '' && postInfo}
+                value={level}
+                onChange={(event) => handleChangeInput(setLevel, event)}
+                label='Level'
+              >
+                {levels.map((level) => (
+                  <MenuItem key={level} value={level}>
+                    {level}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
         </div>
         <div className={styles.itemContainer}>
@@ -67,6 +81,8 @@ const Header = ({ level, setLevel, unit, setUnit, topic, setTopic, postInfo }) =
 export default Header;
 
 Header.propTypes = {
+  test: PropTypes.object,
+  levels: PropTypes.array,
   level: PropTypes.string,
   setLevel: PropTypes.func,
   unit: PropTypes.string,
