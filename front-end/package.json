@@ -45,6 +45,7 @@
     "socket.io-client": "^4.5.4",
     "suneditor": "^2.44.3",
     "suneditor-react": "^3.4.1",
+    "use-sound": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

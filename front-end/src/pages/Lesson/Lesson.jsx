@@ -61,7 +61,13 @@ const Lesson = () => {
         teacherImg={lesson.teacherId?.url}
         studentImg={lesson.studentId?.url}
       />
-      <Quiz id={id} questions={lesson.questions} isLesson={true} student={lesson.studentId} />
+      <Quiz
+        id={id}
+        questions={lesson.questions}
+        isLesson={true}
+        teacher={lesson.teacherId}
+        student={lesson.studentId}
+      />
     </>
   );
 };

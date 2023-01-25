@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { JitsiMeeting } from '@jitsi/react-sdk';
 import PropTypes from 'prop-types';
 
@@ -11,6 +11,7 @@ import styles from './MeetRoom.module.scss';
 // import VideoCallIcon from '@mui/icons-material/VideoCall';
 
 const MeetRoom = ({ roomId }) => {
+  const apiRef = useRef();
   // const [showNew, toggleShowNew] = useState(false);
 
   // const renderNewInstance = () => {
@@ -23,6 +24,15 @@ const MeetRoom = ({ roomId }) => {
   //   );
   // };
 
+  const handleUserJoined = () => {
+    console.log('user joined');
+  };
+
+  const handleApiReady = (apiObj) => {
+    apiRef.current = apiObj;
+    apiRef.current.on('participantJoined', handleUserJoined);
+  };
+
   const generateRoomName = () => `JitsiMeetRoomNo ${roomId}`;
   const { currentUser } = useContext(CurrentUserContext);
   return (
@@ -33,6 +43,7 @@ const MeetRoom = ({ roomId }) => {
           startAudioOnly: true,
           prejoinPageEnabled: false,
         }}
+        onApiReady={(externalApi) => handleApiReady(externalApi)}
         userInfo={{
           displayName: currentUser.fullName,
         }}
