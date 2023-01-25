@@ -42,13 +42,17 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
         preferences: agePreferences,
         socialMedias,
       };
-      if (language === '' || biography.length < 10 || minAge === '' || maxAge === '') {
-        setError(true);
-        snackbarShowMessage({
-          message: 'Error',
-          severity: 'error',
-        });
-        return;
+      if (language === '') {
+        throw new Error('You have not chosen language');
+      }
+      if (biography.length < 10) {
+        throw new Error('not enough info for biography');
+      }
+      if (minAge === '' || maxAge === '') {
+        throw new Error('You have not input age preferences');
+      }
+      if (minAge < 0 || maxAge < 0) {
+        throw new Error('Ages can not be less then zero');
       }
       await updateTeacher(currentUser.roleId, patchTeacher);
       snackbarShowMessage({
@@ -57,10 +61,12 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
       });
       return;
     } catch (error) {
+      setError(true);
       snackbarShowMessage({
         message: 'Error',
         severity: 'error',
       });
+      console.log('error', error);
     }
   };
 
