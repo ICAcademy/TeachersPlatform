@@ -87,8 +87,8 @@ export const SidebarList = ({ showSidebar }) => {
   }, [currentUser.roleId, dispatchFunction]);
 
   useEffect(() => {
-    fetchSubscriptionsCount(currentUser.roleId);
-  }, [currentUser.roleId]);
+    currentUser.role === STUDENT_ROLE && fetchSubscriptionsCount(currentUser.roleId);
+  }, [currentUser.role, currentUser.roleId]);
 
   const isActive = ({ isActive }) =>
     isActive ? `${styles.sidebarLink} ${styles.active}` : styles.sidebarLink;
@@ -108,7 +108,15 @@ export const SidebarList = ({ showSidebar }) => {
             Calendar
           </NavLink>
         </ListItem>
-        {subscriptionsCount !== 0 && (
+        {currentUser.role === TEACHER_ROLE && (
+          <ListItem className={styles.sidebarItem}>
+            <NavLink to='/app/materials' className={isActive} onClick={handlePathTo}>
+              <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
+              Materials
+            </NavLink>
+          </ListItem>
+        )}
+        {currentUser.role === STUDENT_ROLE && subscriptionsCount !== 0 && (
           <ListItem className={styles.sidebarItem}>
             <NavLink to='/app/materials' className={isActive} onClick={handlePathTo}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
