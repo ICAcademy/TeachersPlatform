@@ -96,7 +96,6 @@ const AddWord = ({ isLoading, createDictionary, selectError }) => {
             resetWord();
             resetTranslation();
           }}
-          type='submit'
           disabled={!wordIsValid || !translationIsValid || selectError}
         >
           Add

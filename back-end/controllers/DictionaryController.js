@@ -1,3 +1,6 @@
+// Sockets
+const { socket } = require('../listeners/Socket');
+
 // Helpers
 const dictionaryValidation = require.main.require('./helpers/dictionaryValidation');
 
@@ -27,6 +30,7 @@ exports.createDictionary = async (req, res) => {
     }
 
     const dictionary = await createDictionary(req.body);
+    socket('create_dictionary', dictionary);
     res.status(201).json(dictionary);
   } catch ({ message }) {
     res.status(400).json(message);
@@ -57,6 +61,7 @@ exports.getDictionary = async (req, res) => {
 exports.updateDictionary = async (req, res) => {
   try {
     const dictionary = await updateDictionary(req.params.id, req.body);
+    socket('update_dictionary', dictionary);
     res.json(dictionary);
   } catch ({ message }) {
     res.status(400).json(message);
@@ -66,6 +71,7 @@ exports.updateDictionary = async (req, res) => {
 exports.deleteDictionary = async (req, res) => {
   try {
     const dictionary = await deleteDictionary(req.params.id);
+    socket('delete_dictionary', req.params.id);
     res.json(dictionary);
   } catch ({ message }) {
     res.status(400).json(message);
