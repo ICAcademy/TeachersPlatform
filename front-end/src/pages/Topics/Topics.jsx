@@ -15,6 +15,12 @@ import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserContext } from 'context/AppProvider';
 import { getTeachersSubscription } from 'services/subscriptionService';
 
+const sx = {
+  startLessonBtn: {
+    ['@media (max-width: 768px)']: { width: '175px', fontSize: '13px', height: '40px' },
+  },
+};
+
 const Topics = () => {
   const [unitData, setUnitData] = useState([]);
   const [topicsData, setTopicsData] = useState([]);
@@ -123,7 +129,12 @@ const Topics = () => {
               ))}
             </Select>
           </FormControl>
-          <Button variant='contained' onClick={startLessonHandler} disabled={!canStartLesson}>
+          <Button
+            sx={sx.startLessonBtn}
+            variant='contained'
+            onClick={startLessonHandler}
+            disabled={!canStartLesson}
+          >
             Start lesson
           </Button>
         </Box>

@@ -98,7 +98,7 @@ const Questions = () => {
             onChange={handleCangeSearchUnit}
             InputProps={{
               endAdornment: (
-                <InputAdornment position='start'>
+                <InputAdornment position='end'>
                   <SearchOutlined />
                 </InputAdornment>
               ),
