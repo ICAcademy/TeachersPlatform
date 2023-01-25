@@ -6,12 +6,6 @@ import { MouseParallaxChild, MouseParallaxContainer } from 'react-parallax-mouse
 import { getAllTeacher } from 'services/teacherService';
 import { getAllStudents } from 'services/studentService';
 
-// assets
-import cloudBiggets from '../../../assets/images/cloudbiggest.webp';
-import layer from '../../../assets/images/parallaxlayer3.webp';
-import cloudBig from '../../../assets/images/cloudbig.webp';
-import logoLetter from '../../../assets/sidebar/logo-letter.png';
-
 // FontAwesome library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -114,18 +108,23 @@ const Banner = () => {
         <div className={styles.right}>
           <div className={styles.images}>
             <MouseParallaxChild className={styles.cloud} factorX={0.4} factorY={0.4}>
-              <img src={cloudBiggets} />
+              <div className={styles.school}></div>
             </MouseParallaxChild>
             <MouseParallaxChild className={styles.layer} factorX={0.2} factorY={0.2}>
-              <img src={layer} />
+              <div className={styles.learnSvg}></div>
             </MouseParallaxChild>
             <MouseParallaxChild className={styles.layer} factorX={0.4} factorY={0.4}>
-              <img src={cloudBig} />
+              <div className={styles.book}></div>
             </MouseParallaxChild>
           </div>
-          <MouseParallaxChild className={styles.logoLetterContainer} factorX={0.1} factorY={0.1}>
-            <img className={styles.logoLetter} src={logoLetter} />
-          </MouseParallaxChild>
+          <div className={styles.images}>
+            <MouseParallaxChild className={styles.logoLetterContainer} factorX={0.5} factorY={0.5}>
+              <div className={styles.graduater}></div>
+            </MouseParallaxChild>
+            <MouseParallaxChild className={styles.logoLetterContainer} factorX={0.5} factorY={0.5}>
+              <div className={styles.japanese}></div>
+            </MouseParallaxChild>
+          </div>
         </div>
       )}
     </MouseParallaxContainer>
