@@ -2,4 +2,10 @@
   display: flex;
   flex-wrap: wrap;
   margin: 0 -1.5rem;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
