@@ -3,6 +3,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Loader from 'components/common/Loader/Loader';
 import NoSubscriptions from 'components/Dashboard/NoSubscriptions/NoSubscriptions';
 import Todo from 'components/Dashboard/Todo/Todo';
+import UpcomingLessons from 'components/Dashboard/UpcomingLessons/UpcomingLessons';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
@@ -48,6 +49,7 @@ const Dashboard = () => {
     <>
       {role === STUDENT_ROLE && subscriptions === 0 && <NoSubscriptions />}
       {role === STUDENT_ROLE && <Todo />}
+      <UpcomingLessons />
     </>
   );
 };

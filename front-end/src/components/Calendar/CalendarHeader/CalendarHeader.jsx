@@ -29,7 +29,7 @@ const CalendarHeader = () => {
         <IconButton onClick={nextMonthHandler}>
           <ChevronRightIcon />
         </IconButton>
-        <Box component='span' sx={{ ml: '15px' }}>
+        <Box component='span' sx={{ ml: '15px', fontWeight: '600' }}>
           {monthAndYear}
         </Box>
       </Box>

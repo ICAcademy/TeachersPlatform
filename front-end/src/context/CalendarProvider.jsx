@@ -34,6 +34,7 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
   const [selectedMonthIdx, setSelectedMonthIdx] = useState(monthIdx);
   const [monthMatrix, setMonthMatrix] = useState([]);
   const [lessonsList, setLessonsList] = useState([]);
+  const [lessonsForWeek, setLessonsForWeek] = useState([]);
   const [selectedLesson, setSelectedLesson] = useState({});
   const [lessonFormIsOpen, setLessonFormIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -80,6 +81,16 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
       console.error(error);
     }
   }, [maxDate, minDate, roleId]);
+
+  const fetchLessonsForWeek = useCallback(async (id, minDate, maxDate) => {
+    try {
+      const params = { id, minDate, maxDate };
+      const lessons = await getAllScheduledLessons(params);
+      setLessonsForWeek(lessons);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   const createLesson = async (data, params) => {
     try {
@@ -212,6 +223,8 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
         prevMonthHandler,
         currentMonthHandler,
         isLoading,
+        fetchLessonsForWeek,
+        lessonsForWeek,
       }}
     >
       {children}
