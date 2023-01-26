@@ -1,14 +1,46 @@
 @import 'styles/colors.scss';
-.subcriptionItem {
+@import 'styles/font.scss';
+
+.subscriptionItem {
   display: flex;
   justify-content: space-between;
   padding: 1rem;
   border-bottom: 1px solid rgba(101, 113, 179, 0.07);
   transition: 0.5s;
 
+  @media screen and (max-width: 725px) {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
   .itemPart {
     display: flex;
     align-items: center;
+
+    @media screen and (max-width: 480px) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .btnWrap {
+    display: flex;
+    align-items: center;
+
+    @media screen and (max-width: 480px) {
+      align-self: end;
+    }
+
+    & svg {
+      @media screen and (max-width: 768px) {
+        font-size: $f20;
+      }
+    }
   }
 
   .itemPart > * {
@@ -16,20 +48,27 @@
   }
 
   .itemInfo {
-    min-width: 280px;
-
     .infoItem {
       display: flex;
       align-items: center;
 
+      @media screen and (max-width: 768px) {
+        font-size: $f14;
+      }
+
       .infoIcon {
         margin-right: 10px;
+
+        @media screen and (max-width: 768px) {
+          margin-right: 5px;
+          font-size: $f16;
+        }
       }
     }
   }
 
   &:hover {
-    background-color: #f0f3f6;
+    background-color: $seashell;
   }
 
   .badgeDot {
@@ -39,23 +78,27 @@
     border-radius: 100%;
     line-height: 1.3;
     font-size: 85%;
-    background-color: #fec801;
-    color: #ffffff;
+    background-color: $citrine;
+    color: $white;
 
     &.approved {
-      background-color: #58baab;
+      background-color: $silverTree;
     }
 
     &.reject {
-      background-color: #f2426d;
+      background-color: $watermelon;
     }
   }
 
   .userName {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: $fw600;
     position: relative;
     display: inline-block;
+
+    @media screen and (max-width: 768px) {
+      font-size: $f16;
+    }
 
     .statusValue {
       position: absolute;
@@ -63,23 +106,27 @@
       top: -10px;
       font-size: 0.75rem;
       font-weight: 300;
-      border: 1px solid #fec801;
-      background-color: #fec801;
-      color: #ffffff;
+      border: 1px solid $citrine;
+      background-color: $citrine;
+      color: $white;
       padding: 0 4px 3px 4px;
       border-radius: 5px;
       display: block;
 
+      @media screen and (max-width: 768px) {
+        font-size: 0.65rem;
+      }
+
       &.approved {
-        background-color: #58baab;
-        color: #ffffff;
-        border: 1px solid #58baab;
+        background-color: $silverTree;
+        color: $white;
+        border: 1px solid $silverTree;
       }
 
       &.reject {
-        background-color: #f2426d;
-        color: #ffffff;
-        border: 1px solid #f2426d;
+        background-color: $watermelon;
+        color: $white;
+        border: 1px solid $watermelon;
       }
     }
   }
@@ -87,6 +134,11 @@
   .avatar {
     width: 55px;
     height: 55px;
+
+    @media screen and (max-width: 768px) {
+      width: 45px;
+      height: 45px;
+    }
 
     img {
       width: 100%;
@@ -103,28 +155,40 @@
     border-radius: 5px;
     cursor: pointer;
 
+    @media screen and (max-width: 768px) {
+      padding: 0.280rem 0.55rem;
+      font-size: 0.800rem;
+    }
+
     &.success {
-      background-color: #d7f3ef;
-      border-color: #d7f3ef;
-      color: #58baab;
+      margin-right: 10px;
+      background-color: $iceberg;
+      border-color: $iceberg;
+      color: $silverTree;
 
       &.approved {
-        background-color: #3ea898;
-        border-color: #3ea898;
-        color: #ffffff;
+        background-color: $mint;
+        border-color: $mint;
+        color: $white;
       }
     }
 
     &.decline {
-      background-color: #fcecf1;
-      border-color: #fcecf1;
-      color: #f2426d;
+      background-color: $merino;
+      border-color: $merino;
+      color: $watermelon;
 
       &.reject {
-        background-color: #da224f;
-        border-color: #da224f;
-        color: #ffffff;
+        background-color: $amaranth;
+        border-color: $amaranth;
+        color: $white;
       }
+    }
+  }
+
+  .level {
+    @media screen and (max-width: 768px) {
+      font-size: $f14;
     }
   }
 
@@ -136,7 +200,7 @@
     cursor: pointer;
 
     svg {
-      color: #4f4f4f;
+      color: $liver;
       width: 100%;
     }
   }

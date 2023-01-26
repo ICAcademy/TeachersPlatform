@@ -1,11 +1,14 @@
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
+
 td {
   text-align: center;
   padding: 1rem;
   vertical-align: middle;
-  color: #a1a4b5;
-  font-weight: 400;
+  color: $santaGrey;
+  font-weight: $fw400;
 }
 
 .statusLabel span {
-  color: #fff;
+  color: $white;
 }

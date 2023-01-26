@@ -1,9 +1,9 @@
 @import '../../../styles/colors.scss';
 
 .units {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.5rem -0.75rem 0;
 }
 
 .notFoundData {
