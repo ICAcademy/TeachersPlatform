@@ -1,20 +1,26 @@
 .contentWrapper {
   background-color: transparent;
-  margin: 0 0 50px 20rem;
+  margin-left: 20rem;
   padding: 50px 2rem 0;
   box-sizing: border-box;
 }
 
 @media screen and (max-width: 1280px) {
   .contentWrapper {
-    margin: 0 0 50px 15rem;
+    margin-left: 15rem;
     padding: 2rem;
   }
 }
 
 @media screen and (max-width: 1024px) {
   .contentWrapper {
-    margin: 0 0 50px 0;
+    margin-left: 0;
     padding: 2rem 15px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .contentWrapper {
+    overflow-x: auto;
   }
 }

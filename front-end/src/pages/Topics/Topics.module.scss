@@ -1,6 +1,10 @@
 .wrapper {
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .topics {
@@ -31,6 +35,10 @@
     margin-top: 20px;
     margin-bottom: 20px;
     padding-left: 15px;
+
+    @media screen and (max-width: 768px) {
+      margin-top: 30px;
+    }
   }
 }
 
@@ -43,5 +51,9 @@
 
   &:hover {
     color: #9000ff;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: none;
   }
 }

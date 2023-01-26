@@ -39,7 +39,7 @@ import styles from './SidebarList.module.scss';
 import Badge from '@mui/material/Badge';
 
 // Constants
-import { STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
+import { STUDENT_ROLE } from 'constants/userRoles';
 import { getSubscriptionsCountByStatus } from 'services/subscriptionService';
 import { APPROVED, PENDING } from 'constants/subscriptionStatuses';
 
@@ -87,8 +87,8 @@ export const SidebarList = ({ showSidebar }) => {
   }, [currentUser.roleId, dispatchFunction]);
 
   useEffect(() => {
-    fetchSubscriptionsCount(currentUser.roleId);
-  }, [currentUser.roleId]);
+    currentUser.role === STUDENT_ROLE && fetchSubscriptionsCount(currentUser.roleId);
+  }, [currentUser.role, currentUser.roleId]);
 
   const isActive = ({ isActive }) =>
     isActive ? `${styles.sidebarLink} ${styles.active}` : styles.sidebarLink;
@@ -108,7 +108,7 @@ export const SidebarList = ({ showSidebar }) => {
             Calendar
           </NavLink>
         </ListItem>
-        {subscriptionsCount !== 0 && (
+        {currentUser.role !== STUDENT_ROLE && (
           <ListItem className={styles.sidebarItem}>
             <NavLink to='/app/materials' className={isActive} onClick={handlePathTo}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
@@ -116,7 +116,15 @@ export const SidebarList = ({ showSidebar }) => {
             </NavLink>
           </ListItem>
         )}
-        {currentUser.role === TEACHER_ROLE && (
+        {currentUser.role === STUDENT_ROLE && subscriptionsCount !== 0 && (
+          <ListItem className={styles.sidebarItem}>
+            <NavLink to='/app/materials' className={isActive} onClick={handlePathTo}>
+              <FontAwesomeIcon className={styles.sidebarIcon} icon={faBook} />
+              Materials
+            </NavLink>
+          </ListItem>
+        )}
+        {currentUser.role !== STUDENT_ROLE && (
           <ListItem className={styles.sidebarItem}>
             <NavLink to='/app/questions' className={isActive}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />

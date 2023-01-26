@@ -106,20 +106,23 @@
   }
 }
 
-.forgotPasswordContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 75px;
-  width: 55%;
-}
+.forgotPasswordWrap {
+  margin: 15px 0 10px 0;
 
-.forgotPassword {
-  font-size: $f14;
-  color: $vividViolet;
-  font-weight: $fw600;
-  margin-left: 5px;
-  &:hover {
-    color: $softPurple;
+  & a {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  & span {
+    font-size: $f12;
+    color: $vividViolet;
+    font-weight: $fw500;
+    margin-left: 5px;
+
+    &:hover {
+      color: $softPurple;
+    }
   }
 }

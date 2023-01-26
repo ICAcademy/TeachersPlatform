@@ -95,7 +95,11 @@ const ScheduledLessons = ({ list }) => {
                   <ListItemIcon sx={sx.icon}>
                     <PersonIcon />
                   </ListItemIcon>
-                  <ListItemText primary={lesson.studentId.fullName} />
+                  <ListItemText
+                    primary={
+                      role === TEACHER_ROLE ? lesson.studentId.fullName : lesson.teacherId.fullName
+                    }
+                  />
                 </Box>
               </ListItem>
             ))}

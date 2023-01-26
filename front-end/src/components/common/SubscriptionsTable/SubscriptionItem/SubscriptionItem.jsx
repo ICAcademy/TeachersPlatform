@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { pendingSubscriptionsCount } from 'store/pending-subscriptions-slice';
 
-//Components
+// Components
 import ChangeLevel from 'components/ChangeLevel/ChangeLevel';
 
 // Services
@@ -96,13 +96,12 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
   }, [subscription._id, dispatchFunction, subscription.teacherID]);
 
   return (
-    <div className={styles.subcriptionItem}>
+    <div className={styles.subscriptionItem}>
       <div className={styles.itemPart}>
         <div className={`${styles.badgeDot} ${statusClass}`}></div>
         <div className={styles.avatar}>
           <img src={subscription.studentID.url || noAvatar} />
         </div>
-
         <div className={styles.itemInfo}>
           <div className={styles.userName}>
             {role === STUDENT_ROLE
@@ -111,7 +110,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
             {status && <span className={`${styles.statusValue} ${statusClass}`}>{status}</span>}
           </div>
           {role === TEACHER_ROLE && (
-            <div>
+            <div className={styles.level}>
               {level ? level : 'No level'}
               <div className={styles.editIcon} onClick={() => setIsOpen(true)}>
                 <EditIcon />
@@ -134,7 +133,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
           </div>
         </div>
       </div>
-      <div className={styles.itemPart}>
+      <div className={styles.btnWrap}>
         {role === STUDENT_ROLE && (
           <Button variant='contained' size='small' onClick={() => onDelete(subscription._id)}>
             Unsubscribe
@@ -158,7 +157,6 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
             Decline
           </div>
         )}
-
         <div>
           <ChangeLevel
             isOpen={isOpen}
@@ -168,7 +166,6 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
             changeLevel={changeLevelHandler}
           />
         </div>
-
         <IconButton aria-label='delete' onClick={handleDelete}>
           <DeleteIcon />
         </IconButton>
