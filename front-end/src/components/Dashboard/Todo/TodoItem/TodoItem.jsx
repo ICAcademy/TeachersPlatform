@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styles from './TodoItem.module.scss';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-const TodoItem = ({ id, description, isComplete, handleChange, handleDelete }) => {
+const TodoItem = ({ id, description, isComplete, handleChange, handleDelete, filtered }) => {
   return (
     <Box className={styles.todo__item}>
       <Box className={styles.todo__info}>
@@ -16,11 +16,13 @@ const TodoItem = ({ id, description, isComplete, handleChange, handleDelete }) =
           sx={{ ml: 'auto' }}
         />
       </Box>
-      <Box className={styles.todo__delete}>
-        <IconButton edge='end' aria-label='delete' onClick={() => handleDelete(id)}>
-          <DeleteOutlineIcon />
-        </IconButton>
-      </Box>
+      {!filtered && (
+        <Box className={styles.todo__delete}>
+          <IconButton edge='end' aria-label='delete' onClick={() => handleDelete(id)}>
+            <DeleteOutlineIcon />
+          </IconButton>
+        </Box>
+      )}
     </Box>
   );
 };
@@ -31,6 +33,7 @@ TodoItem.propTypes = {
   isComplete: PropTypes.bool,
   handleChange: PropTypes.func,
   handleDelete: PropTypes.func,
+  filtered: PropTypes.bool,
 };
 
 export default TodoItem;

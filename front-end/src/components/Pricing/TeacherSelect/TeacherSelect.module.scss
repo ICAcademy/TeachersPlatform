@@ -1,17 +1,26 @@
+@import 'styles/colors.scss';
+@import 'styles/font.scss';
+
 .teacherSelector {
   display: flex;
   align-items: center;
 
   h3 {
-    background-color: #ffffff;
+    background-color: $white;
     border-radius: 5px;
     padding: 10px 15px;
     box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
-    font-weight: 400;
-    color: #7f839a;
+    font-weight: $fw400;
+    color: $steel;
     position: relative;
     margin-left: 10px;
     display: none;
+
+    
+    @media screen and (max-width: 768px) {
+      text-align: center;
+      font-size: $f16;
+    }
 
     &:before {
       position: absolute;
@@ -23,7 +32,7 @@
       height: 0;
       border-style: solid;
       border-width: 10px 14px 10px 0;
-      border-color: transparent #ffffff transparent transparent;
+      border-color: transparent $white transparent transparent;
     }
 
     &.noValue {

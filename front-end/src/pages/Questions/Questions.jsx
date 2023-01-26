@@ -71,7 +71,13 @@ const Questions = () => {
   const { data, loading } = useFetchUnits(isEdit, searching, selectedLevel, 'question');
 
   const saveTestBtn = isAuthenticated && currentUser.role === ADMIN_ROLE && (
-    <Button component={Link} to='/app/questions/new' variant='contained' endIcon={<Add />}>
+    <Button
+      component={Link}
+      className={styles.createBtn}
+      to='/app/questions/new'
+      variant='contained'
+      endIcon={<Add />}
+    >
       Create new test
     </Button>
   );
@@ -92,13 +98,13 @@ const Questions = () => {
             }}
             className={styles.input}
             variant='outlined'
-            label='search unit'
+            label='Search unit'
             size='small'
             value={searchUnitName}
             onChange={handleCangeSearchUnit}
             InputProps={{
               endAdornment: (
-                <InputAdornment position='start'>
+                <InputAdornment position='end'>
                   <SearchOutlined />
                 </InputAdornment>
               ),

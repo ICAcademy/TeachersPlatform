@@ -19,6 +19,9 @@ import { TEACHER_ROLE } from 'constants/userRoles';
 // HOC
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
+// Socket
+import { socket } from 'services/socketService';
+
 // Components
 import Table from 'components/Dictionary/Table';
 import AddWord from 'components/Dictionary/AddWord';
@@ -73,8 +76,7 @@ const Dictionary = ({ snackbarShowMessage }) => {
   const handleCreateDictionary = async (word, translation) => {
     try {
       setIsLoading(true);
-      const newInstance = await createDictionary({ word, translation, studentId: getId() });
-      setWords((prev) => [newInstance, ...prev]);
+      await createDictionary({ word, translation, studentId: getId() });
       snackbarShowMessage({
         message: 'Created word!',
         severity: 'success',
@@ -98,14 +100,11 @@ const Dictionary = ({ snackbarShowMessage }) => {
       const dictionaryOfStudent = await getDictionaryByStudentId({ studentId: getId() });
       setWords(dictionaryOfStudent);
     } catch (error) {
-      snackbarShowMessage({
-        message: 'Something went wrong!',
-        severity: 'error',
-      });
+      return error;
     } finally {
       setIsLoading(false);
     }
-  }, [getId, snackbarShowMessage]);
+  }, [getId]);
 
   const searchByWord = useCallback(async () => {
     try {
@@ -135,62 +134,107 @@ const Dictionary = ({ snackbarShowMessage }) => {
     }
   }, [searchByWord, searchWord]);
 
-  const handleUpdateDictionary = async (id, data) => {
-    try {
-      setIsLoading(true);
-      const updatedWord = await updateDictionary(id, data);
-      const updatedDictionary = words.map((item) => {
-        return item._id === id ? updatedWord : item;
-      });
-      setWords(updatedDictionary);
-      snackbarShowMessage({
-        message: 'Successfully updated!',
-        severity: 'success',
-      });
-    } catch (error) {
-      snackbarShowMessage({
-        message: 'Something went wrong!',
-        severity: 'error',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handleUpdateDictionary = useCallback(
+    async (id, data) => {
+      try {
+        setIsLoading(true);
+        await updateDictionary(id, data);
+        snackbarShowMessage({
+          message: 'Successfully updated!',
+          severity: 'success',
+        });
+      } catch (error) {
+        snackbarShowMessage({
+          message: 'Something went wrong!',
+          severity: 'error',
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [snackbarShowMessage],
+  );
 
-  const deleteWordById = async (id) => {
-    try {
-      await deleteDictionary(id);
-      const updatedDictionary = words.filter((word) => word._id !== id);
-      setWords(updatedDictionary);
-      snackbarShowMessage({
-        message: 'Successfully deleted!',
-        severity: 'success',
-      });
-    } catch (error) {
-      snackbarShowMessage({
-        message: 'Something went wrong!',
-        severity: 'error',
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (selectedStudentId !== '' && searchWord === '') {
-      fetchDictionary();
-    }
-  }, [fetchDictionary, searchWord, selectedStudentId]);
+  const deleteWordById = useCallback(
+    async (id) => {
+      try {
+        await deleteDictionary(id);
+        snackbarShowMessage({
+          message: 'Successfully deleted!',
+          severity: 'success',
+        });
+      } catch (error) {
+        snackbarShowMessage({
+          message: 'Something went wrong!',
+          severity: 'error',
+        });
+      }
+    },
+    [snackbarShowMessage],
+  );
 
   useEffect(() => {
-    if (!isTeacher && searchWord === '') {
-      fetchDictionary();
+    if (searchWord === '') {
+      if (selectedStudentId !== '' || !isTeacher) {
+        fetchDictionary();
+      }
     }
-  }, [fetchDictionary, isTeacher, searchWord]);
+  }, [fetchDictionary, isTeacher, searchWord, selectedStudentId]);
 
   useEffect(() => {
     if (isTeacher) {
       fetchSubscriptions(roleId);
     }
   }, [fetchSubscriptions, isTeacher, roleId]);
+
+  const fnSetWords = useCallback(
+    (data) => {
+      if (
+        data?.studentId === roleId ||
+        (role === TEACHER_ROLE && selectedStudentId === data?.studentId)
+      ) {
+        setWords((prev) => [data, ...prev]);
+      }
+    },
+    [role, roleId, selectedStudentId],
+  );
+
+  useEffect(() => {
+    socket.on('create_dictionary', (data) => fnSetWords(data));
+
+    return () => {
+      socket.removeAllListeners('create_dictionary');
+    };
+  }, [fnSetWords]);
+
+  const fnUpdateDictionary = useCallback(
+    (data) => {
+      const updatedDictionary = words.map((item) => {
+        return item._id === data._id ? data : item;
+      });
+      setWords(updatedDictionary);
+    },
+    [words],
+  );
+
+  useEffect(() => {
+    socket.on('update_dictionary', (data) => fnUpdateDictionary(data));
+
+    return () => {
+      socket.removeAllListeners('update_dictionary');
+    };
+  }, [fnUpdateDictionary]);
+
+  useEffect(() => {
+    socket.on('delete_dictionary', (id) => {
+      const updatedDictionary = words.filter((word) => word._id !== id);
+      setWords(updatedDictionary);
+    });
+
+    return () => {
+      socket.removeAllListeners('delete_dictionary');
+    };
+  }, [words]);
 
   return isLoading ? (
     <Loader />

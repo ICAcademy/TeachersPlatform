@@ -1,6 +1,6 @@
 const Todo = require('../models/Todo');
 
-const getAllTodoById = async (id) => await Todo.find({ studentId: id }).sort('-createdAt');
+const getAllTodoById = async (id) => await Todo.find({ creatorId: id }).sort('-createdAt');
 const getSingleTodoById = async (id) => await Todo.findById(id);
 const createNewTodo = async (body) => await Todo.create(body);
 const updateTodoById = async (id, body) =>

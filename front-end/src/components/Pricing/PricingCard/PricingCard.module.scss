@@ -1,9 +1,19 @@
 @import 'styles/colors.scss';
+@import 'styles/font.scss';
 
 .financesCard {
   flex: 0 0 auto;
   width: 33.3333333333%;
   margin-bottom: 50px;
+
+  @media screen and (max-width: 768px) {
+    width: 75%;
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
 
   .cardBody {
     padding: 1.5rem;
@@ -11,45 +21,45 @@
     margin: 1.5rem;
     border-radius: 5px;
     box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
-    border: 1px solid #f0f3f6;
-    background-color: #fff;
+    border: 1px solid $seashell;
+    background-color: $white;
   }
 
   h4 {
     font-size: 1.35rem;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: $fw500;
     margin-bottom: 35px;
   }
 
   .cardIcon {
-    font-size: 22px;
+    font-size: $f22;
     box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
     height: 60px;
     display: inline-block;
     width: 60px;
     line-height: 56px;
     border-radius: 50%;
-    background-color: #ecc9e6;
+    background-color: $paleLilac;
     color: $softPurple;
     margin-bottom: 35px;
   }
 
   .cardPricing {
     font-size: 1.75rem;
-    font-weight: 400;
+    font-weight: $fw400;
     margin-bottom: 15px;
 
     span {
       font-size: 40%;
-      color: #7f839a;
+      color: $steel;
       letter-spacing: 2px;
       text-transform: uppercase;
     }
   }
 
   p {
-    color: #7f839a;
+    color: $steel;
     margin-bottom: 35px;
   }
 
@@ -62,11 +72,11 @@
   .teacherRow {
     font-size: 1.25rem;
     margin-bottom: 25px;
-    font-weight: 300;
+    font-weight: $fw300;
 
     .bage {
       display: inline-block;
-      background-color: #ecc9e6;
+      background-color: $paleLilac;
       min-width: 100px;
       height: 28px;
       vertical-align: middle;

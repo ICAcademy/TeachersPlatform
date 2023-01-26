@@ -16,6 +16,19 @@ const AgePreferences = ({ minAge, setMinAge, maxAge, setMaxAge, error }) => {
     setMaxAge(event.target.value);
   };
 
+  const errorShow = (age) => {
+    if (age === '') {
+      return 'Empty field!';
+    } else if (age < 0) {
+      return 'Age can not be less than zero';
+    }
+
+    return '';
+  };
+
+  const errMin = errorShow(minAge);
+  const errMax = errorShow(maxAge);
+
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -31,8 +44,8 @@ const AgePreferences = ({ minAge, setMinAge, maxAge, setMaxAge, error }) => {
             type='number'
             label='Min Age'
             size='small'
-            error={error && minAge === ''}
-            helperText={error && minAge === '' ? 'Empty field!' : ' '}
+            error={error}
+            helperText={error && errMin}
           />
         </div>
         <span className={styles.range}>-</span>
@@ -45,8 +58,8 @@ const AgePreferences = ({ minAge, setMinAge, maxAge, setMaxAge, error }) => {
             type='number'
             label='Max Age'
             size='small'
-            error={error && maxAge === ''}
-            helperText={error && maxAge === '' ? 'Empty field!' : ' '}
+            error={error}
+            helperText={error && errMax}
           />
         </div>
       </div>

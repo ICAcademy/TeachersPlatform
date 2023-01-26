@@ -87,7 +87,7 @@ const GeneralInfo = ({ snackbarShowMessage }) => {
       const file = e.target.files[0];
       const url = await uploadPhoto(file);
       const updatedUser = await updateUserById(currentUser._id, { url });
-      setCurrentUser(updatedUser);
+      setCurrentUser(updatedUser.user);
       setIsLoading(false);
     } catch (error) {
       console.log(error);

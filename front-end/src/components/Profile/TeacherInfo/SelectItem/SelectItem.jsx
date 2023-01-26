@@ -25,6 +25,7 @@ const SelectItem = ({ nameSelect, value, setValue, selectArray }) => {
             id='demo-simple-select'
             value={value}
             label='language'
+            size='small'
             onChange={handleChange}
           >
             {selectArray.map((language) => {
