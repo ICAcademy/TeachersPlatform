@@ -5,7 +5,6 @@
   display: flex;
   width: 100%;
   background: $white;
-  height: 100px;
   align-items: center;
 }
 
@@ -13,14 +12,14 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 1130px;
+  width: 55%;
   margin: 0 auto;
 }
 
 .logoContainer {
   display: flex;
   align-self: center;
-  width: 130px;
+  width: 15%;
 }
 
 .button {
@@ -34,7 +33,7 @@
 }
 
 .menuContainer {
-  margin-left: 100px;
+  margin-left: 10%;
 }
 
 .menu {
@@ -44,11 +43,10 @@
   color: $purple;
   text-decoration: none;
   font-weight: $fw500;
-  line-height: 50px;
+  line-height: 80px;
   font-size: $f18;
   text-transform: capitalize;
   justify-content: center;
-  margin: 0px 0px;
 }
 
 .itemMenu {
@@ -83,7 +81,6 @@
     background: $darkPurple;
     color: $white;
     transition: all 0.5s ease-out;
-    color: $white;
   }
 }
 

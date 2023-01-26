@@ -1,0 +1,85 @@
+@import 'styles/colors.scss';
+@import '../../../styles/font.scss';
+
+.container {
+  display: flex;
+  position: fixed;
+  width: 15%;
+  background: $white;
+  height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.logoContainer {
+  display: flex;
+  align-self: center;
+  width: 80%;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.menuContainer {
+  margin-top: 40px;
+}
+
+.menu {
+  list-style-type: none;
+  color: $purple;
+  text-decoration: none;
+  font-weight: $fw500;
+  line-height: 50px;
+  font-size: $f22;
+  text-transform: capitalize;
+  justify-content: center;
+}
+
+.itemMenu {
+  cursor: pointer;
+  border-top: 1px solid $grey200;
+  border-bottom: 1px solid $grey200;
+  width: 100%;
+  padding: 20px;
+}
+
+.sign {
+  text-decoration: none;
+  color: $purple;
+}
+
+.logInOutContainer {
+  width: 100%;
+  font-weight: $fw500;
+  line-height: 50px;
+  font-size: $f22;
+  text-transform: capitalize;
+  justify-content: center;
+  background: $lightPurple;
+  border-top: 1px solid $grey200;
+  border-bottom: 1px solid $grey200;
+  padding: 20px;
+}
+
+.logOutContainer {
+  width: 100%;
+  font-weight: $fw500;
+  line-height: 50px;
+  font-size: $f22;
+  text-transform: capitalize;
+  justify-content: center;
+  background: $darkPurple;
+  border-top: 1px solid $grey200;
+  border-bottom: 1px solid $grey200;
+  padding: 20px;
+}
+
+.logInOut {
+  cursor: pointer;
+  color: $purple;
+  width: 100%;
+}
