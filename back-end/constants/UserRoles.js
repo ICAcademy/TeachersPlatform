@@ -1,2 +1,2 @@
-exports.TEACHER = 'teacher';
-exports.STUDENT = 'student';
+exports.TEACHER = 'Teacher';
+exports.STUDENT = 'Student';

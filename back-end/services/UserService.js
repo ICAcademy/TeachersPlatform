@@ -1,7 +1,10 @@
 const User = require('../models/User');
 
 const findByEmail = async (email) => {
-  const user = await User.findOne({ email }).select(['-password']);
+  const user = await User.findOne({ email }).select(['-password']).populate({
+    path: 'roleId',
+    select: 'level',
+  });
   return user;
 };
 

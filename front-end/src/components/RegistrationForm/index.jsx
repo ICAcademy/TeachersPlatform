@@ -36,7 +36,7 @@ import styles from './RegistrationForm.module.scss';
 
 const RegistrationForm = () => {
   const [data, setData] = useState({
-    role: 'student',
+    role: 'Student',
     fullName: '',
     dateOfBirth: '',
     email: '',
@@ -130,7 +130,7 @@ const RegistrationForm = () => {
 
   const handleChangeActive = (tab) => {
     setActiveTab(tab);
-    setData((prev) => ({ ...prev, role: `${tab === 0 ? 'student' : 'teacher'}` }));
+    setData((prev) => ({ ...prev, role: `${tab === 0 ? 'Student' : 'Teacher'}` }));
   };
 
   return (

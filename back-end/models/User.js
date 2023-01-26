@@ -9,6 +9,7 @@ const userSchema = new Schema(
     },
     roleId: {
       type: Schema.Types.ObjectId,
+      refPath: 'role',
     },
     fullName: {
       type: String,

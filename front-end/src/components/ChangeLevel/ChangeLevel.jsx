@@ -20,7 +20,7 @@ const style = {
   justifyContent: 'center',
 };
 
-const ChangeLevel = ({ isOpen, handleIsClose, level, changeLevel }) => {
+const ChangeLevel = ({ isOpen, handleIsClose, level, changeLevel, studentName }) => {
   const [selectedLevel, setSelectedLevel] = useState(level || '');
   const [levels, setLevels] = useState([]);
 
@@ -50,7 +50,7 @@ const ChangeLevel = ({ isOpen, handleIsClose, level, changeLevel }) => {
     <Modal open={isOpen} onClose={handleIsClose}>
       <Box sx={style}>
         <Typography variant='h5' marginBottom='30px'>
-          Student Name
+          {studentName}
         </Typography>
         <FormControl sx={{ width: '100%' }}>
           <Select
@@ -91,6 +91,7 @@ ChangeLevel.propTypes = {
   handleIsClose: PropTypes.func,
   level: PropTypes.string,
   changeLevel: PropTypes.func,
+  studentName: PropTypes.string,
 };
 
 export default ChangeLevel;
