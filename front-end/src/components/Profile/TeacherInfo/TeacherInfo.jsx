@@ -50,7 +50,7 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
         });
         return;
       }
-      await updateTeacher(currentUser.roleId, patchTeacher);
+      await updateTeacher(currentUser.roleId._id, patchTeacher);
       snackbarShowMessage({
         message: 'Changes saved',
         severity: 'success',
@@ -66,7 +66,7 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
 
   const getTeacherFromUser = useCallback(async () => {
     try {
-      const teacher = await getTeacher(currentUser.roleId);
+      const teacher = await getTeacher(currentUser.roleId._id);
       const agePreferences = teacher.preferences.split(' ');
       setLanguage(teacher.language);
       setBiography(teacher.biography);
@@ -77,7 +77,7 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [currentUser.roleId]);
+  }, [currentUser.roleId._id]);
 
   useEffect(() => {
     getTeacherFromUser();

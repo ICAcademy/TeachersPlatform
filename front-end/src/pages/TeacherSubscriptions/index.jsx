@@ -43,7 +43,7 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
         return subscription._id === id;
       });
       const remove = await deleteSubscription(necessarySubscription._id);
-      await fetchSubscriptions(currentUser.roleId);
+      await fetchSubscriptions(currentUser.roleId._id);
       setIsLoading(false);
       snackbarShowMessage({
         message: 'Subscription removed',
@@ -57,16 +57,16 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
   };
 
   useEffect(() => {
-    fetchSubscriptions(currentUser?.roleId);
+    fetchSubscriptions(currentUser?.roleId._id);
   }, [currentUser]);
 
   useEffect(() => {
     socket.on('create_subscription', (data) => {
-      if (data.teacher._id === currentUser.roleId) {
-        fetchSubscriptions(currentUser?.roleId);
+      if (data.teacher._id === currentUser.roleId._id) {
+        fetchSubscriptions(currentUser?.roleId._id);
       }
     });
-  }, [currentUser?.roleId]);
+  }, [currentUser?.roleId._id]);
 
   useEffect(() => {
     socket.on('delete_subscription', (data) => {
@@ -74,10 +74,10 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
         return subscription._id === data;
       });
       if (deletedSubscription) {
-        fetchSubscriptions(currentUser.roleId);
+        fetchSubscriptions(currentUser.roleId._id);
       }
     });
-  }, [currentUser.roleId, subscriptions]);
+  }, [currentUser.roleId._id, subscriptions]);
 
   return (
     <div className={styles.wrapper}>
