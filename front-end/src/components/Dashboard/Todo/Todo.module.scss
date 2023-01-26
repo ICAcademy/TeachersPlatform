@@ -9,9 +9,14 @@
   border-radius: 10px;
   box-shadow: 0 0 35px 0 rgb(154 161 171 / 25%);
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+  }
+
   &__title {
-    padding-top: 15px;
-    padding-left: 15px;
     border-bottom: 1px solid #f6f9fb;
   }
 

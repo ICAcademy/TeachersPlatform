@@ -18,7 +18,7 @@ const UpcomingLessons = () => {
 
   const firstDayOfWeek = dayjs().day(1).format('YYYY/MM/D');
   const lastDayOfWeek = dayjs().day(7).format('YYYY/MM/D');
-  console.log(lessonsForWeek);
+
   useEffect(() => {
     fetchLessonsForWeek(roleId, firstDayOfWeek, lastDayOfWeek);
   }, [fetchLessonsForWeek, firstDayOfWeek, lastDayOfWeek, roleId]);
