@@ -91,9 +91,7 @@
 .images {
   display: flex;
   width: 100%;
-  @media (min-width: 2000px) {
-    margin-left: 300px;
-  }
+  margin-left: 300px;
 }
 
 .cloudBigContainer {
@@ -150,8 +148,8 @@
 .flatBackgroundContainer {
   width: 55%;
   z-index: 1;
-  @media (max-width: 2000px) {
-    max-width: 45%;
+  @media (max-width: 1800px) {
+    max-width: 55%;
   }
   filter: saturate(90%);
 }
