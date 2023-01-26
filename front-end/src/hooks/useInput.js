@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(isBetween);
@@ -16,6 +16,14 @@ const useInput = (type, value, regex) => {
 
   let valueIsValid;
   let valueChangeHandler;
+
+  const syncValue = (value) => {
+    setEnteredValue(value);
+  };
+
+  useEffect(() => {
+    syncValue(value);
+  }, [value]);
 
   switch (type) {
     case 'date':
@@ -35,6 +43,9 @@ const useInput = (type, value, regex) => {
       valueIsValid = regex.test(enteredValue);
       valueChangeHandler = (e) => {
         setEnteredValue(e.target.value);
+        if (!e.target.value) {
+          setIsTouched(false);
+        }
       };
       break;
   }
@@ -47,7 +58,11 @@ const useInput = (type, value, regex) => {
   const hasError = !valueIsValid && isTouched;
 
   const valueOnBlurHandler = () => {
-    setIsTouched(true);
+    if (enteredValue !== '') {
+      setIsTouched(true);
+    } else {
+      setIsTouched(false);
+    }
   };
 
   return {

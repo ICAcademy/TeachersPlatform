@@ -15,15 +15,19 @@ import styles from './Main.module.scss';
 
 const Main = () => {
   return (
-    <div className={styles.container}>
-      <Header />
-      <Welcome />
-      <GrandMaster />
-      <AdditionalResources />
-      <DegreeProgram />
-      <Activity />
-      <Teacher />
-      <Footer />
+    <div>
+      <div className={styles.container}>
+        <Header />
+        <Welcome />
+        <GrandMaster />
+        <AdditionalResources />
+        <DegreeProgram />
+        <Activity />
+        <Teacher />
+      </div>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import dayjs from 'dayjs';
@@ -21,11 +21,6 @@ const dateFormat = 'YYYY/MM/D';
 
 const year = dayjs().year();
 const monthIdx = dayjs().month();
-const firstDay = dayjs().startOf('M').format('D');
-const lastDay = dayjs().endOf('M').format('D');
-
-const minDate = dayjs(new Date(year, monthIdx, firstDay)).format(dateFormat);
-const maxDate = dayjs(new Date(year, monthIdx, lastDay)).format(dateFormat);
 
 const sortLessonsByDate = (list) =>
   list.sort((prev, curr) => dayjs(prev.date).diff(dayjs(curr.date)));
@@ -39,41 +34,63 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
   const [selectedMonthIdx, setSelectedMonthIdx] = useState(monthIdx);
   const [monthMatrix, setMonthMatrix] = useState([]);
   const [lessonsList, setLessonsList] = useState([]);
+  const [lessonsForWeek, setLessonsForWeek] = useState([]);
   const [selectedLesson, setSelectedLesson] = useState({});
   const [lessonFormIsOpen, setLessonFormIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [formError, setFormError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const monthAndYear = dayjs(new Date(dayjs().year(), selectedMonthIdx)).format('MMMM YYYY');
-  const monthName = dayjs(new Date(dayjs().year(), selectedMonthIdx)).format('MMM');
+  const firstDay = dayjs(new Date(year, selectedMonthIdx)).startOf('M').format('D');
+  const lastDay = dayjs(new Date(year, selectedMonthIdx)).endOf('M').format('D');
 
-  const fetchStudents = async (id) => {
+  const minDate = dayjs(new Date(year, selectedMonthIdx, firstDay)).format(dateFormat);
+  const maxDate = dayjs(new Date(year, selectedMonthIdx, lastDay)).format(dateFormat);
+
+  const monthAndYear = dayjs(new Date(year, selectedMonthIdx)).format('MMMM YYYY');
+  const monthName = dayjs(new Date(year, selectedMonthIdx)).format('MMM');
+
+  const fetchStudents = useCallback(async () => {
     try {
-      const list = await getTeachersSubscription(id);
+      setIsLoading(true);
+      const list = await getTeachersSubscription(roleId);
       const studentsList = list.map((item) => ({
         id: item.studentID._id,
         fullName: item.studentID.fullName,
       }));
       setStudentsList(studentsList);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [roleId]);
 
   const getLessonsForDay = (date) =>
     lessonsList.filter(
       (lesson) => dayjs(lesson.date).format('YYYY/MM/DD') === date.format('YYYY/MM/DD'),
     );
 
-  const fetchLessons = async (id) => {
+  const fetchLessons = useCallback(async () => {
     try {
-      const params = { id, minDate, maxDate };
+      setIsLoading(true);
+      const params = { id: roleId, minDate, maxDate };
       const lessons = await getAllScheduledLessons(params);
       setLessonsList(lessons);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [maxDate, minDate, roleId]);
+
+  const fetchLessonsForWeek = useCallback(async (id, minDate, maxDate) => {
+    try {
+      const params = { id, minDate, maxDate };
+      const lessons = await getAllScheduledLessons(params);
+      setLessonsForWeek(lessons);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   const createLesson = async (data, params) => {
     try {
@@ -178,20 +195,15 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
     setMonthMatrix(getMonthMatrix(selectedMonthIdx));
   }, [selectedMonthIdx]);
 
-  useEffect(() => {
-    if (roleId) {
-      fetchLessons(roleId);
-      fetchStudents(roleId);
-    }
-  }, [roleId]);
-
   return (
     <CalendarContext.Provider
       value={{
         role,
         roleId,
         studentsList,
+        fetchStudents,
         isEditing,
+        fetchLessons,
         selectedLesson,
         getLessonsForDay,
         createLesson,
@@ -204,13 +216,15 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
         formError,
         monthMatrix,
         selectedMonthIdx,
+        setSelectedMonthIdx,
         monthAndYear,
         monthName,
         nextMonthHandler,
         prevMonthHandler,
         currentMonthHandler,
-        minDate,
-        maxDate,
+        isLoading,
+        fetchLessonsForWeek,
+        lessonsForWeek,
       }}
     >
       {children}

@@ -77,11 +77,11 @@ const Transactions = () => {
     const data = transactions.items.map((item) => {
       const userData = JSON.parse(item.dae);
       return [
+        userData.fullName,
+        userData.userId,
         item.transaction_id,
         item.end_date,
         item.amount + item.currency,
-        userData.fullName,
-        userData.userId,
         userData.teacher,
         item.status,
       ];
@@ -136,11 +136,11 @@ const Transactions = () => {
         <table ref={tableRef}>
           <thead>
             <tr className={styles.headerRow}>
-              <th>Trasaction ID</th>
-              <th>Transaction Date</th>
-              <th>Ammount</th>
               <th>User</th>
               <th>User ID</th>
+              <th>Transaction ID</th>
+              <th>Transaction Date</th>
+              <th>Amount</th>
               <th>Teacher</th>
               <th>Status</th>
             </tr>
@@ -150,30 +150,30 @@ const Transactions = () => {
             {noTransactions}
           </tbody>
         </table>
-        <div className={styles.pagination}>
-          <ul className={styles.paginationList}>
-            <li className={page === 1 ? styles.disabled : ''} onClick={handlePrev}>
-              Previous
-            </li>
-            {Array(pageCount)
-              .fill()
-              .map((_, index) => {
-                return (
-                  <li
-                    key={index}
-                    className={page == index + 1 ? styles.active : ''}
-                    data-index={index + 1}
-                    onClick={changePageHandle}
-                  >
-                    {index + 1}
-                  </li>
-                );
-              })}
-            <li className={page === pageCount ? styles.disabled : ''} onClick={handleNext}>
-              Next
-            </li>
-          </ul>
-        </div>
+      </div>
+      <div className={styles.pagination}>
+        <ul className={styles.paginationList}>
+          <li className={page === 1 ? styles.disabled : ''} onClick={handlePrev}>
+            Previous
+          </li>
+          {Array(pageCount)
+            .fill()
+            .map((_, index) => {
+              return (
+                <li
+                  key={index}
+                  className={page == index + 1 ? styles.active : ''}
+                  data-index={index + 1}
+                  onClick={changePageHandle}
+                >
+                  {index + 1}
+                </li>
+              );
+            })}
+          <li className={page === pageCount ? styles.disabled : ''} onClick={handleNext}>
+            Next
+          </li>
+        </ul>
       </div>
     </div>
   );

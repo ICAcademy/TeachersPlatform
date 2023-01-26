@@ -1,50 +1,59 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 // components
 import Banner from 'components/Dashboard/Banner/Banner';
-
-// styles
-import styles from './Dashboard.module.scss';
-
-import NoSubscriptions from 'components/NoSubscriptions/NoSubscriptions';
 import Loader from 'components/common/Loader/Loader';
+import NoSubscriptions from 'components/Dashboard/NoSubscriptions/NoSubscriptions';
+import Todo from 'components/Dashboard/Todo/Todo';
+import UpcomingLessons from 'components/Dashboard/UpcomingLessons/UpcomingLessons';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
 import { getSubscriptionsCountByStatus } from 'services/subscriptionService';
 import { socket } from 'services/socketService';
 
+import { STUDENT_ROLE } from 'constants/userRoles';
+import { APPROVED } from 'constants/subscriptionStatuses';
+
 const Dashboard = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    currentUser: { roleId },
+    currentUser: { roleId, role },
   } = useContext(CurrentUserContext);
 
-  const fetchSubscriptionsCount = async (id) => {
-    try {
-      setIsLoading(true);
-      const response = await getSubscriptionsCountByStatus({ statusName: 'approved', id });
-      setSubscriptions(response);
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const fetchSubscriptionsCount = useCallback(
+    async (id = roleId) => {
+      try {
+        setIsLoading(true);
+        const response = await getSubscriptionsCountByStatus({ statusName: APPROVED, id });
+        setSubscriptions(response);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [roleId],
+  );
 
   useEffect(() => {
-    fetchSubscriptionsCount(roleId);
-    socket.on('subscription:updated', (id) => id === roleId && fetchSubscriptionsCount(roleId));
-  }, [roleId]);
+    role === STUDENT_ROLE && fetchSubscriptionsCount();
+  }, [fetchSubscriptionsCount, role]);
 
-  return (
-    <div>
-      <div className={styles.content}>
-        <Banner />
-      </div>
-      <div>{isLoading ? <Loader /> : subscriptions === 0 && <NoSubscriptions />}</div>
-    </div>
+  useEffect(() => {
+    socket.on('subscription:updated', (id) => id === roleId && fetchSubscriptionsCount(roleId));
+  }, [roleId, fetchSubscriptionsCount]);
+
+  return isLoading ? (
+    <Loader />
+  ) : (
+    <>
+      <Banner />
+      {role === STUDENT_ROLE && subscriptions === 0 && <NoSubscriptions />}
+      {role === STUDENT_ROLE && <Todo />}
+      <UpcomingLessons />
+    </>
   );
 };
 

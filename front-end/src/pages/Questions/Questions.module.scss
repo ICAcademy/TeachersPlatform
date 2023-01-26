@@ -3,8 +3,78 @@
   justify-content: space-between;
 }
 
+.input {
+  margin-left: 15px !important;
+
+  label {
+    font-size: 0.9rem;
+    line-height: 1em;
+  }
+
+  input {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  & svg {
+    font-size: 19px;
+  }
+}
+
 .navigationRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 1680px) {
+  .questionsHeader {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .createBtn {
+    margin-top: 20px !important;
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .input {
+    width: 260px !important;
+
+    label {
+      font-size: 0.6rem;
+      line-height: 0.8em;
+    }
+
+    input {
+      font-size: 0.6rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .questionsHeader {
+    justify-content: center;
+  }
+
+  .navigationRow {
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .createBtn {
+    font-size: 0.65rem;
+  }
+
+  .input {
+    width: 100% !important;
+    margin: 15px 0 0 0 !important;
+
+    & svg {
+      font-size: 16px;
+      padding: auto;
+    }
+  }
 }

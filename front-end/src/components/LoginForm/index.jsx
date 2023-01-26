@@ -144,12 +144,17 @@ const LoginForm = () => {
                   ),
                 }}
               />
+              <div className={styles.forgotPasswordWrap}>
+                <Link to='/reset-password'>
+                  <span>Forgot password?</span>
+                </Link>
+              </div>
               <Button
                 disabled={isDisabledBtn}
                 onClick={handleSubmit}
                 type='submit'
                 variant='contained'
-                sx={{ margin: '15px 0', bgcolor: '#7c08ff' }}
+                sx={{ margin: '5px 0 15px 0', bgcolor: '#7c08ff' }}
               >
                 Sign in
               </Button>
@@ -172,11 +177,6 @@ const LoginForm = () => {
             <p>Don&apos;t have an account?</p>
             <Link className={styles.link} to='/registration'>
               <span>Sign Up</span>
-            </Link>
-          </div>
-          <div className={styles.forgotPasswordContainer}>
-            <Link className={styles.link} to='/reset-password'>
-              <span className={styles.forgotPassword}>Forgot Password</span>
             </Link>
           </div>
         </div>

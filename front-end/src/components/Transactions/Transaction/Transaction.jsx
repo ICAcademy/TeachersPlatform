@@ -19,11 +19,11 @@ const Transaction = ({ transaction }) => {
   const statusLabel = <Chip className={styles.statusLabel} label={status} color='success' />;
 
   const transactionData = [
+    userData.fullName,
+    userData.userId,
     transaction_id,
     formattedDate,
     amountWithCurrency,
-    userData.fullName,
-    userData.userId,
     userData.teacher,
     statusLabel,
   ];

@@ -8,7 +8,7 @@ import { getLevels } from 'services/MaterialsService/MaterialsService';
 const style = {
   position: 'absolute',
   top: '50%',
-  right: '30%',
+  left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 320,
   bgcolor: 'background.paper',
