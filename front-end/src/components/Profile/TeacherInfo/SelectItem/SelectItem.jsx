@@ -17,7 +17,7 @@ const SelectItem = ({ nameSelect, value, setValue, selectArray }) => {
   };
   return (
     <div className={styles.container}>
-      <Box sx={{ minWidth: 120 }}>
+      <Box>
         <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>{nameSelect}</InputLabel>
           <Select
