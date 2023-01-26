@@ -81,7 +81,8 @@
 }
 
 .right {
-  width: 50%;
+  width: 54%;
+  height: 200px;
   @media (max-width: 2000px) {
     width: 100%;
   }
@@ -90,49 +91,55 @@
 .images {
   display: flex;
   width: 100%;
-  margin-left: 300px;
+  @media (min-width: 2000px) {
+    margin-left: 300px;
+  }
 }
 
 .cloudBigContainer {
-  width: 40px;
+  width: 70px;
   position: absolute;
-  margin-top: 5px;
+  margin-top: 6px;
   margin-left: 80px;
 }
 
 .cloudBig1Container {
-  width: 40px;
+  width: 60px;
   position: absolute;
-  margin-top: 5px;
-  margin-left: 160px;
+  margin-top: 25px;
+  margin-left: 180px;
 }
 
 .cloudBiggestContainer {
-  width: 40px;
+  width: 48px;
   position: absolute;
-  margin-top: 8px;
-  margin-left: 230px;
+  margin-top: 17px;
+  margin-left: 220px;
+  z-index: 1;
 }
 
 .student1Container {
-  width: 50px;
+  width: 40px;
   position: absolute;
-  margin-top: 60px;
-  margin-left: 60px;
+  margin-top: 83px;
+  margin-left: 50px;
+  z-index: 2;
 }
 
 .student2Container {
   width: 30px;
   position: absolute;
-  margin-top: 60px;
-  margin-left: 180px;
+  margin-top: 86px;
+  margin-left: 150px;
+  z-index: 2;
 }
 
 .student3Container {
-  width: 30px;
+  width: 28px;
   position: absolute;
-  margin-top: 60px;
-  margin-left: 250px;
+  margin-top: 82px;
+  margin-left: 260px;
+  z-index: 2;
 }
 
 .student1 {
@@ -142,7 +149,9 @@
 
 .flatBackgroundContainer {
   width: 55%;
+  z-index: 1;
   @media (max-width: 2000px) {
-    width: 70%;
+    max-width: 45%;
   }
+  filter: saturate(90%);
 }
