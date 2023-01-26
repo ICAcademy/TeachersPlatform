@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(isBetween);
@@ -16,6 +16,14 @@ const useInput = (type, value, regex) => {
 
   let valueIsValid;
   let valueChangeHandler;
+
+  const syncValue = (value) => {
+    setEnteredValue(value);
+  };
+
+  useEffect(() => {
+    syncValue(value);
+  }, [value]);
 
   switch (type) {
     case 'date':

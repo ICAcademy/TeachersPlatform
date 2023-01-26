@@ -20,7 +20,8 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 const style = {
   position: 'absolute',
   top: '50%',
-  left: '50%',
+  left: '61%',
+  ['@media (max-width: 1024px)']: { left: '50%' },
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
@@ -38,6 +39,7 @@ const style = {
 };
 
 const newPasswordAgainHelperText = 'Passwords do not match';
+const newPasswordHelperText = 'Enter min 8 and max 10 characters; example: Jerry77)';
 
 const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
   const { currentUser } = useContext(CurrentUserContext);
@@ -156,6 +158,7 @@ const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
             onChange={newPasswordChangeHandler}
             onBlur={newPasswordBlurHandler}
             error={newPasswordHasError}
+            helperText={newPasswordHasError ? newPasswordHelperText : ''}
             InputLabelProps={{ shrink: true }}
             InputProps={{
               endAdornment: (
