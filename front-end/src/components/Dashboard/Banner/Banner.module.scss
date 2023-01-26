@@ -3,7 +3,6 @@
 
 .content {
   display: flex;
-  justify-content: space-between;
   width: 70%;
   @media (max-width: 600px) {
     width: 100%;
@@ -82,90 +81,68 @@
 }
 
 .right {
-  width: 250px;
-  transform: scale(1);
-  transition: all 0.4s;
-  padding: 0px 10px;
+  width: 50%;
+  @media (max-width: 2000px) {
+    width: 100%;
+  }
 }
 
 .images {
   display: flex;
-}
-
-.cloud {
-  margin-top: 20px;
-}
-
-.layer {
-  margin-left: 20px;
-}
-
-.logoLetterContainer {
-  margin-top: 15px;
-  margin-left: 60px;
-  width: 70px;
-}
-
-.logoLetter {
   width: 100%;
+  margin-left: 300px;
 }
 
-.learnSvg {
-  background-image: url('../../../assets/svg/learn.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 50px;
-  height: 50px;
-  margin-top: 10px;
-}
-
-.graduater {
-  background-image: url('../../../assets/svg/graduater.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 50px;
-  height: 50px;
-  margin-top: 10px;
-}
-
-.book {
-  background-image: url('../../../assets/svg/book.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 50px;
-  height: 50px;
-  margin-top: 10px;
-}
-
-.school {
-  background-image: url('../../../assets/svg/school.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 50px;
-  height: 50px;
+.cloudBigContainer {
+  width: 40px;
+  position: absolute;
   margin-top: 5px;
+  margin-left: 80px;
 }
 
-.japanese {
-  background-image: url('../../../assets/svg/japanese.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.cloudBig1Container {
+  width: 40px;
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 160px;
+}
+
+.cloudBiggestContainer {
+  width: 40px;
+  position: absolute;
+  margin-top: 8px;
+  margin-left: 230px;
+}
+
+.student1Container {
   width: 50px;
-  height: 50px;
-  margin-top: 4px;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 60px;
 }
 
-.studentsSvg {
-  background-image: url('../../../assets/svg/custom-30.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 210px;
-  height: 180px;
-  margin-top: 4px;
+.student2Container {
+  width: 30px;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 180px;
+}
+
+.student3Container {
+  width: 30px;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 250px;
+}
+
+.student1 {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.flatBackgroundContainer {
+  width: 55%;
+  @media (max-width: 2000px) {
+    width: 70%;
+  }
 }
