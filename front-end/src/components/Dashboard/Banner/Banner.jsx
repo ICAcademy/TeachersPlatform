@@ -11,10 +11,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap, faUser } from '@fortawesome/free-solid-svg-icons';
 
 // assets
-import student1 from '../../../assets/images/student1.png';
-import student2 from '../../../assets/images/student2.png';
-import student3 from '../../../assets/images/student3.png';
-import flatBackground from '../../../assets/images/city.png';
+import studentBoy from '../../../assets/images/student1.png';
+import studentGirlAfroAmerican from '../../../assets/images/student2.png';
+import studentGirl from '../../../assets/images/student3.png';
+import city from '../../../assets/images/city.png';
 import cloudBig from '../../../assets/images/cloudbig.webp';
 import cloudBiggest from '../../../assets/images/cloudbiggest.webp';
 
@@ -115,34 +115,42 @@ const Banner = () => {
           resetOnLeave
         >
           <div className={styles.images}>
-            <MouseParallaxChild
-              className={styles.flatBackgroundContainer}
-              factorX={0.15}
-              factorY={0.15}
-            >
-              <img className={styles.student1} src={flatBackground} />
+            <MouseParallaxChild className={styles.cityContainer} factorX={0.15} factorY={0.15}>
+              <img className={styles.img} src={city} />
             </MouseParallaxChild>
             <MouseParallaxChild className={styles.cloudBigContainer} factorX={0.08} factorY={0.08}>
-              <img className={styles.student1} src={cloudBig} />
+              <img className={styles.img} src={cloudBig} />
             </MouseParallaxChild>
             <MouseParallaxChild
               className={styles.cloudBiggestContainer}
               factorX={0.1}
               factorY={0.1}
             >
-              <img className={styles.student1} src={cloudBiggest} />
+              <img className={styles.img} src={cloudBiggest} />
             </MouseParallaxChild>
             <MouseParallaxChild className={styles.cloudBig1Container} factorX={0.07} factorY={0.07}>
-              <img className={styles.student1} src={cloudBig} />
+              <img className={styles.img} src={cloudBig} />
             </MouseParallaxChild>
-            <MouseParallaxChild className={styles.student1Container} factorX={0.07} factorY={0.09}>
-              <img className={styles.student1} src={student1} />
+            <MouseParallaxChild
+              className={styles.studentBoyContainer}
+              factorX={0.07}
+              factorY={0.09}
+            >
+              <img className={styles.img} src={studentBoy} />
             </MouseParallaxChild>
-            <MouseParallaxChild className={styles.student2Container} factorX={0.1} factorY={0.08}>
-              <img className={styles.student1} src={student2} />
+            <MouseParallaxChild
+              className={styles.studentGirlAfroAmericanContainer}
+              factorX={0.1}
+              factorY={0.08}
+            >
+              <img className={styles.img} src={studentGirlAfroAmerican} />
             </MouseParallaxChild>
-            <MouseParallaxChild className={styles.student3Container} factorX={0.09} factorY={0.1}>
-              <img className={styles.student1} src={student3} />
+            <MouseParallaxChild
+              className={styles.studentGirlContainer}
+              factorX={0.09}
+              factorY={0.1}
+            >
+              <img className={styles.img} src={studentGirl} />
             </MouseParallaxChild>
           </div>
         </MouseParallaxContainer>

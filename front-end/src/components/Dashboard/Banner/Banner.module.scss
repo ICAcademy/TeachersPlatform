@@ -116,7 +116,7 @@
   z-index: 1;
 }
 
-.student1Container {
+.studentBoyContainer {
   width: 40px;
   position: absolute;
   margin-top: 83px;
@@ -124,7 +124,7 @@
   z-index: 2;
 }
 
-.student2Container {
+.studentGirlAfroAmericanContainer {
   width: 30px;
   position: absolute;
   margin-top: 86px;
@@ -132,7 +132,7 @@
   z-index: 2;
 }
 
-.student3Container {
+.studentGirlContainer {
   width: 28px;
   position: absolute;
   margin-top: 82px;
@@ -140,12 +140,11 @@
   z-index: 2;
 }
 
-.student1 {
+.img {
   width: 100%;
-  border-radius: 5px;
 }
 
-.flatBackgroundContainer {
+.cityContainer {
   width: 55%;
   z-index: 1;
   @media (max-width: 1800px) {
