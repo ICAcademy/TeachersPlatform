@@ -13,9 +13,9 @@ const Timer = ({ running }) => {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime + 10);
       }, 10);
-    } else if (!running) {
-      clearInterval(interval);
+      return;
     }
+    clearInterval(interval);
     return () => clearInterval(interval);
   }, [running]);
 

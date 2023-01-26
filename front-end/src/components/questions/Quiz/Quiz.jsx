@@ -55,6 +55,7 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
 
   const callToUserHandler = () => {
     playBoop();
+    setIsLoading(true);
     socket.emit('lesson:call-request', { roomId: id, userId: _id });
   };
 
@@ -97,6 +98,8 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
           severity: 'error',
         });
         setIsUserJoined(false);
+      } else {
+        setIsLoading(true);
       }
       stop();
     });
