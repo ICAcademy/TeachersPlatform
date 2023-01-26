@@ -114,30 +114,32 @@ const Teacher = ({ teacher }) => {
   }, [subscriptions, teacherSubscription]);
 
   return (
-    <div className={`${styles.wrapper} ${!teacherInformation ? styles.addHeightParameter : ''}`}>
+    <div className={styles.wrapper}>
       {isLoader ? (
         <Loader />
       ) : (
         <>
           <div className={styles.contentWrap}>
+            <div className={styles.imageWrap}>
+              <img src={teacher.url ? teacher.url : teacherPhoto} alt='teacher' />
+            </div>
+          </div>
+          <div className={styles.descriptionWrap}>
+            <div className={styles.description}>
+              <h1 className={styles.title}>{teacher.fullName}</h1>
+              <span>{`${teacher.language || 'English'} teacher`}</span>
+            </div>
+          </div>
+          <div className={styles.iconsAndEmailWrap}>
             <div className={styles.iconsWrap}>
               <FontAwesomeIcon icon={faFacebookF} />
               <FontAwesomeIcon icon={faTwitter} />
               <FontAwesomeIcon icon={faInstagram} />
               <FontAwesomeIcon icon={faLinkedinIn} />
             </div>
-            <div className={styles.imageWrap}>
-              <img src={teacher.url ? teacher.url : teacherPhoto} alt='teacher' />
-            </div>
             <div className={styles.shareWrap}>
               <FontAwesomeIcon icon={faSquareEnvelope} />
               <span>{teacher.email}</span>
-            </div>
-          </div>
-          <div className={styles.descriptionWrap}>
-            <div className={styles.description}>
-              <h1>{teacher.fullName}</h1>
-              <span>{`${teacher.language || 'English'} teacher`}</span>
             </div>
           </div>
           <div className={styles.infoWrap}>
