@@ -53,3 +53,7 @@ exports.getMaterialByUrl = async (url) => {
     url: { $eq: url },
   });
 };
+
+exports.matchMaterials = async (data) => {
+  return await MaterialModel.find({ level: data.level, unit: data.unit });
+};

@@ -14,6 +14,12 @@ exports.getAllMaterials = async (req, res) => {
 
 exports.createMaterial = async (req, res) => {
   try {
+    const findMaterial = await materialService.matchMaterials(req.body);
+
+    if (findMaterial.length !== 0) {
+      throw new Error('This material already exist');
+    }
+
     const material = await materialService.createMaterial(req.body);
     res.json(material);
   } catch (err) {

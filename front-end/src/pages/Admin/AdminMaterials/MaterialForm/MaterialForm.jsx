@@ -101,9 +101,10 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
       const imageUrl = await uploadImage(data);
       setImgUrl(imageUrl);
       setSaveBtn(true);
-      setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      return error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -130,18 +131,32 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
   const saveMaterialHandler = async () => {
     try {
       setIsLoading(true);
+      let newMaterial;
+
       if (create) {
-        await createMaterial(materialData);
+        newMaterial = await createMaterial(materialData);
       } else {
-        await updateMaterial(material._id, materialData);
+        newMaterial = await updateMaterial(material._id, materialData);
       }
-      setIsLoading(false);
+
+      if (!newMaterial) {
+        throw new Error();
+      }
+
       snackbarShowMessage({
         message: 'Material saved',
         severity: 'success',
       });
     } catch (error) {
-      console.log(error);
+      snackbarShowMessage({
+        message:
+          error.response.data.error === 'This material already exist'
+            ? error.response.data.error
+            : 'Something went wrong',
+        severity: 'error',
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -158,7 +173,7 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
       deleteMaterial(material._id);
       navigate('/app/materials', { state: 'delete' });
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
