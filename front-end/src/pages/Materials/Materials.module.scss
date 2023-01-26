@@ -5,6 +5,20 @@
 
 .materialsSearch {
   margin-left: 15px !important;
+
+  label {
+    font-size: 0.9rem;
+    line-height: 1em;
+  }
+
+  input {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  & svg {
+    font-size: 19px;
+  }
 }
 
 .navigationRow {
@@ -46,6 +60,10 @@
 
   .navigationRow {
     flex-direction: column;
+  }
+
+  .createBtn {
+    font-size: 0.65rem;
   }
 
   .materialsSearch {
