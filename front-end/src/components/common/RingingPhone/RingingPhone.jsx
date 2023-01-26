@@ -1,13 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-//Constants
+// Components
+import DotsSpinner from '../DotsSpinner/DotsSpinner';
+import Timer from 'components/Timer/Timer';
+
+// Constants
 import { TEACHER_ROLE, STUDENT_ROLE } from 'constants/userRoles';
 
 // Styles
 import styles from './RingingPhone.module.scss';
 
-const RingingPhone = ({ active, onApprove, onDecline, student, teacher, role, isCallingUser }) => {
+const RingingPhone = ({
+  active,
+  role,
+  student,
+  teacher,
+  isCallingUser,
+  timer,
+  onApprove,
+  onDecline,
+  onLoading,
+  onJoining,
+}) => {
   const callApproveHandler = () => {
     onApprove(true);
   };
@@ -18,19 +33,24 @@ const RingingPhone = ({ active, onApprove, onDecline, student, teacher, role, is
 
   let callingMessage = '';
 
-  if (isCallingUser && role === TEACHER_ROLE) {
+  const callingUser = isCallingUser && !onLoading && !onJoining;
+  const receiveUser = !isCallingUser && !onLoading && !onJoining;
+
+  if (callingUser && role === TEACHER_ROLE) {
     callingMessage = `Call to ${student.fullName}...`;
-  } else if (isCallingUser && role === STUDENT_ROLE) {
+  } else if (callingUser && role === STUDENT_ROLE) {
     callingMessage = `Call to ${teacher.fullName}...`;
-  } else if (!isCallingUser && role === TEACHER_ROLE) {
+  } else if (receiveUser && role === TEACHER_ROLE) {
     callingMessage = `${student.fullName} is calling...`;
-  } else if (!isCallingUser && role === STUDENT_ROLE) {
+  } else if (receiveUser && role === STUDENT_ROLE) {
     callingMessage = `${teacher.fullName} is calling...`;
+  } else if (onLoading && !onJoining) {
+    callingMessage = 'Connecting...Please wait';
+  } else if (!onLoading && onJoining) {
+    callingMessage = 'Connected';
   } else {
     callingMessage = 'Call...';
   }
-
-  //isCallingUser && TEACHER_ROLE ? 'Call to student...' : ``${student.fullName} is calling...``;
 
   return (
     <div className={styles.ringingPhone}>
@@ -44,7 +64,7 @@ const RingingPhone = ({ active, onApprove, onDecline, student, teacher, role, is
           <img src={role === TEACHER_ROLE ? student.url : teacher.url} alt='' width='135' />
         </div>
         <div className={styles.phoneBtns}>
-          {active && !isCallingUser && (
+          {active && !isCallingUser && !onLoading && !onJoining && (
             <div className={styles.phoneBtn} onClick={callApproveHandler}>
               <svg height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'>
                 <path d='M0 0h24v24H0z' fill='none' />
@@ -52,11 +72,9 @@ const RingingPhone = ({ active, onApprove, onDecline, student, teacher, role, is
               </svg>
             </div>
           )}
-          {isCallingUser && (
-            <div className={styles.dotsWaiting}>
-              <div className={styles.dotElastic}></div>
-            </div>
-          )}
+          {onLoading && !onJoining && <DotsSpinner />}
+          {isCallingUser && !onJoining && <DotsSpinner />}
+          {onJoining && <Timer running={timer} />}
           <div className={`${styles.phoneBtn} ${styles.declineCall}`} onClick={declineCallHandler}>
             <svg height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'>
               <path d='M0 0h24v24H0z' fill='none' />
@@ -77,6 +95,9 @@ RingingPhone.propTypes = {
   teacher: PropTypes.object,
   role: PropTypes.string,
   isCallingUser: PropTypes.bool,
+  onLoading: PropTypes.bool,
+  onJoining: PropTypes.bool,
+  timer: PropTypes.bool,
 };
 
 export default RingingPhone;

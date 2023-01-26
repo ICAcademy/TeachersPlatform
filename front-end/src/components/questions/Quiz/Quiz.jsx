@@ -1,67 +1,119 @@
 import React, { useState, useContext, useEffect } from 'react';
 import useSound from 'use-sound';
-import { Box, Button, List, ListItem } from '@mui/material';
 import PropTypes from 'prop-types';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
-import AnswerPicker from 'components/questions/AnswerPicker/AnswerPicker';
-import MeetRoom from 'components/MeetRoom/MeetRoom';
+//HOC
+import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
+// Services
 import { socket } from 'services/socketService';
 
+// Constants
 import { STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
 
+//Components
+import AnswerPicker from 'components/questions/AnswerPicker/AnswerPicker';
+import MeetRoom from 'components/MeetRoom/MeetRoom';
+import RingingPhone from 'components/common/RingingPhone/RingingPhone';
+
+// Styles
 import styles from './Quiz.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
-import RingingPhone from 'components/common/RingingPhone/RingingPhone';
+import { Box, Button, List, ListItem } from '@mui/material';
 
-//Sounds
+// Sounds
 import ringtone from 'assets/sounds/facebook-messenger-tone.mp3';
 
-const Quiz = ({ id, questions, isLesson, student, teacher }) => {
+const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }) => {
+  // States for calls
   const [callRequest, setCallRequest] = useState(false);
   const [callApprove, setCallApprove] = useState(false);
   const [isCallingUser, setIsCallingUser] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUserJoined, setIsUserJoined] = useState(false);
+  const [runningTimer, setRunningTimer] = useState(false);
 
-  const [play] = useSound(ringtone);
+  const [playBoop, { stop }] = useSound(ringtone);
 
   const {
     currentUser: { role, _id },
   } = useContext(CurrentUserContext);
+
+  const resetCallState = (state) => {
+    setCallRequest(state);
+    setCallApprove(state);
+    setIsUserJoined(state);
+    setIsCallingUser(state);
+  };
 
   const endLessonHandler = () => {
     socket.emit('lesson:end', id);
   };
 
   const callToUserHandler = () => {
+    playBoop();
     socket.emit('lesson:call-request', { roomId: id, userId: _id });
   };
 
   const callApproveHandler = (state) => {
+    stop();
+    setIsLoading(true);
     setCallApprove(state);
     socket.emit('lesson:call-approve', { roomId: id, approved: true });
   };
 
   const declineCallHandler = (state) => {
-    setCallRequest(state);
+    stop();
+    resetCallState(state);
     socket.emit('lesson:call-approve', { roomId: id, approved: false });
-    socket.off('lesson:call-request');
+  };
+
+  const joinUserHandler = (state) => {
+    setIsUserJoined(state);
+    setIsLoading(false);
+    setRunningTimer(true);
   };
 
   useEffect(() => {
     socket.on('lesson:call-request', (data) => {
       if (data.userId === _id) {
         setIsCallingUser(true);
+      } else {
+        setIsCallingUser(false);
       }
       setCallRequest(true);
+      playBoop();
     });
 
     socket.on('lesson:call-approve', (data) => {
       setCallApprove(data.approved);
       setCallRequest(data.approved);
+      if (!data.approved) {
+        snackbarShowMessage({
+          message: 'Call was cancelled',
+          severity: 'error',
+        });
+        setIsUserJoined(false);
+      }
+      stop();
     });
+
+    if (isUserJoined) {
+      socket.on('lesson:updated', (data) => {
+        const dataValues = Object.values(data);
+        const offlineStatus = dataValues.find((value) => value === 'offline');
+        if (offlineStatus) {
+          resetCallState(false);
+          snackbarShowMessage({
+            message: 'Another user left the lesson',
+            severity: 'error',
+          });
+        }
+      });
+    }
   });
 
   const quiz = questions.map((question) => (
@@ -117,13 +169,16 @@ const Quiz = ({ id, questions, isLesson, student, teacher }) => {
           active={callRequest}
           onApprove={callApproveHandler}
           onDecline={declineCallHandler}
+          onJoining={isUserJoined}
+          onLoading={isLoading}
           isCallingUser={isCallingUser}
           student={student}
           teacher={teacher}
           role={role}
+          timer={runningTimer}
         />
       )}
-      {callApprove && <MeetRoom roomId={id} />}
+      {callApprove && <MeetRoom roomId={id} onJoin={joinUserHandler} />}
     </>
   );
 };
@@ -134,6 +189,7 @@ Quiz.propTypes = {
   isLesson: PropTypes.bool,
   student: PropTypes.object,
   teacher: PropTypes.object,
+  snackbarShowMessage: PropTypes.func,
 };
 
 Quiz.defaultProps = {
@@ -142,4 +198,4 @@ Quiz.defaultProps = {
   isLesson: false,
 };
 
-export default Quiz;
+export default withSnackbar(Quiz);
