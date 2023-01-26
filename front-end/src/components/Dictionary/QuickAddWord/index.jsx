@@ -138,9 +138,9 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
 
   useEffect(() => {
     if (isTeacher) {
-      fetchSubscriptions(roleId._id);
+      fetchSubscriptions(roleId);
     }
-  }, [fetchSubscriptions, isTeacher, roleId._id]);
+  }, [fetchSubscriptions, isTeacher, roleId]);
 
   const reset = () => {
     resetWord();

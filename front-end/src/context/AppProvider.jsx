@@ -16,8 +16,9 @@ const AppProvider = ({ children }) => {
     try {
       const accessToken = localStorage.getItem('token');
       const { data } = accessToken ? await getUser(accessToken) : isAuthenticated;
+      const updatedUser = { ...data, roleId: data.roleId._id, roleInfo: { ...data.roleId } };
       if (data) {
-        setCurrentUser(data);
+        setCurrentUser(updatedUser);
         setIsLoading(false);
         setIsAuthenticated(true);
       }

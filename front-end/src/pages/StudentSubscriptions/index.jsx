@@ -40,7 +40,7 @@ const StudentSubscriptions = () => {
         return subscription._id === id;
       });
       const deletedSubscription = await deleteSubscription(necessarySubscription._id);
-      await fetchSubscriptions(currentUser.roleId._id);
+      await fetchSubscriptions(currentUser.roleId);
       setIsLoading(false);
       return deletedSubscription;
     } catch (e) {
@@ -51,7 +51,7 @@ const StudentSubscriptions = () => {
   };
 
   useEffect(() => {
-    fetchSubscriptions(currentUser?.roleId._id);
+    fetchSubscriptions(currentUser?.roleId);
   }, [currentUser]);
 
   useEffect(() => {
@@ -60,10 +60,10 @@ const StudentSubscriptions = () => {
         return subscription._id === data;
       });
       if (deletedSubscription) {
-        fetchSubscriptions(currentUser.roleId._id);
+        fetchSubscriptions(currentUser.roleId);
       }
     });
-  }, [currentUser.roleId._id, subscriptions]);
+  }, [currentUser.roleId, subscriptions]);
 
   return (
     <div className={styles.container}>

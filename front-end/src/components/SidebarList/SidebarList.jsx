@@ -70,31 +70,25 @@ export const SidebarList = ({ showSidebar }) => {
   };
 
   useEffect(() => {
-    dispatchFunction(
-      pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId._id }),
-    );
-  }, [currentUser.roleId._id, dispatchFunction]);
+    dispatchFunction(pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId }));
+  }, [currentUser.roleId, dispatchFunction]);
 
   useEffect(() => {
     socket.on('create_subscription', () => {
-      dispatchFunction(
-        pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId._id }),
-      );
+      dispatchFunction(pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId }));
     });
     socket.on('delete_subscription', () => {
-      dispatchFunction(
-        pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId._id }),
-      );
+      dispatchFunction(pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId }));
     });
     socket.on(
       'subscription:updated',
-      (id) => id === currentUser.roleId._id && fetchSubscriptionsCount(currentUser.roleId._id),
+      (id) => id === currentUser.roleId && fetchSubscriptionsCount(currentUser.roleId),
     );
-  }, [currentUser.roleId._id, dispatchFunction]);
+  }, [currentUser.roleId, dispatchFunction]);
 
   useEffect(() => {
-    fetchSubscriptionsCount(currentUser.roleId._id);
-  }, [currentUser.roleId._id]);
+    fetchSubscriptionsCount(currentUser.roleId);
+  }, [currentUser.roleId]);
 
   const isActive = ({ isActive }) =>
     isActive ? `${styles.sidebarLink} ${styles.active}` : styles.sidebarLink;

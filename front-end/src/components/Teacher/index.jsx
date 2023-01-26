@@ -56,12 +56,12 @@ const Teacher = ({ teacher }) => {
       setButtonLoader(true);
       const subscribe = await createSubscription(
         teacher._id,
-        currentUser.roleId._id,
+        currentUser.roleId,
         currentUser.email,
         currentUser.fullName,
         teacher.fullName,
       );
-      await fetchStudentSubscriptions(currentUser.roleId._id);
+      await fetchStudentSubscriptions(currentUser.roleId);
       setButtonLoader(false);
       return subscribe;
     } catch (error) {
@@ -106,7 +106,7 @@ const Teacher = ({ teacher }) => {
   };
 
   useEffect(() => {
-    fetchStudentSubscriptions(currentUser?.roleId._id);
+    fetchStudentSubscriptions(currentUser?.roleId);
   }, [currentUser]);
 
   useEffect(() => {

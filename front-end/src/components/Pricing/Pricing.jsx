@@ -56,8 +56,8 @@ const Pricing = () => {
 
   useEffect(() => {
     getPricing();
-    fetchSubscriptions(currentUser.roleId._id);
-  }, [currentUser.roleId._id]);
+    fetchSubscriptions(currentUser.roleId);
+  }, [currentUser.roleId]);
 
   return (
     currentUser.role === STUDENT_ROLE &&

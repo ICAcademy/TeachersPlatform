@@ -4,8 +4,12 @@ exports.getAllMaterials = async () => {
   return await MaterialModel.find();
 };
 
-exports.getMaterialsByUnit = async (unitName) => {
-  return await MaterialModel.find({ unit: { $regex: unitName, $options: 'i' } });
+exports.getMaterialsByUnit = async (unitName, level) => {
+  if (level) {
+    return await MaterialModel.find({ unit: { $regex: unitName, $options: 'i' }, level });
+  } else {
+    return await MaterialModel.find({ unit: { $regex: unitName, $options: 'i' } });
+  }
 };
 
 exports.createMaterial = async (material) => {

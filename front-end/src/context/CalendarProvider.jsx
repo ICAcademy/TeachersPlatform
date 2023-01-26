@@ -44,7 +44,6 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
   const [lessonFormIsOpen, setLessonFormIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [formError, setFormError] = useState(null);
-  console.log(lessonsForWeek);
 
   const monthAndYear = dayjs(new Date(dayjs().year(), selectedMonthIdx)).format('MMMM YYYY');
   const monthName = dayjs(new Date(dayjs().year(), selectedMonthIdx)).format('MMM');

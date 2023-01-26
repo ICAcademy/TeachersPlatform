@@ -30,6 +30,10 @@ const userSchema = new Schema(
     url: {
       type: String,
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );
