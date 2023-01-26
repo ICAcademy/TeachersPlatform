@@ -92,7 +92,7 @@ const Questions = () => {
             }}
             className={styles.input}
             variant='outlined'
-            label='search unit'
+            label='Search unit'
             size='small'
             value={searchUnitName}
             onChange={handleCangeSearchUnit}
