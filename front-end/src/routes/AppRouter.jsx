@@ -69,8 +69,6 @@ const RouterWrapper = () => {
               path='teacher-info'
               element={isAuthenticated && currentUser.role === TEACHER_ROLE && <TeacherInfo />}
             />
-            <Route path='subjects' element={<h1>This route is not created!!!</h1>} />
-            <Route path='languages' element={<h1>This route is not created!!!</h1>} />
           </Route>
           <Route
             path='/app/materials'

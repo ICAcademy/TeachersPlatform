@@ -14,14 +14,6 @@ let defaultTabs = [
     title: 'General Info',
     link: 'general-info',
   },
-  {
-    title: 'Subjects',
-    link: 'subjects',
-  },
-  {
-    title: 'Languages',
-    link: 'languages',
-  },
 ];
 
 const ProfileTabs = () => {
