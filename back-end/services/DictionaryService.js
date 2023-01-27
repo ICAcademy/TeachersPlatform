@@ -20,11 +20,5 @@ exports.updateDictionary = async (id, dictionary) =>
 
 exports.deleteDictionary = async (id) => await Dictionary.findByIdAndDelete(id);
 
-exports.matchWordAndTranslation = async (data) => {
-  const dictionary = await Dictionary.find({
-    studentId: data.studentId,
-    word: { $regex: data.word, $options: 'i' },
-    translation: { $regex: data.translation, $options: 'i' },
-  });
-  return dictionary;
-};
+exports.matchWordAndTranslation = async ({ studentId, word, translation }) =>
+  await Dictionary.find({ studentId, word, translation });
