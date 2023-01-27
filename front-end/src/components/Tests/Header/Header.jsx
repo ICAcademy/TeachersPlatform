@@ -48,7 +48,7 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
               className={styles.input}
               variant='outlined'
               size='small'
-              label='unit'
+              label='Unit'
               autoFocus={unit === '' && postInfo}
               error={postInfo && unit === ''}
               helperText={postInfo && unit === '' ? 'Empty field!' : ' '}
@@ -57,13 +57,13 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
             />
           </div>
         </div>
-        <div className={styles.itemContainer}>
+        <div>
           <div className={styles.inputContainer}>
             <TextField
               className={styles.input}
               variant='outlined'
               size='small'
-              label='topic'
+              label='Topic'
               autoFocus={topic === '' && postInfo}
               error={postInfo && topic === ''}
               helperText={postInfo && topic === '' ? 'Empty field!' : ' '}
@@ -73,7 +73,6 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
           </div>
         </div>
       </div>
-      <div className={styles.logoHeaderContainer}></div>
     </div>
   );
 };

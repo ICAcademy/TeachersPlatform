@@ -31,7 +31,7 @@ const Question = ({
             <span className={styles.question}>Question</span>
             {index + 1}
           </div>
-          <Button onClick={() => deleteQuestion(id)} sx={{ padding: '15px', fontSize: '17px' }}>
+          <Button onClick={() => deleteQuestion(id)} sx={{ p: 0, minWidth: 0, fontSize: '17px' }}>
             <FontAwesomeIcon icon={faXmark} />
           </Button>
         </div>
@@ -40,7 +40,7 @@ const Question = ({
             className={styles.input}
             variant='outlined'
             size='small'
-            placeholder='title'
+            placeholder='Title'
             error={question.title === '' && postInfo}
             value={question.title}
             onChange={(event) => changeTitleForQuestion(question.id, event)}
@@ -59,7 +59,7 @@ const Question = ({
                   onChange={() => changeRightAnswerForQuestion(question.id, answer.id)}
                 />
               </div>
-              <div className={styles.inputAnswerContainer}>
+              <div>
                 <Input
                   className={styles.input}
                   placeholder='answer'

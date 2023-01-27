@@ -17,6 +17,7 @@ const Units = ({ units }) => {
               <UnitCard
                 key={i}
                 unit={item.unit}
+                level={item.level}
                 image={item.image}
                 url={item.url}
                 numberOfLessons={item.numberOfLessons}
