@@ -17,10 +17,11 @@ const SelectItem = ({ nameSelect, value, setValue, selectArray }) => {
   };
   return (
     <div className={styles.container}>
-      <Box>
+      <Box className={styles.box}>
         <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>{nameSelect}</InputLabel>
           <Select
+            className={styles.select}
             labelId='demo-simple-select-label'
             id='demo-simple-select'
             value={value}

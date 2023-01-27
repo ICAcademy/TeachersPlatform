@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import dayjs from 'dayjs';
+import { STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
 
 // MUI library
 import { FormControl, TextField, Box, InputAdornment, Button, IconButton } from '@mui/material';
@@ -36,7 +37,7 @@ import styles from './RegistrationForm.module.scss';
 
 const RegistrationForm = () => {
   const [data, setData] = useState({
-    role: 'student',
+    role: STUDENT_ROLE,
     fullName: '',
     dateOfBirth: '',
     email: '',
@@ -130,7 +131,7 @@ const RegistrationForm = () => {
 
   const handleChangeActive = (tab) => {
     setActiveTab(tab);
-    setData((prev) => ({ ...prev, role: `${tab === 0 ? 'student' : 'teacher'}` }));
+    setData((prev) => ({ ...prev, role: `${tab === 0 ? STUDENT_ROLE : TEACHER_ROLE}` }));
   };
 
   return (

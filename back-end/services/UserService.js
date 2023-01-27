@@ -1,8 +1,15 @@
+const { ADMIN } = require('../constants/UserRoles');
 const User = require('../models/User');
 
 const findByEmail = async (email) => {
   const user = await User.findOne({ email }).select(['-password']);
-  return user;
+  if (user.role === ADMIN) {
+    return user;
+  }
+  return user.populate({
+    path: 'roleId',
+    select: 'level',
+  });
 };
 
 const updateByID = async (id, body) => {
