@@ -16,7 +16,7 @@ const TeacherPhone = ({ phoneInput, setPhoneInput }) => {
         <span className={styles.header}>Phone</span>
       </div>
       <Box className={styles.box}>
-        <PhoneInput value={phoneInput} onChange={setPhoneInput} />
+        <PhoneInput className={styles.input} value={phoneInput} onChange={setPhoneInput} />
       </Box>
     </div>
   );

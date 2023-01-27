@@ -1,0 +1,101 @@
+.ringingPhone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  padding: 15px 20px;
+  left: 20px;
+  bottom: 20px;
+  max-width: 250px;
+  border-radius: 5px;
+  z-index: 9;
+  background-color: #fff;
+  box-shadow: 0 14px 24px rgb(0 0 0 / 20%);
+
+  .ringingBox {
+    display: flex;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  .underCallInfo {
+    text-align: center;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    color: #aaa;
+  }
+
+  .phoneBtns {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.phoneBtn {
+  z-index: 1;
+  width: 35px;
+  height: 35px;
+  margin: 0 10px;
+  padding: 0.5em;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 3em #40d465, 0 0 0 0 rgba(#40d465, 0.25);
+  background-color: #40d465;
+  cursor: pointer;
+
+  &.declineCall {
+    box-shadow: 0 0.125em 0.5em #aaa, inset 0 0 0 3em #f54336, 0 0 0 0 rgba(#f54336, 0.25);
+    background-color: #f54336;
+
+    img {
+      transform: rotate(135deg);
+    }
+  }
+
+  > img {
+    width: 100%;
+    height: 100%;
+    fill: #fff;
+    animation: shake 2s cubic-bezier(0.43, 0, 0.6, 0.4) infinite;
+  }
+}
+
+.callAnimation {
+  background: #fff;
+  width: 35px;
+  height: 35px;
+  margin-right: 5px;
+  border-radius: 100%;
+  animation: play 2s ease infinite;
+  z-index: 10;
+  backface-visibility: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 100%;
+  }
+
+  &.withoutAnimation {
+    animation: none;
+  }
+}
+
+@keyframes play {
+  0% {
+    transform: scale(1);
+  }
+  15% {
+    box-shadow: 0 0 0 2px rgba(180, 100, 166, 0.4);
+  }
+  25% {
+    box-shadow: 0 0 0 4px rgba(180, 100, 166, 0.4), 0 0 0 5px rgba(180, 100, 166, 0.2);
+  }
+  25% {
+    box-shadow: 0 0 0 8px rgba(180, 100, 166, 0.4), 0 0 0 10px rgba(180, 100, 166, 0.2);
+  }
+}
