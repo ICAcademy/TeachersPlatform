@@ -23,16 +23,36 @@
   flex-wrap: wrap;
   flex-direction: column;
   box-shadow: 0 0 35px 0 rgb(154 161 171 / 15%);
-  transition: all ease-in-out 0.3s;
-
-  &:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 14px 24px rgb(0 0 0 / 20%);
-    transition: all ease-in-out 0.3s;
-  }
 }
 
 .lesson {
   display: flex;
   align-items: center;
+}
+
+.letterIcon {
+  display: flex;
+  font-size: 1.5rem;
+  background-color: #9000ff;
+  color: #fff;
+  min-width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+}
+
+@media screen and (max-width: 1280px) {
+  .letterIcon {
+    min-width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .letterIcon {
+    margin-right: 0;
+  }
 }

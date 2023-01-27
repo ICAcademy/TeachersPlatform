@@ -16,8 +16,8 @@ const UpcomingLessons = () => {
     currentUser: { role },
   } = useContext(CurrentUserContext);
 
-  const firstDayOfWeek = dayjs().day(1).format('YYYY/MM/D');
-  const lastDayOfWeek = dayjs().day(7).format('YYYY/MM/D');
+  const firstDayOfWeek = dayjs(new Date()).format('YYYY/MM/D');
+  const lastDayOfWeek = dayjs().day(8).format('YYYY/MM/D');
 
   useEffect(() => {
     fetchLessonsForWeek(roleId, firstDayOfWeek, lastDayOfWeek);
@@ -40,7 +40,7 @@ const UpcomingLessons = () => {
           No lessons for week
         </Typography>
       ) : (
-        lessonsForWeek.map((lesson) => (
+        lessonsForWeek.slice(0, 4).map((lesson) => (
           <Box key={lesson._id} className={styles.eventBlock}>
             <Box className={styles.lesson}>
               <ListItemIcon>
@@ -62,7 +62,7 @@ const UpcomingLessons = () => {
               <ListItemIcon>
                 <CalendarTodayIcon />
               </ListItemIcon>
-              <ListItemText primary={dayjs(lesson.date).format('dddd, D MMMM HH:mm')} />
+              <ListItemText primary={dayjs(lesson.date).format('dddd, D MMMM')} />
             </Box>
           </Box>
         ))
