@@ -44,8 +44,6 @@ const Topics = () => {
       const { unitInfo, topicsInfo } = await getTopicDataByUrl({ url });
       setUnitData(unitInfo);
       setTopicsData(topicsInfo);
-      console.log('unitInfo', unitInfo);
-      console.log('topicsInfo', topicsInfo);
     } catch (error) {
       console.log(error);
     }
