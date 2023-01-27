@@ -41,7 +41,7 @@ const Topics = () => {
 
   const fetchTopicsData = async (url) => {
     try {
-      const { unitInfo, topicsInfo } = await getTopicDataByUrl(url);
+      const { unitInfo, topicsInfo } = await getTopicDataByUrl({ url });
       setUnitData(unitInfo);
       setTopicsData(topicsInfo);
     } catch (error) {
@@ -82,10 +82,6 @@ const Topics = () => {
   useEffect(() => {
     fetchStudents(roleId);
   }, [roleId]);
-
-  useEffect(() => {
-    fetchTopicsData(url);
-  }, [url]);
 
   useEffect(() => {
     socket.on('lesson:added', (lesson) => navigate(`/app/lessons/${lesson._id}`));
