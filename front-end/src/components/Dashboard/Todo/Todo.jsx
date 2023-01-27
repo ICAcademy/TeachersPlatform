@@ -21,14 +21,16 @@ const sx = {
     flexDirection: 'column',
     rowGap: '10px',
     position: 'absolute',
-    top: '50%',
+    top: '5%',
     left: '50%',
-    transform: 'translate(-50%, -50%)',
+    transform: 'translate(-50%, 0%)',
     width: '600px',
+    height: 'calc(100vh - 10%)',
     borderRadius: '20px',
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
+    overflowY: 'auto',
   },
   modalTitle: {
     ml: '10px',
@@ -152,17 +154,19 @@ const Todo = () => {
             {`You have no unfinished todo for now :\(`}
           </Box>
         ) : (
-          filterTodo(todoList).map((todo) => (
-            <TodoItem
-              key={todo._id}
-              id={todo._id}
-              description={todo.description}
-              isComplete={todo.isComplete}
-              handleChange={changeStatus}
-              handleDelete={deleteTodo}
-              filtered={true}
-            />
-          ))
+          filterTodo(todoList)
+            .slice(0, 4)
+            .map((todo) => (
+              <TodoItem
+                key={todo._id}
+                id={todo._id}
+                description={todo.description}
+                isComplete={todo.isComplete}
+                handleChange={changeStatus}
+                handleDelete={deleteTodo}
+                filtered={true}
+              />
+            ))
         )}
       </Box>
       <Box className={styles.todo__add}>

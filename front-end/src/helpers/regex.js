@@ -8,4 +8,4 @@ export const REGEX_LABEL = /^[\w\s\-,\.:;()''""]{1,30}$/;
 export const REGEX_WORD = /^([a-zA-Z]{0,20})(?: |)([a-zA-Z]{0,20})$/;
 export const REGEX_TRANSLATION =
   /^([А-ЩЬЮЯҐЄІЇа-щьюяґєії]{0,20})(?: |)([А-ЩЬЮЯҐЄІЇа-щьюяґєії]{0,20})$/;
-export const REGEX_TODO = /^[a-zA-Z \-,\.:;()?!''""]{1,30}$/;
+export const REGEX_TODO = /^[a-zA-Z0-9 \-,\.:;()?!''""]{1,30}$/;
