@@ -1,5 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
+// components
+import Banner from 'components/Dashboard/Banner/Banner';
 import Loader from 'components/common/Loader/Loader';
 import NoSubscriptions from 'components/Dashboard/NoSubscriptions/NoSubscriptions';
 import Todo from 'components/Dashboard/Todo/Todo';
@@ -47,6 +49,7 @@ const Dashboard = () => {
     <Loader />
   ) : (
     <>
+      <Banner />
       {role === STUDENT_ROLE && subscriptions === 0 && <NoSubscriptions />}
       {role === STUDENT_ROLE && <Todo />}
       <UpcomingLessons />

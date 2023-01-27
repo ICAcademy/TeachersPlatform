@@ -1,0 +1,154 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/font.scss';
+
+.content {
+  display: flex;
+  width: 70%;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+  background: #58baab;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.learn {
+  color: $white;
+  font-weight: $fw600;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.discount {
+  margin: 10px 0;
+  color: $grey200;
+  font-weight: $fw600;
+  line-height: 1.5;
+}
+
+.countOfUsers {
+  display: flex;
+  margin-top: 55px;
+}
+
+.students {
+  display: flex;
+}
+
+.iconOfStudentsContainer {
+  background: $red;
+  border: 1px solid $white;
+  display: flex;
+  align-self: center;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.iconOfTeachersContainer {
+  background: $lightBlue;
+  border: 1px solid $white;
+  display: flex;
+  align-self: center;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.iconOfUsers {
+  color: $white;
+  font-size: 25px;
+}
+
+.teachers {
+  display: flex;
+  margin-left: 30px;
+}
+
+.count {
+  margin-left: 15px;
+}
+
+.nameOfCount {
+  color: $white;
+  font-size: 1.25rem;
+  font-weight: $fw400;
+  line-height: 1.2;
+}
+
+.totalCount {
+  color: $grey200;
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.right {
+  width: 54%;
+  height: 200px;
+  @media (max-width: 2000px) {
+    width: 100%;
+  }
+}
+
+.images {
+  display: flex;
+  width: 100%;
+  margin-left: 300px;
+}
+
+.cloudBigContainer {
+  width: 70px;
+  position: absolute;
+  margin-top: 6px;
+  margin-left: 80px;
+}
+
+.cloudBig1Container {
+  width: 60px;
+  position: absolute;
+  margin-top: 25px;
+  margin-left: 180px;
+}
+
+.cloudBiggestContainer {
+  width: 48px;
+  position: absolute;
+  margin-top: 17px;
+  margin-left: 220px;
+  z-index: 1;
+}
+
+.studentBoyContainer {
+  width: 40px;
+  position: absolute;
+  margin-top: 83px;
+  margin-left: 50px;
+  z-index: 2;
+}
+
+.studentGirlAfroAmericanContainer {
+  width: 30px;
+  position: absolute;
+  margin-top: 86px;
+  margin-left: 150px;
+  z-index: 2;
+}
+
+.studentGirlContainer {
+  width: 28px;
+  position: absolute;
+  margin-top: 82px;
+  margin-left: 260px;
+  z-index: 2;
+}
+
+.img {
+  width: 100%;
+}
+
+.cityContainer {
+  width: 55%;
+  z-index: 1;
+  @media (max-width: 1800px) {
+    max-width: 55%;
+  }
+  filter: saturate(90%);
+}

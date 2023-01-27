@@ -5,7 +5,7 @@ import {
   getMaterialsByUnit,
 } from 'services/MaterialsService/MaterialsService';
 
-const useFetchUnits = (isEdit, searchUnit, selectedLevel, materialsOrQuestions) => {
+const useFetchUnits = (isEdit, searchUnit, selectedLevel, materialsOrQuestions, level) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -29,7 +29,7 @@ const useFetchUnits = (isEdit, searchUnit, selectedLevel, materialsOrQuestions) 
           const questionsFromInput =
             materialsOrQuestions === 'question'
               ? await getQuestionsByUnitName({ searchUnit })
-              : await getMaterialsByUnit({ unitName: searchUnit });
+              : await getMaterialsByUnit({ level, unitName: searchUnit });
           setData(questionsFromInput);
           setLoading(false);
           setError(null);
@@ -43,7 +43,7 @@ const useFetchUnits = (isEdit, searchUnit, selectedLevel, materialsOrQuestions) 
       }
     })();
     return () => controller.abort();
-  }, [searchUnit, isEdit, selectedLevel, materialsOrQuestions]);
+  }, [searchUnit, isEdit, selectedLevel, materialsOrQuestions, level]);
   return { data, loading, error };
 };
 

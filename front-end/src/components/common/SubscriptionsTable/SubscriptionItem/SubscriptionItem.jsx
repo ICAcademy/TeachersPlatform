@@ -35,6 +35,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
   const dispatchFunction = useDispatch();
 
   const studentID = subscription.studentID._id;
+  const studentName = subscription.studentID.fullName;
 
   const updateStatus = async (status) => {
     try {
@@ -162,6 +163,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
             isOpen={isOpen}
             handleIsClose={handleIsClose}
             studentID={studentID}
+            studentName={studentName}
             level={level}
             changeLevel={changeLevelHandler}
           />
