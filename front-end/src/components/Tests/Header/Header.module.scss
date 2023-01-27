@@ -2,26 +2,22 @@
 @import '../../../styles/font.scss';
 
 .header {
-  display: flex;
-  flex-direction: row;
   background: $white;
-  width: 1060px;
   padding: 30px 30px 45px 30px;
   border-radius: 10px;
   box-shadow: 0px 4px 74px rgb(0 0 0 / 8%);
-  margin-top: 30px;
   border: 1px solid $grey200;
-}
-
-.itemContainer {
-  margin-left: 30px;
+  background-image: url('../../../assets/svg/custom-30.svg');
+  background-repeat: no-repeat;
+  background-position: right 10% center;
+  background-size: 300px 300px;
 }
 
 .inputContainer {
   margin-top: 25px;
-  width: 400px;
   display: flex;
   justify-content: center;
+  width: 50%;
 }
 
 .input {
@@ -35,13 +31,21 @@
   border-radius: 0.25rem;
 }
 
-.logoHeaderContainer {
-  background-image: url('../../../assets/svg/custom-30.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 210px;
-  height: 180px;
-  display: flex;
-  margin-left: 180px;
+@media (max-width: 768px) {
+  .header {
+    background-size: 225px 225px;
+    background-position: right 5% center;
+  }
+}
+
+@media (max-width: 550px) {
+  .header {
+    background-image: none;
+    padding: 20px;
+  }
+
+  .inputContainer {
+    width: 100%;
+    margin-top: 0;
+  }
 }

@@ -5,7 +5,6 @@
   width: 100%;
   min-height: 100vh;
   background: $lightPurple;
-  padding-bottom: 50px;
 }
 
 .container {
@@ -17,11 +16,11 @@
 .content {
   display: flex;
   flex-direction: column;
-  margin-left: 14%;
+  row-gap: 20px;
+  padding: 20px;
 }
 
 .editTestContainer {
-  margin-top: 30px;
   color: $darkGrey;
 }
 
@@ -32,10 +31,8 @@
 }
 
 .questionsContainer {
-  width: 1060px;
   background: $white;
   padding: 10px 30px 30px 30px;
-  margin-top: 30px;
   border-radius: 5px;
   box-shadow: 0px 4px 74px rgb(0 0 0 / 8%);
   border: 1px solid $grey200;
@@ -43,9 +40,8 @@
 
 .buttonsContainer {
   display: flex;
-  margin-top: 30px;
-  margin-bottom: 10px;
-  width: 1060px;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 .addQuestionContainer {
@@ -71,7 +67,6 @@
 
 .saveTestsContainer {
   display: flex;
-  width: 625px;
   justify-content: center;
   .button {
     padding: 0 20px;
@@ -97,4 +92,23 @@
 
 .button {
   height: 50px;
+}
+
+@media (max-width: 500px) {
+  .questionsContainer {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 425px) {
+  .buttonsContainer {
+    flex-direction: column;
+    align-items: flex-end;
+    row-gap: 20px;
+  }
+
+  .saveTestsContainer {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
