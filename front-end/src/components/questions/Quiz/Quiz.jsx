@@ -55,7 +55,6 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
 
   const callToUserHandler = () => {
     playBoop();
-    setIsLoading(true);
     socket.emit('lesson:call-request', { roomId: id, userId: _id });
   };
 
@@ -104,8 +103,8 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
       stop();
     });
 
-    if (isUserJoined) {
-      socket.on('lesson:updated', (data) => {
+    socket.on('lesson:updated', (data) => {
+      if (isUserJoined) {
         const dataValues = Object.values(data);
         const offlineStatus = dataValues.find((value) => value === 'offline');
         if (offlineStatus) {
@@ -115,8 +114,9 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
             severity: 'error',
           });
         }
-      });
-    }
+      }
+      resetCallState(false);
+    });
   });
 
   const quiz = questions.map((question) => (
