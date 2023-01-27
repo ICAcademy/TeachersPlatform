@@ -201,6 +201,7 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
                   helperText={translationHasError ? TRANSLATION_HELPER_TEXT : ' '}
                   size='small'
                   align='center'
+                  sx={{ ml: 1 }}
                 />
               </div>
               <Button
