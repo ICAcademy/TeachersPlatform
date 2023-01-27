@@ -3,9 +3,6 @@ import dayjs from 'dayjs';
 import { CalendarContext } from 'context/CalendarProvider';
 import { Box, Button, Typography, ListItemText, ListItemIcon } from '@mui/material';
 import styles from './UpcomingLessons.module.scss';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import LabelImportantIcon from '@mui/icons-material/LabelImportant';
-import PersonIcon from '@mui/icons-material/Person';
 import { Link } from 'react-router-dom';
 import { TEACHER_ROLE } from 'constants/userRoles';
 import { CurrentUserContext } from 'context/AppProvider';
@@ -42,27 +39,35 @@ const UpcomingLessons = () => {
       ) : (
         lessonsForWeek.slice(0, 4).map((lesson) => (
           <Box key={lesson._id} className={styles.eventBlock}>
-            <Box className={styles.lesson}>
-              <ListItemIcon>
-                <div className={styles.letterIcon}></div>
-              </ListItemIcon>
-              <ListItemText primary={lesson.label} />
-            </Box>
-            <Box className={styles.lesson}>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              {role === TEACHER_ROLE ? (
-                <ListItemText primary={lesson.studentId.fullName} />
-              ) : (
-                <ListItemText primary={lesson.teacherId.fullName} />
-              )}
-            </Box>
-            <Box className={styles.lesson}>
-              <ListItemIcon>
-                <CalendarTodayIcon />
-              </ListItemIcon>
-              <ListItemText primary={dayjs(lesson.date).format('dddd, D MMMM')} />
+            <Box className={styles.wrapper}>
+              <Box className={styles.icon}>
+                <ListItemIcon>
+                  <div className={styles.letterIcon}>{lesson.label[0]}</div>
+                </ListItemIcon>
+              </Box>
+              <Box className={styles.text}>
+                <ListItemText
+                  sx={{ '& .MuiTypography-root': { fontSize: '23px' } }}
+                  primary={lesson.label}
+                />
+                {role === TEACHER_ROLE ? (
+                  <Box className={styles.listItem}>
+                    <ListItemText
+                      sx={{ '& .MuiTypography-root': { marginRight: '10px' } }}
+                      primary={lesson.studentId.fullName}
+                    />
+                    <ListItemText secondary={dayjs(lesson.date).format('D MMMM')} />
+                  </Box>
+                ) : (
+                  <Box className={styles.listItem}>
+                    <ListItemText
+                      sx={{ '& .MuiTypography-root': { marginRight: '10px' } }}
+                      primary={lesson.teacherId.fullName}
+                    />
+                    <ListItemText secondary={dayjs(lesson.date).format('D MMMM')} />
+                  </Box>
+                )}
+              </Box>
             </Box>
           </Box>
         ))
