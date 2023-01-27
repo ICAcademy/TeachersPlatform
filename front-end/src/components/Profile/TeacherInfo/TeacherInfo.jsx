@@ -109,7 +109,9 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
       </div>
       <div className={styles.infoContainer}>
         <TextAreaInfo header='Biography' value={biography} setValue={setBiography} error={error} />
-        <TextAreaInfo header='Social Medias' value={socialMedias} setValue={setSocialMedias} />
+        <div className={styles.socialMediasContainer}>
+          <TextAreaInfo header='Social Medias' value={socialMedias} setValue={setSocialMedias} />
+        </div>
       </div>
       <div className={styles.buttonContainer}>
         <Button onClick={changeProfile} variant='contained'>
