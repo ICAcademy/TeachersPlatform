@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import dayjs from 'dayjs';
-import { STUDENT_ROLE } from 'constants/userRoles';
+import { STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
 
 // MUI library
 import { FormControl, TextField, Box, InputAdornment, Button, IconButton } from '@mui/material';
@@ -131,7 +131,7 @@ const RegistrationForm = () => {
 
   const handleChangeActive = (tab) => {
     setActiveTab(tab);
-    setData((prev) => ({ ...prev, role: `${tab === 0 ? 'Student' : 'Teacher'}` }));
+    setData((prev) => ({ ...prev, role: `${tab === 0 ? STUDENT_ROLE : TEACHER_ROLE}` }));
   };
 
   return (
