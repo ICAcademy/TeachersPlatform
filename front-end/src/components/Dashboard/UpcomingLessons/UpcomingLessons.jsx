@@ -44,7 +44,7 @@ const UpcomingLessons = () => {
           <Box key={lesson._id} className={styles.eventBlock}>
             <Box className={styles.lesson}>
               <ListItemIcon>
-                <LabelImportantIcon />
+                <div className={styles.letterIcon}></div>
               </ListItemIcon>
               <ListItemText primary={lesson.label} />
             </Box>
