@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 import LessonsHeader from 'components/Lessons/LessonsHeader/LessonsHeader';
 import TopicsBody from 'components/questions/TopicsBody/TopicsBody';
 import Quiz from 'components/questions/Quiz/Quiz';
 
-import { getTopicDataByUrl } from 'services/questionService';
+import { getTopicDataByUnitAndLevel } from 'services/questionService';
 import { socket } from 'services/socketService';
 
 // Constants
@@ -25,14 +25,17 @@ const sx = {
 };
 
 const Topics = () => {
-  const [unitData, setUnitData] = useState([]);
   const [topicsData, setTopicsData] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState({});
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [students, setStudents] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
-  const { url } = useParams();
+
   const navigate = useNavigate();
+
+  const {
+    state: { level, unit },
+  } = useLocation();
 
   const {
     currentUser: { roleId, role },
@@ -42,10 +45,9 @@ const Topics = () => {
 
   const studentSelectHandler = (e) => setSelectedStudentId(e.target.value);
 
-  const fetchTopicsData = async (url) => {
+  const fetchTopicsData = async (unit, level) => {
     try {
-      const { unitInfo, topicsInfo } = await getTopicDataByUrl(url);
-      setUnitData(unitInfo);
+      const topicsInfo = await getTopicDataByUnitAndLevel({ unit, level });
       setTopicsData(topicsInfo);
     } catch (error) {
       console.log(error);
@@ -73,7 +75,7 @@ const Topics = () => {
   const startLessonHandler = () => {
     const body = {
       topic: selectedTopic.topic,
-      level: unitData.level,
+      level: level,
       teacherId: roleId,
       studentId: selectedStudentId,
       questions: selectedTopic.questions,
@@ -87,8 +89,8 @@ const Topics = () => {
   }, [roleId]);
 
   useEffect(() => {
-    fetchTopicsData(url);
-  }, [url]);
+    fetchTopicsData(unit, level);
+  }, [level, unit]);
 
   useEffect(() => {
     socket.on('lesson:added', (lesson) => navigate(`/app/lessons/${lesson._id}`));
@@ -102,14 +104,10 @@ const Topics = () => {
     ''
   );
 
-  useEffect(() => {
-    fetchTopicsData(url);
-  }, [url]);
-
   return (
     <Box className={styles.wrapper}>
       <Box className={`${styles.topics} ${isFullscreen ? styles.topics__shrink : ''}`}>
-        {!isFullscreen && <LessonsHeader level={unitData.level} title={unitData.unit} />}
+        {!isFullscreen && <LessonsHeader level={level} title={unit} />}
         <TopicsBody topics={topicsData} selectHandler={selectTopic} fullscreen={isFullscreen} />
       </Box>
       <Box className={`${styles.lesson} ${isFullscreen ? styles.lesson__full : ''}`}>

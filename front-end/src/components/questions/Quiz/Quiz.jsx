@@ -11,7 +11,7 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 import { socket } from 'services/socketService';
 
 // Constants
-import { STUDENT_ROLE, TEACHER_ROLE } from 'constants/userRoles';
+import { STUDENT_ROLE, TEACHER_ROLE, ADMIN_ROLE } from 'constants/userRoles';
 
 //Components
 import AnswerPicker from 'components/questions/AnswerPicker/AnswerPicker';
@@ -55,7 +55,6 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
 
   const callToUserHandler = () => {
     playBoop();
-    setIsLoading(true);
     socket.emit('lesson:call-request', { roomId: id, userId: _id });
   };
 
@@ -104,8 +103,8 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
       stop();
     });
 
-    if (isUserJoined) {
-      socket.on('lesson:updated', (data) => {
+    socket.on('lesson:updated', (data) => {
+      if (isUserJoined) {
         const dataValues = Object.values(data);
         const offlineStatus = dataValues.find((value) => value === 'offline');
         if (offlineStatus) {
@@ -115,8 +114,9 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
             severity: 'error',
           });
         }
-      });
-    }
+      }
+      resetCallState(false);
+    });
   });
 
   const quiz = questions.map((question) => (
@@ -157,9 +157,17 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
     <>
       <Box className={styles.header} sx={{ '& button': { m: 1 } }}>
         <h3 className={styles.title}>Quiz</h3>
-        <Button variant='contained' size='small' onClick={callToUserHandler} disabled={callRequest}>
-          {`Call to ${role === TEACHER_ROLE ? STUDENT_ROLE : TEACHER_ROLE}`}
-        </Button>
+        {role !== ADMIN_ROLE && isLesson && (
+          <Button
+            variant='contained'
+            size='small'
+            onClick={callToUserHandler}
+            disabled={callRequest}
+          >
+            {`Call to ${role === TEACHER_ROLE ? STUDENT_ROLE : TEACHER_ROLE}`}
+          </Button>
+        )}
+
         {isLesson && role === TEACHER_ROLE && (
           <Button variant='contained' size='small' onClick={endLessonHandler}>
             End lesson

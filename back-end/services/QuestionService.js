@@ -60,9 +60,7 @@ const getQuestionsByUnitName = async (search) => {
 };
 
 const getTest = async (level, unit) => {
-  return await Question.find({
-    $and: [{ level }, { unit }],
-  });
+  return await Question.find({ level, unit }).select('topic questions');
 };
 
 module.exports = {
