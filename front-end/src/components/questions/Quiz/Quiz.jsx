@@ -49,8 +49,6 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
     setIsCallingUser(state);
   };
 
-  console.log(isLesson);
-
   const endLessonHandler = () => {
     socket.emit('lesson:end', id);
   };
