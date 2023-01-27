@@ -27,16 +27,22 @@ import Button from '@mui/material/Button';
 import Add from '@mui/icons-material/Add';
 
 // Constants
-import { ADMIN_ROLE } from 'constants/userRoles';
+import { ADMIN_ROLE, STUDENT_ROLE } from 'constants/userRoles';
 
 const Materials = ({ snackbarShowMessage }) => {
+  const {
+    currentUser: {
+      role,
+      roleInfo: { level },
+    },
+  } = useContext(CurrentUserContext);
+
   const [levels, setLevels] = useState([]);
-  const [selectedLevel, setSelectedLevel] = useState('beginner');
+  const [selectedLevel, setSelectedLevel] = useState(level || 'beginner');
   const [searchByUnitName, setSearchByUnitName] = useState('');
   const [searchUnit, setSearchUnit] = useState('');
   const [isEdit, setIsEdit] = useState(false);
-
-  const { currentUser } = useContext(CurrentUserContext);
+  const searchLevel = role === STUDENT_ROLE ? level : null;
 
   const location = useLocation();
 
@@ -65,7 +71,7 @@ const Materials = ({ snackbarShowMessage }) => {
     }
   };
 
-  const createMaterialBtn = currentUser.role === ADMIN_ROLE && (
+  const createMaterialBtn = role.user === ADMIN_ROLE && (
     <Button
       className={styles.createBtn}
       component={Link}
@@ -78,8 +84,8 @@ const Materials = ({ snackbarShowMessage }) => {
   );
 
   useEffect(() => {
-    fetchLevels();
-  }, []);
+    role !== STUDENT_ROLE && fetchLevels();
+  }, [role]);
 
   useEffect(() => {
     if (location.state === 'delete') {
@@ -100,18 +106,30 @@ const Materials = ({ snackbarShowMessage }) => {
 
   const searching = searchByUnitName === '' ? searchByUnitName : searchUnit;
 
-  const { data, loading } = useFetchUnits(isEdit, searching, selectedLevel, 'materials');
+  const { data, loading } = useFetchUnits(
+    isEdit,
+    searching,
+    selectedLevel,
+    'materials',
+    searchLevel,
+  );
 
   return (
     <div className={styles.materials}>
       <div className={styles.materialsHeader}>
         <div className={styles.navigationRow}>
-          <Levels
-            list={levels}
-            selectedLevel={isEdit ? '' : selectedLevel}
-            onChangeLevel={changeLevelHandler}
-            searchByUnitName={searchByUnitName}
-          />
+          {role === STUDENT_ROLE ? (
+            <Button variant='contained' size='small'>
+              {level}
+            </Button>
+          ) : (
+            <Levels
+              list={levels}
+              selectedLevel={isEdit ? '' : selectedLevel}
+              onChangeLevel={changeLevelHandler}
+              searchByUnitName={searchByUnitName}
+            />
+          )}
           <TextField
             sx={{
               width: '360px',

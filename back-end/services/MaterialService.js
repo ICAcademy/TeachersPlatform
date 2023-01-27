@@ -4,7 +4,10 @@ exports.getAllMaterials = async () => {
   return await MaterialModel.find();
 };
 
-exports.getMaterialsByUnit = async (unitName) => {
+exports.getMaterialsByUnit = async (unitName, level) => {
+  if (level) {
+    return await MaterialModel.find({ unit: { $regex: unitName, $options: 'i' }, level });
+  }
   return await MaterialModel.find({ unit: { $regex: unitName, $options: 'i' } });
 };
 
