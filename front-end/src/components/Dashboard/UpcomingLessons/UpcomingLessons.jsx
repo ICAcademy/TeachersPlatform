@@ -23,7 +23,7 @@ const UpcomingLessons = () => {
   return (
     <Box className={styles.eventContainer}>
       <Box className={styles.eventBox}>
-        <Typography sx={{ fontSize: '30px' }} className={styles.name}>
+        <Typography sx={{ fontSize: '22px' }} className={styles.name}>
           Upcoming Lessons
         </Typography>
         <Button sx={{ backgroundColor: '#e2f3fc' }} size='small'>
@@ -53,7 +53,7 @@ const UpcomingLessons = () => {
                 {role === TEACHER_ROLE ? (
                   <Box className={styles.listItem}>
                     <ListItemText
-                      sx={{ '& .MuiTypography-root': { marginRight: '10px' } }}
+                      sx={{ '& .MuiTypography-root': { marginRight: '5px' } }}
                       primary={lesson.studentId.fullName}
                     />
                     <ListItemText secondary={dayjs(lesson.date).format('D MMMM')} />
@@ -61,7 +61,7 @@ const UpcomingLessons = () => {
                 ) : (
                   <Box className={styles.listItem}>
                     <ListItemText
-                      sx={{ '& .MuiTypography-root': { marginRight: '10px' } }}
+                      sx={{ '& .MuiTypography-root': { marginRight: '5px' } }}
                       primary={lesson.teacherId.fullName}
                     />
                     <ListItemText secondary={dayjs(lesson.date).format('D MMMM')} />

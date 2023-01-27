@@ -1,7 +1,8 @@
 @import 'styles/colors.scss';
 
 .eventContainer {
-  width: 50%;
+  max-width: 500px;
+  max-height: 500px;
 }
 
 .eventBox {
