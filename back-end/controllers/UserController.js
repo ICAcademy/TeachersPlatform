@@ -1,5 +1,10 @@
 // Services
-const { findByEmail, updateByID, getCurrentPassword } = require('../services/UserService');
+const {
+  findByEmail,
+  findByEmailWithRoleId,
+  updateByID,
+  getCurrentPassword,
+} = require('../services/UserService');
 const { comparePasswords, hashPassword, createToken } = require('../services/AuthService');
 const { updateTeacher } = require('../services/TeacherService');
 const { updateStudent } = require('../services/StudentService');
@@ -11,7 +16,7 @@ const { FORGOTPASSWORD } = require('../constants/emailSend');
 
 const getUser = async (req, res) => {
   try {
-    const user = await findByEmail(req.user.email);
+    const user = await findByEmailWithRoleId(req.user.email);
     if (!user) {
       res.status(401).json({ message: 'User was not found!' });
     }

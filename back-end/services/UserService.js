@@ -1,7 +1,9 @@
 const { ADMIN } = require('../constants/UserRoles');
 const User = require('../models/User');
 
-const findByEmail = async (email) => {
+const findByEmail = async (email) => await User.findOne({ email }).select(['-password']);
+
+const findByEmailWithRoleId = async (email) => {
   const user = await User.findOne({ email }).select(['-password']);
   if (user.role === ADMIN) {
     return user;
@@ -20,4 +22,4 @@ const updateByID = async (id, body) => {
 
 const getCurrentPassword = async (id) => await User.findById(id).select('password');
 
-module.exports = { findByEmail, updateByID, getCurrentPassword };
+module.exports = { findByEmail, findByEmailWithRoleId, updateByID, getCurrentPassword };
