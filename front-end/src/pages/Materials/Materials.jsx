@@ -71,7 +71,7 @@ const Materials = ({ snackbarShowMessage }) => {
     }
   };
 
-  const createMaterialBtn = role.user === ADMIN_ROLE && (
+  const createMaterialBtn = (role || role.user) === ADMIN_ROLE && (
     <Button
       className={styles.createBtn}
       component={Link}
