@@ -59,7 +59,7 @@ const RouterWrapper = () => {
             index
             element={
               <PrivateRoute>
-                <Dashboard />
+                {currentUser.role !== ADMIN_ROLE ? <Dashboard /> : <Navigate to='/app/calendar' />}
               </PrivateRoute>
             }
           />
@@ -67,7 +67,7 @@ const RouterWrapper = () => {
             <Route path='general-info' element={<GeneralInfo />} />
             <Route
               path='teacher-info'
-              element={isAuthenticated && currentUser.role === TEACHER_ROLE && <TeacherInfo />}
+              element={currentUser.role === TEACHER_ROLE && <TeacherInfo />}
             />
           </Route>
           <Route
@@ -75,7 +75,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Materials />
-                <QuickAddWord />
+                {currentUser.role !== ADMIN_ROLE && <QuickAddWord />}
               </PrivateRoute>
             }
           />
@@ -90,7 +90,6 @@ const RouterWrapper = () => {
           <Route
             path='/app/materials/edit/:url'
             element={
-              isAuthenticated &&
               currentUser.role === ADMIN_ROLE && (
                 <PrivateRoute>
                   <AdminMaterials />
@@ -103,7 +102,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Questions />
-                <QuickAddWord />
+                {currentUser.role !== ADMIN_ROLE && <QuickAddWord />}
               </PrivateRoute>
             }
           />
@@ -118,7 +117,6 @@ const RouterWrapper = () => {
           <Route
             path='/app/questions/edit/:id'
             element={
-              isAuthenticated &&
               currentUser.role === ADMIN_ROLE && (
                 <PrivateRoute>
                   <Tests />
@@ -129,7 +127,6 @@ const RouterWrapper = () => {
           <Route
             path='/app/questions/new'
             element={
-              isAuthenticated &&
               currentUser.role === ADMIN_ROLE && (
                 <PrivateRoute>
                   <Tests />
@@ -148,38 +145,37 @@ const RouterWrapper = () => {
           <Route
             path='/app/teachers'
             element={
-              currentUser?.role === TEACHER_ROLE ? (
-                <Navigate to='/app' />
-              ) : (
+              currentUser?.role === STUDENT_ROLE ? (
                 <PrivateRoute>
                   <TeachersList />
                 </PrivateRoute>
+              ) : (
+                <Navigate to='/app' />
               )
             }
           />
           <Route
             path='/app/teachers/:id'
             element={
-              currentUser?.role === TEACHER_ROLE ? (
-                <Navigate to='/app' />
-              ) : (
+              currentUser?.role === STUDENT_ROLE ? (
                 <PrivateRoute>
                   <Teacher />
                 </PrivateRoute>
+              ) : (
+                <Navigate to='/app' />
               )
             }
           />
           <Route
             path='/app/subscriptions'
             element={
-              currentUser?.role === STUDENT_ROLE ? (
+              currentUser?.role !== ADMIN_ROLE ? (
                 <PrivateRoute>
-                  <StudentSubscriptions />
+                  {currentUser?.role === STUDENT_ROLE && <StudentSubscriptions />}
+                  {currentUser?.role === TEACHER_ROLE && <TeacherSubscriptions />}
                 </PrivateRoute>
               ) : (
-                <PrivateRoute>
-                  <TeacherSubscriptions />
-                </PrivateRoute>
+                <Navigate to='/app/calendar' />
               )
             }
           />
@@ -187,7 +183,7 @@ const RouterWrapper = () => {
             path='/app/finances'
             element={
               <PrivateRoute>
-                <Finances />
+                {currentUser?.role !== TEACHER_ROLE ? <Finances /> : <Navigate to='/app' />}
               </PrivateRoute>
             }
           />
@@ -195,7 +191,11 @@ const RouterWrapper = () => {
             path='/app/dictionary'
             element={
               <PrivateRoute>
-                <Dictionary />
+                {currentUser?.role !== ADMIN_ROLE ? (
+                  <Dictionary />
+                ) : (
+                  <Navigate to='/app/calendar' />
+                )}
               </PrivateRoute>
             }
           />
@@ -203,7 +203,7 @@ const RouterWrapper = () => {
             path='/app/lessons'
             element={
               <PrivateRoute>
-                <Lessons />
+                {currentUser?.role !== ADMIN_ROLE ? <Lessons /> : <Navigate to='/app/calendar' />}
               </PrivateRoute>
             }
           />
@@ -211,19 +211,11 @@ const RouterWrapper = () => {
             path='/app/lessons/:id'
             element={
               <PrivateRoute>
-                <Lesson />
+                {currentUser?.role !== ADMIN_ROLE ? <Lesson /> : <Navigate to='/app/calendar' />}
               </PrivateRoute>
             }
           />
         </Route>
-        <Route
-          path='/app/tests'
-          element={
-            <PrivateRoute>
-              <Tests />
-            </PrivateRoute>
-          }
-        />
         <Route path='/login' element={<Login />} />
         <Route path='/registration' element={<Registration />} />
         <Route path='/reset-password' element={<ChangePassword />} />

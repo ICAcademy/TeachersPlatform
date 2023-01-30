@@ -9,6 +9,9 @@ import Quiz from 'components/questions/Quiz/Quiz';
 import { getTopicDataByUnitAndLevel } from 'services/questionService';
 import { socket } from 'services/socketService';
 
+// Constants
+import { TEACHER_ROLE } from 'constants/userRoles';
+
 import styles from './Topics.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
@@ -35,7 +38,7 @@ const Topics = () => {
   } = useLocation();
 
   const {
-    currentUser: { roleId },
+    currentUser: { roleId, role },
   } = useContext(CurrentUserContext);
 
   const canStartLesson = Object.keys(selectedTopic).length && selectedStudentId;
@@ -111,31 +114,33 @@ const Topics = () => {
         <Box className={styles.fullScreen} onClick={fullscreenHandler}>
           <FontAwesomeIcon icon={faArrowsLeftRightToLine} />
         </Box>
-        <Box className={styles.lesson__form}>
-          <FormControl sx={{ maxWidth: '200px' }} fullWidth size='small'>
-            <InputLabel id='select student'>Select student</InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              label='select student'
-              value={selectedStudentId}
-              onChange={studentSelectHandler}
+        {role === TEACHER_ROLE && (
+          <Box className={styles.lesson__form}>
+            <FormControl sx={{ maxWidth: '200px' }} fullWidth size='small'>
+              <InputLabel id='select student'>Select student</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                label='select student'
+                value={selectedStudentId}
+                onChange={studentSelectHandler}
+              >
+                {students.map((student) => (
+                  <MenuItem key={student._id} value={student.studentID._id}>
+                    {student.studentID.fullName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Button
+              sx={sx.startLessonBtn}
+              variant='contained'
+              onClick={startLessonHandler}
+              disabled={!canStartLesson}
             >
-              {students.map((student) => (
-                <MenuItem key={student._id} value={student.studentID._id}>
-                  {student.studentID.fullName}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Button
-            sx={sx.startLessonBtn}
-            variant='contained'
-            onClick={startLessonHandler}
-            disabled={!canStartLesson}
-          >
-            Start lesson
-          </Button>
-        </Box>
+              Start lesson
+            </Button>
+          </Box>
+        )}
         {quiz}
       </Box>
     </Box>
