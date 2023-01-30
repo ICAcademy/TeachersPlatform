@@ -15,9 +15,9 @@ const AppProvider = ({ children }) => {
   const fetchUser = useCallback(async () => {
     try {
       const accessToken = localStorage.getItem('token');
-      const { data } = accessToken ? await getUser(accessToken) : isAuthenticated;
-      const updatedUser = { ...data, roleId: data.roleId._id, roleInfo: { ...data.roleId } };
-      if (data) {
+      if (accessToken) {
+        const { data } = await getUser(accessToken);
+        const updatedUser = { ...data, roleId: data.roleId._id, roleInfo: { ...data.roleId } };
         setCurrentUser(updatedUser);
         setIsLoading(false);
         setIsAuthenticated(true);
@@ -28,7 +28,7 @@ const AppProvider = ({ children }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <CurrentUserContext.Provider
