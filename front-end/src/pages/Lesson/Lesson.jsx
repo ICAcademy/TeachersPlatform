@@ -17,7 +17,7 @@ const Lesson = () => {
   const navigate = useNavigate();
 
   const {
-    currentUser: { role },
+    currentUser: { role, roleId },
   } = useContext(CurrentUserContext);
 
   const [lesson, setLesson] = useState({});
@@ -42,10 +42,14 @@ const Lesson = () => {
     socket.emit('lesson:join', id, role);
 
     socket.on('lesson:updated', (data) => setLesson(data));
-    socket.on('lesson:ended', () => navigate('/app/lessons'));
+    socket.on('lesson:ended', (lesson) => {
+      if (lesson.studentId === roleId || lesson.teacherId === roleId) {
+        navigate('/app/lessons');
+      }
+    });
 
     return () => socket.emit('lesson:leave', id, role);
-  }, [id, navigate, role]);
+  }, [id, navigate, role, roleId]);
 
   return isLoading ? (
     <Loader />

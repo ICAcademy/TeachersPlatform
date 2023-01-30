@@ -1,3 +1,5 @@
+const { TEACHER } = require('../constants/UserRoles');
+
 const {
   updateLesson,
   updateOnDisconnect,
@@ -7,7 +9,7 @@ const {
 } = require('../services/LessonService');
 
 const getStatus = (role, status, socketId) =>
-  role === 'teacher'
+  role === TEACHER
     ? { teacherStatus: status, teacherSocketId: socketId }
     : { studentStatus: status, studentSocketId: socketId };
 
@@ -45,17 +47,19 @@ const registerLessonHandlers = (io, socket) => {
   };
 
   const userEndLesson = async (roomId) => {
-    await endLesson(roomId);
+    const lesson = await endLesson(roomId);
 
-    io.to(roomId).emit('lesson:ended');
+    io.emit('lesson:ended', lesson);
   };
 
   const userDisconnect = async () => {
-    socket.leaveAll();
+    const roomId = [...socket.rooms][1];
 
-    const lesson = await updateOnDisconnect(socket.id);
+    socket.leave(roomId);
 
-    io.to(lesson?._id.toString()).emit('lesson:updated', lesson);
+    const lesson = await updateOnDisconnect(roomId, socket.id);
+
+    io.to(roomId).emit('lesson:updated', lesson);
   };
 
   const userCallRequest = async (data) => {
@@ -71,7 +75,7 @@ const registerLessonHandlers = (io, socket) => {
   socket.on('lesson:leave', userLeave);
   socket.on('lesson:select-answer', userSelectAnswer);
   socket.on('lesson:end', userEndLesson);
-  socket.on('disconnect', userDisconnect);
+  socket.on('disconnecting', userDisconnect);
   socket.on('lesson:call-request', userCallRequest);
   socket.on('lesson:call-approve', userCallApprove);
 };
