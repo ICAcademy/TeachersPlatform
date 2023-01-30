@@ -38,6 +38,17 @@ const style = {
   },
 };
 
+const modalStyle = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  pointerEvents: 'none',
+  transition: '0.5s',
+};
+
 const newPasswordAgainHelperText = 'Passwords do not match';
 const newPasswordHelperText = 'Enter min 8 and max 10 characters; example: Jerry77)';
 
