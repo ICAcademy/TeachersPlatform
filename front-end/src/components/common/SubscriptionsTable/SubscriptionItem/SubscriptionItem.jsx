@@ -98,7 +98,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
 
   return (
     <div className={styles.subscriptionItem}>
-      <div className={styles.itemPart}>
+      <div className={styles.mainUserInfo}>
         <div className={`${styles.badgeDot} ${statusClass}`}></div>
         <div className={styles.avatar}>
           <img src={subscription.studentID.url || noAvatar} />
@@ -120,7 +120,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
           )}
         </div>
       </div>
-      <div className={styles.itemPart}>
+      <div className={styles.additionalUserInfo}>
         <div className={styles.itemInfo}>
           <div className={styles.infoItem}>
             <EmailIcon className={styles.infoIcon} color='primary' />
@@ -134,7 +134,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
           </div>
         </div>
       </div>
-      <div className={styles.btnWrap}>
+      <div className={styles.buttonsWrapper}>
         {role === STUDENT_ROLE && (
           <Button variant='contained' size='small' onClick={() => onDelete(subscription._id)}>
             Unsubscribe
@@ -168,9 +168,11 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
             changeLevel={changeLevelHandler}
           />
         </div>
-        <IconButton aria-label='delete' onClick={handleDelete}>
-          <DeleteIcon />
-        </IconButton>
+        {role === TEACHER_ROLE && (
+          <IconButton aria-label='delete' onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+        )}
       </div>
     </div>
   );
