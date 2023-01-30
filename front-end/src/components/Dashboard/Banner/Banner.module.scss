@@ -12,6 +12,10 @@
   border-radius: 5px;
 }
 
+.headerContainer {
+  width: 100%;
+}
+
 .learn {
   color: $white;
   font-weight: $fw600;
@@ -81,77 +85,78 @@
 }
 
 .right {
-  width: 54%;
+  width: 65%;
   height: 200px;
-  @media (max-width: 2000px) {
-    width: 100%;
-  }
 }
 
 .images {
   display: flex;
   width: 100%;
-  margin-left: 300px;
-  @media (max-width: 2000px) {
-    margin-left: 30%;
-  }
+  margin-left: 30%;
 }
 
 .cloudBigContainer {
   width: 70px;
   position: absolute;
-  margin-top: 6px;
-  margin-left: 80px;
+  margin-top: 1%;
+  margin-left: 14%;
 }
 
 .cloudBig1Container {
   width: 60px;
   position: absolute;
-  margin-top: 25px;
-  margin-left: 180px;
+  margin-top: 2%;
+  margin-left: 25%;
 }
 
 .cloudBiggestContainer {
   width: 48px;
   position: absolute;
-  margin-top: 17px;
-  margin-left: 220px;
+  margin-top: 5%;
+  margin-left: 32%;
   z-index: 1;
 }
 
 .studentBoyContainer {
   width: 40px;
   position: absolute;
-  margin-top: 83px;
-  margin-left: 50px;
+  margin-top: 15%;
+  margin-left: 10%;
   z-index: 2;
+  @media (min-width: 2050px) {
+    margin-top: 10%;
+  }
 }
 
 .studentGirlAfroAmericanContainer {
   width: 30px;
   position: absolute;
-  margin-top: 86px;
-  margin-left: 150px;
+  margin-top: 14%;
+  margin-left: 30%;
   z-index: 2;
+  @media (min-width: 2050px) {
+    margin-top: 10%;
+  }
 }
 
 .studentGirlContainer {
   width: 28px;
   position: absolute;
-  margin-top: 82px;
-  margin-left: 260px;
+  margin-top: 14%;
+  margin-left: 50%;
   z-index: 2;
+  @media (min-width: 2050px) {
+    margin-top: 10%;
+  }
 }
 
 .img {
   width: 100%;
+  height: auto;
 }
 
 .cityContainer {
-  width: 55%;
+  max-width: 55%;
   z-index: 1;
-  @media (max-width: 1800px) {
-    max-width: 55%;
-  }
   filter: saturate(90%);
 }
