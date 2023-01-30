@@ -75,7 +75,6 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Materials />
-                {currentUser.role !== ADMIN_ROLE && <QuickAddWord />}
               </PrivateRoute>
             }
           />
@@ -84,6 +83,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Material />
+                {currentUser.role !== ADMIN_ROLE && <QuickAddWord />}
               </PrivateRoute>
             }
           />
@@ -102,7 +102,6 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Questions />
-                {currentUser.role !== ADMIN_ROLE && <QuickAddWord />}
               </PrivateRoute>
             }
           />
@@ -111,6 +110,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Topics />
+                {currentUser.role !== ADMIN_ROLE && <QuickAddWord />}
               </PrivateRoute>
             }
           />
