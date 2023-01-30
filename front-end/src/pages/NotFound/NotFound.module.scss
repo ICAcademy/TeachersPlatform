@@ -1,0 +1,48 @@
+@import 'styles/font.scss';
+@import 'styles/colors.scss';
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 0;
+
+  @media screen and (max-width: 1280px) {
+    justify-content: space-evenly;
+  }
+
+  .block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & h1 {
+      width: 75%;
+      line-height: 1.5;
+      color: $santaGrey;
+      text-align: center;
+      margin: 25px 0;
+      font-size: $f16;
+      font-weight: $fw500;
+      font-family: 'Poppins-Regular', sans-serif;
+
+      @media screen and (max-width: 480px) {
+        font-size: $f14;
+      }
+    }
+  }
+
+  & img {
+    width: 500px;
+
+    @media screen and (max-width: 1280px) {
+      width: 400px;
+    }
+
+    @media screen and (max-width: 480px) {
+      width: 350px;
+    }
+  }
+}
