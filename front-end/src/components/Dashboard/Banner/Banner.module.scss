@@ -92,6 +92,9 @@
   display: flex;
   width: 100%;
   margin-left: 300px;
+  @media (max-width: 2000px) {
+    margin-left: 30%;
+  }
 }
 
 .cloudBigContainer {
