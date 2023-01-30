@@ -30,7 +30,7 @@ const Banner = () => {
 
   useEffect(() => {
     window.addEventListener('resize', () => {
-      if (window.matchMedia('(min-width: 1700px)').matches) {
+      if (window.matchMedia('(min-width: 1100px)').matches) {
         setShowMedia(true);
       } else {
         setShowMedia(false);
