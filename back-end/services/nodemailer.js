@@ -26,7 +26,7 @@ const forgotPasswordTemplate = (name, link) =>
   `<div style='text-align: center'>
 <h1>Hello ${name}!</h1>
 <p>You requested to reset your password</p>
-<p>Link is active six minutes</p>
+<p>Link is active one hour</p>
 <p>Please, click the link below to reset your password</p>
 <a href="${link}">Reset password</a>
 </div>`;
