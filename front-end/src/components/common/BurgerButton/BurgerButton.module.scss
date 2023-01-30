@@ -1,0 +1,13 @@
+@import 'styles/colors.scss';
+
+.burgerButton {
+  background-color: $softPurple;
+  border-radius: 5px;
+  padding: 2px 5px;
+  cursor: pointer;
+
+  .burgerLines {
+    color: #fff;
+    font-size: 30px;
+  }
+}
