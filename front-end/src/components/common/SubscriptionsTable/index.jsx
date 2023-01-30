@@ -17,7 +17,7 @@ const SubscriptionsTable = ({ subscriptions, role, deleteSubscriptionById }) => 
           role={role}
           subscription={subscription}
           onDelete={deleteSubscriptionById}
-        ></SubscriptionItem>
+        />
       ))}
     </div>
   );

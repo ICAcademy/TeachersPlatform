@@ -31,7 +31,7 @@ import { teacherPhoto, certificate, favourite, reward, speechBubble } from 'cons
 import {
   createSubscription,
   deleteSubscription,
-  getStudentSubscription,
+  getSubscriptionByQueries,
 } from 'services/subscriptionService';
 
 // Context
@@ -61,7 +61,7 @@ const Teacher = ({ teacher }) => {
         currentUser.fullName,
         teacher.fullName,
       );
-      await fetchStudentSubscriptions(currentUser.roleId);
+      await fetchStudentSubscriptions(currentUser.role, currentUser.roleId);
       setButtonLoader(false);
       return subscribe;
     } catch (error) {
@@ -69,10 +69,10 @@ const Teacher = ({ teacher }) => {
     }
   };
 
-  const fetchStudentSubscriptions = async (userId) => {
+  const fetchStudentSubscriptions = async (role, id) => {
     try {
       setIsLoader(true);
-      const fetchedSubscriptions = await getStudentSubscription(userId);
+      const fetchedSubscriptions = await getSubscriptionByQueries({ role, id });
       setSubscriptions(fetchedSubscriptions);
     } catch (error) {
       return error;
@@ -106,7 +106,7 @@ const Teacher = ({ teacher }) => {
   };
 
   useEffect(() => {
-    fetchStudentSubscriptions(currentUser?.roleId);
+    fetchStudentSubscriptions(currentUser.role, currentUser?.roleId);
   }, [currentUser]);
 
   useEffect(() => {
@@ -197,7 +197,7 @@ const Teacher = ({ teacher }) => {
               <div className={`${styles.teacherInfoWrap} ${styles.margin}`}>
                 <div className={styles.biographyBlock}>
                   <FontAwesomeIcon icon={faComments} />
-                  <h2>Biograpghy</h2>
+                  <h2>Biography</h2>
                 </div>
                 <p className={styles.biography}>{teacher.biography}</p>
               </div>

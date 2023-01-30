@@ -13,7 +13,7 @@ import {
   scheduleLesson,
   updateScheduledLesson,
 } from 'services/scheduledLessonService';
-import { getTeachersSubscription } from 'services/subscriptionService';
+import { getSubscriptionByQueries } from 'services/subscriptionService';
 
 export const CalendarContext = createContext();
 
@@ -53,7 +53,7 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
   const fetchStudents = useCallback(async () => {
     try {
       setIsLoading(true);
-      const list = await getTeachersSubscription(roleId);
+      const list = await getSubscriptionByQueries({ role, id: roleId });
       const studentsList = list.map((item) => ({
         id: item.studentID._id,
         fullName: item.studentID.fullName,
@@ -63,7 +63,7 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [roleId]);
+  }, [role, roleId]);
 
   const getLessonsForDay = (date) =>
     lessonsList.filter(

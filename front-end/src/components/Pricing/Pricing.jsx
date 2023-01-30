@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 //Services
 import { getAllPricing } from 'services/pricingService';
-import { getStudentSubscription } from 'services/subscriptionService';
+import { getSubscriptionByQueries } from 'services/subscriptionService';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -25,10 +25,10 @@ const Pricing = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { currentUser } = useContext(CurrentUserContext);
 
-  const fetchSubscriptions = async (id) => {
+  const fetchSubscriptions = async (role, id) => {
     try {
       setIsLoading(true);
-      const subscriptions = await getStudentSubscription(id);
+      const subscriptions = await getSubscriptionByQueries({ role, id });
       setTeachers(subscriptions);
       setIsLoading(false);
     } catch (e) {
@@ -56,8 +56,8 @@ const Pricing = () => {
 
   useEffect(() => {
     getPricing();
-    fetchSubscriptions(currentUser.roleId);
-  }, [currentUser.roleId]);
+    fetchSubscriptions(currentUser.role, currentUser?.roleId);
+  }, [currentUser.role, currentUser.roleId]);
 
   return (
     currentUser.role === STUDENT_ROLE &&

@@ -40,7 +40,7 @@ import Badge from '@mui/material/Badge';
 
 // Constants
 import { STUDENT_ROLE, ADMIN_ROLE, TEACHER_ROLE } from 'constants/userRoles';
-import { getSubscriptionsCountByStatus } from 'services/subscriptionService';
+import { getSubscriptionByQueries } from 'services/subscriptionService';
 import { APPROVED, PENDING } from 'constants/subscriptionStatuses';
 
 export const SidebarList = ({ showSidebar }) => {
@@ -51,7 +51,7 @@ export const SidebarList = ({ showSidebar }) => {
 
   const fetchSubscriptionsCount = async (id) => {
     try {
-      const count = await getSubscriptionsCountByStatus({ statusName: APPROVED, id });
+      const count = await getSubscriptionByQueries({ statusName: APPROVED, id });
       setSubscriptionsCount(count);
     } catch (error) {
       console.log(error);
