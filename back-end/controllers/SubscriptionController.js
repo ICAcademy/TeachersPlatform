@@ -1,35 +1,31 @@
-const subscriptionService = require('../services/SubscriptionService');
-const studentService = require('../services/StudentService');
-const teacherService = require('../services/TeacherService');
-const SubscriptionModel = require('../models/Subscription');
-const sendMail = require('../services/nodemailer');
-const { SUBSCRIPTION } = require('../constants/emailSend');
-const { socket } = require('../listeners/Socket');
+// Model
+const SubscriptionModel = require.main.require('./models/Subscription');
 
-exports.getAllSubscriptions = async (req, res) => {
-  try {
-    const { statusName, id } = req.query;
-    const subscriptions = statusName
-      ? await subscriptionService.getSubscriptionsByStatus(statusName, id)
-      : await subscriptionService.getAllSubscriptions();
-    res.json(subscriptions);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
+// Services
+const sendMail = require.main.require('./services/nodemailer');
+const subscriptionService = require.main.require('./services/SubscriptionService');
+const studentService = require.main.require('./services/StudentService');
+const teacherService = require.main.require('./services/TeacherService');
+
+// Web sockets
+const { socket } = require.main.require('./listeners/Socket');
+
+// Constants
+const { SUBSCRIPTION } = require.main.require('./constants/emailSend');
+const { TEACHER } = require.main.require('./constants/UserRoles');
+
+const getSubscriptionByRole = async (role, id) => {
+  if (role === TEACHER) return await subscriptionService.getTeacherSubscriptions(id);
+  return await subscriptionService.getStudentSubscriptions(id);
 };
 
-exports.getTeacherSubscriptions = async (req, res) => {
+exports.getSubscriptionsByQueries = async (req, res) => {
   try {
-    const subscriptions = await subscriptionService.getTeacherSubscriptions(req.params.id);
-    res.json(subscriptions);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-};
-
-exports.getStudentSubscriptions = async (req, res) => {
-  try {
-    const subscriptions = await subscriptionService.getStudentSubscriptions(req.params.id);
+    const { statusName, role, id } = req.query;
+    const subscriptions =
+      statusName && id
+        ? await subscriptionService.getSubscriptionsByStatus(statusName, id)
+        : await getSubscriptionByRole(role, id);
     res.json(subscriptions);
   } catch (err) {
     res.status(400).json({ error: err.message });

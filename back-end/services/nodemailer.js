@@ -25,7 +25,10 @@ const subcriptionTemplate = (name, teacherName) =>
 const forgotPasswordTemplate = (name, link) =>
   `<div style='text-align: center'>
 <h1>Hello ${name}!</h1>
-<a href="${link}">Link for changing password</a>
+<p>You requested to reset your password</p>
+<p>Link is active one hour</p>
+<p>Please, click the link below to reset your password</p>
+<a href="${link}">Reset password</a>
 </div>`;
 
 const changedPasswordTemplate = (name) =>

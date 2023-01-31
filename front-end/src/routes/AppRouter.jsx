@@ -84,6 +84,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Material />
+                {currentUser.role !== ADMIN_ROLE && <QuickAddWord />}
               </PrivateRoute>
             }
           />
@@ -111,6 +112,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 <Topics />
+                {currentUser.role !== ADMIN_ROLE && <QuickAddWord />}
               </PrivateRoute>
             }
           />
@@ -212,6 +214,7 @@ const RouterWrapper = () => {
             element={
               <PrivateRoute>
                 {currentUser?.role !== ADMIN_ROLE ? <Lesson /> : <Navigate to='/app/calendar' />}
+                {currentUser.role !== ADMIN_ROLE && <QuickAddWord />}
               </PrivateRoute>
             }
           />

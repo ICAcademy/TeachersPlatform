@@ -16,7 +16,7 @@ import styles from './Topics.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserContext } from 'context/AppProvider';
-import { getTeachersSubscription } from 'services/subscriptionService';
+import { getSubscriptionByQueries } from 'services/subscriptionService';
 
 const sx = {
   startLessonBtn: {
@@ -63,9 +63,9 @@ const Topics = () => {
     setIsFullscreen((prev) => !prev);
   };
 
-  const fetchStudents = async (id) => {
+  const fetchStudents = async (role, id) => {
     try {
-      const students = await getTeachersSubscription(id);
+      const students = await getSubscriptionByQueries({ role, id });
       setStudents(students);
     } catch (error) {
       console.log(error);
@@ -85,8 +85,8 @@ const Topics = () => {
   };
 
   useEffect(() => {
-    fetchStudents(roleId);
-  }, [roleId]);
+    fetchStudents(role, roleId);
+  }, [role, roleId]);
 
   useEffect(() => {
     fetchTopicsData(unit, level);

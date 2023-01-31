@@ -11,7 +11,7 @@ import {
   updateDictionary,
   deleteDictionary,
 } from 'services/dictionaryService';
-import { getTeachersSubscription } from 'services/subscriptionService';
+import { getSubscriptionByQueries } from 'services/subscriptionService';
 
 // Constants
 import { TEACHER_ROLE } from 'constants/userRoles';
@@ -64,14 +64,14 @@ const Dictionary = ({ snackbarShowMessage }) => {
     return roleId;
   }, [isTeacher, roleId, selectedStudentId]);
 
-  const fetchSubscriptions = useCallback(async (id) => {
+  const fetchSubscriptions = useCallback(async () => {
     try {
-      const subscriptions = await getTeachersSubscription(id);
+      const subscriptions = await getSubscriptionByQueries({ role, id: roleId });
       setStudents(subscriptions);
     } catch (error) {
       return error;
     }
-  }, []);
+  }, [role, roleId]);
 
   const handleCreateDictionary = async (word, translation) => {
     try {
@@ -183,9 +183,9 @@ const Dictionary = ({ snackbarShowMessage }) => {
 
   useEffect(() => {
     if (isTeacher) {
-      fetchSubscriptions(roleId);
+      fetchSubscriptions();
     }
-  }, [fetchSubscriptions, isTeacher, roleId]);
+  }, [fetchSubscriptions, isTeacher]);
 
   const fnSetWords = useCallback(
     (data) => {

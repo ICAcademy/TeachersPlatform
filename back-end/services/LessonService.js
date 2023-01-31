@@ -32,19 +32,18 @@ const updateLessonAnswerById = async (roomId, questionId, answer) =>
     select: 'fullName url',
   });
 
-const endLesson = async (id) =>
-  await Lesson.findByIdAndUpdate(id, { lessonStatus: 'ended' }, { new: true, runValidators: true });
+const endLesson = async (id) => await Lesson.findByIdAndDelete(id);
 
-const updateOnDisconnect = async (id) => {
-  return Lesson.findOneAndUpdate(
-    { $or: [{ teacherSocketId: id }, { studentSocketId: id }] },
+const updateOnDisconnect = async (id, socketId) => {
+  return Lesson.findByIdAndUpdate(
+    id,
     [
       {
         $set: {
           teacherStatus: {
             $cond: {
               if: {
-                $eq: ['$teacherSocketId', id],
+                $eq: ['$teacherSocketId', socketId],
               },
               then: 'offline',
               else: '$teacherStatus',
@@ -53,7 +52,7 @@ const updateOnDisconnect = async (id) => {
           studentStatus: {
             $cond: {
               if: {
-                $eq: ['$studentSocketId', id],
+                $eq: ['$studentSocketId', socketId],
               },
               then: 'offline',
               else: '$studentStatus',

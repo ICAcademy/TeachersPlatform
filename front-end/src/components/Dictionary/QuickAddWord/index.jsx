@@ -16,7 +16,7 @@ import { TEACHER_ROLE } from 'constants/userRoles';
 
 // Services
 import { createDictionary } from 'services/dictionaryService';
-import { getTeachersSubscription } from 'services/subscriptionService';
+import { getSubscriptionByQueries } from 'services/subscriptionService';
 
 // Hooks
 import useInput from 'hooks/useInput';
@@ -63,7 +63,7 @@ const sx = {
 
 const QuickAddWord = ({ snackbarShowMessage }) => {
   const {
-    currentUser: { roleId, role },
+    currentUser: { role, roleId },
   } = useContext(CurrentUserContext);
 
   const [isClicked, setIsClicked] = useState(false);
@@ -127,20 +127,20 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
     }
   };
 
-  const fetchSubscriptions = useCallback(async (id) => {
+  const fetchSubscriptions = useCallback(async () => {
     try {
-      const subscriptions = await getTeachersSubscription(id);
+      const subscriptions = await getSubscriptionByQueries({ role, id: roleId });
       setStudents(subscriptions);
     } catch (error) {
       return error;
     }
-  }, []);
+  }, [role, roleId]);
 
   useEffect(() => {
     if (isTeacher) {
-      fetchSubscriptions(roleId);
+      fetchSubscriptions();
     }
-  }, [fetchSubscriptions, isTeacher, roleId]);
+  }, [fetchSubscriptions, isTeacher]);
 
   const reset = () => {
     resetWord();

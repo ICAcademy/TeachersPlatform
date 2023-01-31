@@ -8,7 +8,7 @@ import { CurrentUserContext } from 'context/AppProvider';
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // Service
-import { getTeachersSubscription, deleteSubscription } from 'services/subscriptionService';
+import { getSubscriptionByQueries, deleteSubscription } from 'services/subscriptionService';
 import { socket } from 'services/socketService';
 
 // Components
@@ -24,10 +24,10 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchSubscriptions = async (teacherId) => {
+  const fetchSubscriptions = async (role, id) => {
     try {
       setIsLoading(true);
-      const data = await getTeachersSubscription(teacherId);
+      const data = await getSubscriptionByQueries({ role, id });
       setSubscriptions(data);
       setIsLoading(false);
     } catch (error) {
@@ -43,7 +43,7 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
         return subscription._id === id;
       });
       const remove = await deleteSubscription(necessarySubscription._id);
-      await fetchSubscriptions(currentUser.roleId);
+      await fetchSubscriptions(currentUser.role, currentUser.roleId);
       setIsLoading(false);
       snackbarShowMessage({
         message: 'Subscription removed',
@@ -57,16 +57,16 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
   };
 
   useEffect(() => {
-    fetchSubscriptions(currentUser?.roleId);
+    fetchSubscriptions(currentUser.role, currentUser?.roleId);
   }, [currentUser]);
 
   useEffect(() => {
     socket.on('create_subscription', (data) => {
       if (data.teacher._id === currentUser.roleId) {
-        fetchSubscriptions(currentUser?.roleId);
+        fetchSubscriptions(currentUser.role, currentUser?.roleId);
       }
     });
-  }, [currentUser?.roleId]);
+  }, [currentUser.role, currentUser.roleId]);
 
   useEffect(() => {
     socket.on('delete_subscription', (data) => {
@@ -74,10 +74,10 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
         return subscription._id === data;
       });
       if (deletedSubscription) {
-        fetchSubscriptions(currentUser.roleId);
+        fetchSubscriptions(currentUser.role, currentUser.roleId);
       }
     });
-  }, [currentUser.roleId, subscriptions]);
+  }, [currentUser.role, currentUser.roleId, subscriptions]);
 
   return (
     <div className={styles.wrapper}>

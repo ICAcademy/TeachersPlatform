@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getSubscriptionsCountByStatus } from 'services/subscriptionService';
+import { getSubscriptionByQueries } from 'services/subscriptionService';
 
 const initialState = { subscriptions: 0 };
 
 export const pendingSubscriptionsCount = createAsyncThunk(
   'subscriptions/pendingSubscriptionsCount',
   async (params) => {
-    const subscriptions = await getSubscriptionsCountByStatus(params);
+    const subscriptions = await getSubscriptionByQueries(params);
     return subscriptions;
   },
 );

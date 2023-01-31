@@ -37,7 +37,8 @@ const Lessons = () => {
   useEffect(() => {
     fetchLessons(roleId);
 
-    socket.on('lesson:added', () => fetchLessons(roleId));
+    socket.on('lesson:added', (lesson) => lesson.studentId === roleId && fetchLessons(roleId));
+    socket.on('lesson:ended', (lesson) => lesson.studentId === roleId && fetchLessons(roleId));
   }, [roleId]);
 
   return isLoading ? (
