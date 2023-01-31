@@ -8,11 +8,9 @@ const {
 const { comparePasswords, hashPassword, createToken } = require('../services/AuthService');
 const { updateTeacher } = require('../services/TeacherService');
 const { updateStudent } = require('../services/StudentService');
-const sendMail = require('../services/nodemailer');
 
 // Constants
 const { STUDENT, TEACHER } = require('../constants/UserRoles');
-const { FORGOTPASSWORD } = require('../constants/emailSend');
 
 const getUser = async (req, res) => {
   try {
@@ -58,14 +56,12 @@ const changePassword = async (req, res) => {
     const userPass = await getCurrentPassword(id);
     const isValidPassword = await comparePasswords(currentPassword, userPass.password);
     if (!isValidPassword) {
-      return res
-        .status(400)
-        .json({ status: 'error', message: 'Please enter correct old password' });
+      return res.status(400).json('Please enter correct old password');
     }
     const hashedPass = await hashPassword(newPassword);
     userPass.password = hashedPass;
     await userPass.save();
-    res.json({ message: 'password updated' });
+    res.json('password updated');
   } catch (err) {
     res.status(400).json(err.message);
   }
