@@ -9,7 +9,7 @@ import UpcomingLessons from 'components/Dashboard/UpcomingLessons/UpcomingLesson
 
 import { CurrentUserContext } from 'context/AppProvider';
 
-import { getSubscriptionsCountByStatus } from 'services/subscriptionService';
+import { getSubscriptionByQueries } from 'services/subscriptionService';
 import { socket } from 'services/socketService';
 
 import { STUDENT_ROLE } from 'constants/userRoles';
@@ -27,7 +27,7 @@ const Dashboard = () => {
     async (id = roleId) => {
       try {
         setIsLoading(true);
-        const response = await getSubscriptionsCountByStatus({ statusName: APPROVED, id });
+        const response = await getSubscriptionByQueries({ statusName: APPROVED, id });
         setSubscriptions(response);
         setIsLoading(false);
       } catch (error) {
