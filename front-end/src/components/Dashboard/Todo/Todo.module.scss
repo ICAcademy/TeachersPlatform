@@ -2,7 +2,7 @@
 @import 'styles/font.scss';
 
 .todo {
-  max-width: 500px;
+  width: 100%;
   max-height: 500px;
   padding-bottom: 20px;
   background-color: $white;
@@ -17,7 +17,7 @@
   }
 
   &__title {
-    border-bottom: 1px solid #f6f9fb;
+    color: #000;
   }
 
   &__list {

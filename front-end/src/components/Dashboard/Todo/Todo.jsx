@@ -141,8 +141,8 @@ const Todo = () => {
         </Box>
       </Modal>
       <Box className={styles.todo__header}>
-        <Typography variant='h6' color='primary' className={styles.todo__title}>
-          Todo list:
+        <Typography variant='h6' className={styles.todo__title}>
+          Todo list
         </Typography>
         <Button variant='outlined' size='small' onClick={handleOpen}>
           Show All
@@ -155,7 +155,7 @@ const Todo = () => {
           </Box>
         ) : (
           filterTodo(todoList)
-            .slice(0, 4)
+            .slice(0, 3)
             .map((todo) => (
               <TodoItem
                 key={todo._id}
