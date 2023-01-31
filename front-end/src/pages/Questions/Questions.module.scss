@@ -7,13 +7,13 @@
   margin-left: 15px !important;
 
   label {
-    font-size: 0.9rem;
-    line-height: 1em;
+    font-size: 1rem;
+    line-height: 0.9em;
   }
 
   input {
-    padding: 6px 10px;
-    font-size: 0.8rem;
+    padding: 6.5px 10px;
+    font-size: 1rem;
   }
 
   & svg {
@@ -29,7 +29,6 @@
 
 @media screen and (max-width: 1680px) {
   .questionsHeader {
-    flex-direction: column;
     align-items: center;
   }
 
@@ -38,30 +37,13 @@
   }
 }
 
-@media screen and (max-width: 1366px) {
-  .input {
-    width: 260px !important;
-
-    label {
-      font-size: 0.6rem;
-      line-height: 0.8em;
-    }
-
-    input {
-      font-size: 0.6rem;
-    }
-  }
-}
-
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .questionsHeader {
     justify-content: center;
   }
 
   .navigationRow {
-    width: 100%;
     flex-direction: column;
-    justify-content: space-between;
   }
 
   .createBtn {
@@ -73,8 +55,7 @@
     margin: 15px 0 0 0 !important;
 
     & svg {
-      font-size: 16px;
-      padding: auto;
+      font-size: 18px;
     }
   }
 }

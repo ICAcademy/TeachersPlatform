@@ -14,7 +14,7 @@ const Level = (props) => {
 
   return (
     <div className={styles.levelItem}>
-      <Button variant={contained} size='small' value={props.level} onClick={changeLevelHandler}>
+      <Button variant={contained} size='medium' value={props.level} onClick={changeLevelHandler}>
         {props.level}
       </Button>
     </div>
