@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes, { bool } from 'prop-types';
 import {
   Modal,
@@ -16,6 +16,7 @@ import { REGEX_PASSWORD } from 'helpers/regex';
 import useInput from 'hooks/useInput';
 import Loader from 'components/common/Loader/Loader';
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
+import { useCallback } from 'react';
 
 const style = {
   position: 'absolute',
@@ -46,9 +47,10 @@ const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
 
   const [enteredCurrentPassword, setEnteredCurrentPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState({ currentPassword: false, matchNewPasswords: false });
+  const [isValid, setIsValid] = useState(false);
 
   const currentPasswordChangeHandler = (e) => {
-    setIsError({});
     setEnteredCurrentPassword(e.target.value);
   };
 
@@ -70,9 +72,7 @@ const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
     resetValue: resetNewPasswordAgain,
   } = useInput('newPasswordAgain', '', REGEX_PASSWORD);
 
-  const formIsValid = newPasswordIsValid && newPasswordAgainIsValid;
-
-  const [isError, setIsError] = useState({});
+  const formIsValid = newPasswordIsValid && newPasswordAgainIsValid && !isValid;
 
   const handleMouseDownPassword = (e) => e.preventDefault();
 
@@ -90,15 +90,20 @@ const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
     try {
       setIsLoading(true);
       await changePassword(id, data);
-      setIsError('');
+      setErr({ currentPassword: false, matchNewPasswords: false });
       snackbarShowMessage({
         message: 'Password changed',
         severity: 'success',
       });
       reset();
-      setIsLoading(false);
     } catch (error) {
-      setIsError(error.response.data);
+      setErr({ ...err, currentPassword: true });
+      snackbarShowMessage({
+        message: error.response.data,
+        severity: 'error',
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,6 +113,23 @@ const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
     resetNewPasswordAgain();
     handleClose();
   };
+
+  const errorCheck = useCallback(() => {
+    if (enteredCurrentPassword !== '' || enteredNewPassword !== '') {
+      if (enteredCurrentPassword === enteredNewPassword) {
+        setIsValid(true);
+        return snackbarShowMessage({
+          message: 'current password and new can not be the same',
+          severity: 'error',
+        });
+      }
+      setIsValid(false);
+    }
+  }, [enteredCurrentPassword, enteredNewPassword, snackbarShowMessage]);
+
+  useEffect(() => {
+    errorCheck();
+  }, [errorCheck]);
 
   return isLoading ? (
     <Loader />
@@ -123,8 +145,7 @@ const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
             type={showPassword.currentPassword ? 'text' : 'password'}
             name='currentPassword'
             value={enteredCurrentPassword}
-            error={isError.status === 'error'}
-            helperText={isError.status === 'error' ? isError.message : ''}
+            error={err.currentPassword}
             onChange={currentPasswordChangeHandler}
             InputLabelProps={{ shrink: true }}
             InputProps={{
@@ -223,13 +244,14 @@ const ModalWindow = ({ open, handleClose, snackbarShowMessage }) => {
             <Button onClick={handleClose}>Cancel</Button>
             <Button
               disabled={!formIsValid}
-              onClick={() =>
+              onClick={() => {
+                errorCheck();
                 savePassword(currentUser._id, {
                   currentPassword: enteredCurrentPassword,
                   newPassword: enteredNewPassword,
                   newPasswordAgain: enteredNewPasswordAgain,
-                })
-              }
+                });
+              }}
             >
               Confirm
             </Button>
