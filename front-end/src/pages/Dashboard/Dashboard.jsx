@@ -12,8 +12,12 @@ import { CurrentUserContext } from 'context/AppProvider';
 import { getSubscriptionByQueries } from 'services/subscriptionService';
 import { socket } from 'services/socketService';
 
+// constants
 import { STUDENT_ROLE } from 'constants/userRoles';
 import { APPROVED } from 'constants/subscriptionStatuses';
+
+// styles
+import styles from './Dashboard.module.scss';
 
 const Dashboard = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -48,12 +52,21 @@ const Dashboard = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <>
+    <div className={styles.content}>
       <Banner />
-      {role === STUDENT_ROLE && subscriptions === 0 && <NoSubscriptions />}
-      {role === STUDENT_ROLE && <Todo />}
-      <UpcomingLessons />
-    </>
+      <div className={styles.info}>
+        <div className={styles.todoContainer}>
+          <Todo />
+        </div>
+        {role === STUDENT_ROLE && subscriptions === 0 ? (
+          <NoSubscriptions />
+        ) : (
+          <div className={styles.upcomingLessonsContainer}>
+            <UpcomingLessons />
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
