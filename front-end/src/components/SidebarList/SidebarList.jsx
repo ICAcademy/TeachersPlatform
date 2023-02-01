@@ -117,7 +117,7 @@ export const SidebarList = ({ showSidebar }) => {
         )}
         {currentUser.role !== STUDENT_ROLE && (
           <ListItem className={styles.sidebarItem}>
-            <NavLink to='/app/questions' className={isActive}>
+            <NavLink to='/app/questions' className={isActive} onClick={handlePathTo}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faSpellCheck} />
               Grammar
             </NavLink>
@@ -125,7 +125,7 @@ export const SidebarList = ({ showSidebar }) => {
         )}
         {currentUser.role !== ADMIN_ROLE && (
           <ListItem className={styles.sidebarItem}>
-            <NavLink to='/app/lessons' className={isActive}>
+            <NavLink to='/app/lessons' className={isActive} onClick={handlePathTo}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faGraduationCap} />
               Lessons
             </NavLink>
@@ -133,7 +133,7 @@ export const SidebarList = ({ showSidebar }) => {
         )}
         {currentUser.role !== ADMIN_ROLE && (
           <ListItem className={styles.sidebarItem}>
-            <NavLink to='/app/dictionary' className={isActive}>
+            <NavLink to='/app/dictionary' className={isActive} onClick={handlePathTo}>
               <FontAwesomeIcon className={styles.sidebarIcon} icon={faBookBookmark} />
               Dictionary
             </NavLink>

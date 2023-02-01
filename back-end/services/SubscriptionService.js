@@ -33,8 +33,6 @@ exports.updateSubscription = async (id, subscription) => {
     runValidators: true,
   });
 
-  socket('subscription:updated', updatedSubscription.studentID);
-
   return updatedSubscription;
 };
 

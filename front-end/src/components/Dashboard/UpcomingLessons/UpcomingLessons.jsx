@@ -23,55 +23,54 @@ const UpcomingLessons = () => {
   return (
     <Box className={styles.eventContainer}>
       <Box className={styles.eventBox}>
-        <Typography sx={{ fontSize: '22px' }} className={styles.name}>
+        <Typography className={styles.name} variant='h6'>
           Upcoming Lessons
         </Typography>
-        <Button sx={{ backgroundColor: '#e2f3fc' }} size='small'>
+        <Button variant='outlined' size='small'>
           <Link className={styles.link} to={'calendar'}>
-            View all
+            Show all
           </Link>
         </Button>
       </Box>
-      {lessonsForWeek.length === 0 ? (
-        <Typography sx={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
-          No lessons for week
-        </Typography>
-      ) : (
-        lessonsForWeek.slice(0, 4).map((lesson) => (
-          <Box key={lesson._id} className={styles.eventBlock}>
-            <Box className={styles.wrapper}>
-              <Box className={styles.icon}>
-                <ListItemIcon>
-                  <div className={styles.letterIcon}>{lesson.label[0]}</div>
-                </ListItemIcon>
-              </Box>
-              <Box className={styles.text}>
-                <ListItemText
-                  sx={{ '& .MuiTypography-root': { fontSize: '23px' } }}
-                  primary={lesson.label}
-                />
-                {role === TEACHER_ROLE ? (
-                  <Box className={styles.listItem}>
-                    <ListItemText
-                      sx={{ '& .MuiTypography-root': { marginRight: '5px' } }}
-                      primary={lesson.studentId.fullName}
-                    />
-                    <ListItemText secondary={dayjs(lesson.date).format('D MMMM')} />
-                  </Box>
-                ) : (
-                  <Box className={styles.listItem}>
-                    <ListItemText
-                      sx={{ '& .MuiTypography-root': { marginRight: '5px' } }}
-                      primary={lesson.teacherId.fullName}
-                    />
-                    <ListItemText secondary={dayjs(lesson.date).format('D MMMM')} />
-                  </Box>
-                )}
+      <div className={styles.events}>
+        {lessonsForWeek.length === 0 ? (
+          <Typography sx={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
+            No lessons for week
+          </Typography>
+        ) : (
+          lessonsForWeek.slice(0, 3).map((lesson) => (
+            <Box key={lesson._id} className={styles.eventBlock}>
+              <Box className={styles.wrapper}>
+                <Box className={styles.icon}>
+                  <ListItemIcon>
+                    <div className={styles.letterIcon}>{lesson.label[0]}</div>
+                  </ListItemIcon>
+                </Box>
+                <Box className={styles.text}>
+                  <ListItemText primary={lesson.label} />
+                  {role === TEACHER_ROLE ? (
+                    <Box className={styles.listItem}>
+                      <ListItemText
+                        sx={{ '& .MuiTypography-root': { marginRight: '5px' } }}
+                        primary={lesson.studentId.fullName}
+                      />
+                      <ListItemText secondary={dayjs(lesson.date).format('D MMMM')} />
+                    </Box>
+                  ) : (
+                    <Box className={styles.listItem}>
+                      <ListItemText
+                        sx={{ '& .MuiTypography-root': { marginRight: '5px' } }}
+                        primary={lesson.teacherId.fullName}
+                      />
+                      <ListItemText secondary={dayjs(lesson.date).format('D MMMM')} />
+                    </Box>
+                  )}
+                </Box>
               </Box>
             </Box>
-          </Box>
-        ))
-      )}
+          ))
+        )}
+      </div>
     </Box>
   );
 };

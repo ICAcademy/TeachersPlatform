@@ -12,14 +12,16 @@ import { CurrentUserContext } from 'context/AppProvider';
 import { socket } from 'services/socketService';
 import { approvedSubscriptionsCount } from 'store/subscriptions-slice';
 
+// constants
 import { STUDENT_ROLE } from 'constants/userRoles';
 import { APPROVED } from 'constants/subscriptionStatuses';
+
+// styles
+import styles from './Dashboard.module.scss';
 
 const Dashboard = () => {
   const { approvedSubscriptions } = useSelector((state) => state.subscriptions);
   const dispatch = useDispatch();
-
-  console.log(approvedSubscriptions);
 
   const {
     currentUser: { role, roleId },
@@ -32,12 +34,21 @@ const Dashboard = () => {
   }, [roleId, dispatch]);
 
   return (
-    <>
+    <div className={styles.content}>
       <Banner />
-      {role === STUDENT_ROLE && !approvedSubscriptions && <NoSubscriptions />}
-      {role === STUDENT_ROLE && <Todo />}
-      <UpcomingLessons />
-    </>
+      <div className={styles.info}>
+        <div className={styles.todoContainer}>
+          <Todo />
+        </div>
+        {role === STUDENT_ROLE && approvedSubscriptions === 0 ? (
+          <NoSubscriptions />
+        ) : (
+          <div className={styles.upcomingLessonsContainer}>
+            <UpcomingLessons />
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

@@ -1,1 +1,32 @@
+.content {
+  width: 100%;
+}
 
+.info {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.todoContainer {
+  width: 49%;
+}
+
+.upcomingLessonsContainer {
+  width: 49%;
+  max-height: 500px;
+}
+
+@media (max-width: 600px) {
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+  .upcomingLessonsContainer {
+    width: 100%;
+  }
+  .todoContainer {
+    width: 100%;
+  }
+}

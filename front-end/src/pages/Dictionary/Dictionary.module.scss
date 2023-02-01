@@ -18,6 +18,8 @@
   justify-content: space-between;
 
   @media screen and (max-width: 970px) {
+    display: inline-block;
     flex-wrap: wrap;
+    width: 100%;
   }
 }

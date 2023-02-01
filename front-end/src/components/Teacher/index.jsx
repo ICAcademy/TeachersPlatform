@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useContext, useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // MUI library
@@ -26,6 +27,7 @@ import Loader from 'components/common/Loader/Loader';
 
 // Constants
 import { teacherPhoto, certificate, favourite, reward, speechBubble } from 'constants/photo';
+import { APPROVED } from 'constants/subscriptionStatuses';
 
 // Services
 import {
@@ -33,6 +35,7 @@ import {
   deleteSubscription,
   getSubscriptionByQueries,
 } from 'services/subscriptionService';
+import { approvedSubscriptionsCount } from 'store/subscriptions-slice';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
@@ -42,6 +45,7 @@ import styles from './Teacher.module.scss';
 
 const Teacher = ({ teacher }) => {
   const { currentUser } = useContext(CurrentUserContext);
+  const dispatch = useDispatch();
 
   const teacherInformation =
     teacher.language && teacher.preferences && teacher.phone && teacher.biography;
@@ -98,6 +102,7 @@ const Teacher = ({ teacher }) => {
         return subscription.teacherID._id === teacher._id;
       });
       await deleteSubscription(neededSubscription._id);
+      dispatch(approvedSubscriptionsCount({ statusName: APPROVED, id: currentUser.roleId }));
       setIsSubscripted(false);
       setButtonLoader(false);
     } catch (error) {
