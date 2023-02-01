@@ -38,8 +38,8 @@ const sx = {
     ml: 0,
     mr: 1,
     width: '30ch',
-    ['@media (max-width: 1100px)']: { width: '24ch' },
-    ['@media (max-width: 550px)']: { width: '97%', mx: 1 },
+    ['@media (max-width: 1280px)']: { width: '24ch' },
+    ['@media (max-width: 768px)']: { width: '100%', mx: 0 },
   },
 };
 

@@ -30,6 +30,7 @@
 @media screen and (max-width: 1680px) {
   .questionsHeader {
     align-items: center;
+    flex-direction: column;
   }
 
   .createBtn {
@@ -37,17 +38,16 @@
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .questionsHeader {
-    justify-content: center;
+@media screen and (max-width: 1400px) {
+  .input {
+    width: 220px !important;
   }
+}
 
+@media screen and (max-width: 1100px) {
   .navigationRow {
     flex-direction: column;
-  }
-
-  .createBtn {
-    font-size: 0.65rem;
+    row-gap: 10px;
   }
 
   .input {
@@ -57,5 +57,11 @@
     & svg {
       font-size: 18px;
     }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .questionsHeader {
+    justify-content: center;
   }
 }

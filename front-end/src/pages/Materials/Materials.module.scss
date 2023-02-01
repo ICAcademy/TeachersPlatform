@@ -33,22 +33,19 @@
     align-items: center;
   }
 
+  .input {
+    width: 220px !important;
+  }
+
   .createBtn {
     margin-top: 20px !important;
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .materialsHeader {
-    justify-content: center;
-  }
-
+@media screen and (max-width: 1100px) {
   .navigationRow {
     flex-direction: column;
-  }
-
-  .createBtn {
-    font-size: 0.65rem;
+    row-gap: 10px;
   }
 
   .input {
@@ -58,5 +55,11 @@
     & svg {
       font-size: 18px;
     }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .materialsHeader {
+    justify-content: center;
   }
 }

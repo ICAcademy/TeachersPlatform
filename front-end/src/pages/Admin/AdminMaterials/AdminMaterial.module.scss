@@ -4,11 +4,11 @@ body {
 
 .adminMaterials {
   margin-bottom: 50px;
-}
 
-h1 {
-  font-weight: 600;
-  margin-bottom: 35px;
+  & h1 {
+    font-weight: 600;
+    margin-bottom: 35px;
+  }
 }
 
 .formWrapper {
