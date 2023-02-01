@@ -30,6 +30,11 @@ export const createTest = async (question) => {
   return data;
 };
 
+export const deleteTest = async (id) => {
+  const { data } = await API.delete(`/api/questions/${id}`);
+  return data;
+};
+
 export const updateTest = async (id, question) => {
   const { data } = await API.patch(`api/questions/${id}`, question);
   return data;

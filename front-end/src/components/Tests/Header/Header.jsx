@@ -11,6 +11,16 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
     setFunc(event.target.value);
   };
 
+  const style = {
+    width: '100%',
+    fontWeight: 400,
+    fontSize: '20px',
+    letterSpacing: 0,
+    borderColor: '#797979',
+    color: '#797979',
+    borderRadius: '0.25rem',
+  };
+
   return (
     <div className={styles.header}>
       <div className={styles.inputsContainer}>
@@ -45,7 +55,7 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
         <div className={styles.itemContainer}>
           <div className={styles.inputContainer}>
             <TextField
-              className={styles.input}
+              sx={style}
               variant='outlined'
               size='small'
               label='Unit'
@@ -60,7 +70,7 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
         <div>
           <div className={styles.inputContainer}>
             <TextField
-              className={styles.input}
+              sx={style}
               variant='outlined'
               size='small'
               label='Topic'
