@@ -1,56 +1,40 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // components
 import Banner from 'components/Dashboard/Banner/Banner';
-import Loader from 'components/common/Loader/Loader';
 import NoSubscriptions from 'components/Dashboard/NoSubscriptions/NoSubscriptions';
 import Todo from 'components/Dashboard/Todo/Todo';
 import UpcomingLessons from 'components/Dashboard/UpcomingLessons/UpcomingLessons';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
-import { getSubscriptionByQueries } from 'services/subscriptionService';
 import { socket } from 'services/socketService';
+import { approvedSubscriptionsCount } from 'store/subscriptions-slice';
 
 import { STUDENT_ROLE } from 'constants/userRoles';
 import { APPROVED } from 'constants/subscriptionStatuses';
 
 const Dashboard = () => {
-  const [subscriptions, setSubscriptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { approvedSubscriptions } = useSelector((state) => state.subscriptions);
+  const dispatch = useDispatch();
+
+  console.log(approvedSubscriptions);
 
   const {
-    currentUser: { roleId, role },
+    currentUser: { role, roleId },
   } = useContext(CurrentUserContext);
 
-  const fetchSubscriptionsCount = useCallback(
-    async (id = roleId) => {
-      try {
-        setIsLoading(true);
-        const response = await getSubscriptionByQueries({ statusName: APPROVED, id });
-        setSubscriptions(response);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [roleId],
-  );
-
   useEffect(() => {
-    role === STUDENT_ROLE && fetchSubscriptionsCount();
-  }, [fetchSubscriptionsCount, role]);
+    socket.on('update_subscription', () => {
+      dispatch(approvedSubscriptionsCount({ statusName: APPROVED, id: roleId }));
+    });
+  }, [roleId, dispatch]);
 
-  useEffect(() => {
-    socket.on('subscription:updated', (id) => id === roleId && fetchSubscriptionsCount(roleId));
-  }, [roleId, fetchSubscriptionsCount]);
-
-  return isLoading ? (
-    <Loader />
-  ) : (
+  return (
     <>
       <Banner />
-      {role === STUDENT_ROLE && subscriptions === 0 && <NoSubscriptions />}
+      {role === STUDENT_ROLE && !approvedSubscriptions && <NoSubscriptions />}
       {role === STUDENT_ROLE && <Todo />}
       <UpcomingLessons />
     </>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // Redux
 import { useDispatch } from 'react-redux';
-import { pendingSubscriptionsCount } from 'store/pending-subscriptions-slice';
+import { pendingSubscriptionsCount } from 'store/subscriptions-slice';
 
 // Components
 import ChangeLevel from 'components/ChangeLevel/ChangeLevel';
