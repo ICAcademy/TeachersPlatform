@@ -21,6 +21,8 @@
 }
 
 .editTestContainer {
+  display: flex;
+  justify-content: space-between;
   color: $darkGrey;
 }
 

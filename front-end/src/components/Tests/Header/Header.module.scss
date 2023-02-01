@@ -20,17 +20,6 @@
   width: 50%;
 }
 
-.input {
-  width: 100%;
-  font-weight: $fw400;
-  font-size: $f20;
-  letter-spacing: 0;
-  padding: 0.5em 0.5em;
-  border-color: $grey400;
-  color: $grey400;
-  border-radius: 0.25rem;
-}
-
 @media (max-width: 768px) {
   .header {
     background-size: 225px 225px;
