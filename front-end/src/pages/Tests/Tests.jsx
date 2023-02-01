@@ -317,7 +317,7 @@ const Tests = ({ snackbarShowMessage }) => {
             <div className={styles.content}>
               <div className={styles.editTestContainer}>
                 <h2>Edit Test</h2>
-                <Button onClick={removeTest}>Remove Test</Button>
+                {id && <Button onClick={removeTest}>Remove Test</Button>}
               </div>
               <div className={styles.headerContainer}>
                 <Header
