@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { nanoid } from 'nanoid';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -12,7 +12,13 @@ import Loader from 'components/common/Loader/Loader';
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 //services
-import { getLevels, getTestById, updateTest, createTest } from 'services/questionService';
+import {
+  getLevels,
+  getTestById,
+  updateTest,
+  createTest,
+  deleteTest,
+} from 'services/questionService';
 
 // styles
 import styles from './Tests.module.scss';
@@ -43,6 +49,7 @@ const Tests = ({ snackbarShowMessage }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const getData = useCallback(async (id) => {
     try {
@@ -295,6 +302,11 @@ const Tests = ({ snackbarShowMessage }) => {
     }
   };
 
+  const removeTest = async () => {
+    await deleteTest(id);
+    await navigate('/app/questions');
+  };
+
   return (
     <>
       {isLoading ? (
@@ -305,6 +317,7 @@ const Tests = ({ snackbarShowMessage }) => {
             <div className={styles.content}>
               <div className={styles.editTestContainer}>
                 <h2>Edit Test</h2>
+                <Button onClick={removeTest}>Remove Test</Button>
               </div>
               <div className={styles.headerContainer}>
                 <Header
