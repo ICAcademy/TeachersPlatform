@@ -33,12 +33,14 @@
     align-items: center;
   }
 
-  .input {
-    width: 220px !important;
-  }
-
   .createBtn {
     margin-top: 20px !important;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .input {
+    width: 220px !important;
   }
 }
 
