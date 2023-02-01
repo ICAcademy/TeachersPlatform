@@ -1,14 +1,9 @@
 .levelItem {
   margin-right: 15px;
+  font-size: 0.8rem;
 
   &:last-child {
     margin-right: 0;
-  }
-}
-
-@media screen and (max-width: 1366px) {
-  .levelItem button {
-    font-size: 0.65rem;
   }
 }
 
@@ -17,8 +12,7 @@
     margin-right: 5px;
 
     button {
-      font-size: 0.6rem;
-      padding: 3px 5px;
+      padding: 5px;
     }
   }
 }

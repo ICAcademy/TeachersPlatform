@@ -131,19 +131,20 @@ const Materials = ({ snackbarShowMessage }) => {
             />
           )}
           <TextField
-            sx={{
-              width: '360px',
-            }}
-            variant='outlined'
+            id='outlined-basic'
+            label='Search by unit'
             size='small'
-            label='Enter here to find a lesson'
-            className={styles.materialsSearch}
+            variant='outlined'
+            className={styles.input}
             InputProps={{
               endAdornment: (
-                <InputAdornment position='start' className={styles.inputWrap}>
+                <InputAdornment position='start' sx={{ pr: '8px' }} className={styles.inputWrap}>
                   <SearchOutlined />
                 </InputAdornment>
               ),
+            }}
+            sx={{
+              width: '360px',
             }}
             onChange={handleInput}
             value={searchByUnitName}

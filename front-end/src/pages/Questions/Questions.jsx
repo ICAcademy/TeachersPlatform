@@ -98,13 +98,13 @@ const Questions = () => {
             }}
             className={styles.input}
             variant='outlined'
-            label='Search unit'
+            label='Search by unit'
             size='small'
             value={searchUnitName}
             onChange={handleCangeSearchUnit}
             InputProps={{
               endAdornment: (
-                <InputAdornment position='end'>
+                <InputAdornment sx={{ pr: '8px' }} position='end'>
                   <SearchOutlined />
                 </InputAdornment>
               ),

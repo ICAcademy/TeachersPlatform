@@ -13,15 +13,15 @@ const sx = {
   inputsBox: {
     display: 'flex',
     alignItems: 'flex-start',
-    ['@media (max-width: 550px)']: { width: '100%' },
+    ['@media (max-width: 768px)']: { width: '100%' },
     '& .MuiTextField-root': {
       my: 1,
       ml: 0,
       mr: 1,
       width: '30ch',
-      ['@media (max-width: 1100px)']: { width: '24ch' },
+      ['@media (max-width: 1280px)']: { width: '24ch' },
       ['@media (max-width: 840px)']: { mb: 3 },
-      ['@media (max-width: 550px)']: { width: '97%', mx: 1 },
+      ['@media (max-width: 768px)']: { width: '100%', mx: 0 },
     },
     '& svg': {
       fontSize: '14px',
@@ -33,8 +33,8 @@ const SearchWord = ({ word, handleInput, selectError }) => (
   <Box component='form' sx={sx.inputsBox} noValidate autoComplete='off'>
     <TextField
       id='outlined-required'
-      name='Search'
-      label='Search'
+      name='Search by word'
+      label='Search by word'
       value={word}
       onChange={handleInput}
       size='small'
