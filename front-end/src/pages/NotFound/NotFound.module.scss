@@ -5,15 +5,12 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 50px 0;
 
-  @media screen and (max-width: 1280px) {
-    justify-content: space-evenly;
-  }
-
   .block {
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,6 +25,10 @@
       font-weight: $fw500;
       font-family: 'Poppins-Regular', sans-serif;
 
+      @media screen and (min-width: 2200px) {
+        font-size: $f22;
+      }
+
       @media screen and (max-width: 480px) {
         font-size: $f14;
       }
@@ -36,6 +37,10 @@
 
   & img {
     width: 500px;
+
+    @media screen and (min-width: 2200px) {
+      width: 700px;
+    }
 
     @media screen and (max-width: 1280px) {
       width: 400px;
