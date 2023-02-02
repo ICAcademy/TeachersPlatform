@@ -1,11 +1,8 @@
 .container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 120px;
+  margin-bottom: 160px;
 }
 
-.content {
+.topicContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,18 +14,31 @@
 }
 
 .sliderContainer {
-  margin-top: 40px;
-  width: 1130px;
+  max-width: 1130px;
+  margin: 40px auto 0;
 }
 
 .next {
   position: absolute;
-  top: 100%;
-  margin-left: 580px;
+  top: 110%;
+  left: 57%;
+  margin-right: -57%;
+  transform: translate(-57%, 0%);
 }
 
 .prev {
   position: absolute;
-  top: 100%;
-  margin-left: 500px;
+  top: 110%;
+  left: 47%;
+  margin-right: -47%;
+  transform: translate(-47%, 0%);
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+  .explanationContainer {
+    width: auto;
+  }
 }

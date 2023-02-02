@@ -45,7 +45,7 @@
 .studentsImg {
   position: absolute;
   margin-top: 20px;
-  margin-left: 180px;
+  margin-left: 138px;
   border-radius: 10px;
 }
 
@@ -54,6 +54,14 @@
     width: auto;
     padding: 65px 15px;
     max-width: 1000px;
+  }
+
+  .colorBackground {
+    margin-left: 260px;
+  }
+
+  .studentsImg {
+    margin-left: 138pxs;
   }
 }
 

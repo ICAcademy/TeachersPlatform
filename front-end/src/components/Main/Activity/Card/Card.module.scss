@@ -2,8 +2,8 @@
 @import '../../../../styles/font.scss';
 
 .container {
+  position: relative;
   border: 1px solid transparent;
-  width: 570px;
 }
 
 .dataContainer {
@@ -18,8 +18,9 @@
   font-size: $f20;
   text-transform: uppercase;
   position: absolute;
+  top: 0;
+  right: 0;
   z-index: 1;
-  margin-left: 470px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -27,16 +28,10 @@
 
 .workContainer {
   margin: 60px 20px 15px;
-  padding: 30px;
+  padding: 60px 30px 30px;
   box-shadow: 0 -4px 25px rgb(144 0 255 / 7%);
   filter: drop-shadow(0px -4px 25px rgba(144, 0, 255, 0.07));
   z-index: 0;
-  width: 530px;
-  height: 180px;
-}
-
-.titleContainer {
-  width: 470px;
 }
 
 .title {
@@ -45,8 +40,11 @@
   padding: 0;
   font-size: $f20;
   line-height: 30px;
+  margin-bottom: 15px;
 }
 
-.explanationContainer {
-  width: 320px;
+@media screen and (max-width: 768px) {
+  .workContainer {
+    text-align: center;
+  }
 }

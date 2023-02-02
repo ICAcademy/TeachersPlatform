@@ -265,6 +265,10 @@ $johnDoe: '../../../assets/images/john-doe.jpeg';
     min-height: 48px;
     line-height: 48px;
   }
+
+  .bannerCourseContainer {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 768px) {

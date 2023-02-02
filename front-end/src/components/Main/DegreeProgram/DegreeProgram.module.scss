@@ -19,6 +19,8 @@
 
 .cardsContainer {
   display: flex;
+  max-width: 1130px;
+  margin: auto;
 }
 
 @media screen and (max-width: 768px) {
@@ -26,6 +28,7 @@
     display: block;
     padding: 35px 15px;
     width: auto;
+    margin-bottom: 65px;
   }
 
   .cardsContainer {
