@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 // HOC
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
+// Functions
+import { isRussianSymbols } from 'hooks/useInput';
+
 //Components
 import AdminLessons from './AdminLessons/AdminLessons';
 import ImageSpinner from 'components/common/ImageSpinner/ImageSpinner';
@@ -71,7 +74,9 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
   };
 
   const unitTitleHandler = (event) => {
-    setUnitTitle(event.target.value);
+    if (!isRussianSymbols(event.target.value)) {
+      setUnitTitle(event.target.value);
+    }
     setSaveBtn(true);
   };
 

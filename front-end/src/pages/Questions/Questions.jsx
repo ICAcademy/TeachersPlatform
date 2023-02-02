@@ -3,14 +3,18 @@ import { Link } from 'react-router-dom';
 import { CurrentUserContext } from 'context/AppProvider';
 import { ADMIN_ROLE } from 'constants/userRoles';
 
-//components
+// Components
 import Loader from 'components/common/Loader/Loader';
 import Levels from 'components/common/Levels/Levels';
 import Units from 'components/questions/Units/Units';
 
+// Services
 import { getLevels } from 'services/questionService';
 
-// styles
+// Functions
+import { isRussianSymbols } from 'hooks/useInput';
+
+// Styles
 import styles from './Questions.module.scss';
 import { TextField, Button } from '@mui/material';
 import Add from '@mui/icons-material/Add';
@@ -47,7 +51,9 @@ const Questions = () => {
   };
 
   const handleCangeSearchUnit = (event) => {
-    setSearchUnitName(event.target.value);
+    if (!isRussianSymbols(event.target.value)) {
+      setSearchUnitName(event.target.value);
+    }
     if (event.target.value) {
       setIsEdit(true);
     } else {

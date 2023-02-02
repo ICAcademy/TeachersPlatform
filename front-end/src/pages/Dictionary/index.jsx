@@ -16,6 +16,9 @@ import { getSubscriptionByQueries } from 'services/subscriptionService';
 // Constants
 import { TEACHER_ROLE } from 'constants/userRoles';
 
+// Functions
+import { isRussianSymbols } from 'hooks/useInput';
+
 // HOC
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
@@ -261,7 +264,11 @@ const Dictionary = ({ snackbarShowMessage }) => {
         <SearchWord
           word={searchWord}
           selectError={selectHasError}
-          handleInput={(e) => setSearchWord(e.target.value)}
+          handleInput={(e) => {
+            if (!isRussianSymbols(e.target.value)) {
+              setSearchWord(e.target.value);
+            }
+          }}
         />
       </div>
       <Table

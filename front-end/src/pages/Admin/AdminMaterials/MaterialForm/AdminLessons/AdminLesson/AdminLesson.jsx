@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SunEditor, { buttonList } from 'suneditor-react';
 
+// Functions
+import { isRussianSymbols } from 'hooks/useInput';
+
 //Styles
 import styles from './AdminLesson.module.scss';
 import 'suneditor/dist/css/suneditor.min.css';
@@ -38,7 +41,9 @@ const AdminLesson = ({ lesson, onSave, onDelete, index }) => {
   };
 
   const changeTitleHandler = (event) => {
-    setLessonTitle(event.target.value);
+    if (!isRussianSymbols(event.target.value)) {
+      setLessonTitle(event.target.value);
+    }
   };
 
   const changeExpandedHandler = (panel) => (event, isExpanded) => {
