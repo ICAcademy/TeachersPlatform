@@ -8,6 +8,22 @@
   padding: 120px 0 0;
 }
 
+.sidebarImgBlock {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.sidebarLogoText {
+  text-transform: uppercase;
+  vertical-align: middle;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-left: 10px;
+  font-size: 1rem;
+  color: white;
+}
+
 .content {
   display: flex;
   flex-direction: row;
@@ -23,7 +39,6 @@
 }
 
 .logoContainer {
-  width: 130px;
   margin: 0 0 30px;
 }
 

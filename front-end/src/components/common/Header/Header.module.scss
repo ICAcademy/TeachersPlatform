@@ -17,10 +17,24 @@
   margin: 0 auto;
 }
 
+.sidebarImgBlock {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.sidebarLogoText {
+  text-transform: uppercase;
+  vertical-align: middle;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-left: 10px;
+  font-size: 1.15rem;
+}
+
 .logoContainer {
   display: flex;
   align-self: center;
-  width: 130px;
 }
 
 .button {

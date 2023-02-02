@@ -1,7 +1,8 @@
 import React from 'react';
 
-// assets
-import logo from '../../../assets/images/logo-footer.png';
+// Assets
+import logo from 'assets/sidebar/logo-letter.png';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronRight,
@@ -26,7 +27,14 @@ const Footer = () => {
       <div className={styles.content}>
         <div className={styles.description}>
           <div className={styles.logoContainer}>
-            <img className={styles.logo} src={logo} alt='logo' />
+            <div className={styles.sidebarImgBlock}>
+              <Link to='/'>
+                <img src={logo} alt='logo' width='30px' />
+              </Link>
+              <Link to='/'>
+                <span className={styles.sidebarLogoText}>Inter School</span>
+              </Link>
+            </div>
           </div>
           <div className={styles.explanationContainer}>
             <p className={styles.explanation}>
@@ -164,7 +172,7 @@ const Footer = () => {
         </div>
       </div>
       <div className={styles.copyrightContainer}>
-        <p className={styles.copyright}>Copyright © 2021 Siksha. All Right reserved.</p>
+        <p className={styles.copyright}>Copyright © 2021 Inter School. All Right reserved.</p>
       </div>
     </footer>
   );
