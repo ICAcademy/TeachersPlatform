@@ -40,7 +40,7 @@ const useInput = (type, value, regex) => {
       };
       break;
     default:
-      valueIsValid = regex.test(enteredValue);
+      valueIsValid = regex.test(enteredValue) && enteredValue.trim();
       valueChangeHandler = (e) => {
         setEnteredValue(e.target.value);
         if (!e.target.value) {
