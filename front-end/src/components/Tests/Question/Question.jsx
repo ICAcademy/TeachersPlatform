@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// components
+// Components
 import { Button, Checkbox, Input } from '@mui/material';
 
-// assets
+// Functions
+import { isPigSymbol } from 'hooks/useInput';
+
+// Assets
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-// styles
+// Styles
 import styles from './Question.module.scss';
 
 const Question = ({
@@ -43,7 +46,11 @@ const Question = ({
             placeholder='Title'
             error={question.title === '' && postInfo}
             value={question.title}
-            onChange={(event) => changeTitleForQuestion(question.id, event)}
+            onChange={(event) => {
+              if (!isPigSymbol(event.target.value)) {
+                changeTitleForQuestion(question.id, event);
+              }
+            }}
           />
         </div>
       </div>
@@ -65,7 +72,11 @@ const Question = ({
                   placeholder='answer'
                   error={answer.answer === '' && postInfo}
                   value={answer.answer}
-                  onChange={(event) => changeAnswerForQuestion(question.id, answer.id, event)}
+                  onChange={(event) => {
+                    if (!isPigSymbol(event.target.value)) {
+                      changeAnswerForQuestion(question.id, answer.id, event);
+                    }
+                  }}
                 />
               </div>
               <div className={styles.buttonDeleteAnswerContainer}>

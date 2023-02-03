@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TextField } from '@mui/material';
 
-// styles
+// Functions
+import { isPigSymbol } from 'hooks/useInput';
+
+// Styles
 import styles from './Header.module.scss';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
@@ -63,7 +66,11 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
               error={postInfo && unit === ''}
               helperText={postInfo && unit === '' ? 'Empty field!' : ' '}
               value={unit}
-              onChange={(event) => handleChangeInput(setUnit, event)}
+              onChange={(event) => {
+                if (!isPigSymbol(event.target.value)) {
+                  handleChangeInput(setUnit, event);
+                }
+              }}
             />
           </div>
         </div>
@@ -78,7 +85,11 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
               error={postInfo && topic === ''}
               helperText={postInfo && topic === '' ? 'Empty field!' : ' '}
               value={topic}
-              onChange={(event) => handleChangeInput(setTopic, event)}
+              onChange={(event) => {
+                if (!isPigSymbol(event.target.value)) {
+                  handleChangeInput(setTopic, event);
+                }
+              }}
             />
           </div>
         </div>

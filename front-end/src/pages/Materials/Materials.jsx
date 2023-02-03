@@ -3,13 +3,16 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-//Services
+// Services
 import { getLevels } from 'services/MaterialsService/MaterialsService';
 
-//HOC
+// HOC
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
-//Components
+// Functions
+import { isPigSymbol } from 'hooks/useInput';
+
+// Components
 import Levels from 'components/common/Levels/Levels';
 import Units from 'components/Materials/Units/Units';
 import Loader from 'components/common/Loader/Loader';
@@ -18,7 +21,7 @@ import useFetchUnits from 'hooks/useFetchUnits';
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
 
-//Styles
+// Styles
 import styles from './Materials.module.scss';
 import { TextField } from '@mui/material';
 import { InputAdornment } from '@mui/material';
@@ -63,7 +66,9 @@ const Materials = ({ snackbarShowMessage }) => {
   };
 
   const handleInput = (e) => {
-    setSearchByUnitName(e.target.value);
+    if (!isPigSymbol(e.target.value)) {
+      setSearchByUnitName(e.target.value);
+    }
     if (e.target.value) {
       setIsEdit(true);
     } else {
