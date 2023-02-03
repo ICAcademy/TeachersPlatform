@@ -8,7 +8,7 @@ import isBetween from 'dayjs/plugin/isBetween';
 import { UNALLOWED_SYMBOLS } from 'constants/symbols';
 
 // Functions
-export const isRussianSymbols = (value) => {
+export const isPigSymbol = (value) => {
   const checkArray = UNALLOWED_SYMBOLS.map((item) => value.includes(item));
   return checkArray.some((item) => item);
 };
@@ -53,7 +53,7 @@ const useInput = (type, value, regex) => {
     default:
       valueIsValid = regex.test(enteredValue);
       valueChangeHandler = (e) => {
-        if (!isRussianSymbols(e.target.value)) {
+        if (!isPigSymbol(e.target.value)) {
           setEnteredValue(e.target.value);
         }
         if (!e.target.value) {

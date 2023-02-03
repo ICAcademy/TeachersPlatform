@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TextField } from '@mui/material';
 
 // Functions
-import { isRussianSymbols } from 'hooks/useInput';
+import { isPigSymbol } from 'hooks/useInput';
 
 // Styles
 import styles from './Header.module.scss';
@@ -67,7 +67,7 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
               helperText={postInfo && unit === '' ? 'Empty field!' : ' '}
               value={unit}
               onChange={(event) => {
-                if (!isRussianSymbols(event.target.value)) {
+                if (!isPigSymbol(event.target.value)) {
                   handleChangeInput(setUnit, event);
                 }
               }}
@@ -86,7 +86,7 @@ const Header = ({ levels, level, setLevel, unit, setUnit, topic, setTopic, postI
               helperText={postInfo && topic === '' ? 'Empty field!' : ' '}
               value={topic}
               onChange={(event) => {
-                if (!isRussianSymbols(event.target.value)) {
+                if (!isPigSymbol(event.target.value)) {
                   handleChangeInput(setTopic, event);
                 }
               }}

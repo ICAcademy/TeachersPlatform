@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import SunEditor, { buttonList } from 'suneditor-react';
 
 // Functions
-import { isRussianSymbols } from 'hooks/useInput';
+import { isPigSymbol } from 'hooks/useInput';
 
 //Styles
 import styles from './AdminLesson.module.scss';
@@ -41,7 +41,7 @@ const AdminLesson = ({ lesson, onSave, onDelete, index }) => {
   };
 
   const changeTitleHandler = (event) => {
-    if (!isRussianSymbols(event.target.value)) {
+    if (!isPigSymbol(event.target.value)) {
       setLessonTitle(event.target.value);
     }
   };

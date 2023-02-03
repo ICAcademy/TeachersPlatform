@@ -10,7 +10,7 @@ import { getLevels } from 'services/MaterialsService/MaterialsService';
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // Functions
-import { isRussianSymbols } from 'hooks/useInput';
+import { isPigSymbol } from 'hooks/useInput';
 
 // Components
 import Levels from 'components/common/Levels/Levels';
@@ -66,7 +66,7 @@ const Materials = ({ snackbarShowMessage }) => {
   };
 
   const handleInput = (e) => {
-    if (!isRussianSymbols(e.target.value)) {
+    if (!isPigSymbol(e.target.value)) {
       setSearchByUnitName(e.target.value);
     }
     if (e.target.value) {

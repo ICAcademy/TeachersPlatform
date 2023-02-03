@@ -12,7 +12,7 @@ import Units from 'components/questions/Units/Units';
 import { getLevels } from 'services/questionService';
 
 // Functions
-import { isRussianSymbols } from 'hooks/useInput';
+import { isPigSymbol } from 'hooks/useInput';
 
 // Styles
 import styles from './Questions.module.scss';
@@ -51,7 +51,7 @@ const Questions = () => {
   };
 
   const handleCangeSearchUnit = (event) => {
-    if (!isRussianSymbols(event.target.value)) {
+    if (!isPigSymbol(event.target.value)) {
       setSearchUnitName(event.target.value);
     }
     if (event.target.value) {

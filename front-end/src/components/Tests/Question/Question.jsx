@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Button, Checkbox, Input } from '@mui/material';
 
 // Functions
-import { isRussianSymbols } from 'hooks/useInput';
+import { isPigSymbol } from 'hooks/useInput';
 
 // Assets
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -47,7 +47,7 @@ const Question = ({
             error={question.title === '' && postInfo}
             value={question.title}
             onChange={(event) => {
-              if (!isRussianSymbols(event.target.value)) {
+              if (!isPigSymbol(event.target.value)) {
                 changeTitleForQuestion(question.id, event);
               }
             }}
@@ -73,7 +73,7 @@ const Question = ({
                   error={answer.answer === '' && postInfo}
                   value={answer.answer}
                   onChange={(event) => {
-                    if (!isRussianSymbols(event.target.value)) {
+                    if (!isPigSymbol(event.target.value)) {
                       changeAnswerForQuestion(question.id, answer.id, event);
                     }
                   }}

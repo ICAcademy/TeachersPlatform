@@ -17,7 +17,7 @@ import { getSubscriptionByQueries } from 'services/subscriptionService';
 import { TEACHER_ROLE } from 'constants/userRoles';
 
 // Functions
-import { isRussianSymbols } from 'hooks/useInput';
+import { isPigSymbol } from 'hooks/useInput';
 
 // HOC
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
@@ -265,7 +265,7 @@ const Dictionary = ({ snackbarShowMessage }) => {
           word={searchWord}
           selectError={selectHasError}
           handleInput={(e) => {
-            if (!isRussianSymbols(e.target.value)) {
+            if (!isPigSymbol(e.target.value)) {
               setSearchWord(e.target.value);
             }
           }}

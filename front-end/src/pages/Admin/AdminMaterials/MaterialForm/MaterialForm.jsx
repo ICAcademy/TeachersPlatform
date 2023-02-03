@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 
 // Functions
-import { isRussianSymbols } from 'hooks/useInput';
+import { isPigSymbol } from 'hooks/useInput';
 
 //Components
 import AdminLessons from './AdminLessons/AdminLessons';
@@ -74,7 +74,7 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
   };
 
   const unitTitleHandler = (event) => {
-    if (!isRussianSymbols(event.target.value)) {
+    if (!isPigSymbol(event.target.value)) {
       setUnitTitle(event.target.value);
     }
     setSaveBtn(true);
