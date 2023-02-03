@@ -1,21 +1,7 @@
-@import 'styles/colors.scss';
-
 .mobileHeader {
   display: none;
   background-color: #fff;
   padding: 15px;
-
-  .burgerButton {
-    background-color: $softPurple;
-    border-radius: 5px;
-    padding: 2px 5px;
-    cursor: pointer;
-
-    .burgerLines {
-      color: #fff;
-      font-size: 30px;
-    }
-  }
 
   .sidebarImgHolder {
     width: 100%;

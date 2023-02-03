@@ -12,7 +12,9 @@ import avatar from 'assets/sidebar/avatar.png';
 
 // Styles
 import styles from './MobileHeader.module.scss';
-import MenuIcon from '@mui/icons-material/Menu';
+
+// Components
+import BurgerButton from '../BurgerButton/BurgerButton';
 
 const MobileHeader = ({ showSidebar, sidebarState }) => {
   const { currentUser } = useContext(CurrentUserContext);
@@ -26,9 +28,7 @@ const MobileHeader = ({ showSidebar, sidebarState }) => {
 
   return (
     <div className={styles.mobileHeader}>
-      <div className={styles.burgerButton} onClick={handleClick}>
-        <MenuIcon className={styles.burgerLines} />
-      </div>
+      <BurgerButton onClick={handleClick} />
       <div className={styles.sidebarImgHolder}>
         <div className={styles.sidebarImgBlock}>
           <Link to='/'>

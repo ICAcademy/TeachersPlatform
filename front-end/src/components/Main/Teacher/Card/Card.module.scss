@@ -2,10 +2,14 @@
 @import '../../../../styles/font.scss';
 
 .container {
-  width: 360px;
-  height: 342px;
+  margin: 0 15px;
   background: $purple;
   border-radius: 0 0 20px 20px;
+
+  img {
+    display: block;
+    width: 100%;
+  }
 }
 
 .nameContainer {

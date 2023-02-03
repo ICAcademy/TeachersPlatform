@@ -6,10 +6,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 360px;
-  height: 348px;
   background: $darkWhite;
   transition: all 0.4s ease-out;
+  margin: 0 15px;
+  padding: 30px 15px;
   &:hover {
     background: $white;
     box-shadow: 0px 4px 74px rgb(0 0 0 / 8%);
@@ -97,3 +97,8 @@
   color: $purple;
 }
 
+@media screen and (max-width: 768px) {
+  .container {
+    margin: 0;
+  }
+}

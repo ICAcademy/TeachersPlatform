@@ -11,8 +11,10 @@
 
 .content {
   display: flex;
+  position: relative;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 1130px;
   margin: 0 auto;
 }
@@ -79,6 +81,14 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  .mobProfile {
+    display: none;
+
+    svg {
+      font-size: 45px;
+    }
+  }
 }
 
 .logIn {
@@ -118,5 +128,78 @@
   &:hover {
     box-shadow: 0 0 1px 0 $purple400 inset, 0 0 1px 2px $purple400;
     transition: all 0.5s ease-out;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .content {
+    max-width: 1000px;
+    padding: 0 15px;
+  }
+
+  .logoContainer {
+    width: 115px;
+  }
+
+  .menu {
+    font-size: 16px;
+  }
+
+  .logIn,
+  .signUp {
+    padding: 14px 34px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    height: auto;
+  }
+  .content {
+    padding: 15px;
+  }
+
+  .menuContainer {
+    width: 15rem;
+    position: fixed;
+    top: 79px;
+    left: 0;
+    margin: 0;
+    box-sizing: border-box;
+    height: calc(100vh - 79px);
+    overflow-y: auto;
+    background-color: #fff;
+    transform: translate(-15rem, 0);
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
+
+    &.open {
+      transform: translate(0, 0);
+    }
+
+    .menu {
+      flex-direction: column;
+      line-height: 2;
+
+      .itemMenu {
+        padding: 10px 15px;
+        margin: 0;
+      }
+    }
+  }
+
+  .buttonsContainer {
+    .mobProfile {
+      display: block;
+    }
+  }
+
+  .logInContainer,
+  .signUpContainer {
+    display: none;
+  }
+
+  .logoContainer {
+    width: 140px;
   }
 }

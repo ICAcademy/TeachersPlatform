@@ -9,19 +9,42 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1130px;
 }
 
 .explanationContainer {
-  width: 600px;
+  max-width: 600px;
   text-align: center;
 }
 
 .cardsContainer {
   display: flex;
+  max-width: 1130px;
   margin-top: 35px;
 }
 
 .cardContainer {
-  margin: 0 15px;
+  flex: 0 0 33.33%;
+}
+
+@media screen and (max-width: 1280px) {
+  .cardsContainer {
+    max-width: 1000px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    display: block;
+  }
+  .content {
+    align-items: normal;
+    padding: 0 15px;
+  }
+  .cardsContainer {
+    flex-direction: column;
+  }
+  .cardContainer {
+    flex: 0 0 100%;
+    margin-bottom: 35px;
+  }
 }

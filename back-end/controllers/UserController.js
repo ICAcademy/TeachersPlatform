@@ -15,6 +15,7 @@ const { STUDENT, TEACHER } = require('../constants/UserRoles');
 const getUser = async (req, res) => {
   try {
     const user = await findByEmailWithRoleId(req.user.email);
+
     if (!user) {
       res.status(401).json({ message: 'User was not found!' });
     }

@@ -38,11 +38,27 @@ const Activity = () => {
     dots: false,
     infinite: true,
     speed: 1500,
-    slidesToShow: 2,
+    slidesToShow: 3,
     slidesToScroll: 1,
     arrows: true,
     nextArrow: <Arrow type='next' />,
     prevArrow: <Arrow type='prev' />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
@@ -50,16 +66,16 @@ const Activity = () => {
       <div className={styles.content}>
         <div className={styles.topicContainer}>
           <Topic topic={'ACTIVITY'} />
-        </div>
-        <div className={styles.titleContainer}>
+
           <Title title={'Upcoming Activity'} />
-        </div>
-        <div className={styles.explanationContainer}>
-          <Explanation
-            explanation={
-              'In this way public speaking & business are an important form of social proof. Social proof is one of two types of evidence.'
-            }
-          />
+
+          <div className={styles.explanationContainer}>
+            <Explanation
+              explanation={
+                'In this way public speaking & business are an important form of social proof. Social proof is one of two types of evidence.'
+              }
+            />
+          </div>
         </div>
         <div className={styles.sliderContainer}>
           <Slider {...settings}>
