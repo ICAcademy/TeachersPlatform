@@ -16,6 +16,12 @@ import notFound from 'assets/svg/notFound.svg';
 // Styles
 import styles from './NotFound.module.scss';
 
+const sx = {
+  button: {
+    ['@media (min-width: 2200px)']: { width: '200px', height: '50px', fontSize: '18px' },
+  },
+};
+
 const NotFound = () => {
   const { currentUser: role } = useContext(CurrentUserContext);
   const navigate = useNavigate();
@@ -35,7 +41,12 @@ const NotFound = () => {
             page.
           </i>
         </h1>
-        <Button variant='contained' size='small' onClick={() => handleRedirect(role)}>
+        <Button
+          sx={sx.button}
+          variant='contained'
+          size='small'
+          onClick={() => handleRedirect(role)}
+        >
           home page
         </Button>
       </div>

@@ -5,17 +5,22 @@ import { Link } from 'react-router-dom';
 // styles
 import styles from './Header.module.scss';
 
-// assets
-import logo from 'assets/images/logo.png';
+// Assets
+import logo from 'assets/sidebar/logo-letter.png';
 
 const Header = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.logoContainer}>
-          <Link to='/'>
-            <img className={styles.logo} src={logo} alt='logo' />
-          </Link>
+          <div className={styles.sidebarImgBlock}>
+            <Link to='/'>
+              <img src={logo} alt='logo' width='30px' />
+            </Link>
+            <Link to='/'>
+              <span className={styles.sidebarLogoText}>Inter School</span>
+            </Link>
+          </div>
         </div>
         <nav className={styles.menuContainer}>
           <ul className={styles.menu}>
