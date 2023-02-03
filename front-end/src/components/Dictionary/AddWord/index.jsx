@@ -56,6 +56,8 @@ const AddWord = ({ isLoading, createDictionary, selectError }) => {
     resetValue: resetTranslation,
   } = useInput('translation', '', REGEX_TRANSLATION);
 
+  const isEmpty = enteredTranslation === '' || enteredWord === '';
+
   return isLoading ? (
     <Loader />
   ) : (
@@ -96,7 +98,7 @@ const AddWord = ({ isLoading, createDictionary, selectError }) => {
             resetWord();
             resetTranslation();
           }}
-          disabled={!wordIsValid || !translationIsValid || selectError}
+          disabled={!wordIsValid || !translationIsValid || selectError || isEmpty}
         >
           Add
         </Button>

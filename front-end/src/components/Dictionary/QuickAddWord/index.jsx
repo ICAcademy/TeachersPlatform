@@ -102,6 +102,8 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
     resetValue: resetTranslation,
   } = useInput('translation', '', REGEX_TRANSLATION);
 
+  const isEmpty = enteredTranslation === '' || enteredWord === '';
+
   const handleCreateDictionary = async (word, translation) => {
     try {
       setIsLoading(true);
@@ -206,7 +208,7 @@ const QuickAddWord = ({ snackbarShowMessage }) => {
               <Button
                 variant='contained'
                 size='small'
-                disabled={!wordIsValid || !translationIsValid || selectHasError}
+                disabled={!wordIsValid || !translationIsValid || selectHasError || isEmpty}
                 sx={sx.addBtn}
                 onClick={async () => {
                   handleCreateDictionary(enteredWord, enteredTranslation);
