@@ -113,12 +113,13 @@ const Teacher = ({ teacher }) => {
     teacherSubscription(subscriptions);
   }, [subscriptions, teacherSubscription]);
 
-  return (
-    <div className={styles.wrapper}>
-      {isLoader ? (
-        <Loader />
-      ) : (
-        <>
+  const teacherLength = Object.keys(teacher).length;
+
+  const getComponent = () => {
+    if (isLoader) return <Loader />;
+    if (teacherLength)
+      return (
+        <div className={styles.wrapper}>
           <div className={styles.contentWrap}>
             <div className={styles.imageWrap}>
               <img src={teacher.url ? teacher.url : teacherPhoto} alt='teacher' />
@@ -160,20 +161,14 @@ const Teacher = ({ teacher }) => {
               <span>29 courses</span>
             </div>
           </div>
-          {isSubscripted ? (
-            <LoadingButton
-              variant='contained'
-              loading={buttonLoader}
-              onClick={deleteSubscriptionOfStudent}
-            >
-              unsubscribe
-            </LoadingButton>
-          ) : (
-            <LoadingButton loading={buttonLoader} variant='contained' onClick={patchSubscription}>
-              subscribe
-            </LoadingButton>
-          )}
-          {teacherInformation ? (
+          <LoadingButton
+            variant='contained'
+            loading={buttonLoader}
+            onClick={() => (isSubscripted ? deleteSubscriptionOfStudent() : patchSubscription())}
+          >
+            {isSubscripted ? 'unsubscribe' : 'subscribe'}
+          </LoadingButton>
+          {teacherInformation && (
             <>
               <div className={styles.teacherInfoWrap}>
                 <div className={styles.blocksWrap}>
@@ -202,13 +197,12 @@ const Teacher = ({ teacher }) => {
                 <p className={styles.biography}>{teacher.biography}</p>
               </div>
             </>
-          ) : (
-            ''
           )}
-        </>
-      )}
-    </div>
-  );
+        </div>
+      );
+  };
+
+  return getComponent();
 };
 
 Teacher.propTypes = {
