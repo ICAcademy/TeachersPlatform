@@ -15,7 +15,7 @@ import { withSnackbar } from 'components/withSnackbar/withSnackbar';
 import { CurrentUserContext } from 'context/AppProvider';
 
 // services
-import { getTeacher, updateTeacher } from 'services/teacherService';
+import { getTeacherById, updateTeacher } from 'services/teacherService';
 
 // styles
 import styles from './TeacherInfo.module.scss';
@@ -72,7 +72,7 @@ const TeacherInfo = ({ snackbarShowMessage }) => {
 
   const getTeacherFromUser = useCallback(async () => {
     try {
-      const teacher = await getTeacher(currentUser.roleId);
+      const teacher = await getTeacherById(currentUser.roleId);
       const agePreferences = teacher.preferences.split(' ');
       setLanguage(teacher.language);
       setBiography(teacher.biography);

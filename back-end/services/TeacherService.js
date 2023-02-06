@@ -1,7 +1,7 @@
 const TeacherModel = require('../models/Teacher');
 
 exports.getAllTeachers = async () => {
-  return await TeacherModel.find();
+  return await TeacherModel.find().sort({ createdAt: -1 });
 };
 
 exports.createTeacher = async (teacher) => {
