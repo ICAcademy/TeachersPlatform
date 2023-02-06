@@ -1,6 +1,7 @@
 @import 'styles/colors.scss';
 
 .burgerButton {
+  display: none;
   background-color: $softPurple;
   border-radius: 5px;
   padding: 2px 5px;
@@ -9,5 +10,11 @@
   .burgerLines {
     color: #fff;
     font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .burgerButton {
+    display: block;
   }
 }
