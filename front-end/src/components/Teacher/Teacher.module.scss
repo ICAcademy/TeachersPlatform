@@ -78,7 +78,7 @@
 
 .imageWrap {
   height: 175px;
-  max-width: 175px;
+  width: 175px;
   padding: 10px;
   border-radius: 50%;
   background-color: $white;
@@ -86,13 +86,14 @@
 
   & img {
     height: 100%;
+    width: 100%;
     object-fit: cover;
     border-radius: 50%;
   }
 
   @media screen and (max-width: 768px) {
     height: 150px;
-    max-width: 150px;
+    width: 150px;
   }
 }
 
