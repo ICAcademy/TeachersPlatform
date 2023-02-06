@@ -113,11 +113,11 @@ const Teacher = ({ teacher }) => {
     teacherSubscription(subscriptions);
   }, [subscriptions, teacherSubscription]);
 
-  const length = Object.keys(teacher).length;
+  const teacherLength = Object.keys(teacher).length;
 
   const getComponent = () => {
     if (isLoader) return <Loader />;
-    if (length)
+    if (teacherLength)
       return (
         <div className={styles.wrapper}>
           <div className={styles.contentWrap}>
