@@ -12,17 +12,23 @@ const TextAreaInfo = ({ header, value, setValue, error }) => {
     setValue(event.target.value);
   };
 
+  const style = {
+    maxWidth: '100%',
+    minWidth: '100%',
+    padding: '15px 10px',
+    fontWeight: 400,
+    fontSize: '15px',
+    fontFamily: 'Arial, sans-serif',
+    resize: 'vertical',
+    overflow: 'auto',
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
         <span className={styles.header}>{header}</span>
       </div>
-      <TextareaAutosize
-        className={styles.input}
-        minRows={2}
-        value={value}
-        onChange={handleChange}
-      />
+      <TextareaAutosize style={style} minRows={4} value={value} onChange={handleChange} />
       {error && header === 'Biography' && value.length < 10 && (
         <div className={styles.errorContainer}>
           Empty Field! Number of letters must be more than 10.
