@@ -50,7 +50,9 @@ const getTopicDataByUrl = async (req, res) => {
 };
 const createNewQuestion = async (req, res) => {
   try {
+    console.log('create question in controller', req.body);
     const question = await createQuestion(req.body);
+    console.log('question for res status', question);
     res.status(201).json(question);
   } catch (error) {
     res.status(400).json(error);
