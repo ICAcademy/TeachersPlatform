@@ -12,6 +12,8 @@ import { CurrentUserContext } from 'context/AppProvider';
 
 import { socket } from 'services/socketService';
 
+import avatar from 'assets/sidebar/avatar.png';
+
 const Lesson = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -62,8 +64,8 @@ const Lesson = () => {
         studentStatus={lesson.studentStatus}
         teacherName={lesson.teacherId?.fullName}
         studentName={lesson.studentId?.fullName}
-        teacherImg={lesson.teacherId?.url}
-        studentImg={lesson.studentId?.url}
+        teacherImg={lesson.teacherId?.url || avatar}
+        studentImg={lesson.studentId?.url || avatar}
       />
       <Quiz
         id={id}

@@ -21,6 +21,13 @@ exports.getStudentSubscriptions = async (id) => {
 };
 
 exports.getSubscriptionsByStatus = async (statusName, id) => {
+  return await SubscriptionModel.find({
+    status: statusName,
+    $or: [{ teacherID: id }, { studentID: id }],
+  }).populate({ path: 'studentID', select: 'fullName' });
+};
+
+exports.getSubscriptionsCountByStatus = async (statusName, id) => {
   return await SubscriptionModel.countDocuments({
     status: { $regex: statusName, $options: 'i' },
     $or: [{ teacherID: id }, { studentID: id }],

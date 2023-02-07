@@ -5,6 +5,11 @@ export const getSubscriptionByQueries = async (params) => {
   return data;
 };
 
+export const getSubscriptionByStatus = async (params) => {
+  const { data } = await API.get('/api/subscriptions/by-status/', { params });
+  return data;
+};
+
 export const createSubscription = async (teacherId, studentId, email, fullName, teacherName) => {
   const body = {
     teacher: {

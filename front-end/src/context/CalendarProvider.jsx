@@ -13,7 +13,9 @@ import {
   scheduleLesson,
   updateScheduledLesson,
 } from 'services/scheduledLessonService';
-import { getSubscriptionByQueries } from 'services/subscriptionService';
+import { getSubscriptionByStatus } from 'services/subscriptionService';
+
+import { APPROVED } from 'constants/subscriptionStatuses';
 
 export const CalendarContext = createContext();
 
@@ -53,7 +55,7 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
   const fetchStudents = useCallback(async () => {
     try {
       setIsLoading(true);
-      const list = await getSubscriptionByQueries({ role, id: roleId });
+      const list = await getSubscriptionByStatus({ statusName: APPROVED, id: roleId });
       const studentsList = list.map((item) => ({
         id: item.studentID._id,
         fullName: item.studentID.fullName,
@@ -63,7 +65,7 @@ const CalendarProvider = ({ children, snackbarShowMessage }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [role, roleId]);
+  }, [roleId]);
 
   const getLessonsForDay = (date) =>
     lessonsList.filter(
