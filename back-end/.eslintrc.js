@@ -15,6 +15,7 @@ module.exports = exports = {
     'linebreak-style': 0,
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
+    'no-useless-escape': 'off',
     'eol-last': ['error', 'always'],
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1, maxBOF: 0 }],
     'no-unused-vars': ['warn'],

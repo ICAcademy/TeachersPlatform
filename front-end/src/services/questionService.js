@@ -27,7 +27,6 @@ export const getTestById = async (id) => {
 
 export const createTest = async (question) => {
   const { data } = await API.post('/api/questions', question);
-  console.log('create question', question);
   return data;
 };
 

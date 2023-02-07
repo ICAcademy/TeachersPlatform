@@ -104,12 +104,14 @@ export const SidebarList = ({ showSidebar }) => {
             </NavLink>
           </ListItem>
         )}
-        <ListItem className={styles.sidebarItem}>
-          <NavLink to='/app/calendar' className={isActive} onClick={handlePathTo}>
-            <FontAwesomeIcon className={styles.sidebarIcon} icon={faCalendarDays} />
-            Calendar
-          </NavLink>
-        </ListItem>
+        {currentUser.role !== ADMIN_ROLE && (
+          <ListItem className={styles.sidebarItem}>
+            <NavLink to='/app/calendar' className={isActive} onClick={handlePathTo}>
+              <FontAwesomeIcon className={styles.sidebarIcon} icon={faCalendarDays} />
+              Calendar
+            </NavLink>
+          </ListItem>
+        )}
         {currentUser.role !== STUDENT_ROLE && (
           <ListItem className={styles.sidebarItem}>
             <NavLink to='/app/materials' className={isActive} onClick={handlePathTo}>
