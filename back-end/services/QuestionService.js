@@ -30,39 +30,12 @@ const getDataByUrl = async (url) => {
   return { unitInfo, topicsInfo };
 };
 
-const createQuestion = async (question) => {
-  const updatedQuestion = {
-    ...question,
-    url:
-      question.unit
-        .toLowerCase()
-        .match(/[a-zA-Z]|\-/g)
-        .join('')
-        .replaceAll(' ', '-') || '',
-  };
-  return await Question.create(updatedQuestion);
-};
+const createQuestion = async (question) => await Question.create(question);
 
 const findQuestionById = async (id) => await Question.findById(id);
 
-const editQuestion = async (id, body) => {
-  if (body.unit) {
-    const updatedUrl =
-      body.unit
-        .toLowerCase()
-        .match(/[a-zA-Z]|\-/g)
-        .join('')
-        .replaceAll(' ', '-') || '';
-
-    return await Question.findByIdAndUpdate(
-      id,
-      { ...body, url: updatedUrl },
-      { new: true, runValidators: true },
-    );
-  }
-
-  return await Question.findByIdAndUpdate(id, body, { new: true, runValidators: true });
-};
+const editQuestion = async (id, body) =>
+  await Question.findByIdAndUpdate(id, body, { new: true, runValidators: true });
 
 const removeQuestion = async (id) => await Question.findByIdAndDelete(id);
 
