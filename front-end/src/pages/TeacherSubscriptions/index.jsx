@@ -57,8 +57,8 @@ const TeacherSubscriptions = ({ snackbarShowMessage }) => {
   };
 
   useEffect(() => {
-    fetchSubscriptions(currentUser.role, currentUser?.roleId);
-  }, [currentUser]);
+    fetchSubscriptions(currentUser.role, currentUser.roleId);
+  }, [currentUser.role, currentUser.roleId]);
 
   useEffect(() => {
     socket.on('create_subscription', (data) => {
