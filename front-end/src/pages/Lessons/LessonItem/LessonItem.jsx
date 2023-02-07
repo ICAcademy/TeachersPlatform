@@ -25,7 +25,10 @@ const LessonItem = ({ id, topic, participant, status }) => {
           <ListItemText primary={participant} />
         </Box>
       </Box>
-      <Box className={styles.lesson__status}>{status}</Box>
+      <Box className={styles.lesson__status}>
+        <Box className={styles.lesson__statusDot}></Box>
+        <Box className={styles.lesson__statusText}>{status}</Box>
+      </Box>
     </Link>
   );
 };

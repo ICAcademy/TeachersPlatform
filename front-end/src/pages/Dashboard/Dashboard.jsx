@@ -52,17 +52,19 @@ const Dashboard = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <div className={styles.content}>
+    <div>
       <Banner />
       <div className={styles.info}>
-        <div className={styles.todoContainer}>
-          <Todo />
-        </div>
         {role === STUDENT_ROLE && subscriptions === 0 ? (
           <NoSubscriptions />
         ) : (
-          <div className={styles.upcomingLessonsContainer}>
-            <UpcomingLessons />
+          <div className={styles.info}>
+            <div className={styles.todoContainer}>
+              <Todo />
+            </div>
+            <div className={styles.upcomingLessonsContainer}>
+              <UpcomingLessons />
+            </div>
           </div>
         )}
       </div>

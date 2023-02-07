@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 
 import LessonsHeader from 'components/Lessons/LessonsHeader/LessonsHeader';
 import TopicsBody from 'components/questions/TopicsBody/TopicsBody';
@@ -11,16 +11,23 @@ import { socket } from 'services/socketService';
 
 // Constants
 import { TEACHER_ROLE } from 'constants/userRoles';
+import { APPROVED } from 'constants/subscriptionStatuses';
 
 import styles from './Topics.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserContext } from 'context/AppProvider';
-import { getSubscriptionByQueries } from 'services/subscriptionService';
+import { getSubscriptionByStatus } from 'services/subscriptionService';
 
 const sx = {
   startLessonBtn: {
     ['@media (max-width: 768px)']: { width: '175px', fontSize: '13px', height: '40px' },
+  },
+  noTopic: {
+    display: 'flex',
+    justifyContent: 'center',
+    mt: '20%',
+    color: '#888',
   },
 };
 
@@ -65,7 +72,7 @@ const Topics = () => {
 
   const fetchStudents = async (role, id) => {
     try {
-      const students = await getSubscriptionByQueries({ role, id });
+      const students = await getSubscriptionByStatus({ statusName: APPROVED, id });
       setStudents(students);
     } catch (error) {
       console.log(error);
@@ -97,11 +104,11 @@ const Topics = () => {
   }, [navigate]);
 
   const quiz = Object.keys(selectedTopic).length ? (
-    <div className={`${styles.lesson__quiz} ${isFullscreen ? styles.quiz__full : ''}`}>
+    <Box className={`${styles.lesson__quiz} ${isFullscreen ? styles.quiz__full : ''}`}>
       <Quiz questions={selectedTopic.questions} />
-    </div>
+    </Box>
   ) : (
-    ''
+    <Typography variant='h5' sx={sx.noTopic}>{`You don't select topic any topic yet.`}</Typography>
   );
 
   return (
