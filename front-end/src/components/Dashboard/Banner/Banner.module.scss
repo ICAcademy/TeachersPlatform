@@ -3,6 +3,7 @@
 
 .content {
   display: flex;
+  justify-content: space-between;
   background: #58baab;
   padding: 30px;
   border-radius: 5px;
@@ -56,6 +57,15 @@
 .iconOfUsers {
   color: $white;
   font-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+
+.iconOfMentors {
+  color: $white;
+  font-size: 25px;
+  width: 30px;
+  height: 30px;
 }
 
 .teachers {
@@ -75,14 +85,15 @@
 }
 
 .totalCount {
-  color: $grey200;
+  color: $white;
   margin-top: 5px;
-  font-size: 16px;
+  font-size: 25px;
+  font-weight: 600;
 }
 
 .right {
-  width: 65%;
-  height: 200px;
+  width: 50%;
+  margin-right: 10%;
 }
 
 .images {
@@ -114,26 +125,26 @@
 }
 
 .studentBoyContainer {
-  width: 40px;
+  width: 3%;
   position: absolute;
-  margin-top: 15%;
+  margin-top: 19%;
   margin-left: 10%;
   z-index: 2;
 }
 
 .studentGirlAfroAmericanContainer {
-  width: 30px;
+  width: 2.7%;
   position: absolute;
-  margin-top: 14%;
-  margin-left: 30%;
+  margin-top: 17%;
+  margin-left: 25%;
   z-index: 2;
 }
 
 .studentGirlContainer {
-  width: 28px;
+  width: 2.3%;
   position: absolute;
-  margin-top: 14%;
-  margin-left: 50%;
+  margin-top: 17.4%;
+  margin-left: 40%;
   z-index: 2;
 }
 
@@ -143,7 +154,7 @@
 }
 
 .cityContainer {
-  max-width: 55%;
+  max-width: 50%;
   z-index: 1;
   filter: saturate(90%);
 }
@@ -154,25 +165,9 @@
   }
 }
 
-@media (min-width: 1400px) {
-  .content {
-    display: flex;
-    justify-content: space-between;
-  }
+@media (max-width: 1600px) {
   .right {
-    width: 40%;
-    margin-right: 10%;
-  }
-}
-
-@media (min-width: 2050px) {
-  .studentGirlContainer {
-    margin-top: 10%;
-  }
-  .studentGirlAfroAmericanContainer {
-    margin-top: 10%;
-  }
-  .studentBoyContainer {
-    margin-top: 10%;
+    width: 70%;
+    margin-top: 3%;
   }
 }
