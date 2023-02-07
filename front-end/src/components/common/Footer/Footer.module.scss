@@ -6,6 +6,9 @@
   background: $darkBlue;
   color: $white;
   padding: 120px 0 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .sidebarImgBlock {
