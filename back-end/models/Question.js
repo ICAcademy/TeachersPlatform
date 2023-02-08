@@ -17,9 +17,6 @@ const questionSchema = new mongoose.Schema(
     image: {
       type: String,
     },
-    url: {
-      type: String,
-    },
     questions: {
       type: [
         {
