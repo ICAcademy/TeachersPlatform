@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Box, Typography, FormControl, Select, MenuItem, Button } from '@mui/material';
 
 //Services
-import { getLevels } from 'services/MaterialsService/MaterialsService';
 
 const style = {
   position: 'absolute',
@@ -20,18 +19,8 @@ const style = {
   justifyContent: 'center',
 };
 
-const ChangeLevel = ({ isOpen, handleIsClose, level, changeLevel, studentName }) => {
+const ChangeLevel = ({ isOpen, handleIsClose, level, levels, changeLevel, studentName }) => {
   const [selectedLevel, setSelectedLevel] = useState(level || '');
-  const [levels, setLevels] = useState([]);
-
-  const fetchLevels = async () => {
-    try {
-      const levels = await getLevels();
-      setLevels(levels);
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
 
   const updateLevelHandler = () => {
     changeLevel(selectedLevel);
@@ -41,10 +30,6 @@ const ChangeLevel = ({ isOpen, handleIsClose, level, changeLevel, studentName })
   const handleChange = (e) => {
     setSelectedLevel(e.target.value);
   };
-
-  useEffect(() => {
-    fetchLevels();
-  }, []);
 
   return (
     <Modal open={isOpen} onClose={handleIsClose}>
@@ -90,6 +75,7 @@ ChangeLevel.propTypes = {
   isOpen: PropTypes.bool,
   handleIsClose: PropTypes.func,
   level: PropTypes.string,
+  levels: PropTypes.array,
   changeLevel: PropTypes.func,
   studentName: PropTypes.string,
 };

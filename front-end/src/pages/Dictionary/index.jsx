@@ -11,7 +11,7 @@ import {
   updateDictionary,
   deleteDictionary,
 } from 'services/dictionaryService';
-import { getSubscriptionByQueries } from 'services/subscriptionService';
+import { getSubscriptionByStatus } from 'services/subscriptionService';
 
 // Constants
 import { TEACHER_ROLE } from 'constants/userRoles';
@@ -34,6 +34,8 @@ import StudentsSelect from 'components/Dictionary/StudentsSelect';
 
 // Styles
 import styles from './Dictionary.module.scss';
+
+import { APPROVED } from 'constants/subscriptionStatuses';
 
 const sx = {
   formControl: {
@@ -69,12 +71,12 @@ const Dictionary = ({ snackbarShowMessage }) => {
 
   const fetchSubscriptions = useCallback(async () => {
     try {
-      const subscriptions = await getSubscriptionByQueries({ role, id: roleId });
+      const subscriptions = await getSubscriptionByStatus({ statusName: APPROVED, id: roleId });
       setStudents(subscriptions);
     } catch (error) {
       return error;
     }
-  }, [role, roleId]);
+  }, [roleId]);
 
   const handleCreateDictionary = async (word, translation) => {
     try {
