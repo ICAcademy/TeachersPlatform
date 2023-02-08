@@ -66,7 +66,7 @@ const Banner = () => {
           <div className={styles.headerContainer}>
             <h1 className={styles.learn}>Learn With Effectively With Us!</h1>
           </div>
-          <p className={styles.discount}>Get 30% off every course on january.</p>
+          <p className={styles.discount}>Get 30% off every course on February.</p>
         </div>
         <div className={styles.countOfUsers}>
           <div className={styles.students}>
@@ -89,7 +89,7 @@ const Banner = () => {
           </div>
           <div className={styles.teachers}>
             <div className={styles.iconOfTeachersContainer}>
-              <FontAwesomeIcon className={styles.iconOfUsers} icon={faUser} />
+              <FontAwesomeIcon className={styles.iconOfMentors} icon={faUser} />
             </div>
             <div className={styles.count}>
               <div className={styles.nameOfCount}>Expert Mentors</div>

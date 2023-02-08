@@ -27,7 +27,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-const SubscriptionItem = ({ role, subscription, onDelete }) => {
+const SubscriptionItem = ({ role, subscription, onDelete, levels }) => {
   const [status, setStatus] = useState(subscription.status || PENDING);
   const [level, setLevel] = useState(subscription.studentID.level || '');
   const [isOpen, setIsOpen] = useState(false);
@@ -37,13 +37,16 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
   const studentID = subscription.studentID._id;
   const studentName = subscription.studentID.fullName;
 
-  const updateStatus = async (status) => {
-    try {
-      await updateSubscription(subscription._id, { status: status });
-    } catch (error) {
-      return error;
-    }
-  };
+  const updateStatus = useCallback(
+    async (status) => {
+      try {
+        await updateSubscription(subscription._id, { status: status });
+      } catch (error) {
+        return error;
+      }
+    },
+    [subscription._id],
+  );
 
   const handleStatus = (event) => {
     if (event.target.dataset.status !== status) {
@@ -78,13 +81,6 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    updateStatus(status);
-    dispatchFunction(
-      pendingSubscriptionsCount({ statusName: PENDING, id: subscription.teacherID }),
-    );
-  });
 
   useEffect(() => {
     socket.on('update_subscription', (data) => {
@@ -166,7 +162,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
             studentID={studentID}
             studentName={studentName}
             level={level}
-            setLevel={setLevel}
+            levels={levels}
             changeLevel={changeLevelHandler}
           />
         </div>
@@ -184,6 +180,7 @@ SubscriptionItem.propTypes = {
   subscription: PropTypes.object,
   role: PropTypes.string,
   onDelete: PropTypes.func,
+  levels: PropTypes.array,
 };
 
 export default SubscriptionItem;

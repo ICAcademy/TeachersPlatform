@@ -24,8 +24,20 @@ exports.getSubscriptionsByQueries = async (req, res) => {
     const { statusName, role, id } = req.query;
     const subscriptions =
       statusName && id
-        ? await subscriptionService.getSubscriptionsByStatus(statusName, id)
+        ? await subscriptionService.getSubscriptionsCountByStatus(statusName, id)
         : await getSubscriptionByRole(role, id);
+    res.json(subscriptions);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+exports.getUserSubscriptionsByStatus = async (req, res) => {
+  try {
+    const { statusName, id } = req.query;
+
+    const subscriptions = await subscriptionService.getSubscriptionsByStatus(statusName, id);
+
     res.json(subscriptions);
   } catch (err) {
     res.status(400).json({ error: err.message });

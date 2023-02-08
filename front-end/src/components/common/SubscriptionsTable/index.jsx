@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Components
@@ -7,8 +7,24 @@ import SubscriptionItem from './SubscriptionItem/SubscriptionItem';
 
 // Styles
 import styles from './SubscriptionsTable.module.scss';
+import { getLevels } from 'services/MaterialsService/MaterialsService';
 
 const SubscriptionsTable = ({ subscriptions, role, deleteSubscriptionById }) => {
+  const [levels, setLevels] = useState([]);
+
+  const fetchLevels = async () => {
+    try {
+      const levels = await getLevels();
+      setLevels(levels);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchLevels();
+  }, []);
+
   return (
     <div className={styles.subscriptionsTable}>
       {subscriptions.map((subscription) => (
@@ -17,6 +33,7 @@ const SubscriptionsTable = ({ subscriptions, role, deleteSubscriptionById }) => 
           role={role}
           subscription={subscription}
           onDelete={deleteSubscriptionById}
+          levels={levels}
         />
       ))}
     </div>

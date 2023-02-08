@@ -30,12 +30,7 @@ const getDataByUrl = async (url) => {
   return { unitInfo, topicsInfo };
 };
 
-const createQuestion = async (question) => {
-  console.log('create question in question service', question);
-  const newQuestion = await Question.create(question);
-  console.log('newQuestion in create question service', newQuestion);
-  return newQuestion;
-};
+const createQuestion = async (question) => await Question.create(question);
 
 const findQuestionById = async (id) => await Question.findById(id);
 

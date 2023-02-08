@@ -25,21 +25,32 @@
     align-items: center;
     column-gap: 5px;
     color: $green;
+  }
 
-    &:before {
-      display: block;
-      content: '';
-      height: 5px;
-      width: 5px;
-      border-radius: 50%;
-      background-color: $green;
-      animation: pulse 2s infinite;
-    }
+  &__statusDot {
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background-color: $green;
+    animation: pulse 2s infinite;
   }
 
   &:hover {
     transform: translateY(-4px) scale(1.02);
     box-shadow: 0 14px 24px rgb(0 0 0 / 20%);
+  }
+}
+
+@media (max-width: 425px) {
+  .lesson {
+    &__statusDot {
+      height: 7px;
+      width: 7px;
+    }
+
+    &__statusText {
+      display: none;
+    }
   }
 }
 
