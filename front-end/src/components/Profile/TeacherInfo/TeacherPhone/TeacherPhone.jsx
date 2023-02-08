@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // components
@@ -10,13 +10,31 @@ import 'react-phone-input-2/lib/style.css';
 import styles from './TeacherPhone.module.scss';
 
 const TeacherPhone = ({ phoneInput, setPhoneInput }) => {
+  const [screen, setScreen] = useState('40%');
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 700px)').matches) {
+        setScreen('40%');
+      } else {
+        setScreen('100%');
+      }
+    });
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
         <span className={styles.header}>Phone</span>
       </div>
       <Box className={styles.box}>
-        <PhoneInput className={styles.input} value={phoneInput} onChange={setPhoneInput} />
+        <PhoneInput
+          inputStyle={{
+            width: screen,
+          }}
+          value={phoneInput}
+          onChange={setPhoneInput}
+        />
       </Box>
     </div>
   );
