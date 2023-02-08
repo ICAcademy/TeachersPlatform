@@ -1,19 +1,13 @@
-.materialsHeader {
-  display: flex;
-  justify-content: space-between;
-}
-
 .input {
   margin-left: 15px !important;
 
   label {
     font-size: 1rem;
-    line-height: 0.9em;
   }
 
   input {
-    padding: 6.5px 10px;
     font-size: 1rem;
+    height: auto;
   }
 
   & svg {
@@ -27,6 +21,13 @@
   justify-content: space-between;
 }
 
+.materials {
+  .createBtn {
+    margin-top: 25px;
+    color: #fff;
+  }
+}
+
 @media screen and (max-width: 1680px) {
   .materialsHeader {
     flex-direction: column;
@@ -35,6 +36,16 @@
 
   .createBtn {
     margin-top: 20px !important;
+  }
+
+  .materials {
+    .createBtn {
+      font-size: 0.75rem;
+    }
+
+    input {
+      font-size: 0.75rem;
+    }
   }
 }
 

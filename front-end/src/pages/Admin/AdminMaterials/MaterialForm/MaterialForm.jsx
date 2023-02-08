@@ -96,6 +96,7 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
       message: 'Lesson saved',
       severity: 'success',
     });
+    setSaveBtn(true);
   };
 
   const uploadImageHandler = async (event) => {

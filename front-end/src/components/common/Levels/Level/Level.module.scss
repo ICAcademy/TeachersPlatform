@@ -7,6 +7,14 @@
   }
 }
 
+@media screen and (max-width: 1680px) {
+  .levelItem {
+    button {
+      font-size: 0.75rem;
+    }
+  }
+}
+
 @media screen and (max-width: 480px) {
   .levelItem {
     margin-right: 5px;
