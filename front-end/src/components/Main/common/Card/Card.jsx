@@ -1,26 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // assets
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDollarSign, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 // styles
 import styles from './Card.module.scss';
 
-const Card = () => {
+const Card = ({ img, header, info }) => {
   return (
     <div className={styles.container}>
       <div className={styles.labelContainer}>
-        <FontAwesomeIcon icon={faDollarSign} className={styles.dollar} />
+        <FontAwesomeIcon icon={img} className={styles.dollar} />
       </div>
       <div>
-        <h3 className={styles.title}>Scolarships</h3>
+        <h3 className={styles.title}>{header}</h3>
       </div>
       <div className={styles.explanationContainer}>
-        <p className={styles.explanation}>
-          ScholarshipPortal is the best scholarship website for international students looking to
-          meet their financial needs.
-        </p>
+        <p className={styles.explanation}>{info}</p>
       </div>
       <div className={styles.learnMoreContainer}>
         <a className={styles.learnMore} href='*'>
@@ -30,6 +28,12 @@ const Card = () => {
       </div>
     </div>
   );
+};
+
+Card.propTypes = {
+  img: PropTypes.object,
+  header: PropTypes.string,
+  info: PropTypes.string,
 };
 
 export default Card;
