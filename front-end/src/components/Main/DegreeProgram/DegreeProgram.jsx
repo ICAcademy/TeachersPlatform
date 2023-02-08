@@ -8,8 +8,18 @@ import Explanation from '../common/Explanation/Explanation';
 
 // styles
 import styles from './DegreeProgram.module.scss';
+import { faBook, faBookmark, faUserGraduate } from '@fortawesome/free-solid-svg-icons';
 
 const DegreeProgram = () => {
+  const infoForDegree =
+    'Compare the Best Bachelor Degrees Worldwide! Find your Perfect Master Abroad. Never stop learning.';
+
+  const infoForSchool =
+    'Finding the right school should not be hard. From K-12 to college to grad school, we make it easy to discover and connect with the best ones for you.';
+
+  const infoForGraduate =
+    'The many sources of information create a great chance to get under the skin of that graduate program you find a perfect match.';
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -28,13 +38,13 @@ const DegreeProgram = () => {
         </div>
         <div className={styles.cardsContainer}>
           <div className={styles.cardContainer}>
-            <Card />
+            <Card img={faBook} header={'Majors & Bachelors Degree'} info={infoForDegree} />
           </div>
           <div className={styles.cardContainer}>
-            <Card />
+            <Card img={faBookmark} header={'Colleges & Schools'} info={infoForSchool} />
           </div>
           <div className={styles.cardContainer}>
-            <Card />
+            <Card img={faUserGraduate} header={'Graduated Programs'} info={infoForGraduate} />
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@
   background: $purple;
   border-radius: 0 0 20px 20px;
 
-  img {
+  .teacher {
     display: block;
     width: 100%;
   }
@@ -32,4 +32,10 @@
   padding: 10px;
   font-size: $f16;
   line-height: 26px;
+}
+
+@media screen and (min-width: 770px) {
+  .teacher {
+    height: 230px;
+  }
 }
