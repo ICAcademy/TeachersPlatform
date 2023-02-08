@@ -40,11 +40,13 @@ exports.updateSubscription = async (id, subscription) => {
     runValidators: true,
   });
 
-  socket('subscription:updated', updatedSubscription.studentID);
+  socket('subscription:updated', updatedSubscription);
 
   return updatedSubscription;
 };
 
 exports.deleteSubscription = async (id) => {
-  return await SubscriptionModel.findByIdAndDelete(id);
+  const removedSubscription = await SubscriptionModel.findByIdAndDelete(id);
+  socket('subscription:deleted', removedSubscription);
+  return removedSubscription;
 };
