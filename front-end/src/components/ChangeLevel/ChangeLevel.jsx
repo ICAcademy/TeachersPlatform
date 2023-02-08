@@ -73,7 +73,13 @@ const ChangeLevel = ({ isOpen, handleIsClose, level, changeLevel, studentName })
               justifyContent: 'space-evenly',
             }}
           >
-            <Button variant='contained' onClick={handleIsClose}>
+            <Button
+              variant='contained'
+              onClick={() => {
+                setSelectedLevel(level);
+                handleIsClose();
+              }}
+            >
               Close
             </Button>
             <Button variant='contained' onClick={updateLevelHandler}>
@@ -90,6 +96,7 @@ ChangeLevel.propTypes = {
   isOpen: PropTypes.bool,
   handleIsClose: PropTypes.func,
   level: PropTypes.string,
+  setLevel: PropTypes.func,
   changeLevel: PropTypes.func,
   studentName: PropTypes.string,
 };

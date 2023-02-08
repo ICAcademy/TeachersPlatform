@@ -55,8 +55,9 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     onDelete(subscription._id);
+    changeLevelHandler(null);
   };
 
   let statusClass = '';
@@ -165,6 +166,7 @@ const SubscriptionItem = ({ role, subscription, onDelete }) => {
             studentID={studentID}
             studentName={studentName}
             level={level}
+            setLevel={setLevel}
             changeLevel={changeLevelHandler}
           />
         </div>
