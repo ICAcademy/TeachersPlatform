@@ -4,6 +4,8 @@
   &__item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    column-gap: 20px;
   }
 
   &__info {
@@ -20,9 +22,16 @@
   &__complete {
     text-decoration: line-through;
   }
+}
 
-  &__delete {
-    margin: 10px;
-    margin-left: 20px;
+@media (max-width: 400px) {
+  .todo {
+    &__item {
+      column-gap: 0px;
+    }
+
+    &__info {
+      padding-left: 10px;
+    }
   }
 }

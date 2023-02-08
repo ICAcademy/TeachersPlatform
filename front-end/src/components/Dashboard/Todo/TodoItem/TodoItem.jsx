@@ -17,8 +17,8 @@ const TodoItem = ({ id, description, isComplete, handleChange, handleDelete, fil
         />
       </Box>
       {!filtered && (
-        <Box className={styles.todo__delete}>
-          <IconButton edge='end' aria-label='delete' onClick={() => handleDelete(id)}>
+        <Box>
+          <IconButton aria-label='delete' onClick={() => handleDelete(id)}>
             <DeleteOutlineIcon />
           </IconButton>
         </Box>
