@@ -20,13 +20,22 @@
   h2,
   h3,
   h4,
-  h5 {
+  h5,
+  table,
+  div {
     margin-bottom: 15px;
-  }
-
-  p {
     font-size: 1.15rem;
     line-height: 1.5;
+  }
+
+  h2 {
+    margin-top: 25px;
+  }
+
+  table td,
+  table th {
+    background-color: #f0f3f6;
+    padding: 8px 15px;
   }
 }
 
