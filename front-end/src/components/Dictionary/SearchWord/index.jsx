@@ -30,7 +30,7 @@ const sx = {
 };
 
 const SearchWord = ({ word, handleInput, selectError }) => (
-  <Box component='form' sx={sx.inputsBox} noValidate autoComplete='off'>
+  <Box sx={sx.inputsBox}>
     <TextField
       id='outlined-required'
       name='Search by word'
