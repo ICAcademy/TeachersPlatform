@@ -7,6 +7,12 @@
   background: #58baab;
   padding: 30px;
   border-radius: 5px;
+  position: relative;
+  min-height: 300px;
+}
+
+.left {
+  width: 50%;
 }
 
 .headerContainer {
@@ -92,82 +98,117 @@
 }
 
 .right {
-  width: 50%;
-  margin-right: 10%;
+  width: 35%;
+  position: absolute;
+  bottom: 0;
+  right: 5%;
 }
 
 .images {
-  display: flex;
   width: 100%;
-  margin-left: 30%;
 }
 
 .cloudBigContainer {
   width: 70px;
   position: absolute;
-  margin-top: 1%;
-  margin-left: 14%;
+  top: 10%;
+  left: 18%;
+  z-index: 1;
 }
 
 .cloudBig1Container {
   width: 60px;
   position: absolute;
-  margin-top: 2%;
-  margin-left: 25%;
+  top: 2%;
+  left: 40%;
 }
 
 .cloudBiggestContainer {
   width: 48px;
   position: absolute;
-  margin-top: 5%;
-  margin-left: 32%;
+  top: 15%;
+  right: 25%;
   z-index: 1;
 }
 
 .studentBoyContainer {
-  width: 3%;
+  width: 8%;
   position: absolute;
-  margin-top: 19%;
-  margin-left: 10%;
-  z-index: 2;
+  bottom: 0%;
+  left: 20%;
+  z-index: 10;
 }
 
 .studentGirlAfroAmericanContainer {
-  width: 2.7%;
+  width: 8%;
   position: absolute;
-  margin-top: 17%;
-  margin-left: 25%;
-  z-index: 2;
+  bottom: 0;
+  left: 42%;
+  z-index: 10;
 }
 
 .studentGirlContainer {
-  width: 2.3%;
+  width: 7%;
   position: absolute;
-  margin-top: 17.4%;
-  margin-left: 40%;
-  z-index: 2;
+  bottom: 0%;
+  right: 20%;
+  z-index: 10;
 }
 
 .img {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 100%;
 }
 
 .cityContainer {
-  max-width: 50%;
-  z-index: 1;
+  z-index: 5;
   filter: saturate(90%);
+  position: relative;
+  margin-bottom: -3px;
 }
 
-@media (max-width: 600px) {
-  .content {
-    width: 100%;
+@media (max-width: 1366px) {
+  .left {
+    width: 60%;
   }
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1280px) {
+  .left {
+    width: 60%;
+  }
+
+  .learn {
+    font-size: 1.5rem;
+  }
+
+  .totalCount {
+    font-size: 20px;
+  }
+
+  .nameOfCount {
+    font-size: 1rem;
+  }
+
+  .iconOfMentors,
+  .iconOfUsers {
+    width: 25px;
+    height: 25px;
+  }
+
   .right {
-    width: 70%;
-    margin-top: 3%;
+    width: 40%;
+  }
+}
+
+@media (max-width: 1640px) {
+  .content {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    width: 100%;
   }
 }

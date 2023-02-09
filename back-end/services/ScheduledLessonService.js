@@ -1,4 +1,7 @@
 const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+
+dayjs.extend(utc);
 
 const ScheduledLesson = require('../models/ScheduledLesson');
 
@@ -22,7 +25,10 @@ const getAllLessons = async (id, minDate, maxDate) => {
 const getLessonById = async (id) => await ScheduledLesson.findById(id);
 
 const scheduleSingleLesson = async (lesson) => {
-  const newLesson = await ScheduledLesson.create(lesson);
+  const newLesson = await ScheduledLesson.create({
+    ...lesson,
+    date: dayjs(lesson.date).utc(),
+  });
   return await newLesson.populate({
     path: 'studentId',
     select: 'fullName',
@@ -39,7 +45,7 @@ const scheduleMultipleLessons = async (lesson) => {
     if (timeIsTaken) {
       return null;
     }
-    lessons.push({ ...lesson, date: dayjs(date).format('YYYY/MM/DD HH:mm') });
+    lessons.push({ ...lesson, date: dayjs(date).utc() });
     date = dayjs(date).add(1, 'week');
   }
 

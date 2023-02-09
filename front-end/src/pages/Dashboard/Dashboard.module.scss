@@ -18,15 +18,17 @@
   max-height: 500px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .info {
     display: flex;
     flex-direction: column;
   }
   .upcomingLessonsContainer {
     width: 100%;
+    margin-bottom: 35px;
   }
   .todoContainer {
     width: 100%;
+    margin-bottom: 35px;
   }
 }

@@ -36,7 +36,11 @@ const Lessons = ({ isOpen, closeModal, date, lessonsList }) => {
               <CloseIcon color='white' />
             </IconButton>
           </Box>
-          {!lessonFormIsOpen ? <ScheduledLessons list={lessonsList} /> : <LessonForm day={date} />}
+          {!lessonFormIsOpen ? (
+            <ScheduledLessons list={lessonsList} day={date} />
+          ) : (
+            <LessonForm day={date} />
+          )}
         </Box>
       </Fade>
     </Modal>
