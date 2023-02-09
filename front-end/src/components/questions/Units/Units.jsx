@@ -15,7 +15,7 @@ const Units = ({ units }) => {
           {units.map((item, i) => {
             const url = item.unit
               .toLowerCase()
-              .match(/[a-zA-Z]|\-/g)
+              .match(/[a-zA-Z]|\-|\s/g)
               .join('')
               .replaceAll(' ', '-');
 

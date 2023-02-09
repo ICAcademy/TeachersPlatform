@@ -59,7 +59,7 @@ const RouterWrapper = () => {
             index
             element={
               <PrivateRoute>
-                {currentUser.role !== ADMIN_ROLE ? <Dashboard /> : <Navigate to='/app/calendar' />}
+                {currentUser.role !== ADMIN_ROLE ? <Dashboard /> : <Navigate to='/app/materials' />}
               </PrivateRoute>
             }
           />
