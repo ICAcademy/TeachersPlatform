@@ -96,6 +96,7 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
       message: 'Lesson saved',
       severity: 'success',
     });
+    setSaveBtn(true);
   };
 
   const uploadImageHandler = async (event) => {
@@ -140,6 +141,7 @@ const CreateMaterial = ({ material, levels, create, snackbarShowMessage }) => {
 
       if (create) {
         newMaterial = await createMaterial(materialData);
+        navigate(`/app/materials/edit/${newMaterial.url}`);
       } else {
         newMaterial = await updateMaterial(material._id, materialData);
       }

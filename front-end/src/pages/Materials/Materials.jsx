@@ -80,6 +80,7 @@ const Materials = ({ snackbarShowMessage }) => {
     <Button
       className={styles.createBtn}
       component={Link}
+      color='success'
       to='/app/materials/edit/new'
       variant='contained'
       endIcon={<Add />}
@@ -155,8 +156,8 @@ const Materials = ({ snackbarShowMessage }) => {
             value={searchByUnitName}
           />
         </div>
-        {createMaterialBtn}
       </div>
+      {createMaterialBtn}
       {loading ? <Loader /> : <Units materials={data} />}
     </div>
   );
