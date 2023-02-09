@@ -80,16 +80,32 @@ const Activity = () => {
         <div className={styles.sliderContainer}>
           <Slider {...settings}>
             <div>
-              <Card />
+              <Card
+                data='8 nov'
+                topic='Public Speaking in front of master'
+                info='To get practice, seek opportunities to speak in front of others.'
+              />
             </div>
             <div>
-              <Card />
+              <Card
+                data='24 dec'
+                topic='Business guide with Professional Mentor'
+                info='Boost your confidence, as you have Expert to turn to for guidance and support.'
+              />
             </div>
             <div>
-              <Card />
+              <Card
+                data='14 jan'
+                topic='Basic English'
+                info='To get basic knowledge for newcomers.'
+              />
             </div>
             <div>
-              <Card />
+              <Card
+                data='8 nov'
+                topic='Public Speaking in front of master'
+                info='To get practice, seek opportunities to speak in front of others.'
+              />
             </div>
           </Slider>
         </div>
