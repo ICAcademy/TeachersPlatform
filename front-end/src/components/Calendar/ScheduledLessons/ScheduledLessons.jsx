@@ -12,6 +12,9 @@ import {
 import PropTypes from 'prop-types';
 
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 import { CalendarContext } from 'context/CalendarProvider';
 
@@ -27,11 +30,29 @@ import styles from './ScheduledLessons.module.scss';
 //Constants
 import { TEACHER_ROLE } from 'constants/userRoles';
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(isSameOrBefore);
+
+const tz = dayjs.tz.guess();
+
+const expiredLesson = (date) => dayjs().isSameOrBefore(dayjs(date), 'day');
+
 const sx = {
   item: {
     alignItems: 'flex-start',
+  },
+  full: {
     '& .MuiListItemSecondaryAction-root': {
       height: '100%',
+    },
+  },
+  single: {
+    '& .MuiListItemSecondaryAction-root': {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      mr: '10px',
     },
   },
   icon: { minWidth: 'auto', mr: '10px' },
@@ -56,18 +77,24 @@ const ScheduledLessons = ({ list }) => {
             {list.map((lesson) => (
               <ListItem
                 key={lesson._id}
-                sx={sx.item}
+                sx={
+                  expiredLesson(lesson.date)
+                    ? { ...sx.item, ...sx.full }
+                    : { ...sx.item, ...sx.single }
+                }
                 className={styles.lesson}
                 secondaryAction={
                   role === TEACHER_ROLE && (
-                    <Box sx={sx.actions}>
-                      <IconButton
-                        edge='end'
-                        aria-label='delete'
-                        onClick={() => openFormForEdit(lesson._id)}
-                      >
-                        <EditIcon fontSize='small' sx={{ mr: '5px' }} />
-                      </IconButton>
+                    <Box>
+                      {expiredLesson(lesson.date) && (
+                        <IconButton
+                          edge='end'
+                          aria-label='delete'
+                          onClick={() => openFormForEdit(lesson._id)}
+                        >
+                          <EditIcon fontSize='small' sx={{ mr: '5px' }} />
+                        </IconButton>
+                      )}
                       <IconButton
                         edge='end'
                         aria-label='delete'
@@ -83,7 +110,7 @@ const ScheduledLessons = ({ list }) => {
                   <ListItemIcon sx={sx.icon}>
                     <AccessTimeIcon />
                   </ListItemIcon>
-                  <ListItemText primary={dayjs(lesson.date).format('HH:mm')} />
+                  <ListItemText primary={dayjs(lesson.date).tz(tz).format('HH:mm')} />
                 </Box>
                 <Box className={styles.lesson__label}>
                   <ListItemIcon sx={sx.icon}>
