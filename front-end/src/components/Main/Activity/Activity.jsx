@@ -89,7 +89,7 @@ const Activity = () => {
             <div>
               <Card
                 data='24 dec'
-                topic='Bus iness guide with Professional Mentor'
+                topic='Business guide with Professional Mentor'
                 info='Boost your confidence, as you have Expert to turn to for guidance and support.'
               />
             </div>
