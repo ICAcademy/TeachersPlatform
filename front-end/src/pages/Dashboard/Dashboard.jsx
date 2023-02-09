@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 // components
 import Banner from 'components/Dashboard/Banner/Banner';
@@ -8,8 +8,8 @@ import Todo from 'components/Dashboard/Todo/Todo';
 import UpcomingLessons from 'components/Dashboard/UpcomingLessons/UpcomingLessons';
 
 import { CurrentUserContext } from 'context/AppProvider';
+import { ApprovedSubscriptionsContext } from 'context/ApprovedSubscriptionsProvider';
 
-import { getSubscriptionByQueries } from 'services/subscriptionService';
 import { socket } from 'services/socketService';
 
 // constants
@@ -20,34 +20,32 @@ import { APPROVED } from 'constants/subscriptionStatuses';
 import styles from './Dashboard.module.scss';
 
 const Dashboard = () => {
-  const [subscriptions, setSubscriptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { subscriptionsCount, fetchSubscriptionsCount, isLoading } = useContext(
+    ApprovedSubscriptionsContext,
+  );
 
   const {
     currentUser: { roleId, role },
   } = useContext(CurrentUserContext);
 
-  const fetchSubscriptionsCount = useCallback(
-    async (id = roleId) => {
-      try {
-        setIsLoading(true);
-        const response = await getSubscriptionByQueries({ statusName: APPROVED, id });
-        setSubscriptions(response);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
+  useEffect(() => {
+    role === STUDENT_ROLE && fetchSubscriptionsCount(roleId);
+  }, [fetchSubscriptionsCount, role, roleId]);
+
+  useEffect(() => {
+    socket.on('subscription:updated', (subscription) => {
+      if (subscription.studentID === roleId) {
+        if (
+          (subscription.status === APPROVED && subscriptionsCount === 0) ||
+          (subscription.status !== APPROVED && subscriptionsCount === 1)
+        ) {
+          fetchSubscriptionsCount(roleId);
+        }
       }
-    },
-    [roleId],
-  );
+    });
 
-  useEffect(() => {
-    role === STUDENT_ROLE && fetchSubscriptionsCount();
-  }, [fetchSubscriptionsCount, role]);
-
-  useEffect(() => {
-    socket.on('subscription:updated', (id) => id === roleId && fetchSubscriptionsCount(roleId));
-  }, [roleId, fetchSubscriptionsCount]);
+    return () => socket.off('subscription:updated');
+  }, [roleId, fetchSubscriptionsCount, subscriptionsCount]);
 
   return isLoading ? (
     <Loader />
@@ -55,7 +53,7 @@ const Dashboard = () => {
     <div>
       <Banner />
       <div className={styles.info}>
-        {role === STUDENT_ROLE && subscriptions === 0 ? (
+        {role === STUDENT_ROLE && subscriptionsCount === 0 ? (
           <NoSubscriptions />
         ) : (
           <div className={styles.info}>

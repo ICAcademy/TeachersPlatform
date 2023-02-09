@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -33,6 +33,7 @@ import { socket } from 'services/socketService';
 
 // Context
 import { CurrentUserContext } from 'context/AppProvider';
+import { ApprovedSubscriptionsContext } from 'context/ApprovedSubscriptionsProvider';
 
 // Styles
 import styles from './SidebarList.module.scss';
@@ -40,23 +41,14 @@ import Badge from '@mui/material/Badge';
 
 // Constants
 import { STUDENT_ROLE, ADMIN_ROLE, TEACHER_ROLE } from 'constants/userRoles';
-import { getSubscriptionByQueries } from 'services/subscriptionService';
-import { APPROVED, PENDING } from 'constants/subscriptionStatuses';
+import { PENDING } from 'constants/subscriptionStatuses';
 
 export const SidebarList = ({ showSidebar }) => {
   const navigate = useNavigate();
   const { currentUser } = useContext(CurrentUserContext);
   const { subscriptions } = useSelector((state) => state.approveStudent);
-  const [subscriptionsCount, setSubscriptionsCount] = useState([]);
 
-  const fetchSubscriptionsCount = async (id) => {
-    try {
-      const count = await getSubscriptionByQueries({ statusName: APPROVED, id });
-      setSubscriptionsCount(count);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { subscriptionsCount, fetchSubscriptionsCount } = useContext(ApprovedSubscriptionsContext);
 
   const dispatchFunction = useDispatch();
 
@@ -71,7 +63,8 @@ export const SidebarList = ({ showSidebar }) => {
 
   useEffect(() => {
     dispatchFunction(pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId }));
-  }, [currentUser.roleId, dispatchFunction]);
+    currentUser.role === STUDENT_ROLE && fetchSubscriptionsCount(currentUser.roleId);
+  }, [currentUser.role, currentUser.roleId, dispatchFunction, fetchSubscriptionsCount]);
 
   useEffect(() => {
     socket.on('create_subscription', () => {
@@ -80,15 +73,7 @@ export const SidebarList = ({ showSidebar }) => {
     socket.on('delete_subscription', () => {
       dispatchFunction(pendingSubscriptionsCount({ statusName: PENDING, id: currentUser.roleId }));
     });
-    socket.on(
-      'subscription:updated',
-      (id) => id === currentUser.roleId && fetchSubscriptionsCount(currentUser.roleId),
-    );
   }, [currentUser.roleId, dispatchFunction]);
-
-  useEffect(() => {
-    currentUser.role === STUDENT_ROLE && fetchSubscriptionsCount(currentUser.roleId);
-  }, [currentUser.role, currentUser.roleId]);
 
   const isActive = ({ isActive }) =>
     isActive ? `${styles.sidebarLink} ${styles.active}` : styles.sidebarLink;

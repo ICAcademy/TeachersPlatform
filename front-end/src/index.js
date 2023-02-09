@@ -22,6 +22,7 @@ import store from 'store';
 // Context
 import AppProvider from 'context/AppProvider';
 import CalendarProvider from 'context/CalendarProvider';
+import ApprovedSubscriptionsProvider from 'context/ApprovedSubscriptionsProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -29,9 +30,11 @@ root.render(
   <Router>
     <Provider store={store}>
       <AppProvider>
-        <CalendarProvider>
-          <App />
-        </CalendarProvider>
+        <ApprovedSubscriptionsProvider>
+          <CalendarProvider>
+            <App />
+          </CalendarProvider>
+        </ApprovedSubscriptionsProvider>
       </AppProvider>
     </Provider>
   </Router>,
