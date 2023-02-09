@@ -30,7 +30,7 @@ const Banner = () => {
 
   useEffect(() => {
     window.addEventListener('resize', () => {
-      if (window.matchMedia('(min-width: 1100px)').matches) {
+      if (window.matchMedia('(min-width: 768px)').matches) {
         setShowMedia(true);
       } else {
         setShowMedia(false);
@@ -108,52 +108,57 @@ const Banner = () => {
         </div>
       </div>
       {showMedia && (
-        <MouseParallaxContainer
-          className={styles.right}
-          globalFactorX={0.1}
-          globalFactorY={0.1}
-          resetOnLeave
-        >
-          <div className={styles.images}>
-            <MouseParallaxChild className={styles.cityContainer} factorX={0.15} factorY={0.15}>
-              <img className={styles.img} src={city} />
-            </MouseParallaxChild>
-            <MouseParallaxChild className={styles.cloudBigContainer} factorX={0.08} factorY={0.08}>
-              <img className={styles.img} src={cloudBig} />
-            </MouseParallaxChild>
-            <MouseParallaxChild
-              className={styles.cloudBiggestContainer}
-              factorX={0.1}
-              factorY={0.1}
-            >
-              <img className={styles.img} src={cloudBiggest} />
-            </MouseParallaxChild>
-            <MouseParallaxChild className={styles.cloudBig1Container} factorX={0.07} factorY={0.07}>
-              <img className={styles.img} src={cloudBig} />
-            </MouseParallaxChild>
-            <MouseParallaxChild
-              className={styles.studentBoyContainer}
-              factorX={0.07}
-              factorY={0.09}
-            >
-              <img className={styles.img} src={studentBoy} />
-            </MouseParallaxChild>
-            <MouseParallaxChild
-              className={styles.studentGirlAfroAmericanContainer}
-              factorX={0.1}
-              factorY={0.08}
-            >
-              <img className={styles.img} src={studentGirlAfroAmerican} />
-            </MouseParallaxChild>
-            <MouseParallaxChild
-              className={styles.studentGirlContainer}
-              factorX={0.09}
-              factorY={0.1}
-            >
-              <img className={styles.img} src={studentGirl} />
-            </MouseParallaxChild>
-          </div>
-        </MouseParallaxContainer>
+        <div className={styles.right}>
+          <MouseParallaxContainer globalFactorX={0.1} globalFactorY={0.1} resetOnLeave>
+            <div className={styles.images}>
+              <MouseParallaxChild className={styles.cityContainer} factorX={0.15} factorY={0.15}>
+                <img className={styles.img} src={city} />
+              </MouseParallaxChild>
+              <MouseParallaxChild
+                className={styles.cloudBigContainer}
+                factorX={0.08}
+                factorY={0.08}
+              >
+                <img className={styles.img} src={cloudBig} />
+              </MouseParallaxChild>
+              <MouseParallaxChild
+                className={styles.cloudBiggestContainer}
+                factorX={0.1}
+                factorY={0.1}
+              >
+                <img className={styles.img} src={cloudBiggest} />
+              </MouseParallaxChild>
+              <MouseParallaxChild
+                className={styles.cloudBig1Container}
+                factorX={0.07}
+                factorY={0.07}
+              >
+                <img className={styles.img} src={cloudBig} />
+              </MouseParallaxChild>
+              <MouseParallaxChild
+                className={styles.studentBoyContainer}
+                factorX={0.07}
+                factorY={0.09}
+              >
+                <img className={styles.img} src={studentBoy} />
+              </MouseParallaxChild>
+              <MouseParallaxChild
+                className={styles.studentGirlAfroAmericanContainer}
+                factorX={0.1}
+                factorY={0.08}
+              >
+                <img className={styles.img} src={studentGirlAfroAmerican} />
+              </MouseParallaxChild>
+              <MouseParallaxChild
+                className={styles.studentGirlContainer}
+                factorX={0.09}
+                factorY={0.1}
+              >
+                <img className={styles.img} src={studentGirl} />
+              </MouseParallaxChild>
+            </div>
+          </MouseParallaxContainer>
+        </div>
       )}
     </div>
   );
