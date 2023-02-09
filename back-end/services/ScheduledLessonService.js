@@ -25,10 +25,8 @@ const getAllLessons = async (id, minDate, maxDate) => {
 const getLessonById = async (id) => await ScheduledLesson.findById(id);
 
 const scheduleSingleLesson = async (lesson) => {
-  const newLesson = await ScheduledLesson.create({
-    ...lesson,
-    date: dayjs(lesson.date).utc(),
-  });
+  console.log(lesson.date);
+  const newLesson = await ScheduledLesson.create(lesson);
   return await newLesson.populate({
     path: 'studentId',
     select: 'fullName',

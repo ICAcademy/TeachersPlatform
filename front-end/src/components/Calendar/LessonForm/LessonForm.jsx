@@ -101,9 +101,10 @@ const LessonForm = ({ day }) => {
 
   const submitHandler = () => {
     const params = { repeat: isRepeated };
+    console.log('When click on create lesson btn: ', dayjs(enteredTime));
     const data = {
       label: enteredLabel,
-      date: enteredTime,
+      date: dayjs(enteredTime).utc(),
       teacherId: roleId,
       studentId: selectedStudent,
     };

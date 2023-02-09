@@ -12,6 +12,9 @@ import {
 import PropTypes from 'prop-types';
 
 import dayjs from 'dayjs';
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
+
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 import { CalendarContext } from 'context/CalendarProvider';
@@ -28,7 +31,13 @@ import styles from './ScheduledLessons.module.scss';
 //Constants
 import { TEACHER_ROLE } from 'constants/userRoles';
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
 dayjs.extend(isSameOrBefore);
+
+const tz = dayjs.tz.guess();
+
+console.log('Timezone: ', tz);
 
 const expiredLesson = (date) => dayjs().isSameOrBefore(dayjs(date), 'day');
 
