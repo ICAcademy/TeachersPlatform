@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, Modal, TextField, Typography } from '@mui/material';
 
 import { CurrentUserContext } from 'context/AppProvider';
 
@@ -14,6 +14,7 @@ import { REGEX_TODO } from 'helpers/regex';
 import styles from './Todo.module.scss';
 
 const todoHelperText = 'Must be less than 30 symbols';
+import CloseIcon from '@mui/icons-material/Close';
 
 const sx = {
   modal: {
@@ -24,16 +25,29 @@ const sx = {
     top: '5%',
     left: '50%',
     transform: 'translate(-50%, 0%)',
-    width: '600px',
+    maxWidth: '600px',
+    width: '100%',
     height: 'calc(100vh - 10%)',
     borderRadius: '20px',
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-    overflowY: 'auto',
+
+    '@media (max-width: 500px)': {
+      px: 2,
+    },
+  },
+  modalHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   modalTitle: {
     ml: '10px',
+  },
+  modalList: {
+    pr: '10px',
+    overflow: 'auto',
   },
 };
 
@@ -119,25 +133,38 @@ const Todo = () => {
         aria-describedby='modal-modal-description'
       >
         <Box sx={sx.modal}>
-          <Typography
-            variant='h6'
-            color='primary'
-            className={styles.todo__title}
-            sx={sx.modalTitle}
-          >
-            All todo:
-          </Typography>
-          {todoList.map((todo) => (
-            <TodoItem
-              key={todo._id}
-              id={todo._id}
-              description={todo.description}
-              isComplete={todo.isComplete}
-              handleChange={changeStatus}
-              handleDelete={deleteTodo}
-              filtered={false}
-            />
-          ))}
+          <Box sx={sx.modalHeader}>
+            <Typography
+              variant='h6'
+              color='primary'
+              className={styles.todo__title}
+              sx={sx.modalTitle}
+            >
+              All todo:
+            </Typography>
+            <IconButton aria-label='close' onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <Box sx={sx.modalList}>
+            {todoList.length === 0 ? (
+              <Box variant='span' className={styles.noTodo}>
+                {`You have no unfinished todo for now :\(`}
+              </Box>
+            ) : (
+              todoList.map((todo) => (
+                <TodoItem
+                  key={todo._id}
+                  id={todo._id}
+                  description={todo.description}
+                  isComplete={todo.isComplete}
+                  handleChange={changeStatus}
+                  handleDelete={deleteTodo}
+                  filtered={false}
+                />
+              ))
+            )}
+          </Box>
         </Box>
       </Modal>
       <Box className={styles.todo__header}>
@@ -154,19 +181,17 @@ const Todo = () => {
             {`You have no unfinished todo for now :\(`}
           </Box>
         ) : (
-          filterTodo(todoList)
-            .slice(0, 3)
-            .map((todo) => (
-              <TodoItem
-                key={todo._id}
-                id={todo._id}
-                description={todo.description}
-                isComplete={todo.isComplete}
-                handleChange={changeStatus}
-                handleDelete={deleteTodo}
-                filtered={true}
-              />
-            ))
+          filterTodo(todoList).map((todo) => (
+            <TodoItem
+              key={todo._id}
+              id={todo._id}
+              description={todo.description}
+              isComplete={todo.isComplete}
+              handleChange={changeStatus}
+              handleDelete={deleteTodo}
+              filtered={true}
+            />
+          ))
         )}
       </Box>
       <Box className={styles.todo__add}>
