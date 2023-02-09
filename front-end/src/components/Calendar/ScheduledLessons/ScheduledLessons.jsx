@@ -36,6 +36,8 @@ dayjs.extend(isSameOrBefore);
 
 const tz = dayjs.tz.guess();
 
+console.log(tz);
+
 const expiredLesson = (date) => dayjs().isSameOrBefore(dayjs(date), 'day');
 
 const sx = {
