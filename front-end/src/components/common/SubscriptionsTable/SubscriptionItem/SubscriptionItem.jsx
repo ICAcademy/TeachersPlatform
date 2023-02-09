@@ -58,8 +58,9 @@ const SubscriptionItem = ({ role, subscription, onDelete, levels }) => {
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     onDelete(subscription._id);
+    changeLevelHandler(null);
   };
 
   let statusClass = '';
