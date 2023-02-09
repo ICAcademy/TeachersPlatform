@@ -12,8 +12,6 @@ import {
 import PropTypes from 'prop-types';
 
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 import { CalendarContext } from 'context/CalendarProvider';
@@ -30,11 +28,7 @@ import styles from './ScheduledLessons.module.scss';
 //Constants
 import { TEACHER_ROLE } from 'constants/userRoles';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
 dayjs.extend(isSameOrBefore);
-
-const tz = dayjs.tz.guess();
 
 const expiredLesson = (date) => dayjs().isSameOrBefore(dayjs(date), 'day');
 
@@ -58,7 +52,7 @@ const sx = {
   icon: { minWidth: 'auto', mr: '10px' },
 };
 
-const ScheduledLessons = ({ list }) => {
+const ScheduledLessons = ({ list, day }) => {
   const { role, deleteLesson, openLessonForm, openFormForEdit } = useContext(CalendarContext);
 
   return (
@@ -110,7 +104,7 @@ const ScheduledLessons = ({ list }) => {
                   <ListItemIcon sx={sx.icon}>
                     <AccessTimeIcon />
                   </ListItemIcon>
-                  <ListItemText primary={dayjs(lesson.date).tz(tz).format('HH:mm')} />
+                  <ListItemText primary={dayjs(lesson.date).format('HH:mm')} />
                 </Box>
                 <Box className={styles.lesson__label}>
                   <ListItemIcon sx={sx.icon}>
@@ -133,11 +127,11 @@ const ScheduledLessons = ({ list }) => {
           </List>
         ) : (
           <Typography variant='body1' sx={{ margin: '20px auto', color: '#797979' }}>
-            You dont have any lessons for today
+            You dont have any lessons for this day.
           </Typography>
         )}
       </Box>
-      {role === TEACHER_ROLE && (
+      {role === TEACHER_ROLE && expiredLesson(day) && (
         <Button
           startIcon={<AddIcon />}
           variant='contained'
@@ -153,6 +147,7 @@ const ScheduledLessons = ({ list }) => {
 
 ScheduledLessons.propTypes = {
   list: PropTypes.array,
+  day: PropTypes.object,
 };
 
 export default ScheduledLessons;
