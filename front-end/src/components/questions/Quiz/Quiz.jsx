@@ -77,6 +77,8 @@ const Quiz = ({ id, questions, isLesson, student, teacher, snackbarShowMessage }
     setRunningTimer(true);
   };
 
+  console.log(callRequest);
+
   useEffect(() => {
     socket.on('lesson:call-request', (data) => {
       if (data.userId === _id) {
