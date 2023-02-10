@@ -17,6 +17,7 @@ const getUnitsByLevel = async (level) => {
         topic: { $first: '$topic' },
         questions: { $first: '$questions' },
         url: { $first: '$url' },
+        image: { $first: '$image' },
         numberOfLessons: { $sum: 1 },
       },
     },
