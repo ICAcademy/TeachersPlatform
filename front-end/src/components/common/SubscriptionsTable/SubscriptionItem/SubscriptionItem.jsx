@@ -98,7 +98,7 @@ const SubscriptionItem = ({ role, subscription, onDelete, levels }) => {
       <div className={styles.mainUserInfo}>
         <div className={`${styles.badgeDot} ${statusClass}`}></div>
         <div className={styles.avatar}>
-          <img src={subscription.studentID.url || noAvatar} />
+          <img src={subscription.studentID.url || subscription.teacherID.url || noAvatar} />
         </div>
         <div className={styles.itemInfo}>
           <div className={styles.userName}>
