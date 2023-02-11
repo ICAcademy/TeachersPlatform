@@ -7,7 +7,7 @@ let modeUrl;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   modeUrl = 'http://localhost:5000';
 } else {
-  modeUrl = 'https://teacher-platform.onrender.com';
+  modeUrl = 'https://inter-school.onrender.com';
 }
 
 export const API_URL = modeUrl;
