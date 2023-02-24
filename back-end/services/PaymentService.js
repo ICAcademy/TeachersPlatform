@@ -16,7 +16,7 @@ const getPaymentData = async (data) => {
     dae: data.dae,
     order_id: data.order_id,
     result_url: 'https://intercode-learning-school.netlify.app/app/finances',
-    server_url: 'https://teacher-platform.onrender.com/transactions',
+    server_url: 'https://inter-school.onrender.com',
   };
 
   const jsonString = JSON.stringify(dataObject);
