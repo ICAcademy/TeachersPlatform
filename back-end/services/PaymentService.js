@@ -3,7 +3,6 @@ const crypto = require('crypto');
 
 const privateKey = process.env.LIQPAY_PRIVATE_KEY;
 const publicKey = process.env.LIQPAY_PUBLIC_KEY;
-const paymentUrl = process.env.LIQPAY_URL;
 const version = process.env.LIQPAY_API_VERSION;
 
 const getPaymentData = async (data) => {
@@ -16,8 +15,8 @@ const getPaymentData = async (data) => {
     description: data.description,
     dae: data.dae,
     order_id: data.order_id,
-    result_url: 'https://incredible-torte-ac738e.netlify.app/app/finances',
-    server_url: 'https://inter-school.onrender.com/transactions',
+    result_url: 'https://intercode-learning-school.netlify.app/app/finances',
+    server_url: 'https://teacher-platform.onrender.com/transactions',
   };
 
   const jsonString = JSON.stringify(dataObject);
